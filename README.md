@@ -22,3 +22,7 @@ Run `ng test helisa-lib` to execute the unit tests via [Karma](https://karma-run
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Install
+
+para instalar la libreria .......   npm i  git+ssh://git@204.10.39.51:helisa-web/helisa-library.git
