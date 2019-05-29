@@ -25,4 +25,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Install
 
-para instalar la libreria .......   npm i  git+ssh://git@204.10.39.51:helisa-web/helisa-library.git
+para instalar la libreria .......   npm i  git+ssh://git@204.10.39.51:web-apps/helisa-library.git
