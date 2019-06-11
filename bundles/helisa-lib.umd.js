@@ -1744,18 +1744,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @enum {string} */
-    var TREE_COLOR_STYLE = {
-        NODE_RED: "red",
-        NODE_GREEN: "green",
-        NODE_PURPLE: "purple",
-        NODE_GRAY: "gray",
-    };
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var HelisaLibModule = /** @class */ (function () {
         function HelisaLibModule() {
         }
@@ -1897,7 +1885,6 @@
     exports.TreeHelisaComponent = TreeHelisaComponent;
     exports.TreeHelisaConnect = TreeHelisaConnect;
     exports.TreeHelisaService = TreeHelisaService;
-    exports.TREE_COLOR_STYLE = TREE_COLOR_STYLE;
     exports.HelisaLibModule = HelisaLibModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
