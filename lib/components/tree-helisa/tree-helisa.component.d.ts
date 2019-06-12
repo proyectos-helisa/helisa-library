@@ -1,4 +1,4 @@
-import { OnInit, EventEmitter, AfterViewInit } from '@angular/core';
+import { OnInit, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { Node } from './node';
@@ -11,6 +11,7 @@ export interface RequestTreeHelisa {
 export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     private treeHelisaService;
     private router;
+    private elementRef;
     private treeHelisaConnect;
     formEdit: FormControl;
     /**
@@ -38,9 +39,14 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     collapseParent: EventEmitter<boolean>;
     rangeScrolled: EventEmitter<RequestTreeHelisa>;
     nodeSelected: EventEmitter<number>;
+    dobleClick: EventEmitter<number>;
+    keypressDelete: EventEmitter<number>;
+    keypressInsert: EventEmitter<number>;
     treeControl: NestedTreeControl<Node>;
     dataSource: MatTreeNestedDataSource<Node>;
-    constructor(treeHelisaService: TreeHelisaService, router: Router);
+    isSingleClick: Boolean;
+    currentNode: Node;
+    constructor(treeHelisaService: TreeHelisaService, router: Router, elementRef: ElementRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     onRedirect(node: Node): void;
@@ -50,6 +56,8 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     onDelete(node: Node): void;
     onEdited(node: Node, value: any): void;
     onCancel(node: Node, value: string): void;
+    onDblClick(node: Node): void;
+    onKeyDown(event: KeyboardEvent): void;
     /**
      * Verifica si el nodo tiene hijos
      */
