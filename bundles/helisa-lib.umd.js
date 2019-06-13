@@ -744,13 +744,16 @@
         function TableHelisaComponent(tableService) {
             this.tableService = tableService;
             this.displayedColumns = [];
+            this.cellSelected = new Array();
             this.type = TableHelisaType.LOCAL;
             this.sort = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.search = new i0.EventEmitter();
             this.select = new i0.EventEmitter();
+            this.selectCell = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.showTitle = true;
+            this.multipleCell = false;
             this.showFooter = false;
             this.showSearch = false;
         }
@@ -798,6 +801,17 @@
                     column.sortDirection = event.direction;
                     _this.sort.emit({ column: column, columnConfigurations: _this.columnConfig, type: ChangeColumnConfigurationType.SORT });
                 }));
+            };
+        /**
+         * @return {?}
+         */
+        TableHelisaComponent.prototype.ngAfterViewInit = /**
+         * @return {?}
+         */
+            function () {
+                if (this.multipleCell) {
+                    this.matTable.renderRows();
+                }
             };
         Object.defineProperty(TableHelisaComponent.prototype, "isRemote", {
             set: /**
@@ -1165,10 +1179,66 @@
                     this.tableHelisaConnectComponent.isUsed = false;
                 }
             };
+        Object.defineProperty(TableHelisaComponent.prototype, "selectedCells", {
+            set: /**
+             * @param {?} selectedCells
+             * @return {?}
+             */ function (selectedCells) {
+                this.cellSelected = selectedCells;
+                if (this.matTable.dataSource) {
+                    this.matTable.renderRows();
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} element
+         * @param {?} columna
+         * @return {?}
+         */
+        TableHelisaComponent.prototype.selectedCell = /**
+         * @param {?} element
+         * @param {?} columna
+         * @return {?}
+         */
+            function (element, columna) {
+                /** @type {?} */
+                var exists = false;
+                for (var index = 0; index < this.cellSelected.length; index++) {
+                    if (this.cellSelected[index].columnObj.name === columna.name && this.cellSelected[index].row.data === element.data) {
+                        exists = true;
+                        this.cellSelected.splice(index, 1);
+                    }
+                }
+                if (!exists) {
+                    this.cellSelected.push({ columnObj: columna, row: element });
+                }
+                this.selectCell.emit(this.cellSelected);
+            };
+        /**
+         * @param {?} element
+         * @param {?} columna
+         * @return {?}
+         */
+        TableHelisaComponent.prototype.isSelecctedCell = /**
+         * @param {?} element
+         * @param {?} columna
+         * @return {?}
+         */
+            function (element, columna) {
+                for (var index = 0; index < this.cellSelected.length; index++) {
+                    if (this.cellSelected[index].columnObj.name === columna.name &&
+                        this.cellSelected[index].row.data === element.data && this.multipleCell) {
+                        return true;
+                    }
+                }
+                return false;
+            };
         TableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-table',
-                        template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort>\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef > {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\"> {{ getValue(element.data, column) }} </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\" [class.selected-row]=\"row.data === selectedObject\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n\r\n</div>\r\n",
+                        template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable>\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef > {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (click)=\"selectedCell(element, column)\" [class.selected-row]= \"isSelecctedCell(element, column)\">{{ getValue(element.data, column) }} </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\" [class.selected-row]=\"row.data === selectedObject && !multipleCell\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n\r\n</div>\r\n",
                         styles: [".div-table-helisa{height:500px;width:800px}.div-table-helisa .container-table{overflow:scroll;width:100%;height:100%}.div-table-helisa .container-table .table-helisa{width:100%}.div-table-helisa .container-table .table-helisa /deep/ tbody tr,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr,.div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td,.div-table-helisa .container-table .table-helisa /deep/ tbody tr th,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,.div-table-helisa .container-table .table-helisa /deep/ thead tr td,.div-table-helisa .container-table .table-helisa /deep/ thead tr th{padding:2px 10px 0}.div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}.div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}.div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                     }] }
         ];
@@ -1180,16 +1250,20 @@
         };
         TableHelisaComponent.propDecorators = {
             matSort: [{ type: i0.ViewChild, args: [material.MatSort,] }],
+            matTable: [{ type: i0.ViewChild, args: [material.MatTable,] }],
             sort: [{ type: i0.Output }],
             total: [{ type: i0.Output }],
             search: [{ type: i0.Output }],
             select: [{ type: i0.Output }],
+            selectCell: [{ type: i0.Output }],
             nextPage: [{ type: i0.Output }],
             showTitle: [{ type: i0.Input }],
+            multipleCell: [{ type: i0.Input }],
             count: [{ type: i0.Input }],
             isRemote: [{ type: i0.Input }],
             columnConfiguration: [{ type: i0.Input }],
-            dataSource: [{ type: i0.Input }]
+            dataSource: [{ type: i0.Input }],
+            selectedCells: [{ type: i0.Input }]
         };
         return TableHelisaComponent;
     }());
@@ -1314,9 +1388,10 @@
      */
     var TreeHelisaComponent = /** @class */ (function () {
         //#endregion ====== Variables ========
-        function TreeHelisaComponent(treeHelisaService, router$$1) {
+        function TreeHelisaComponent(treeHelisaService, router$$1, elementRef) {
             this.treeHelisaService = treeHelisaService;
             this.router = router$$1;
+            this.elementRef = elementRef;
             /**
              * Establece si se mostraran las opciones de
              * Creacion, edición y eliminacion del nodo
@@ -1338,11 +1413,16 @@
             this.collapseParent = new i0.EventEmitter();
             this.rangeScrolled = new i0.EventEmitter();
             this.nodeSelected = new i0.EventEmitter();
+            this.dobleClick = new i0.EventEmitter();
+            this.keypressDelete = new i0.EventEmitter();
+            this.keypressInsert = new i0.EventEmitter();
             this.treeControl = new tree.NestedTreeControl(( /**
              * @param {?} node
              * @return {?}
              */function (node) { return node.children; }));
             this.dataSource = new material.MatTreeNestedDataSource();
+            this.isSingleClick = true;
+            this.currentNode = null;
             //#endregion ======= Events ========
             //#region  ======== Metodos =============
             /**
@@ -1402,6 +1482,13 @@
          * @return {?}
          */
             function () {
+                this.elementRef.nativeElement
+                    .addEventListener('keydown', ( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                    console.log(event);
+                }));
             };
         //#region  ====== Events ===========
         //#region  ====== Events ===========
@@ -1416,10 +1503,20 @@
              * @return {?}
              */
             function (node) {
-                this.selectNode(this.data, node.id);
-                if (!!node && !node.children) {
-                    this.nodeSelected.emit(node.id);
-                }
+                var _this = this;
+                this.isSingleClick = true;
+                setTimeout(( /**
+                 * @return {?}
+                 */function () {
+                    if (_this.isSingleClick) {
+                        _this.selectNode(_this.data, node.id);
+                        // if(!!node && !node.children){
+                        if (!!node) {
+                            _this.nodeSelected.emit(node.id);
+                            _this.currentNode = node;
+                        }
+                    }
+                }), 350);
             };
         /**
          * @param {?} event
@@ -1445,6 +1542,8 @@
          * @return {?}
          */
             function (node) {
+                console.log(node.id);
+                console.log(node);
                 node.isEditable = true;
             };
         /**
@@ -1525,6 +1624,36 @@
                     this.refreshTree();
                 }
                 node.isEditable = false;
+            };
+        /**
+         * @param {?} node
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.onDblClick = /**
+         * @param {?} node
+         * @return {?}
+         */
+            function (node) {
+                this.isSingleClick = false;
+                this.dobleClick.emit(node.id);
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.onKeyDown = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                switch (event.key) {
+                    case 'Delete':
+                        this.keypressDelete.emit((!!this.currentNode && this.currentNode.id) ? this.currentNode.id : null);
+                        break;
+                    case 'Insert':
+                        this.keypressInsert.emit((!!this.currentNode && this.currentNode.id) ? this.currentNode.id : null);
+                        break;
+                }
             };
         /**
          * Obtiene la descripcion completa del nodo
@@ -1720,7 +1849,10 @@
         TreeHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-tree',
-                        template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\r\n<mat-tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n  <!-- This is the tree node template for leaf nodes -->\r\n  <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n    <li class=\"mat-tree-node\" [ngStyle]=\"{'color': node.colorStyle}\" [ngClass]=\"{'isSelected': node.isSelected}\"\r\n    (click)=\"onRedirect(node)\" *ngIf=\"!node.isEditable\">\r\n      <!-- use a disabled button to provide padding for tree leaf -->\r\n      <button mat-icon-button disabled></button>\r\n      {{node.name}}\r\n    </li>\r\n    <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n      </li>\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">          \r\n          <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n  </mat-tree-node>\r\n  <!-- This is the tree node template for expandable nodes -->\r\n  <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\">\r\n    <li>\r\n      <div class=\"mat-tree-node tree-options\"  *ngIf=\"!node.isEditable\" \r\n      [ngStyle]=\"{'color': node.colorStyle}\"\r\n      >\r\n        <button mat-icon-button matTreeNodeToggle\r\n                [attr.aria-label]=\"'toggle ' + node.name\">\r\n          <mat-icon class=\"mat-icon-rtl-mirror\">\r\n            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}\r\n          </mat-icon>\r\n        </button>\r\n        {{node.name}}        \r\n      </div>\r\n      <div class=\"tree-options\">\r\n          <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n              <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n            </li>\r\n            <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n                <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n            </li>\r\n      </div>\r\n      <ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\r\n        <ng-container matTreeNodeOutlet></ng-container>\r\n      </ul>\r\n    </li>       \r\n  </mat-nested-tree-node>\r\n</mat-tree>\r\n</div>\r\n",
+                        template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\" >\r\n<mat-tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n  <!-- This is the tree node template for leaf nodes -->\r\n  <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n    <li class=\"mat-tree-node\" [ngStyle]=\"{'color': node.colorStyle}\" [ngClass]=\"{'isSelected': node.isSelected}\"\r\n    (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" *ngIf=\"!node.isEditable\">\r\n      <!-- use a disabled button to provide padding for tree leaf -->\r\n      <button mat-icon-button disabled></button>\r\n      <label (keydown)=\"onKeyDown($event)\">{{node.name}}</label>\r\n    </li>\r\n    <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n      </li>\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">          \r\n          <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n  </mat-tree-node>\r\n  <!-- This is the tree node template for expandable nodes -->\r\n  <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\r\n    <li>\r\n      <div class=\"mat-tree-node tree-options\"  *ngIf=\"!node.isEditable\" \r\n      [ngStyle]=\"{'color': node.colorStyle}\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" [ngClass]=\"{'isSelected': node.isSelected}\">\r\n        <button mat-icon-button matTreeNodeToggle\r\n                [attr.aria-label]=\"'toggle ' + node.name\">\r\n          <mat-icon class=\"mat-icon-rtl-mirror\">\r\n            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}\r\n          </mat-icon>\r\n        </button>\r\n        {{node.name}}        \r\n      </div>\r\n      <div class=\"tree-options\">\r\n          <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n              <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n            </li>\r\n            <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n                <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n            </li>\r\n      </div>\r\n      <ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\r\n        <ng-container matTreeNodeOutlet></ng-container>\r\n      </ul>\r\n    </li>       \r\n  </mat-nested-tree-node>\r\n</mat-tree>\r\n</div>\r\n",
+                        host: {
+                            '(document:keyup)': 'onKeyDown($event)'
+                        },
                         styles: [".example-tree-invisible{display:none}.example-tree li,.example-tree ul{margin-top:0;margin-bottom:0;list-style-type:none}.isSelected{background:red}.tree-options{display:inline}.container-tree{overflow:scroll;height:350px;width:100%}"]
                     }] }
         ];
@@ -1728,7 +1860,8 @@
         TreeHelisaComponent.ctorParameters = function () {
             return [
                 { type: TreeHelisaService },
-                { type: router.Router }
+                { type: router.Router },
+                { type: i0.ElementRef }
             ];
         };
         TreeHelisaComponent.propDecorators = {
@@ -1739,22 +1872,13 @@
             added: [{ type: i0.Output }],
             collapseParent: [{ type: i0.Output }],
             rangeScrolled: [{ type: i0.Output }],
-            nodeSelected: [{ type: i0.Output }]
+            nodeSelected: [{ type: i0.Output }],
+            dobleClick: [{ type: i0.Output }],
+            keypressDelete: [{ type: i0.Output }],
+            keypressInsert: [{ type: i0.Output }]
         };
         return TreeHelisaComponent;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @enum {string} */
-    var TREE_COLOR_STYLE = {
-        NODE_RED: "red",
-        NODE_GREEN: "green",
-        NODE_PURPLE: "purple",
-        NODE_GRAY: "gray",
-    };
 
     /**
      * @fileoverview added by tsickle
@@ -1901,7 +2025,6 @@
     exports.TreeHelisaComponent = TreeHelisaComponent;
     exports.TreeHelisaConnect = TreeHelisaConnect;
     exports.TreeHelisaService = TreeHelisaService;
-    exports.TREE_COLOR_STYLE = TREE_COLOR_STYLE;
     exports.HelisaLibModule = HelisaLibModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });

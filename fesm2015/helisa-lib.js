@@ -3,7 +3,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTreeNestedDataSource, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -596,13 +596,16 @@ class TableHelisaComponent {
     constructor(tableService) {
         this.tableService = tableService;
         this.displayedColumns = [];
+        this.cellSelected = new Array();
         this.type = TableHelisaType.LOCAL;
         this.sort = new EventEmitter();
         this.total = new EventEmitter();
         this.search = new EventEmitter();
         this.select = new EventEmitter();
+        this.selectCell = new EventEmitter();
         this.nextPage = new EventEmitter();
         this.showTitle = true;
+        this.multipleCell = false;
         this.showFooter = false;
         this.showSearch = false;
     }
@@ -651,6 +654,14 @@ class TableHelisaComponent {
             column.sortDirection = event.direction;
             this.sort.emit({ column, columnConfigurations: this.columnConfig, type: ChangeColumnConfigurationType.SORT });
         }));
+    }
+    /**
+     * @return {?}
+     */
+    ngAfterViewInit() {
+        if (this.multipleCell) {
+            this.matTable.renderRows();
+        }
     }
     /**
      * @param {?} w
@@ -897,7 +908,7 @@ class TableHelisaComponent {
      */
     searchText(text) {
         this.lastSearch = text;
-        this.search.emit({ text: text, columnConfigurations: this.columnConfig });
+        this.search.emit({ text, columnConfigurations: this.columnConfig });
     }
     /**
      * @param {?} row
@@ -947,11 +958,54 @@ class TableHelisaComponent {
             this.tableHelisaConnectComponent.isUsed = false;
         }
     }
+    /**
+     * @param {?} selectedCells
+     * @return {?}
+     */
+    set selectedCells(selectedCells) {
+        this.cellSelected = selectedCells;
+        if (this.matTable.dataSource) {
+            this.matTable.renderRows();
+        }
+    }
+    /**
+     * @param {?} element
+     * @param {?} columna
+     * @return {?}
+     */
+    selectedCell(element, columna) {
+        /** @type {?} */
+        let exists = false;
+        for (let index = 0; index < this.cellSelected.length; index++) {
+            if (this.cellSelected[index].columnObj.name === columna.name && this.cellSelected[index].row.data === element.data) {
+                exists = true;
+                this.cellSelected.splice(index, 1);
+            }
+        }
+        if (!exists) {
+            this.cellSelected.push({ columnObj: columna, row: element });
+        }
+        this.selectCell.emit(this.cellSelected);
+    }
+    /**
+     * @param {?} element
+     * @param {?} columna
+     * @return {?}
+     */
+    isSelecctedCell(element, columna) {
+        for (let index = 0; index < this.cellSelected.length; index++) {
+            if (this.cellSelected[index].columnObj.name === columna.name &&
+                this.cellSelected[index].row.data === element.data && this.multipleCell) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 TableHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-table',
-                template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort>\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef > {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\"> {{ getValue(element.data, column) }} </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\" [class.selected-row]=\"row.data === selectedObject\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n\r\n</div>\r\n",
+                template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable>\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef > {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (click)=\"selectedCell(element, column)\" [class.selected-row]= \"isSelecctedCell(element, column)\">{{ getValue(element.data, column) }} </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\" [class.selected-row]=\"row.data === selectedObject && !multipleCell\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n\r\n</div>\r\n",
                 styles: [".div-table-helisa{height:500px;width:800px}.div-table-helisa .container-table{overflow:scroll;width:100%;height:100%}.div-table-helisa .container-table .table-helisa{width:100%}.div-table-helisa .container-table .table-helisa /deep/ tbody tr,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr,.div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td,.div-table-helisa .container-table .table-helisa /deep/ tbody tr th,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,.div-table-helisa .container-table .table-helisa /deep/ thead tr td,.div-table-helisa .container-table .table-helisa /deep/ thead tr th{padding:2px 10px 0}.div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}.div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}.div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
             }] }
 ];
@@ -961,16 +1015,20 @@ TableHelisaComponent.ctorParameters = () => [
 ];
 TableHelisaComponent.propDecorators = {
     matSort: [{ type: ViewChild, args: [MatSort,] }],
+    matTable: [{ type: ViewChild, args: [MatTable,] }],
     sort: [{ type: Output }],
     total: [{ type: Output }],
     search: [{ type: Output }],
     select: [{ type: Output }],
+    selectCell: [{ type: Output }],
     nextPage: [{ type: Output }],
     showTitle: [{ type: Input }],
+    multipleCell: [{ type: Input }],
     count: [{ type: Input }],
     isRemote: [{ type: Input }],
     columnConfiguration: [{ type: Input }],
-    dataSource: [{ type: Input }]
+    dataSource: [{ type: Input }],
+    selectedCells: [{ type: Input }]
 };
 
 /**
@@ -1071,10 +1129,12 @@ class TreeHelisaComponent {
     /**
      * @param {?} treeHelisaService
      * @param {?} router
+     * @param {?} elementRef
      */
-    constructor(treeHelisaService, router) {
+    constructor(treeHelisaService, router, elementRef) {
         this.treeHelisaService = treeHelisaService;
         this.router = router;
+        this.elementRef = elementRef;
         /**
          * Establece si se mostraran las opciones de
          * Creacion, edición y eliminacion del nodo
@@ -1096,12 +1156,17 @@ class TreeHelisaComponent {
         this.collapseParent = new EventEmitter();
         this.rangeScrolled = new EventEmitter();
         this.nodeSelected = new EventEmitter();
+        this.dobleClick = new EventEmitter();
+        this.keypressDelete = new EventEmitter();
+        this.keypressInsert = new EventEmitter();
         this.treeControl = new NestedTreeControl((/**
          * @param {?} node
          * @return {?}
          */
         node => node.children));
         this.dataSource = new MatTreeNestedDataSource();
+        this.isSingleClick = true;
+        this.currentNode = null;
         //#endregion ======= Events ========
         //#region  ======== Metodos =============
         /**
@@ -1157,6 +1222,14 @@ class TreeHelisaComponent {
      * @return {?}
      */
     ngAfterViewInit() {
+        this.elementRef.nativeElement
+            .addEventListener('keydown', (/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
+            console.log(event);
+        }));
     }
     //#region  ====== Events ===========
     /**
@@ -1164,10 +1237,20 @@ class TreeHelisaComponent {
      * @return {?}
      */
     onRedirect(node) {
-        this.selectNode(this.data, node.id);
-        if (!!node && !node.children) {
-            this.nodeSelected.emit(node.id);
-        }
+        this.isSingleClick = true;
+        setTimeout((/**
+         * @return {?}
+         */
+        () => {
+            if (this.isSingleClick) {
+                this.selectNode(this.data, node.id);
+                // if(!!node && !node.children){
+                if (!!node) {
+                    this.nodeSelected.emit(node.id);
+                    this.currentNode = node;
+                }
+            }
+        }), 350);
     }
     /**
      * @param {?} event
@@ -1185,6 +1268,8 @@ class TreeHelisaComponent {
      * @return {?}
      */
     onEdit(node) {
+        console.log(node.id);
+        console.log(node);
         node.isEditable = true;
     }
     /**
@@ -1247,6 +1332,28 @@ class TreeHelisaComponent {
             this.refreshTree();
         }
         node.isEditable = false;
+    }
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    onDblClick(node) {
+        this.isSingleClick = false;
+        this.dobleClick.emit(node.id);
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    onKeyDown(event) {
+        switch (event.key) {
+            case 'Delete':
+                this.keypressDelete.emit((!!this.currentNode && this.currentNode.id) ? this.currentNode.id : null);
+                break;
+            case 'Insert':
+                this.keypressInsert.emit((!!this.currentNode && this.currentNode.id) ? this.currentNode.id : null);
+                break;
+        }
     }
     /**
      * Obtiene la descripcion completa del nodo
@@ -1381,14 +1488,18 @@ class TreeHelisaComponent {
 TreeHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-tree',
-                template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\r\n<mat-tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n  <!-- This is the tree node template for leaf nodes -->\r\n  <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n    <li class=\"mat-tree-node\" [ngStyle]=\"{'color': node.colorStyle}\" [ngClass]=\"{'isSelected': node.isSelected}\"\r\n    (click)=\"onRedirect(node)\" *ngIf=\"!node.isEditable\">\r\n      <!-- use a disabled button to provide padding for tree leaf -->\r\n      <button mat-icon-button disabled></button>\r\n      {{node.name}}\r\n    </li>\r\n    <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n      </li>\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">          \r\n          <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n  </mat-tree-node>\r\n  <!-- This is the tree node template for expandable nodes -->\r\n  <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\">\r\n    <li>\r\n      <div class=\"mat-tree-node tree-options\"  *ngIf=\"!node.isEditable\" \r\n      [ngStyle]=\"{'color': node.colorStyle}\"\r\n      >\r\n        <button mat-icon-button matTreeNodeToggle\r\n                [attr.aria-label]=\"'toggle ' + node.name\">\r\n          <mat-icon class=\"mat-icon-rtl-mirror\">\r\n            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}\r\n          </mat-icon>\r\n        </button>\r\n        {{node.name}}        \r\n      </div>\r\n      <div class=\"tree-options\">\r\n          <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n              <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n            </li>\r\n            <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n                <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n            </li>\r\n      </div>\r\n      <ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\r\n        <ng-container matTreeNodeOutlet></ng-container>\r\n      </ul>\r\n    </li>       \r\n  </mat-nested-tree-node>\r\n</mat-tree>\r\n</div>\r\n",
+                template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\" >\r\n<mat-tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n  <!-- This is the tree node template for leaf nodes -->\r\n  <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n    <li class=\"mat-tree-node\" [ngStyle]=\"{'color': node.colorStyle}\" [ngClass]=\"{'isSelected': node.isSelected}\"\r\n    (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" *ngIf=\"!node.isEditable\">\r\n      <!-- use a disabled button to provide padding for tree leaf -->\r\n      <button mat-icon-button disabled></button>\r\n      <label (keydown)=\"onKeyDown($event)\">{{node.name}}</label>\r\n    </li>\r\n    <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n      </li>\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">          \r\n          <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n  </mat-tree-node>\r\n  <!-- This is the tree node template for expandable nodes -->\r\n  <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\r\n    <li>\r\n      <div class=\"mat-tree-node tree-options\"  *ngIf=\"!node.isEditable\" \r\n      [ngStyle]=\"{'color': node.colorStyle}\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" [ngClass]=\"{'isSelected': node.isSelected}\">\r\n        <button mat-icon-button matTreeNodeToggle\r\n                [attr.aria-label]=\"'toggle ' + node.name\">\r\n          <mat-icon class=\"mat-icon-rtl-mirror\">\r\n            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}\r\n          </mat-icon>\r\n        </button>\r\n        {{node.name}}        \r\n      </div>\r\n      <div class=\"tree-options\">\r\n          <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n              <button mat-icon-button (click)=\"onEdit(node)\"><mat-icon>edit</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onAdd(node)\"><mat-icon>add</mat-icon></button>\r\n              <button mat-icon-button (click)=\"onDelete(node)\"><mat-icon>delete</mat-icon></button>\r\n            </li>\r\n            <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n                <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\" (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n            </li>\r\n      </div>\r\n      <ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\r\n        <ng-container matTreeNodeOutlet></ng-container>\r\n      </ul>\r\n    </li>       \r\n  </mat-nested-tree-node>\r\n</mat-tree>\r\n</div>\r\n",
+                host: {
+                    '(document:keyup)': 'onKeyDown($event)'
+                },
                 styles: [".example-tree-invisible{display:none}.example-tree li,.example-tree ul{margin-top:0;margin-bottom:0;list-style-type:none}.isSelected{background:red}.tree-options{display:inline}.container-tree{overflow:scroll;height:350px;width:100%}"]
             }] }
 ];
 /** @nocollapse */
 TreeHelisaComponent.ctorParameters = () => [
     { type: TreeHelisaService },
-    { type: Router }
+    { type: Router },
+    { type: ElementRef }
 ];
 TreeHelisaComponent.propDecorators = {
     data: [{ type: Input }],
@@ -1398,19 +1509,10 @@ TreeHelisaComponent.propDecorators = {
     added: [{ type: Output }],
     collapseParent: [{ type: Output }],
     rangeScrolled: [{ type: Output }],
-    nodeSelected: [{ type: Output }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-const TREE_COLOR_STYLE = {
-    NODE_RED: "red",
-    NODE_GREEN: "green",
-    NODE_PURPLE: "purple",
-    NODE_GRAY: "gray",
+    nodeSelected: [{ type: Output }],
+    dobleClick: [{ type: Output }],
+    keypressDelete: [{ type: Output }],
+    keypressInsert: [{ type: Output }]
 };
 
 /**
@@ -1540,6 +1642,6 @@ HelisaLibModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, TREE_COLOR_STYLE, HelisaLibModule };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, HelisaLibModule };
 
 //# sourceMappingURL=helisa-lib.js.map
