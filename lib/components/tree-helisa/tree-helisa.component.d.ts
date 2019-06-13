@@ -27,7 +27,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     /**
      * Retorna el id del nodo removido
      */
-    removed: EventEmitter<number>;
+    removed: EventEmitter<string | number>;
     /**
      * Retorna un nodo editado
      */
@@ -39,10 +39,10 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     added: EventEmitter<Node>;
     collapseParent: EventEmitter<boolean>;
     rangeScrolled: EventEmitter<RequestTreeHelisa>;
-    nodeSelected: EventEmitter<number>;
-    dobleClick: EventEmitter<number>;
-    keypressDelete: EventEmitter<number>;
-    keypressInsert: EventEmitter<number>;
+    nodeSelected: EventEmitter<string | number>;
+    dobleClick: EventEmitter<string | number>;
+    keypressDelete: EventEmitter<string | number>;
+    keypressInsert: EventEmitter<string | number>;
     treeControl: NestedTreeControl<Node>;
     dataSource: MatTreeNestedDataSource<Node>;
     isSingleClick: Boolean;

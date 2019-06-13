@@ -8,7 +8,7 @@ export declare class TreeHelisaService {
     changeDataSource(data: Node): void;
     private emitExpandAllNodes;
     nodeExpand: import("rxjs").Observable<boolean>;
-    exandAllNodes(expand: boolean): void;
+    expandAllNodes(expand: boolean): void;
     private emitCollapseAllNodes;
     nodeCollapse: import("rxjs").Observable<boolean>;
     collapseAllNodes(collapse: boolean): void;
