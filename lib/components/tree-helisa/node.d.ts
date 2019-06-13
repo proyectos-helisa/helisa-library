@@ -1,3 +1,4 @@
+import { TREE_COLOR_STYLE } from './tree-color-style.enum';
 export interface Node {
     id: number | null;
     name: string;
@@ -5,5 +6,5 @@ export interface Node {
     parent?: Node;
     isSelected: boolean;
     isEditable?: boolean;
-    colorStyle?: string | null;
+    colorStyle?: TREE_COLOR_STYLE | null;
 }
