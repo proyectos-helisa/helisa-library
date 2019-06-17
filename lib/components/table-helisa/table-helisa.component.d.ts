@@ -1,6 +1,6 @@
 import { EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { MatSort, MatTableDataSource, MatTable } from '@angular/material';
-import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, SelectedCell } from './table-helisa.interface';
+import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, Cell, ConfigCellStyles, ConfigRowStyles } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
 interface RowData {
     data: any;
@@ -20,7 +20,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     displayedColumns: string[];
     columnConfig: Array<ColumnConfig>;
     selectedObject: T;
-    cellSelected: Array<SelectedCell>;
     lastSearch: string;
     type: TableHelisaType;
     matSort: MatSort;
@@ -29,11 +28,14 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     total: EventEmitter<EventColumn>;
     search: EventEmitter<EventSearch>;
     select: EventEmitter<T>;
-    selectCell: EventEmitter<SelectedCell[]>;
+    selectCell: EventEmitter<Cell[]>;
     nextPage: EventEmitter<RequestTableHelisa>;
     showTitle: boolean;
     multipleCell: boolean;
     count: number;
+    configCellStyles: Array<ConfigCellStyles>;
+    configRowStylesFromColumn: Array<ConfigRowStyles>;
+    selectedCells: Array<Cell>;
     showFooter: boolean;
     showSearch: boolean;
     constructor(tableService: TableHelisaService<T>);
@@ -57,8 +59,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     onScroll(event: any): void;
     private goNextPage;
     private receivePage;
-    selectedCells: Array<SelectedCell>;
-    selectedCell(element: any, columna: any): void;
-    isSelecctedCell(element: any, columna: any): boolean;
+    selectedCell(element: any, column: ColumnConfig): void;
+    isSelectedCell(element: any, column: ColumnConfig): number;
+    getClassToCell(row: any, column: ColumnConfig): string;
+    getClassToRow(row: any): string;
 }
 export {};

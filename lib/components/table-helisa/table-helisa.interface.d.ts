@@ -44,9 +44,18 @@ export declare enum TableHelisaType {
     REMOTE = 0,
     LOCAL = 1
 }
-export interface SelectedCell {
-    columnObj: any;
+export interface Cell {
+    column: ColumnConfig;
     row: any;
+}
+export interface ConfigCellStyles {
+    cellData: any;
+    classCell: string;
+}
+export interface ConfigRowStyles {
+    column: ColumnConfig;
+    data: any;
+    classRow: string;
 }
 export declare abstract class ColumnConfigUtil {
     static getValue(obj: any, column: ColumnConfig): any;
