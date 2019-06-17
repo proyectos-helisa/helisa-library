@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1346,6 +1346,7 @@ var TableHelisaComponent = /** @class */ (function () {
  */
 var DateHelisaComponent = /** @class */ (function () {
     function DateHelisaComponent() {
+        this.placeholder = "";
         this.dateFormControl = new FormControl('');
     }
     /**
@@ -1359,13 +1360,14 @@ var DateHelisaComponent = /** @class */ (function () {
     DateHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-date-helisa',
-                    template: "<div>\r\n<mat-form-field class=\"example-full-width\">\r\n  <input matInput [matDatepicker]=\"picker\" placeholder=\"Choose a date\" [formControl]= \"dateFormControl\">\r\n  <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n  <mat-datepicker touchUi #picker></mat-datepicker>\r\n</mat-form-field>\r\n</div>\r\n",
+                    template: "<div>\r\n<mat-form-field class=\"example-full-width\">\r\n  <input matInput [matDatepicker]=\"picker\" [formControl]= \"dateFormControl\">\r\n  <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n  <mat-datepicker touchUi #picker></mat-datepicker>\r\n</mat-form-field>\r\n</div>\r\n",
                     styles: [""]
                 }] }
     ];
     /** @nocollapse */
     DateHelisaComponent.ctorParameters = function () { return []; };
     DateHelisaComponent.propDecorators = {
+        placeholder: [{ type: Input }],
         dateFormControl: [{ type: Input }]
     };
     return DateHelisaComponent;

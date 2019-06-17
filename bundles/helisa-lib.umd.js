@@ -1316,6 +1316,7 @@
      */
     var DateHelisaComponent = /** @class */ (function () {
         function DateHelisaComponent() {
+            this.placeholder = "";
             this.dateFormControl = new forms.FormControl('');
         }
         /**
@@ -1329,13 +1330,14 @@
         DateHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-date-helisa',
-                        template: "<div>\r\n<mat-form-field class=\"example-full-width\">\r\n  <input matInput [matDatepicker]=\"picker\" placeholder=\"Choose a date\" [formControl]= \"dateFormControl\">\r\n  <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n  <mat-datepicker touchUi #picker></mat-datepicker>\r\n</mat-form-field>\r\n</div>\r\n",
+                        template: "<div>\r\n<mat-form-field class=\"example-full-width\">\r\n  <input matInput [matDatepicker]=\"picker\" [formControl]= \"dateFormControl\">\r\n  <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n  <mat-datepicker touchUi #picker></mat-datepicker>\r\n</mat-form-field>\r\n</div>\r\n",
                         styles: [""]
                     }] }
         ];
         /** @nocollapse */
         DateHelisaComponent.ctorParameters = function () { return []; };
         DateHelisaComponent.propDecorators = {
+            placeholder: [{ type: i0.Input }],
             dateFormControl: [{ type: i0.Input }]
         };
         return DateHelisaComponent;
