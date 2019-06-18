@@ -92,4 +92,5 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      * @param node
      */
     private upSelectNode;
+    getClassNode(node: Node): string[];
 }

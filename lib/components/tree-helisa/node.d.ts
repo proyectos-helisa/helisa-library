@@ -6,4 +6,5 @@ export interface Node {
     isSelected: boolean;
     isEditable?: boolean;
     colorStyle?: string | null;
+    classNode?: string | null;
 }
