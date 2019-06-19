@@ -2044,7 +2044,7 @@
                          * @return {?}
                          */function (text) { return ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0; }));
                         return ws;
-                    }));
+                    })).splice(0, 5);
                 }
             };
         /**
