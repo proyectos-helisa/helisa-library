@@ -3,7 +3,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -20,9 +19,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -2037,6 +2038,83 @@ var TreeHelisaComponent = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @template T
+ */
+var AutocompleteHelisaComponent = /** @class */ (function () {
+    function AutocompleteHelisaComponent() {
+        this.myControl = new FormControl();
+        this.options = new Array();
+        this.onSelectedValue = new EventEmitter();
+    }
+    /**
+     * @return {?}
+     */
+    AutocompleteHelisaComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.filteredOptions = this.myControl.valueChanges.pipe(startWith(''), map((/**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) { return _this._filter(value); })));
+    };
+    /**
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    AutocompleteHelisaComponent.prototype._filter = /**
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        if (value instanceof Object) {
+            this.myControl.setValue(value.displayText);
+        }
+        else {
+            /** @type {?} */
+            var filterValue_1 = value.toLowerCase();
+            return this.options.filter((/**
+             * @param {?} option
+             * @return {?}
+             */
+            function (option) { return option.displayText.toLowerCase().indexOf(filterValue_1) >= 0; }));
+        }
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    AutocompleteHelisaComponent.prototype.onSelected = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        this.selectedValue = event.option.value;
+        this.onSelectedValue.emit(this.selectedValue.value);
+    };
+    AutocompleteHelisaComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'hel-autocomplete',
+                    template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                    styles: [""]
+                }] }
+    ];
+    AutocompleteHelisaComponent.propDecorators = {
+        options: [{ type: Input }],
+        onSelectedValue: [{ type: Output }]
+    };
+    return AutocompleteHelisaComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var HelisaLibModule = /** @class */ (function () {
     function HelisaLibModule() {
     }
@@ -2050,12 +2128,14 @@ var HelisaLibModule = /** @class */ (function () {
                         InputHelisaComponent,
                         TableHelisaComponent,
                         TreeHelisaComponent,
-                        DateHelisaComponent
+                        DateHelisaComponent,
+                        AutocompleteHelisaComponent
                     ],
                     imports: [
                         CommonModule,
                         FormsModule,
                         ReactiveFormsModule,
+                        MatAutocompleteModule,
                         MatButtonModule,
                         MatCheckboxModule,
                         MatToolbarModule,
@@ -2102,6 +2182,7 @@ var HelisaLibModule = /** @class */ (function () {
                         TableHelisaComponent,
                         TreeHelisaComponent,
                         DateHelisaComponent,
+                        AutocompleteHelisaComponent,
                         MatButtonModule,
                         MatCheckboxModule,
                         MatToolbarModule,
@@ -2158,6 +2239,6 @@ var HelisaLibModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, HelisaLibModule };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, HelisaLibModule, AutocompleteHelisaComponent as ɵa };
 
 //# sourceMappingURL=helisa-lib.js.map
