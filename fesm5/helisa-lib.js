@@ -3,6 +3,8 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
+import { map, startWith } from 'rxjs/operators';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -19,11 +21,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { map, startWith } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -2077,12 +2077,21 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
         }
         else {
             /** @type {?} */
-            var filterValue_1 = value.toLowerCase();
+            var filterValue_1 = value.toLowerCase().split(' ');
             return this.options.filter((/**
              * @param {?} option
              * @return {?}
              */
-            function (option) { return option.displayText.toLowerCase().indexOf(filterValue_1) >= 0; }));
+            function (option) {
+                /** @type {?} */
+                var ws = true;
+                filterValue_1.forEach((/**
+                 * @param {?} text
+                 * @return {?}
+                 */
+                function (text) { return ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0; }));
+                return ws;
+            }));
         }
     };
     /**
@@ -2239,6 +2248,6 @@ var HelisaLibModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, HelisaLibModule, AutocompleteHelisaComponent as ɵa };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, HelisaLibModule };
 
 //# sourceMappingURL=helisa-lib.js.map

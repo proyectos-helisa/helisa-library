@@ -16,4 +16,5 @@ export * from './lib/components/tree-helisa/tree-helisa.component';
 export * from './lib/components/tree-helisa/tree-helisa-connect';
 export * from './lib/components/tree-helisa/tree-helisa.service';
 export * from './lib/components/tree-helisa/node';
+export * from './lib/components/autocomplete-helisa/autocomplete-helisa.component';
 export * from './lib/helisa-lib.module';
