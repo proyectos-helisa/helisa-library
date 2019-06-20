@@ -410,6 +410,26 @@ var TableHelisaService = /** @class */ (function () {
     function (page, table) {
         this.emitNextPage.next({ obj: page, table: table });
     };
+    /**
+     * @param {?} configTable
+     * @return {?}
+     */
+    TableHelisaService.prototype.setSelectedCells = /**
+     * @param {?} configTable
+     * @return {?}
+     */
+    function (configTable) {
+        this.configTable = configTable;
+    };
+    /**
+     * @return {?}
+     */
+    TableHelisaService.prototype.getSelectedCells = /**
+     * @return {?}
+     */
+    function () {
+        return this.configTable;
+    };
     TableHelisaService.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'
@@ -759,6 +779,7 @@ var TableHelisaComponent = /** @class */ (function () {
         this.tableService = tableService;
         this.displayedColumns = [];
         this.type = TableHelisaType.LOCAL;
+        this.isSetSelectedRow = false;
         this.sort = new EventEmitter();
         this.total = new EventEmitter();
         this.search = new EventEmitter();
@@ -770,6 +791,11 @@ var TableHelisaComponent = /** @class */ (function () {
         this.selectedCells = new Array();
         this.showFooter = false;
         this.showSearch = false;
+        /** @type {?} */
+        var configTable = tableService.getSelectedCells();
+        if (configTable && configTable.selectedRow) {
+            this.isSetSelectedRow = configTable.selectedRow;
+        }
     }
     /**
      * @return {?}
@@ -891,6 +917,19 @@ var TableHelisaComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(TableHelisaComponent.prototype, "selectedRow", {
+        set: /**
+         * @param {?} row
+         * @return {?}
+         */
+        function (row) {
+            if (row) {
+                this.selectRow({ data: row, rowType: RowType.ROW });
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * @private
      * @return {?}
@@ -959,7 +998,7 @@ var TableHelisaComponent = /** @class */ (function () {
             changeData.push({ data: row, rowType: RowType.ROW });
         }));
         this.data = new MatTableDataSource(changeData);
-        if (this.rawData && this.rawData.length) {
+        if (this.rawData && this.rawData.length && !this.isSetSelectedRow) {
             this.selectRow({ data: this.rawData[0], rowType: RowType.ROW });
         }
     };
@@ -1336,7 +1375,8 @@ var TableHelisaComponent = /** @class */ (function () {
         selectedCells: [{ type: Input }],
         isRemote: [{ type: Input }],
         columnConfiguration: [{ type: Input }],
-        dataSource: [{ type: Input }]
+        dataSource: [{ type: Input }],
+        selectedRow: [{ type: Input }]
     };
     return TableHelisaComponent;
 }());

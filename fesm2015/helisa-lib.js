@@ -4,7 +4,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChildren, ViewChild, ElementRef, NgModule, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -339,6 +339,19 @@ class TableHelisaService {
     addPage(page, table) {
         this.emitNextPage.next({ obj: page, table: table });
     }
+    /**
+     * @param {?} configTable
+     * @return {?}
+     */
+    setSelectedCells(configTable) {
+        this.configTable = configTable;
+    }
+    /**
+     * @return {?}
+     */
+    getSelectedCells() {
+        return this.configTable;
+    }
 }
 TableHelisaService.decorators = [
     { type: Injectable, args: [{
@@ -598,6 +611,7 @@ class TableHelisaComponent {
         this.tableService = tableService;
         this.displayedColumns = [];
         this.type = TableHelisaType.LOCAL;
+        this.isSetSelectedRow = false;
         this.sort = new EventEmitter();
         this.total = new EventEmitter();
         this.search = new EventEmitter();
@@ -609,6 +623,11 @@ class TableHelisaComponent {
         this.selectedCells = new Array();
         this.showFooter = false;
         this.showSearch = false;
+        /** @type {?} */
+        let configTable = tableService.getSelectedCells();
+        if (configTable && configTable.selectedRow) {
+            this.isSetSelectedRow = configTable.selectedRow;
+        }
     }
     /**
      * @return {?}
@@ -711,6 +730,15 @@ class TableHelisaComponent {
         }
     }
     /**
+     * @param {?} row
+     * @return {?}
+     */
+    set selectedRow(row) {
+        if (row) {
+            this.selectRow({ data: row, rowType: RowType.ROW });
+        }
+    }
+    /**
      * @private
      * @return {?}
      */
@@ -773,7 +801,7 @@ class TableHelisaComponent {
             changeData.push({ data: row, rowType: RowType.ROW });
         }));
         this.data = new MatTableDataSource(changeData);
-        if (this.rawData && this.rawData.length) {
+        if (this.rawData && this.rawData.length && !this.isSetSelectedRow) {
             this.selectRow({ data: this.rawData[0], rowType: RowType.ROW });
         }
     }
@@ -1065,7 +1093,8 @@ TableHelisaComponent.propDecorators = {
     selectedCells: [{ type: Input }],
     isRemote: [{ type: Input }],
     columnConfiguration: [{ type: Input }],
-    dataSource: [{ type: Input }]
+    dataSource: [{ type: Input }],
+    selectedRow: [{ type: Input }]
 };
 
 /**

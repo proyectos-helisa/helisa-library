@@ -22,6 +22,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     selectedObject: T;
     lastSearch: string;
     type: TableHelisaType;
+    isSetSelectedRow: boolean;
     matSort: MatSort;
     matTable: MatTable<any>;
     sort: EventEmitter<EventColumn>;
@@ -44,6 +45,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     isRemote: boolean;
     columnConfiguration: Array<ColumnConfig>;
     dataSource: Array<any>;
+    selectedRow: T;
     private prepareDataSource;
     private addTotalGroup;
     private compare;
