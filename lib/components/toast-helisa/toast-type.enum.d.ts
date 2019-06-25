@@ -1,5 +1,5 @@
 export declare enum ToastType {
-    DONE = "DONE",
-    ERROR = "ERROR",
-    INFO = "INFO"
+    DONE = "done",
+    ERROR = "error",
+    INFO = "info"
 }

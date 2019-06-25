@@ -45,7 +45,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     isRemote: boolean;
     columnConfiguration: Array<ColumnConfig>;
     dataSource: Array<any>;
-    selectedRow: T;
+    selectedIndexRow: number;
     private prepareDataSource;
     private addTotalGroup;
     private compare;

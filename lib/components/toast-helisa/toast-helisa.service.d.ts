@@ -4,5 +4,5 @@ export declare class ToastHelisaService {
     private snackBar;
     durationInSeconds: number;
     constructor(snackBar: MatSnackBar);
-    showToast(type: ToastType, message: String): void;
+    showToast(type: ToastType, message: String, subMessages?: String[]): void;
 }
