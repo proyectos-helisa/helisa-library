@@ -61,6 +61,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     onScroll(event: any): void;
     private goNextPage;
     private receivePage;
+    dblClickCell(): void;
     selectedCell(element: any, column: ColumnConfig): void;
     isSelectedCell(element: any, column: ColumnConfig): number;
     getClassToCell(row: any, column: ColumnConfig): string;
