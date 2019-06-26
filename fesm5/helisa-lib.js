@@ -2145,6 +2145,7 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
                 }] }
     ];
     AutocompleteHelisaComponent.propDecorators = {
+        myControl: [{ type: Input }],
         options: [{ type: Input }],
         onSelectedValue: [{ type: Output }]
     };
