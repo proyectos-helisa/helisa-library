@@ -23,6 +23,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     lastSearch: string;
     type: TableHelisaType;
     isSetSelectedRow: boolean;
+    indexRowSelect: number;
     matSort: MatSort;
     matTable: MatTable<any>;
     sort: EventEmitter<EventColumn>;

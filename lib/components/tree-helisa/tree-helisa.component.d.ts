@@ -44,6 +44,8 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     dobleClick: EventEmitter<string | number>;
     keypressDelete: EventEmitter<string | number>;
     keypressInsert: EventEmitter<string | number>;
+    checkedOptionNode: EventEmitter<string | number>;
+    uncheckedOptionNode: EventEmitter<string | number>;
     treeControl: NestedTreeControl<Node>;
     dataSource: MatTreeNestedDataSource<Node>;
     isSingleClick: Boolean;

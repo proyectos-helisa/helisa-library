@@ -8,4 +8,5 @@ export interface Node {
     colorStyle?: string | null;
     classNode?: string | null;
     options?: Node[];
+    isCheckedOption?: boolean;
 }

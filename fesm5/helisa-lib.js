@@ -908,6 +908,7 @@ var TableHelisaComponent = /** @class */ (function () {
         function (idRowSelected) {
             if (this.rawData && this.rawData.length) {
                 if ((idRowSelected < this.rawData.length && idRowSelected >= 0)) {
+                    this.indexRowSelect = idRowSelected;
                     this.selectRow({ data: this.rawData[idRowSelected], rowType: RowType.ROW });
                 }
             }
@@ -983,6 +984,9 @@ var TableHelisaComponent = /** @class */ (function () {
             changeData.push({ data: row, rowType: RowType.ROW });
         }));
         this.data = new MatTableDataSource(changeData);
+        if (this.rawData && this.rawData.length && this.indexRowSelect && !this.selectedObject) {
+            this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW });
+        }
     };
     /**
      * @private
@@ -1552,6 +1556,8 @@ var TreeHelisaComponent = /** @class */ (function () {
         this.dobleClick = new EventEmitter();
         this.keypressDelete = new EventEmitter();
         this.keypressInsert = new EventEmitter();
+        this.checkedOptionNode = new EventEmitter();
+        this.uncheckedOptionNode = new EventEmitter();
         this.treeControl = new NestedTreeControl((/**
          * @param {?} node
          * @return {?}
@@ -2052,7 +2058,11 @@ var TreeHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (event, node) {
-        node.isSelected = event.source.selected;
+        node.isCheckedOption = event.source.selected;
+        if (node.isCheckedOption)
+            this.checkedOptionNode.emit(node.id);
+        else
+            this.uncheckedOptionNode.emit(node.id);
     };
     /**
      * @param {?} node
@@ -2073,7 +2083,7 @@ var TreeHelisaComponent = /** @class */ (function () {
              * @return {?}
              */
             function (option) {
-                if (option.isSelected)
+                if (option.isCheckedOption)
                     array_1.push(option.id);
             }));
             /** @type {?} */
@@ -2110,7 +2120,9 @@ var TreeHelisaComponent = /** @class */ (function () {
         nodeSelected: [{ type: Output }],
         dobleClick: [{ type: Output }],
         keypressDelete: [{ type: Output }],
-        keypressInsert: [{ type: Output }]
+        keypressInsert: [{ type: Output }],
+        checkedOptionNode: [{ type: Output }],
+        uncheckedOptionNode: [{ type: Output }]
     };
     return TreeHelisaComponent;
 }());

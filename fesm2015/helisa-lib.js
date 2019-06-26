@@ -725,6 +725,7 @@ class TableHelisaComponent {
     set selectedIndexRow(idRowSelected) {
         if (this.rawData && this.rawData.length) {
             if ((idRowSelected < this.rawData.length && idRowSelected >= 0)) {
+                this.indexRowSelect = idRowSelected;
                 this.selectRow({ data: this.rawData[idRowSelected], rowType: RowType.ROW });
             }
         }
@@ -792,6 +793,9 @@ class TableHelisaComponent {
             changeData.push({ data: row, rowType: RowType.ROW });
         }));
         this.data = new MatTableDataSource(changeData);
+        if (this.rawData && this.rawData.length && this.indexRowSelect && !this.selectedObject) {
+            this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW });
+        }
     }
     /**
      * @private
@@ -1242,6 +1246,8 @@ class TreeHelisaComponent {
         this.dobleClick = new EventEmitter();
         this.keypressDelete = new EventEmitter();
         this.keypressInsert = new EventEmitter();
+        this.checkedOptionNode = new EventEmitter();
+        this.uncheckedOptionNode = new EventEmitter();
         this.treeControl = new NestedTreeControl((/**
          * @param {?} node
          * @return {?}
@@ -1614,7 +1620,11 @@ class TreeHelisaComponent {
      * @return {?}
      */
     onSelectOption(event, node) {
-        node.isSelected = event.source.selected;
+        node.isCheckedOption = event.source.selected;
+        if (node.isCheckedOption)
+            this.checkedOptionNode.emit(node.id);
+        else
+            this.uncheckedOptionNode.emit(node.id);
     }
     /**
      * @param {?} node
@@ -1631,7 +1641,7 @@ class TreeHelisaComponent {
              * @return {?}
              */
             option => {
-                if (option.isSelected)
+                if (option.isCheckedOption)
                     array.push(option.id);
             }));
             /** @type {?} */
@@ -1669,7 +1679,9 @@ TreeHelisaComponent.propDecorators = {
     nodeSelected: [{ type: Output }],
     dobleClick: [{ type: Output }],
     keypressDelete: [{ type: Output }],
-    keypressInsert: [{ type: Output }]
+    keypressInsert: [{ type: Output }],
+    checkedOptionNode: [{ type: Output }],
+    uncheckedOptionNode: [{ type: Output }]
 };
 
 /**
