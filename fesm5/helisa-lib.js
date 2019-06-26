@@ -906,11 +906,12 @@ var TableHelisaComponent = /** @class */ (function () {
          * @return {?}
          */
         function (idRowSelected) {
+            this.indexRowSelect = idRowSelected;
             if (this.rawData && this.rawData.length) {
-                if ((idRowSelected < this.rawData.length && idRowSelected >= 0)) {
-                    this.indexRowSelect = idRowSelected;
-                    this.selectRow({ data: this.rawData[idRowSelected], rowType: RowType.ROW });
+                if ((idRowSelected >= this.rawData.length || idRowSelected < 0)) {
+                    this.indexRowSelect = 0;
                 }
+                this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW });
             }
         },
         enumerable: true,
@@ -985,6 +986,8 @@ var TableHelisaComponent = /** @class */ (function () {
         }));
         this.data = new MatTableDataSource(changeData);
         if (this.rawData && this.rawData.length && this.indexRowSelect && !this.selectedObject) {
+            if (this.indexRowSelect >= this.rawData.length || this.indexRowSelect < 0)
+                this.indexRowSelect = 0;
             this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW });
         }
     };
