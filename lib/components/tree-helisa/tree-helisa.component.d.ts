@@ -15,6 +15,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     private treeHelisaConnect;
     formEdit: FormControl;
     tree: MatTree<any>;
+    private selectedOptions;
     /**
      * Datos del Arbol
      */
@@ -93,4 +94,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      */
     private upSelectNode;
     getClassNode(node: Node): string[];
+    onEditMode(node: any, editMode: any): void;
+    onSelectOption(event: any, node: any): void;
+    getSelectedOptions(node: Node): any;
 }

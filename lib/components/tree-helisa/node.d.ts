@@ -7,4 +7,5 @@ export interface Node {
     isEditable?: boolean;
     colorStyle?: string | null;
     classNode?: string | null;
+    options?: Node[];
 }
