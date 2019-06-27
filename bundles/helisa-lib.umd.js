@@ -121,6 +121,7 @@
          * @return {?}
          */
             function (type, message, subMessages) {
+                subMessages = subMessages ? subMessages : [];
                 this.snackBar.openFromComponent(ToastHelisaComponent, {
                     data: { message: message, type: type, subMessages: subMessages },
                     duration: this.durationInSeconds * 1000

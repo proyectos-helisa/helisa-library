@@ -126,6 +126,7 @@ class ToastHelisaService {
      * @return {?}
      */
     showToast(type, message, subMessages) {
+        subMessages = subMessages ? subMessages : [];
         this.snackBar.openFromComponent(ToastHelisaComponent, {
             data: { message: message, type: type, subMessages },
             duration: this.durationInSeconds * 1000
