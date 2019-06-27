@@ -4,7 +4,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1433,6 +1433,12 @@ var TreeHelisaService = /** @class */ (function () {
         // Collapse node observable
         this.emitCollapseAllNodes = new BehaviorSubject(null);
         this.nodeCollapse = this.emitCollapseAllNodes.asObservable();
+        this.emitRefreshTree = new Subject();
+        this.refreshTreeObservable = this.emitRefreshTree.asObservable();
+        this.emitExpandOneNode = new Subject();
+        this.expandOneNodeObservable = this.emitExpandOneNode.asObservable();
+        this.emitCollapseOneNode = new Subject();
+        this.collapseOneNodeObservable = this.emitCollapseOneNode.asObservable();
     }
     // Service message commands
     // Service message commands
@@ -1485,6 +1491,37 @@ var TreeHelisaService = /** @class */ (function () {
      */
     function (collapse) {
         this.emitCollapseAllNodes.next(collapse);
+    };
+    /**
+     * @return {?}
+     */
+    TreeHelisaService.prototype.refreshTree = /**
+     * @return {?}
+     */
+    function () {
+        this.emitRefreshTree.next();
+    };
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    TreeHelisaService.prototype.expandOneNode = /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    function (indexNode) {
+        this.emitExpandOneNode.next(indexNode);
+    };
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    TreeHelisaService.prototype.collapseOneNode = /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    function (indexNode) {
+        this.emitCollapseOneNode.next(indexNode);
     };
     TreeHelisaService.decorators = [
         { type: Injectable, args: [{
@@ -1626,6 +1663,14 @@ var TreeHelisaComponent = /** @class */ (function () {
             if (!!_this.data && !!_this.data.children)
                 _this.selectNode(_this.data, res);
         }));
+        this.treeHelisaService.refreshTreeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            _this.refreshTree();
+        }));
     };
     /**
      * @return {?}
@@ -1655,6 +1700,26 @@ var TreeHelisaComponent = /** @class */ (function () {
                 if (res) {
                     _this.tree.treeControl.collapseAll();
                 }
+            }
+        }));
+        this.treeHelisaService.expandOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            if (res != undefined) {
+                _this.treeControl.expand(_this.treeControl.dataNodes[res]);
+            }
+        }));
+        this.treeHelisaService.collapseOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            if (res != undefined) {
+                _this.treeControl.collapse(_this.treeControl.dataNodes[res]);
             }
         }));
     };
