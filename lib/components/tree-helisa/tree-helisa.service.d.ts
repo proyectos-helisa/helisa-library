@@ -12,5 +12,14 @@ export declare class TreeHelisaService {
     private emitCollapseAllNodes;
     nodeCollapse: import("rxjs").Observable<boolean>;
     collapseAllNodes(collapse: boolean): void;
+    private emitRefreshTree;
+    refreshTreeObservable: import("rxjs").Observable<void>;
+    refreshTree(): void;
+    private emitExpandOneNode;
+    expandOneNodeObservable: import("rxjs").Observable<number>;
+    expandOneNode(indexNode: number): void;
+    private emitCollapseOneNode;
+    collapseOneNodeObservable: import("rxjs").Observable<number>;
+    collapseOneNode(indexNode: number): void;
     constructor();
 }

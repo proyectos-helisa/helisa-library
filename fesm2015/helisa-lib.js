@@ -4,7 +4,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, ViewChildren, NgModule, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1148,6 +1148,12 @@ class TreeHelisaService {
         // Collapse node observable
         this.emitCollapseAllNodes = new BehaviorSubject(null);
         this.nodeCollapse = this.emitCollapseAllNodes.asObservable();
+        this.emitRefreshTree = new Subject();
+        this.refreshTreeObservable = this.emitRefreshTree.asObservable();
+        this.emitExpandOneNode = new Subject();
+        this.expandOneNodeObservable = this.emitExpandOneNode.asObservable();
+        this.emitCollapseOneNode = new Subject();
+        this.collapseOneNodeObservable = this.emitCollapseOneNode.asObservable();
     }
     // Service message commands
     /**
@@ -1178,6 +1184,26 @@ class TreeHelisaService {
      */
     collapseAllNodes(collapse) {
         this.emitCollapseAllNodes.next(collapse);
+    }
+    /**
+     * @return {?}
+     */
+    refreshTree() {
+        this.emitRefreshTree.next();
+    }
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    expandOneNode(indexNode) {
+        this.emitExpandOneNode.next(indexNode);
+    }
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    collapseOneNode(indexNode) {
+        this.emitCollapseOneNode.next(indexNode);
     }
 }
 TreeHelisaService.decorators = [
@@ -1312,6 +1338,14 @@ class TreeHelisaComponent {
             if (!!this.data && !!this.data.children)
                 this.selectNode(this.data, res);
         }));
+        this.treeHelisaService.refreshTreeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            this.refreshTree();
+        }));
     }
     /**
      * @return {?}
@@ -1337,6 +1371,26 @@ class TreeHelisaComponent {
                 if (res) {
                     this.tree.treeControl.collapseAll();
                 }
+            }
+        }));
+        this.treeHelisaService.expandOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            if (res != undefined) {
+                this.treeControl.expand(this.treeControl.dataNodes[res]);
+            }
+        }));
+        this.treeHelisaService.collapseOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            if (res != undefined) {
+                this.treeControl.collapse(this.treeControl.dataNodes[res]);
             }
         }));
     }
