@@ -1148,6 +1148,12 @@ class TreeHelisaService {
         // Collapse node observable
         this.emitCollapseAllNodes = new BehaviorSubject(null);
         this.nodeCollapse = this.emitCollapseAllNodes.asObservable();
+        this.emitRefreshTree = new Subject();
+        this.refreshTreeObservable = this.emitRefreshTree.asObservable();
+        this.emitExpandOneNode = new Subject();
+        this.expandOneNodeObservable = this.emitExpandOneNode.asObservable();
+        this.emitCollapseOneNode = new Subject();
+        this.collapseOneNodeObservable = this.emitCollapseOneNode.asObservable();
     }
     // Service message commands
     /**
@@ -1178,6 +1184,26 @@ class TreeHelisaService {
      */
     collapseAllNodes(collapse) {
         this.emitCollapseAllNodes.next(collapse);
+    }
+    /**
+     * @return {?}
+     */
+    refreshTree() {
+        this.emitRefreshTree.next();
+    }
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    expandOneNode(indexNode) {
+        this.emitExpandOneNode.next(indexNode);
+    }
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    collapseOneNode(indexNode) {
+        this.emitCollapseOneNode.next(indexNode);
     }
 }
 TreeHelisaService.decorators = [
@@ -1312,6 +1338,14 @@ class TreeHelisaComponent {
             if (!!this.data && !!this.data.children)
                 this.selectNode(this.data, res);
         }));
+        this.treeHelisaService.refreshTreeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            this.refreshTree();
+        }));
     }
     /**
      * @return {?}
@@ -1337,6 +1371,26 @@ class TreeHelisaComponent {
                 if (res) {
                     this.tree.treeControl.collapseAll();
                 }
+            }
+        }));
+        this.treeHelisaService.expandOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            if (res != undefined) {
+                this.treeControl.expand(this.treeControl.dataNodes[res]);
+            }
+        }));
+        this.treeHelisaService.collapseOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            if (res != undefined) {
+                this.treeControl.collapse(this.treeControl.dataNodes[res]);
             }
         }));
     }
@@ -1636,23 +1690,31 @@ class TreeHelisaComponent {
      */
     getSelectedOptions(node) {
         if (this.selectedOptions.has(node.id))
-            return this.selectedOptions.get(node.id);
-        else {
-            /** @type {?} */
-            const array = new Array();
-            node.options.forEach((/**
-             * @param {?} option
-             * @return {?}
-             */
-            option => {
-                if (option.isCheckedOption)
-                    array.push(option.id);
-            }));
-            /** @type {?} */
-            const obj = { formControl: new FormControl(array), editMode: false };
-            this.selectedOptions.set(node.id, obj);
-            return obj;
-        }
+            this.reloadSelectedOptions(node, this.selectedOptions.get(node.id).editMode);
+        else
+            this.reloadSelectedOptions(node, false);
+        return this.selectedOptions.get(node.id);
+    }
+    /**
+     * @private
+     * @param {?} node
+     * @param {?} editMode
+     * @return {?}
+     */
+    reloadSelectedOptions(node, editMode) {
+        /** @type {?} */
+        const array = new Array();
+        node.options.forEach((/**
+         * @param {?} option
+         * @return {?}
+         */
+        option => {
+            if (option.isCheckedOption)
+                array.push(option.id);
+        }));
+        /** @type {?} */
+        const obj = { formControl: new FormControl(array), editMode: editMode };
+        this.selectedOptions.set(node.id, obj);
     }
 }
 TreeHelisaComponent.decorators = [

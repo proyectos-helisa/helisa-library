@@ -99,4 +99,5 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     onEditMode(node: any, editMode: any): void;
     onSelectOption(event: any, node: any): void;
     getSelectedOptions(node: Node): any;
+    private reloadSelectedOptions;
 }

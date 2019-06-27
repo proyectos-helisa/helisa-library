@@ -1433,6 +1433,12 @@ var TreeHelisaService = /** @class */ (function () {
         // Collapse node observable
         this.emitCollapseAllNodes = new BehaviorSubject(null);
         this.nodeCollapse = this.emitCollapseAllNodes.asObservable();
+        this.emitRefreshTree = new Subject();
+        this.refreshTreeObservable = this.emitRefreshTree.asObservable();
+        this.emitExpandOneNode = new Subject();
+        this.expandOneNodeObservable = this.emitExpandOneNode.asObservable();
+        this.emitCollapseOneNode = new Subject();
+        this.collapseOneNodeObservable = this.emitCollapseOneNode.asObservable();
     }
     // Service message commands
     // Service message commands
@@ -1485,6 +1491,37 @@ var TreeHelisaService = /** @class */ (function () {
      */
     function (collapse) {
         this.emitCollapseAllNodes.next(collapse);
+    };
+    /**
+     * @return {?}
+     */
+    TreeHelisaService.prototype.refreshTree = /**
+     * @return {?}
+     */
+    function () {
+        this.emitRefreshTree.next();
+    };
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    TreeHelisaService.prototype.expandOneNode = /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    function (indexNode) {
+        this.emitExpandOneNode.next(indexNode);
+    };
+    /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    TreeHelisaService.prototype.collapseOneNode = /**
+     * @param {?} indexNode
+     * @return {?}
+     */
+    function (indexNode) {
+        this.emitCollapseOneNode.next(indexNode);
     };
     TreeHelisaService.decorators = [
         { type: Injectable, args: [{
@@ -1626,6 +1663,14 @@ var TreeHelisaComponent = /** @class */ (function () {
             if (!!_this.data && !!_this.data.children)
                 _this.selectNode(_this.data, res);
         }));
+        this.treeHelisaService.refreshTreeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            _this.refreshTree();
+        }));
     };
     /**
      * @return {?}
@@ -1655,6 +1700,26 @@ var TreeHelisaComponent = /** @class */ (function () {
                 if (res) {
                     _this.tree.treeControl.collapseAll();
                 }
+            }
+        }));
+        this.treeHelisaService.expandOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            if (res != undefined) {
+                _this.treeControl.expand(_this.treeControl.dataNodes[res]);
+            }
+        }));
+        this.treeHelisaService.collapseOneNodeObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            if (res != undefined) {
+                _this.treeControl.collapse(_this.treeControl.dataNodes[res]);
             }
         }));
     };
@@ -2078,23 +2143,37 @@ var TreeHelisaComponent = /** @class */ (function () {
      */
     function (node) {
         if (this.selectedOptions.has(node.id))
-            return this.selectedOptions.get(node.id);
-        else {
-            /** @type {?} */
-            var array_1 = new Array();
-            node.options.forEach((/**
-             * @param {?} option
-             * @return {?}
-             */
-            function (option) {
-                if (option.isCheckedOption)
-                    array_1.push(option.id);
-            }));
-            /** @type {?} */
-            var obj = { formControl: new FormControl(array_1), editMode: false };
-            this.selectedOptions.set(node.id, obj);
-            return obj;
-        }
+            this.reloadSelectedOptions(node, this.selectedOptions.get(node.id).editMode);
+        else
+            this.reloadSelectedOptions(node, false);
+        return this.selectedOptions.get(node.id);
+    };
+    /**
+     * @private
+     * @param {?} node
+     * @param {?} editMode
+     * @return {?}
+     */
+    TreeHelisaComponent.prototype.reloadSelectedOptions = /**
+     * @private
+     * @param {?} node
+     * @param {?} editMode
+     * @return {?}
+     */
+    function (node, editMode) {
+        /** @type {?} */
+        var array = new Array();
+        node.options.forEach((/**
+         * @param {?} option
+         * @return {?}
+         */
+        function (option) {
+            if (option.isCheckedOption)
+                array.push(option.id);
+        }));
+        /** @type {?} */
+        var obj = { formControl: new FormControl(array), editMode: editMode };
+        this.selectedOptions.set(node.id, obj);
     };
     TreeHelisaComponent.decorators = [
         { type: Component, args: [{
