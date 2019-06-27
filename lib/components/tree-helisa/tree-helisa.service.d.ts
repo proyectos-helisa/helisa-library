@@ -16,10 +16,10 @@ export declare class TreeHelisaService {
     refreshTreeObservable: import("rxjs").Observable<void>;
     refreshTree(): void;
     private emitExpandOneNode;
-    expandOneNodeObservable: import("rxjs").Observable<number>;
-    expandOneNode(indexNode: number): void;
+    expandOneNodeObservable: import("rxjs").Observable<Node>;
+    expandOneNode(node: Node): void;
     private emitCollapseOneNode;
-    collapseOneNodeObservable: import("rxjs").Observable<number>;
-    collapseOneNode(indexNode: number): void;
+    collapseOneNodeObservable: import("rxjs").Observable<Node>;
+    collapseOneNode(node: Node): void;
     constructor();
 }

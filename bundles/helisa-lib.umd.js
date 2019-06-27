@@ -1470,26 +1470,26 @@
                 this.emitRefreshTree.next();
             };
         /**
-         * @param {?} indexNode
+         * @param {?} node
          * @return {?}
          */
         TreeHelisaService.prototype.expandOneNode = /**
-         * @param {?} indexNode
+         * @param {?} node
          * @return {?}
          */
-            function (indexNode) {
-                this.emitExpandOneNode.next(indexNode);
+            function (node) {
+                this.emitExpandOneNode.next(node);
             };
         /**
-         * @param {?} indexNode
+         * @param {?} node
          * @return {?}
          */
         TreeHelisaService.prototype.collapseOneNode = /**
-         * @param {?} indexNode
+         * @param {?} node
          * @return {?}
          */
-            function (indexNode) {
-                this.emitCollapseOneNode.next(indexNode);
+            function (node) {
+                this.emitCollapseOneNode.next(node);
             };
         TreeHelisaService.decorators = [
             { type: i0.Injectable, args: [{
@@ -1668,7 +1668,7 @@
              * @return {?}
              */function (res) {
                     if (res != undefined) {
-                        _this.treeControl.expand(_this.treeControl.dataNodes[res]);
+                        _this.treeControl.expand(res);
                     }
                 }));
                 this.treeHelisaService.collapseOneNodeObservable
@@ -1677,7 +1677,7 @@
              * @return {?}
              */function (res) {
                     if (res != undefined) {
-                        _this.treeControl.collapse(_this.treeControl.dataNodes[res]);
+                        _this.treeControl.collapse(res);
                     }
                 }));
             };
