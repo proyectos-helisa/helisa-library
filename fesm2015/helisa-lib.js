@@ -4,7 +4,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1192,18 +1192,18 @@ class TreeHelisaService {
         this.emitRefreshTree.next();
     }
     /**
-     * @param {?} indexNode
+     * @param {?} node
      * @return {?}
      */
-    expandOneNode(indexNode) {
-        this.emitExpandOneNode.next(indexNode);
+    expandOneNode(node) {
+        this.emitExpandOneNode.next(node);
     }
     /**
-     * @param {?} indexNode
+     * @param {?} node
      * @return {?}
      */
-    collapseOneNode(indexNode) {
-        this.emitCollapseOneNode.next(indexNode);
+    collapseOneNode(node) {
+        this.emitCollapseOneNode.next(node);
     }
 }
 TreeHelisaService.decorators = [
@@ -1380,7 +1380,7 @@ class TreeHelisaComponent {
          */
         res => {
             if (res != undefined) {
-                this.treeControl.expand(this.treeControl.dataNodes[res]);
+                this.treeControl.expand(res);
             }
         }));
         this.treeHelisaService.collapseOneNodeObservable
@@ -1390,7 +1390,7 @@ class TreeHelisaComponent {
          */
         res => {
             if (res != undefined) {
-                this.treeControl.collapse(this.treeControl.dataNodes[res]);
+                this.treeControl.collapse(res);
             }
         }));
     }
