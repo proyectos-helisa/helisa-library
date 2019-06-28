@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('@angular/cdk/tree'), require('rxjs'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree')) :
-    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', '@angular/cdk/tree', 'rxjs', '@angular/router', 'lodash', 'rxjs/operators', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree'], factory) :
-    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.ng.cdk.tree,global.rxjs,global.ng.router,global._,global.rxjs.operators,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree));
-}(this, (function (exports,i1,tree,rxjs,router,_,operators,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree')) :
+    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree'], factory) :
+    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree));
+}(this, (function (exports,i1,tree,router,_,operators,rxjs,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -2173,11 +2173,45 @@
     /**
      * @template T
      */
+    var AutocompleteHelisaService = /** @class */ (function () {
+        function AutocompleteHelisaService() {
+            this.emitChangeSource = new rxjs.BehaviorSubject([]);
+            this.dataSource$ = this.emitChangeSource.asObservable();
+        }
+        /**
+         * @param {?} options
+         * @return {?}
+         */
+        AutocompleteHelisaService.prototype.setDataSource = /**
+         * @param {?} options
+         * @return {?}
+         */
+            function (options) {
+                this.emitChangeSource.next(options);
+            };
+        AutocompleteHelisaService.decorators = [
+            { type: i0.Injectable }
+        ];
+        /** @nocollapse */
+        AutocompleteHelisaService.ctorParameters = function () { return []; };
+        return AutocompleteHelisaService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @template T
+     */
     var AutocompleteHelisaComponent = /** @class */ (function () {
-        function AutocompleteHelisaComponent() {
+        function AutocompleteHelisaComponent(autocompleteHelisaService) {
+            this.autocompleteHelisaService = autocompleteHelisaService;
             this.myControl = new forms.FormControl();
             this.options = new Array();
             this.onSelectedValue = new i0.EventEmitter();
+            this.isRemote = false;
+            this.isLoading = false;
         }
         /**
          * @return {?}
@@ -2187,10 +2221,25 @@
          */
             function () {
                 var _this = this;
+                if (this.isRemote) {
+                    this.autocompleteHelisaService.dataSource$.subscribe(( /**
+                     * @param {?} data
+                     * @return {?}
+                     */function (data) { return _this.options = data; }));
+                }
                 this.filteredOptions = this.myControl.valueChanges.pipe(operators.startWith(''), operators.map(( /**
                  * @param {?} value
                  * @return {?}
                  */function (value) { return _this._filter(value); })));
+            };
+        /**
+         * @return {?}
+         */
+        AutocompleteHelisaComponent.prototype.getService = /**
+         * @return {?}
+         */
+            function () {
+                return this.autocompleteHelisaService;
             };
         /**
          * @private
@@ -2207,20 +2256,25 @@
                     this.myControl.setValue(value.displayText);
                 }
                 else {
-                    /** @type {?} */
-                    var filterValue_1 = value.toLowerCase().split(' ');
-                    return this.options.filter(( /**
-                     * @param {?} option
-                     * @return {?}
-                     */function (option) {
+                    if (!this.isRemote) {
                         /** @type {?} */
-                        var ws = true;
-                        filterValue_1.forEach(( /**
-                         * @param {?} text
+                        var filterValue_1 = value.toLowerCase().split(' ');
+                        return this.options.filter(( /**
+                         * @param {?} option
                          * @return {?}
-                         */function (text) { return ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0; }));
-                        return ws;
-                    })).splice(0, 5);
+                         */function (option) {
+                            /** @type {?} */
+                            var ws = true;
+                            filterValue_1.forEach(( /**
+                             * @param {?} text
+                             * @return {?}
+                             */function (text) { return ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0; }));
+                            return ws;
+                        })).splice(0, 5);
+                    }
+                    else {
+                        return this.options;
+                    }
                 }
             };
         /**
@@ -2239,13 +2293,21 @@
             { type: i0.Component, args: [{
                         selector: 'hel-autocomplete',
                         template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                        providers: [AutocompleteHelisaService],
                         styles: [""]
                     }] }
         ];
+        /** @nocollapse */
+        AutocompleteHelisaComponent.ctorParameters = function () {
+            return [
+                { type: AutocompleteHelisaService }
+            ];
+        };
         AutocompleteHelisaComponent.propDecorators = {
             myControl: [{ type: i0.Input }],
             options: [{ type: i0.Input }],
-            onSelectedValue: [{ type: i0.Output }]
+            onSelectedValue: [{ type: i0.Output }],
+            isRemote: [{ type: i0.Input }]
         };
         return AutocompleteHelisaComponent;
     }());
@@ -2399,6 +2461,7 @@
     exports.TreeHelisaConnect = TreeHelisaConnect;
     exports.TreeHelisaService = TreeHelisaService;
     exports.AutocompleteHelisaComponent = AutocompleteHelisaComponent;
+    exports.AutocompleteHelisaService = AutocompleteHelisaService;
     exports.HelisaLibModule = HelisaLibModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });

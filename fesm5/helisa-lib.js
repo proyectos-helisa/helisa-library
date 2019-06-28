@@ -1,10 +1,10 @@
 import { MatSnackBar as MatSnackBar$1 } from '@angular/material/snack-bar';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -2222,11 +2222,45 @@ var TreeHelisaComponent = /** @class */ (function () {
 /**
  * @template T
  */
+var AutocompleteHelisaService = /** @class */ (function () {
+    function AutocompleteHelisaService() {
+        this.emitChangeSource = new BehaviorSubject([]);
+        this.dataSource$ = this.emitChangeSource.asObservable();
+    }
+    /**
+     * @param {?} options
+     * @return {?}
+     */
+    AutocompleteHelisaService.prototype.setDataSource = /**
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
+        this.emitChangeSource.next(options);
+    };
+    AutocompleteHelisaService.decorators = [
+        { type: Injectable }
+    ];
+    /** @nocollapse */
+    AutocompleteHelisaService.ctorParameters = function () { return []; };
+    return AutocompleteHelisaService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ */
 var AutocompleteHelisaComponent = /** @class */ (function () {
-    function AutocompleteHelisaComponent() {
+    function AutocompleteHelisaComponent(autocompleteHelisaService) {
+        this.autocompleteHelisaService = autocompleteHelisaService;
         this.myControl = new FormControl();
         this.options = new Array();
         this.onSelectedValue = new EventEmitter();
+        this.isRemote = false;
+        this.isLoading = false;
     }
     /**
      * @return {?}
@@ -2236,11 +2270,27 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
      */
     function () {
         var _this = this;
+        if (this.isRemote) {
+            this.autocompleteHelisaService.dataSource$.subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            function (data) { return _this.options = data; }));
+        }
         this.filteredOptions = this.myControl.valueChanges.pipe(startWith(''), map((/**
          * @param {?} value
          * @return {?}
          */
         function (value) { return _this._filter(value); })));
+    };
+    /**
+     * @return {?}
+     */
+    AutocompleteHelisaComponent.prototype.getService = /**
+     * @return {?}
+     */
+    function () {
+        return this.autocompleteHelisaService;
     };
     /**
      * @private
@@ -2257,22 +2307,27 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
             this.myControl.setValue(value.displayText);
         }
         else {
-            /** @type {?} */
-            var filterValue_1 = value.toLowerCase().split(' ');
-            return this.options.filter((/**
-             * @param {?} option
-             * @return {?}
-             */
-            function (option) {
+            if (!this.isRemote) {
                 /** @type {?} */
-                var ws = true;
-                filterValue_1.forEach((/**
-                 * @param {?} text
+                var filterValue_1 = value.toLowerCase().split(' ');
+                return this.options.filter((/**
+                 * @param {?} option
                  * @return {?}
                  */
-                function (text) { return ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0; }));
-                return ws;
-            })).splice(0, 5);
+                function (option) {
+                    /** @type {?} */
+                    var ws = true;
+                    filterValue_1.forEach((/**
+                     * @param {?} text
+                     * @return {?}
+                     */
+                    function (text) { return ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0; }));
+                    return ws;
+                })).splice(0, 5);
+            }
+            else {
+                return this.options;
+            }
         }
     };
     /**
@@ -2291,13 +2346,19 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'hel-autocomplete',
                     template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                    providers: [AutocompleteHelisaService],
                     styles: [""]
                 }] }
     ];
+    /** @nocollapse */
+    AutocompleteHelisaComponent.ctorParameters = function () { return [
+        { type: AutocompleteHelisaService }
+    ]; };
     AutocompleteHelisaComponent.propDecorators = {
         myControl: [{ type: Input }],
         options: [{ type: Input }],
-        onSelectedValue: [{ type: Output }]
+        onSelectedValue: [{ type: Output }],
+        isRemote: [{ type: Input }]
     };
     return AutocompleteHelisaComponent;
 }());
@@ -2430,6 +2491,6 @@ var HelisaLibModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, HelisaLibModule };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, HelisaLibModule };
 
 //# sourceMappingURL=helisa-lib.js.map

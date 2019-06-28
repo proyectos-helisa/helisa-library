@@ -1,10 +1,10 @@
 import { MatSnackBar as MatSnackBar$1 } from '@angular/material/snack-bar';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1762,21 +1762,66 @@ TreeHelisaComponent.propDecorators = {
 /**
  * @template T
  */
-class AutocompleteHelisaComponent {
+class AutocompleteHelisaService {
     constructor() {
+        this.emitChangeSource = new BehaviorSubject([]);
+        this.dataSource$ = this.emitChangeSource.asObservable();
+    }
+    /**
+     * @param {?} options
+     * @return {?}
+     */
+    setDataSource(options) {
+        this.emitChangeSource.next(options);
+    }
+}
+AutocompleteHelisaService.decorators = [
+    { type: Injectable }
+];
+/** @nocollapse */
+AutocompleteHelisaService.ctorParameters = () => [];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ */
+class AutocompleteHelisaComponent {
+    /**
+     * @param {?} autocompleteHelisaService
+     */
+    constructor(autocompleteHelisaService) {
+        this.autocompleteHelisaService = autocompleteHelisaService;
         this.myControl = new FormControl();
         this.options = new Array();
         this.onSelectedValue = new EventEmitter();
+        this.isRemote = false;
+        this.isLoading = false;
     }
     /**
      * @return {?}
      */
     ngOnInit() {
+        if (this.isRemote) {
+            this.autocompleteHelisaService.dataSource$.subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            data => this.options = data));
+        }
         this.filteredOptions = this.myControl.valueChanges.pipe(startWith(''), map((/**
          * @param {?} value
          * @return {?}
          */
         value => this._filter(value))));
+    }
+    /**
+     * @return {?}
+     */
+    getService() {
+        return this.autocompleteHelisaService;
     }
     /**
      * @private
@@ -1788,22 +1833,27 @@ class AutocompleteHelisaComponent {
             this.myControl.setValue(value.displayText);
         }
         else {
-            /** @type {?} */
-            const filterValue = value.toLowerCase().split(' ');
-            return this.options.filter((/**
-             * @param {?} option
-             * @return {?}
-             */
-            option => {
+            if (!this.isRemote) {
                 /** @type {?} */
-                let ws = true;
-                filterValue.forEach((/**
-                 * @param {?} text
+                const filterValue = value.toLowerCase().split(' ');
+                return this.options.filter((/**
+                 * @param {?} option
                  * @return {?}
                  */
-                text => ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0));
-                return ws;
-            })).splice(0, 5);
+                option => {
+                    /** @type {?} */
+                    let ws = true;
+                    filterValue.forEach((/**
+                     * @param {?} text
+                     * @return {?}
+                     */
+                    text => ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0));
+                    return ws;
+                })).splice(0, 5);
+            }
+            else {
+                return this.options;
+            }
         }
     }
     /**
@@ -1819,13 +1869,19 @@ AutocompleteHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-autocomplete',
                 template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                providers: [AutocompleteHelisaService],
                 styles: [""]
             }] }
+];
+/** @nocollapse */
+AutocompleteHelisaComponent.ctorParameters = () => [
+    { type: AutocompleteHelisaService }
 ];
 AutocompleteHelisaComponent.propDecorators = {
     myControl: [{ type: Input }],
     options: [{ type: Input }],
-    onSelectedValue: [{ type: Output }]
+    onSelectedValue: [{ type: Output }],
+    isRemote: [{ type: Input }]
 };
 
 /**
@@ -1953,6 +2009,6 @@ HelisaLibModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, HelisaLibModule };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, HelisaLibModule };
 
 //# sourceMappingURL=helisa-lib.js.map
