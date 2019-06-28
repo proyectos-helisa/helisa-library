@@ -2264,7 +2264,10 @@
                     this.autocompleteHelisaService.dataSource$.subscribe(( /**
                      * @param {?} data
                      * @return {?}
-                     */function (data) { return _this.options = data; }));
+                     */function (data) {
+                        _this.options = data;
+                        _this.filteredOptions = rxjs.of(_this.options);
+                    }));
                 }
                 this.filteredOptions = this.myControl.valueChanges.pipe(operators.startWith(''), operators.map(( /**
                  * @param {?} value
