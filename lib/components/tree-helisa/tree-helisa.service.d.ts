@@ -15,6 +15,9 @@ export declare class TreeHelisaService {
     private emitRefreshTree;
     refreshTreeObservable: import("rxjs").Observable<void>;
     refreshTree(): void;
+    private emitRefreshTreeWithPagination;
+    refreshTreeWithPaginationObservable: import("rxjs").Observable<void>;
+    refreshTreeWithPagination(): void;
     private emitExpandOneNode;
     expandOneNodeObservable: import("rxjs").Observable<Node>;
     expandOneNode(node: Node): void;

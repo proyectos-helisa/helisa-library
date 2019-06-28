@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, ViewChildren, NgModule, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1150,6 +1150,8 @@ class TreeHelisaService {
         this.nodeCollapse = this.emitCollapseAllNodes.asObservable();
         this.emitRefreshTree = new Subject();
         this.refreshTreeObservable = this.emitRefreshTree.asObservable();
+        this.emitRefreshTreeWithPagination = new Subject();
+        this.refreshTreeWithPaginationObservable = this.emitRefreshTreeWithPagination.asObservable();
         this.emitExpandOneNode = new Subject();
         this.expandOneNodeObservable = this.emitExpandOneNode.asObservable();
         this.emitCollapseOneNode = new Subject();
@@ -1190,6 +1192,12 @@ class TreeHelisaService {
      */
     refreshTree() {
         this.emitRefreshTree.next();
+    }
+    /**
+     * @return {?}
+     */
+    refreshTreeWithPagination() {
+        this.emitRefreshTreeWithPagination.next();
     }
     /**
      * @param {?} node
@@ -1345,6 +1353,14 @@ class TreeHelisaComponent {
          */
         res => {
             this.refreshTree();
+        }));
+        this.treeHelisaService.refreshTreeWithPaginationObservable
+            .subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            this.refreshTreeWithPagination();
         }));
     }
     /**
@@ -1543,11 +1559,24 @@ class TreeHelisaComponent {
         return concat;
     }
     /**
-     * Actualiza el arbol
+     * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
      * @private
      * @return {?}
      */
     refreshTree() {
+        this.data = null;
+        /** @type {?} */
+        let _data = this.dataSource.data;
+        this.dataSource.data = null;
+        this.dataSource.data = _data;
+        this.treeControl.dataNodes = _data;
+    }
+    /**
+     * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
+     * @private
+     * @return {?}
+     */
+    refreshTreeWithPagination() {
         /** @type {?} */
         let _data = this.dataSource.data;
         this.dataSource.data = null;

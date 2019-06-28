@@ -73,9 +73,13 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      */
     static getDescription(node: Node): string;
     /**
-     * Actualiza el arbol
+     * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
      */
     private refreshTree;
+    /**
+     * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
+     */
+    private refreshTreeWithPagination;
     private goNextPage;
     private receivePage;
     /**

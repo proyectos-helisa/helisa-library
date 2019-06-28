@@ -1403,6 +1403,8 @@
             this.nodeCollapse = this.emitCollapseAllNodes.asObservable();
             this.emitRefreshTree = new rxjs.Subject();
             this.refreshTreeObservable = this.emitRefreshTree.asObservable();
+            this.emitRefreshTreeWithPagination = new rxjs.Subject();
+            this.refreshTreeWithPaginationObservable = this.emitRefreshTreeWithPagination.asObservable();
             this.emitExpandOneNode = new rxjs.Subject();
             this.expandOneNodeObservable = this.emitExpandOneNode.asObservable();
             this.emitCollapseOneNode = new rxjs.Subject();
@@ -1468,6 +1470,15 @@
          */
             function () {
                 this.emitRefreshTree.next();
+            };
+        /**
+         * @return {?}
+         */
+        TreeHelisaService.prototype.refreshTreeWithPagination = /**
+         * @return {?}
+         */
+            function () {
+                this.emitRefreshTreeWithPagination.next();
             };
         /**
          * @param {?} node
@@ -1632,6 +1643,13 @@
              * @return {?}
              */function (res) {
                     _this.refreshTree();
+                }));
+                this.treeHelisaService.refreshTreeWithPaginationObservable
+                    .subscribe(( /**
+             * @param {?} res
+             * @return {?}
+             */function (res) {
+                    _this.refreshTreeWithPagination();
                 }));
             };
         /**
@@ -1882,15 +1900,36 @@
                 return concat;
             };
         /**
-         * Actualiza el arbol
+         * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
          */
         /**
-         * Actualiza el arbol
+         * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
          * @private
          * @return {?}
          */
         TreeHelisaComponent.prototype.refreshTree = /**
-         * Actualiza el arbol
+         * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
+         * @private
+         * @return {?}
+         */
+            function () {
+                this.data = null;
+                /** @type {?} */
+                var _data = this.dataSource.data;
+                this.dataSource.data = null;
+                this.dataSource.data = _data;
+                this.treeControl.dataNodes = _data;
+            };
+        /**
+         * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
+         */
+        /**
+         * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
+         * @private
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.refreshTreeWithPagination = /**
+         * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
          * @private
          * @return {?}
          */
