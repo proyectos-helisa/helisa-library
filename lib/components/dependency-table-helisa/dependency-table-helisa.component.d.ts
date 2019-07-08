@@ -16,6 +16,7 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     nextPage: EventEmitter<EventDependency>;
     total: EventEmitter<EventDependency>;
     sort: EventEmitter<EventDependency>;
+    isDragged: boolean;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;
     /**

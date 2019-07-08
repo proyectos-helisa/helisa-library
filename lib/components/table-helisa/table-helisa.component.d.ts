@@ -1,7 +1,8 @@
 import { EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { MatSort, MatTableDataSource, MatTable } from '@angular/material';
-import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, Cell, ConfigCellStyles, ConfigRowStyles } from './table-helisa.interface';
+import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, Cell, ConfigCellStyles, ConfigRowStyles, DropElement } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 interface RowData {
     data: any;
     rowType: RowType;
@@ -24,6 +25,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     type: TableHelisaType;
     isSetSelectedRow: boolean;
     indexRowSelect: number;
+    private scrollCount;
     matSort: MatSort;
     matTable: MatTable<any>;
     sort: EventEmitter<EventColumn>;
@@ -38,6 +40,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     configCellStyles: Array<ConfigCellStyles>;
     configRowStylesFromColumn: Array<ConfigRowStyles>;
     selectedCells: Array<Cell>;
+    drop: EventEmitter<DropElement<T>>;
+    isDragged: boolean;
     showFooter: boolean;
     showSearch: boolean;
     constructor(tableService: TableHelisaService<T>);
@@ -67,5 +71,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     isSelectedCell(element: any, column: ColumnConfig): number;
     getClassToCell(row: any, column: ColumnConfig): string;
     getClassToRow(row: any): string;
+    onDrop(event: CdkDragDrop<any>): void;
+    tableKeydown(event: KeyboardEvent): void;
 }
 export {};

@@ -40,6 +40,10 @@ export interface RequestTableHelisa {
     page: number;
     body: any;
 }
+export interface DropElement<T> {
+    value: T;
+    order: number;
+}
 export declare enum TableHelisaType {
     REMOTE = 0,
     LOCAL = 1

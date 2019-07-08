@@ -62,6 +62,8 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     onCancel(node: Node, value: string): void;
     onDblClick(node: Node): void;
     onKeyDown(event: KeyboardEvent): void;
+    private moveUpIntoTree;
+    private moveDownIntoTree;
     /**
      * Verifica si el nodo tiene hijos
      */
@@ -94,6 +96,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      * @param id
      */
     private selectNode;
+    private expandAllParents;
     /**
      * Elimina el isSelected de todos los nodos
      * @param node

@@ -1,8 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree')) :
-    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree'], factory) :
-    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree));
-}(this, (function (exports,i1,tree,router,_,operators,rxjs,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('lodash.clonedeep'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree')) :
+    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'lodash.clonedeep', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree'], factory) :
+    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.clonedeep,global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree));
+}(this, (function (exports,i1,clonedeep,tree,router,_,operators,rxjs,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1) { 'use strict';
+
+    clonedeep = clonedeep && clonedeep.hasOwnProperty('default') ? clonedeep['default'] : clonedeep;
 
     /**
      * @fileoverview added by tsickle
@@ -424,6 +426,7 @@
             this.nextPage = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.sort = new i0.EventEmitter();
+            this.isDragged = false;
         }
         /**
          * @return {?}
@@ -565,7 +568,7 @@
         DependencyTableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-dependency-table',
-                        template: "<div>\r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (select)=\"onSelectedDependency(i, $event)\"  (nextPage)=\"onNextPage(i, $event)\" (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\">\r\n  </hel-table>\r\n</div>\r\n",
+                        template: "<div>\r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (select)=\"onSelectedDependency(i, $event)\"  (nextPage)=\"onNextPage(i, $event)\" (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"true\">\r\n  </hel-table>\r\n</div>\r\n",
                         providers: [DependencyTableHelisaService],
                         styles: [""]
                     }] }
@@ -582,7 +585,8 @@
             selected: [{ type: i0.Output }],
             nextPage: [{ type: i0.Output }],
             total: [{ type: i0.Output }],
-            sort: [{ type: i0.Output }]
+            sort: [{ type: i0.Output }],
+            isDragged: [{ type: i0.Input }]
         };
         return DependencyTableHelisaComponent;
     }());
@@ -755,6 +759,7 @@
             this.displayedColumns = [];
             this.type = TableHelisaType.LOCAL;
             this.isSetSelectedRow = false;
+            this.scrollCount = 0;
             this.sort = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.search = new i0.EventEmitter();
@@ -764,6 +769,8 @@
             this.showTitle = true;
             this.multipleCell = false;
             this.selectedCells = new Array();
+            this.drop = new i0.EventEmitter();
+            this.isDragged = false;
             this.showFooter = false;
             this.showSearch = false;
         }
@@ -1312,10 +1319,79 @@
                 }
                 return classToRow;
             };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        TableHelisaComponent.prototype.onDrop = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                /** @type {?} */
+                var array = this.data.data;
+                dragDrop.moveItemInArray(array, event.previousIndex, event.currentIndex);
+                this.drop.emit({ value: array[event.previousIndex].data, order: event.currentIndex });
+                this.data.data = clonedeep(array);
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        TableHelisaComponent.prototype.tableKeydown = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                var _this = this;
+                if (!this.multipleCell) {
+                    /** @type {?} */
+                    var currentIndex_1 = this.data.data.findIndex(( /**
+                     * @param {?} row
+                     * @return {?}
+                     */function (row) { return row.data === _this.selectedObject; }));
+                    /** @type {?} */
+                    var newSelection_1 = -10;
+                    if (event.key === 'ArrowDown') {
+                        this.scrollCount++;
+                        this.data.data.forEach(( /**
+                         * @param {?} row
+                         * @param {?} index
+                         * @return {?}
+                         */function (row, index) {
+                            if (newSelection_1 == -10 && index > currentIndex_1 && row.rowType == RowType.ROW)
+                                newSelection_1 = index;
+                        }));
+                    }
+                    if (event.key === 'ArrowUp') {
+                        this.scrollCount--;
+                        currentIndex_1 = this.data.data.length - currentIndex_1 - 1;
+                        this.data.data.reverse().forEach(( /**
+                         * @param {?} row
+                         * @param {?} index
+                         * @return {?}
+                         */function (row, index) {
+                            if (newSelection_1 == -10 && index > currentIndex_1 && row.rowType == RowType.ROW)
+                                newSelection_1 = index;
+                        }));
+                        this.data.data.reverse();
+                        if (newSelection_1 != -10) {
+                            newSelection_1 = this.data.data.length - newSelection_1 - 1;
+                        }
+                    }
+                    if (newSelection_1 != -10) {
+                        this.selectedObject = this.data.data[newSelection_1].data;
+                    }
+                    if (Math.abs(this.scrollCount) >= 2)
+                        this.scrollCount = 0;
+                    else
+                        event.preventDefault();
+                }
+            };
         TableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-table',
-                        template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable>\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef > {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\" \r\n          [class.selected-row]= \"isSelectedCell(element, column) >= 0\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n            {{ getValue(element.data, column) }} \r\n        </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\" \r\n        [class.selected-row]=\"row.data === selectedObject && !multipleCell\" [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n\r\n</div>\r\n",
+                        template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table cdkDropList (cdkDropListDropped)=\"onDrop($event)\" mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" >\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef> {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n          [class.selected-row]=\"isSelectedCell(element, column) >= 0\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n          {{ getValue(element.data, column) }}\r\n        </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"isDragged\">\r\n        <tr cdkDrag [cdkDragData]=\"row\" mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row)\" [class.selected-row]=\"row.data === selectedObject && !multipleCell\"\r\n          [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <div *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !multipleCell\" [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>",
                         styles: [".div-table-helisa{height:500px;width:800px}.div-table-helisa .container-table{overflow:scroll;width:100%;height:100%}.div-table-helisa .container-table .table-helisa{width:100%}.div-table-helisa .container-table .table-helisa /deep/ tbody tr,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr,.div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td,.div-table-helisa .container-table .table-helisa /deep/ tbody tr th,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,.div-table-helisa .container-table .table-helisa /deep/ thead tr td,.div-table-helisa .container-table .table-helisa /deep/ thead tr th{padding:2px 10px 0}.div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}.div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}.div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                     }] }
         ];
@@ -1340,6 +1416,8 @@
             configCellStyles: [{ type: i0.Input }],
             configRowStylesFromColumn: [{ type: i0.Input }],
             selectedCells: [{ type: i0.Input }],
+            drop: [{ type: i0.Output }],
+            isDragged: [{ type: i0.Input }],
             isRemote: [{ type: i0.Input }],
             columnConfiguration: [{ type: i0.Input }],
             dataSource: [{ type: i0.Input }],
@@ -1584,8 +1662,6 @@
             this.dataSource = new material.MatTreeNestedDataSource();
             this.isSingleClick = true;
             this.currentNode = null;
-            //#endregion ======= Events ========
-            //#region  ======== Metodos =============
             /**
              * Verifica si el nodo tiene hijos
              */
@@ -1751,8 +1827,6 @@
          * @return {?}
          */
             function (node) {
-                console.log(node.id);
-                console.log(node);
                 node.isEditable = true;
             };
         /**
@@ -1862,6 +1936,121 @@
                     case 'Insert':
                         this.keypressInsert.emit((!!this.currentNode && this.currentNode.id) ? this.currentNode.id : null);
                         break;
+                    case 'ArrowDown':
+                        this.moveDownIntoTree();
+                        break;
+                    case 'ArrowUp':
+                        this.moveUpIntoTree();
+                        break;
+                }
+            };
+        //#endregion ======= Events ========
+        //#region  ======== Metodos =============
+        //#endregion ======= Events ========
+        //#region  ======== Metodos =============
+        /**
+         * @private
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.moveUpIntoTree =
+            //#endregion ======= Events ========
+            //#region  ======== Metodos =============
+            /**
+             * @private
+             * @return {?}
+             */
+            function () {
+                if (!!this.data) {
+                    // si aun no hay ningun node seleccionado selecciona el primero
+                    if (this.currentNode == null) {
+                        this.selectNode(this.data, this.data.children[0].id);
+                        this.currentNode = this.data.children[0];
+                        if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                            this.treeHelisaService.expandOneNode(this.currentNode);
+                        }
+                    }
+                    else {
+                        if (!!this.currentNode.parent && this.currentNode.id != null) {
+                            // obtiene el indice del nodo seleccionado actualmente
+                            /** @type {?} */
+                            var index = this.currentNode.parent.children.indexOf(this.currentNode);
+                            if (this.currentNode.parent.id == null && index == 0) {
+                                return 0;
+                            }
+                            else { // si tiene nodos al mismo nivel salta al nodo anterior
+                                if (index != undefined && index == 0) {
+                                    this.currentNode = this.currentNode.parent;
+                                    this.selectNode(this.data, this.currentNode.id);
+                                    if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                                        this.treeHelisaService.expandOneNode(this.currentNode);
+                                    }
+                                }
+                                else { // si no tiene nodos al mismo nivel salta al nodo padre
+                                    this.currentNode = this.currentNode.parent.children[index - 1];
+                                    this.selectNode(this.data, this.currentNode.id);
+                                    if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                                        this.treeHelisaService.expandOneNode(this.currentNode);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        /**
+         * @private
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.moveDownIntoTree = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                if (!!this.data) {
+                    if (this.currentNode == null) {
+                        this.selectNode(this.data, this.data.children[0].id);
+                        this.currentNode = this.data.children[0];
+                        if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                            this.treeHelisaService.expandOneNode(this.currentNode);
+                        }
+                    }
+                    else {
+                        if (!!this.currentNode) {
+                            // obtiene el indice del nodo seleccionado actualmente
+                            /** @type {?} */
+                            var index = (!!this.currentNode && !!this.currentNode.parent) ? this.currentNode.parent.children.indexOf(this.currentNode) : null;
+                            // si tiene childrens pasa al primer children
+                            if (!!this.currentNode.children &&
+                                this.currentNode.children.length > 0) {
+                                this.currentNode = this.currentNode.children[0];
+                                this.selectNode(this.data, this.currentNode.id);
+                                if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                                    this.treeHelisaService.expandOneNode(this.currentNode);
+                                }
+                            }
+                            // Si es el ultimo nodo del array pasa al nodo hermano del padre (tio) hacia abajo
+                            else if (index != undefined &&
+                                index == this.currentNode.parent.children.length - 1 &&
+                                this.currentNode.parent.parent != null &&
+                                this.currentNode.parent.parent.children != null &&
+                                this.currentNode.parent.parent.children.length > 0) {
+                                /** @type {?} */
+                                var indexOfParent = this.currentNode.parent.parent.children.indexOf(this.currentNode.parent);
+                                this.currentNode = (this.currentNode.parent.parent.children[indexOfParent + 1] == undefined) ? this.currentNode : this.currentNode.parent.parent.children[indexOfParent + 1];
+                                this.selectNode(this.data, this.currentNode.id);
+                                if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                                    this.treeHelisaService.expandOneNode(this.currentNode);
+                                }
+                            }
+                            else { // si no tiene nodos al mismo nivel salta al siguiente hacia abajo
+                                this.currentNode = this.currentNode.parent.children[index + 1];
+                                this.selectNode(this.data, this.currentNode.id);
+                                if (!!this.currentNode.children && this.currentNode.children.length > 0) {
+                                    this.treeHelisaService.expandOneNode(this.currentNode);
+                                }
+                            }
+                        }
+                    }
                 }
             };
         /**
@@ -2041,6 +2230,7 @@
                 this.upSelectNode(node);
                 if (node.id == id) {
                     node.isSelected = true;
+                    this.expandAllParents(node);
                     return node;
                 }
                 else if (node.children != null) {
@@ -2054,6 +2244,22 @@
                     return result;
                 }
                 return null;
+            };
+        /**
+         * @private
+         * @param {?} node
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.expandAllParents = /**
+         * @private
+         * @param {?} node
+         * @return {?}
+         */
+            function (node) {
+                if (!!node && !!node.parent) {
+                    this.treeHelisaService.expandOneNode(node.parent);
+                    this.expandAllParents(node.parent);
+                }
             };
         /**
          * Elimina el isSelected de todos los nodos
