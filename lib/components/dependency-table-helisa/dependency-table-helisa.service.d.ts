@@ -36,4 +36,7 @@ export declare class DependencyTableHelisaService {
      * @param event wrapper que contiene el indice de la tabla y la información de la pagina
      */
     addPage(event: EventDependency): void;
+    private selectedIndexRow$;
+    selectedIndexRow: Observable<number>;
+    selectIndexRow(index: number): void;
 }
