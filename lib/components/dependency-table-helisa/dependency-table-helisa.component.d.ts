@@ -17,7 +17,6 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     total: EventEmitter<EventDependency>;
     sort: EventEmitter<EventDependency>;
     isDragged: boolean;
-    indexRowSelect: number;
     selectedObject: EventDependency;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;

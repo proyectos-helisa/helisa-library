@@ -8,6 +8,7 @@ export interface ConfigTable {
     count?: number;
     order?: number;
     showTitle?: boolean;
+    indexRowSelect?: number;
 }
 export declare class DependencyTableHelisaService {
     tables: Subject<ConfigTable[]>;
@@ -36,7 +37,5 @@ export declare class DependencyTableHelisaService {
      * @param event wrapper que contiene el indice de la tabla y la información de la pagina
      */
     addPage(event: EventDependency): void;
-    private selectedIndexRow$;
-    selectedIndexRow: Observable<number>;
-    selectIndexRow(index: number): void;
+    selectIndexRow(config: ConfigTable): void;
 }
