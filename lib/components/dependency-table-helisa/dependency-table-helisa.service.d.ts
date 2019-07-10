@@ -9,6 +9,7 @@ export interface ConfigTable {
     order?: number;
     showTitle?: boolean;
     indexRowSelect?: number;
+    isDragged?: Boolean;
 }
 export declare class DependencyTableHelisaService {
     tables: Subject<ConfigTable[]>;

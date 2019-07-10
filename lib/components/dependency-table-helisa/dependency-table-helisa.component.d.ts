@@ -16,7 +16,7 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     nextPage: EventEmitter<EventDependency>;
     total: EventEmitter<EventDependency>;
     sort: EventEmitter<EventDependency>;
-    isDragged: boolean;
+    drop: EventEmitter<EventDependency>;
     selectedObject: EventDependency;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;
@@ -52,4 +52,10 @@ export declare class DependencyTableHelisaComponent implements OnInit {
      * @param event evento generado desde la tabla
      */
     onSort(index: number, event: any): void;
+    /**
+     * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
+     * @param index indica el indice de la tabla que genera el evento
+     * @param event evento generado desde la tabla
+     */
+    onDrop(index: number, event: any): void;
 }
