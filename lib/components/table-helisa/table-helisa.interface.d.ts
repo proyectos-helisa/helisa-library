@@ -9,6 +9,10 @@ export interface ColumnConfig {
     searchable?: boolean;
     sortDirection?: SortDirection;
 }
+export interface AddRowButton {
+    text: string;
+    showButton: boolean;
+}
 export declare enum TotalType {
     SUM = 0,
     AVERAGE = 1,

@@ -1,7 +1,6 @@
 import { Observable, Subject } from 'rxjs';
-import { ColumnConfig } from '../table-helisa/table-helisa.interface';
+import { ColumnConfig, AddRowButton } from '../table-helisa/table-helisa.interface';
 import { EventDependency } from './dependency-table-helisa.component';
-import { AddRowButton } from '../table-helisa/table-helisa.component';
 export interface ConfigTable {
     columns: Array<ColumnConfig>;
     isRemote: boolean;

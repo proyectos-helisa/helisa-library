@@ -1,6 +1,6 @@
 import { EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { MatSort, MatTableDataSource, MatTable } from '@angular/material';
-import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, Cell, ConfigCellStyles, ConfigRowStyles, DropElement } from './table-helisa.interface';
+import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, Cell, ConfigCellStyles, ConfigRowStyles, DropElement, AddRowButton } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 interface RowData {
@@ -11,10 +11,6 @@ declare enum RowType {
     GROUP_TITLE = 0,
     GROUP_FOOTER = 1,
     ROW = 2
-}
-export interface AddRowButton {
-    text: string;
-    showButton: boolean;
 }
 export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     private tableService;
