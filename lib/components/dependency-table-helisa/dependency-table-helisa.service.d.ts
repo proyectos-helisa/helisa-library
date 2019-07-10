@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import { ColumnConfig } from '../table-helisa/table-helisa.interface';
 import { EventDependency } from './dependency-table-helisa.component';
+import { AddRowButton } from '../table-helisa/table-helisa.component';
 export interface ConfigTable {
     columns: Array<ColumnConfig>;
     isRemote: boolean;
@@ -10,6 +11,7 @@ export interface ConfigTable {
     showTitle?: boolean;
     indexRowSelect?: number;
     isDragged?: Boolean;
+    addRowButton?: AddRowButton;
 }
 export declare class DependencyTableHelisaService {
     tables: Subject<ConfigTable[]>;

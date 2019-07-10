@@ -12,6 +12,10 @@ declare enum RowType {
     GROUP_FOOTER = 1,
     ROW = 2
 }
+export interface AddRowButton {
+    text: string;
+    showButton: boolean;
+}
 export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     private tableService;
     private tableHelisaConnectComponent;
@@ -42,6 +46,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     selectedCells: Array<Cell>;
     drop: EventEmitter<DropElement<T>>;
     isDragged: boolean;
+    addRowButton: AddRowButton;
+    addRow: EventEmitter<void>;
     showFooter: boolean;
     showSearch: boolean;
     constructor(tableService: TableHelisaService<T>);
@@ -73,5 +79,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     getClassToRow(row: any): string;
     onDrop(event: CdkDragDrop<any>): void;
     tableKeydown(event: KeyboardEvent): void;
+    /**
+     * Emite el evento cuando se da click al boton AddRow
+     */
+    onAddRow(): void;
 }
 export {};
