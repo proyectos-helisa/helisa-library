@@ -262,6 +262,10 @@
         function DependencyTableHelisaService() {
             this.tables = new rxjs.Subject();
             this.infoTables = new Array();
+            this.emitVisibilityButton$ = new rxjs.Subject();
+            this.emitVisibilityButton = this.emitVisibilityButton$.asObservable();
+            this.emitVisibilityAllButtons$ = new rxjs.Subject();
+            this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
             this.emitTotal = new rxjs.Subject();
             this.emitNextPage = new rxjs.Subject();
         }
@@ -370,6 +374,40 @@
                     this.tables.next(this.infoTables);
                 }
             };
+        /**
+         * Muestra o esconde el boton una tabla en especifico
+         * @param event para indicar el index de la tabla y en "data" true o false
+         */
+        /**
+         * Muestra o esconde el boton una tabla en especifico
+         * @param {?} event para indicar el index de la tabla y en "data" true o false
+         * @return {?}
+         */
+        DependencyTableHelisaService.prototype.changeVisibilityButton = /**
+         * Muestra o esconde el boton una tabla en especifico
+         * @param {?} event para indicar el index de la tabla y en "data" true o false
+         * @return {?}
+         */
+            function (event) {
+                this.emitVisibilityButton$.next(event);
+            };
+        /**
+         * Esconde los botones de todas las tablas
+         * @param show indicar si se muestran o no todos los botones de las tablas
+         */
+        /**
+         * Esconde los botones de todas las tablas
+         * @param {?} show indicar si se muestran o no todos los botones de las tablas
+         * @return {?}
+         */
+        DependencyTableHelisaService.prototype.changeVisibilityAllButtons = /**
+         * Esconde los botones de todas las tablas
+         * @param {?} show indicar si se muestran o no todos los botones de las tablas
+         * @return {?}
+         */
+            function (show) {
+                this.emitVisibilityAllButtons$.next(show);
+            };
         DependencyTableHelisaService.decorators = [
             { type: i0.Injectable }
         ];
@@ -391,6 +429,11 @@
             this.emitNextPage = new rxjs.Subject();
             this.totalReturn = this.emitChangeSource.asObservable();
             this.nextPageReturn = this.emitNextPage.asObservable();
+            this.emitVisibleButton$ = new rxjs.Subject();
+            /**
+             * Observable para saber si se debe mostrar o esconder el boton de add row
+             */
+            this.emitVisibleButton = this.emitVisibleButton$.asObservable();
         }
         /**
          * @param {?} total
@@ -417,6 +460,23 @@
          */
             function (page, table) {
                 this.emitNextPage.next({ obj: page, table: table });
+            };
+        /**
+         * para modificar el valor de si se muestra o no el boton de add row de la tabla
+         * @param change indicar si se muestra o no el boton de add row de la tabla
+         */
+        /**
+         * para modificar el valor de si se muestra o no el boton de add row de la tabla
+         * @param {?} change indicar si se muestra o no el boton de add row de la tabla
+         * @return {?}
+         */
+        TableHelisaService.prototype.changeVisibilityButton = /**
+         * para modificar el valor de si se muestra o no el boton de add row de la tabla
+         * @param {?} change indicar si se muestra o no el boton de add row de la tabla
+         * @return {?}
+         */
+            function (change) {
+                this.emitVisibleButton$.next(change);
             };
         TableHelisaService.decorators = [
             { type: i0.Injectable, args: [{
@@ -464,6 +524,35 @@
                  * @return {?}
                  */function (event) {
                     _this.tableService.setTotal(event.data, _this.viewTables[event.index]);
+                }));
+                // Observable para mostrar o esconder el boton de una tabla
+                this.dependencyTableHelisaService.emitVisibilityButton.subscribe(( /**
+                 * @param {?} data
+                 * @return {?}
+                 */function (data) {
+                    if (!!data && data.index != undefined) {
+                        /** @type {?} */
+                        var table = _this.tables[data.index];
+                        if (!!table) {
+                            table.addRowButton.showButton = data.data;
+                        }
+                    }
+                }));
+                //Observable para mostrar o esconder los botones de todas las tablas
+                this.dependencyTableHelisaService.emitVisibilityAllButtons.subscribe(( /**
+                 * @param {?} data
+                 * @return {?}
+                 */function (data) {
+                    if (data != undefined && data != null) {
+                        _this.tables.forEach(( /**
+                         * @param {?} element
+                         * @return {?}
+                         */function (element) {
+                            if (!!element.addRowButton) {
+                                element.addRowButton.showButton = data;
+                            }
+                        }));
+                    }
                 }));
             };
         /**
@@ -874,6 +963,14 @@
                      */function (c) { return c.name === event.active; }));
                     column.sortDirection = event.direction;
                     _this.sort.emit({ column: column, columnConfigurations: _this.columnConfig, type: ChangeColumnConfigurationType.SORT });
+                }));
+                this.tableService.emitVisibleButton.subscribe(( /**
+                 * @param {?} data
+                 * @return {?}
+                 */function (data) {
+                    if (data != undefined && data != null) {
+                        _this.addRowButton.showButton = data;
+                    }
                 }));
             };
         /**

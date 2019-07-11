@@ -252,6 +252,10 @@ class DependencyTableHelisaService {
     constructor() {
         this.tables = new Subject();
         this.infoTables = new Array();
+        this.emitVisibilityButton$ = new Subject();
+        this.emitVisibilityButton = this.emitVisibilityButton$.asObservable();
+        this.emitVisibilityAllButtons$ = new Subject();
+        this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
         this.emitTotal = new Subject();
         this.emitNextPage = new Subject();
     }
@@ -315,6 +319,22 @@ class DependencyTableHelisaService {
             this.tables.next(this.infoTables);
         }
     }
+    /**
+     * Muestra o esconde el boton una tabla en especifico
+     * @param {?} event para indicar el index de la tabla y en "data" true o false
+     * @return {?}
+     */
+    changeVisibilityButton(event) {
+        this.emitVisibilityButton$.next(event);
+    }
+    /**
+     * Esconde los botones de todas las tablas
+     * @param {?} show indicar si se muestran o no todos los botones de las tablas
+     * @return {?}
+     */
+    changeVisibilityAllButtons(show) {
+        this.emitVisibilityAllButtons$.next(show);
+    }
 }
 DependencyTableHelisaService.decorators = [
     { type: Injectable }
@@ -335,6 +355,11 @@ class TableHelisaService {
         this.emitNextPage = new Subject();
         this.totalReturn = this.emitChangeSource.asObservable();
         this.nextPageReturn = this.emitNextPage.asObservable();
+        this.emitVisibleButton$ = new Subject();
+        /**
+         * Observable para saber si se debe mostrar o esconder el boton de add row
+         */
+        this.emitVisibleButton = this.emitVisibleButton$.asObservable();
     }
     /**
      * @param {?} total
@@ -351,6 +376,14 @@ class TableHelisaService {
      */
     addPage(page, table) {
         this.emitNextPage.next({ obj: page, table: table });
+    }
+    /**
+     * para modificar el valor de si se muestra o no el boton de add row de la tabla
+     * @param {?} change indicar si se muestra o no el boton de add row de la tabla
+     * @return {?}
+     */
+    changeVisibilityButton(change) {
+        this.emitVisibleButton$.next(change);
     }
 }
 TableHelisaService.decorators = [
@@ -399,6 +432,38 @@ class DependencyTableHelisaComponent {
          */
         event => {
             this.tableService.setTotal(event.data, this.viewTables[event.index]);
+        }));
+        // Observable para mostrar o esconder el boton de una tabla
+        this.dependencyTableHelisaService.emitVisibilityButton.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        data => {
+            if (!!data && data.index != undefined) {
+                /** @type {?} */
+                let table = this.tables[data.index];
+                if (!!table) {
+                    table.addRowButton.showButton = data.data;
+                }
+            }
+        }));
+        //Observable para mostrar o esconder los botones de todas las tablas
+        this.dependencyTableHelisaService.emitVisibilityAllButtons.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        data => {
+            if (data != undefined && data != null) {
+                this.tables.forEach((/**
+                 * @param {?} element
+                 * @return {?}
+                 */
+                element => {
+                    if (!!element.addRowButton) {
+                        element.addRowButton.showButton = data;
+                    }
+                }));
+            }
         }));
     }
     /**
@@ -702,6 +767,15 @@ class TableHelisaComponent {
             c => c.name === event.active));
             column.sortDirection = event.direction;
             this.sort.emit({ column, columnConfigurations: this.columnConfig, type: ChangeColumnConfigurationType.SORT });
+        }));
+        this.tableService.emitVisibleButton.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        data => {
+            if (data != undefined && data != null) {
+                this.addRowButton.showButton = data;
+            }
         }));
     }
     /**

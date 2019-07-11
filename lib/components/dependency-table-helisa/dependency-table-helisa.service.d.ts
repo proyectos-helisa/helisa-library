@@ -15,6 +15,10 @@ export interface ConfigTable {
 export declare class DependencyTableHelisaService {
     tables: Subject<ConfigTable[]>;
     infoTables: Array<ConfigTable>;
+    private emitVisibilityButton$;
+    emitVisibilityButton: Observable<EventDependency>;
+    private emitVisibilityAllButtons$;
+    emitVisibilityAllButtons: Observable<boolean>;
     emitTotal: Subject<EventDependency>;
     emitNextPage: Subject<EventDependency>;
     constructor();
@@ -40,4 +44,14 @@ export declare class DependencyTableHelisaService {
      */
     addPage(event: EventDependency): void;
     selectIndexRow(config: ConfigTable): void;
+    /**
+     * Muestra o esconde el boton una tabla en especifico
+     * @param event para indicar el index de la tabla y en "data" true o false
+     */
+    changeVisibilityButton(event: EventDependency): void;
+    /**
+     * Esconde los botones de todas las tablas
+     * @param show indicar si se muestran o no todos los botones de las tablas
+     */
+    changeVisibilityAllButtons(show: boolean): void;
 }

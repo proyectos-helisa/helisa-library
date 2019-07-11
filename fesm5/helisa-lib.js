@@ -274,6 +274,10 @@ var DependencyTableHelisaService = /** @class */ (function () {
     function DependencyTableHelisaService() {
         this.tables = new Subject();
         this.infoTables = new Array();
+        this.emitVisibilityButton$ = new Subject();
+        this.emitVisibilityButton = this.emitVisibilityButton$.asObservable();
+        this.emitVisibilityAllButtons$ = new Subject();
+        this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
         this.emitTotal = new Subject();
         this.emitNextPage = new Subject();
     }
@@ -380,6 +384,40 @@ var DependencyTableHelisaService = /** @class */ (function () {
             this.tables.next(this.infoTables);
         }
     };
+    /**
+     * Muestra o esconde el boton una tabla en especifico
+     * @param event para indicar el index de la tabla y en "data" true o false
+     */
+    /**
+     * Muestra o esconde el boton una tabla en especifico
+     * @param {?} event para indicar el index de la tabla y en "data" true o false
+     * @return {?}
+     */
+    DependencyTableHelisaService.prototype.changeVisibilityButton = /**
+     * Muestra o esconde el boton una tabla en especifico
+     * @param {?} event para indicar el index de la tabla y en "data" true o false
+     * @return {?}
+     */
+    function (event) {
+        this.emitVisibilityButton$.next(event);
+    };
+    /**
+     * Esconde los botones de todas las tablas
+     * @param show indicar si se muestran o no todos los botones de las tablas
+     */
+    /**
+     * Esconde los botones de todas las tablas
+     * @param {?} show indicar si se muestran o no todos los botones de las tablas
+     * @return {?}
+     */
+    DependencyTableHelisaService.prototype.changeVisibilityAllButtons = /**
+     * Esconde los botones de todas las tablas
+     * @param {?} show indicar si se muestran o no todos los botones de las tablas
+     * @return {?}
+     */
+    function (show) {
+        this.emitVisibilityAllButtons$.next(show);
+    };
     DependencyTableHelisaService.decorators = [
         { type: Injectable }
     ];
@@ -401,6 +439,11 @@ var TableHelisaService = /** @class */ (function () {
         this.emitNextPage = new Subject();
         this.totalReturn = this.emitChangeSource.asObservable();
         this.nextPageReturn = this.emitNextPage.asObservable();
+        this.emitVisibleButton$ = new Subject();
+        /**
+         * Observable para saber si se debe mostrar o esconder el boton de add row
+         */
+        this.emitVisibleButton = this.emitVisibleButton$.asObservable();
     }
     /**
      * @param {?} total
@@ -427,6 +470,23 @@ var TableHelisaService = /** @class */ (function () {
      */
     function (page, table) {
         this.emitNextPage.next({ obj: page, table: table });
+    };
+    /**
+     * para modificar el valor de si se muestra o no el boton de add row de la tabla
+     * @param change indicar si se muestra o no el boton de add row de la tabla
+     */
+    /**
+     * para modificar el valor de si se muestra o no el boton de add row de la tabla
+     * @param {?} change indicar si se muestra o no el boton de add row de la tabla
+     * @return {?}
+     */
+    TableHelisaService.prototype.changeVisibilityButton = /**
+     * para modificar el valor de si se muestra o no el boton de add row de la tabla
+     * @param {?} change indicar si se muestra o no el boton de add row de la tabla
+     * @return {?}
+     */
+    function (change) {
+        this.emitVisibleButton$.next(change);
     };
     TableHelisaService.decorators = [
         { type: Injectable, args: [{
@@ -476,6 +536,38 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
          */
         function (event) {
             _this.tableService.setTotal(event.data, _this.viewTables[event.index]);
+        }));
+        // Observable para mostrar o esconder el boton de una tabla
+        this.dependencyTableHelisaService.emitVisibilityButton.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        function (data) {
+            if (!!data && data.index != undefined) {
+                /** @type {?} */
+                var table = _this.tables[data.index];
+                if (!!table) {
+                    table.addRowButton.showButton = data.data;
+                }
+            }
+        }));
+        //Observable para mostrar o esconder los botones de todas las tablas
+        this.dependencyTableHelisaService.emitVisibilityAllButtons.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        function (data) {
+            if (data != undefined && data != null) {
+                _this.tables.forEach((/**
+                 * @param {?} element
+                 * @return {?}
+                 */
+                function (element) {
+                    if (!!element.addRowButton) {
+                        element.addRowButton.showButton = data;
+                    }
+                }));
+            }
         }));
     };
     /**
@@ -892,6 +984,15 @@ var TableHelisaComponent = /** @class */ (function () {
             function (c) { return c.name === event.active; }));
             column.sortDirection = event.direction;
             _this.sort.emit({ column: column, columnConfigurations: _this.columnConfig, type: ChangeColumnConfigurationType.SORT });
+        }));
+        this.tableService.emitVisibleButton.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        function (data) {
+            if (data != undefined && data != null) {
+                _this.addRowButton.showButton = data;
+            }
         }));
     };
     /**
