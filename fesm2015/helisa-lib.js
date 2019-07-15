@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChild, ElementRef, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTableDataSource, MatTable, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -576,6 +576,7 @@ class InputHelisaComponent {
         this.isSearch = false;
         this.inputFormControl = new FormControl('');
         this.isFocused = false;
+        this.disabled = false;
     }
     /**
      * @return {?}
@@ -595,7 +596,7 @@ class InputHelisaComponent {
 InputHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-input',
-                template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\">\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
+                template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                 styles: [""]
             }] }
 ];
@@ -607,6 +608,7 @@ InputHelisaComponent.propDecorators = {
     isSearch: [{ type: Input }],
     inputFormControl: [{ type: Input }],
     isFocused: [{ type: Input }],
+    disabled: [{ type: Input }],
     nameInput: [{ type: ViewChild, args: ['inputText',] }]
 };
 

@@ -746,6 +746,7 @@
             this.isSearch = false;
             this.inputFormControl = new forms.FormControl('');
             this.isFocused = false;
+            this.disabled = false;
         }
         /**
          * @return {?}
@@ -770,7 +771,7 @@
         InputHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-input',
-                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\">\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
+                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                         styles: [""]
                     }] }
         ];
@@ -782,6 +783,7 @@
             isSearch: [{ type: i0.Input }],
             inputFormControl: [{ type: i0.Input }],
             isFocused: [{ type: i0.Input }],
+            disabled: [{ type: i0.Input }],
             nameInput: [{ type: i0.ViewChild, args: ['inputText',] }]
         };
         return InputHelisaComponent;
