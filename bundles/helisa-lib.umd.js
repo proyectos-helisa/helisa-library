@@ -496,7 +496,11 @@
             this.dependencyTableHelisaService = dependencyTableHelisaService;
             this.tableService = tableService;
             this.tables = [];
+            /**
+             * deprecated, use selectObject
+             */
             this.selected = new i0.EventEmitter();
+            this.selectObject = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.sort = new i0.EventEmitter();
@@ -608,8 +612,10 @@
          * @return {?}
          */
             function (index, event) {
+                console.log(event);
                 this.selectedObject = { index: index, data: event };
-                this.selected.emit({ index: index, data: event });
+                this.selected.emit({ index: index, data: event.value });
+                this.selectObject.emit({ index: index, data: event });
             };
         /**
          * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
@@ -711,7 +717,7 @@
         DependencyTableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-dependency-table',
-                        template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (select)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\" \r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\">\r\n  </hel-table>\r\n</div>\r\n",
+                        template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\">\r\n  </hel-table>\r\n</div>\r\n",
                         providers: [DependencyTableHelisaService],
                         styles: [""]
                     }] }
@@ -726,6 +732,7 @@
         DependencyTableHelisaComponent.propDecorators = {
             viewTables: [{ type: i0.ViewChildren, args: ['viewTables',] }],
             selected: [{ type: i0.Output }],
+            selectObject: [{ type: i0.Output }],
             nextPage: [{ type: i0.Output }],
             total: [{ type: i0.Output }],
             sort: [{ type: i0.Output }],
