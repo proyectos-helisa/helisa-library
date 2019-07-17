@@ -1,6 +1,6 @@
-import { EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { MatSort, MatTableDataSource, MatTable } from '@angular/material';
-import { ColumnConfig, EventColumn, EventSearch, RequestTableHelisa, TableHelisaType, TotalGroup, Cell, ConfigCellStyles, ConfigRowStyles, DropElement, AddRowButton } from './table-helisa.interface';
+import { AfterViewInit, EventEmitter, OnInit } from '@angular/core';
+import { MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 interface RowData {
@@ -31,8 +31,12 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     sort: EventEmitter<EventColumn>;
     total: EventEmitter<EventColumn>;
     search: EventEmitter<EventSearch>;
+    /**
+     * Deprecado, cambiar por electObject
+     */
     select: EventEmitter<T>;
     selectCell: EventEmitter<Cell[]>;
+    selectObject: EventEmitter<SelectObject<T>>;
     nextPage: EventEmitter<RequestTableHelisa>;
     showTitle: boolean;
     multipleCell: boolean;
@@ -64,7 +68,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     getGroupValue(column: ColumnConfig, data: TotalGroup): number;
     getValue(obj: any, column: ColumnConfig): any;
     searchText(text: any): void;
-    selectRow(row: any): void;
+    selectRow(row: any, isUser: any): void;
     onScroll(event: any): void;
     private goNextPage;
     private receivePage;

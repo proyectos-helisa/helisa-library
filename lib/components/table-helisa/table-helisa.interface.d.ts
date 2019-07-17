@@ -13,6 +13,10 @@ export interface AddRowButton {
     text: string;
     showButton: boolean;
 }
+export declare enum EventScope {
+    USER = 0,
+    CODE_CALL = 1
+}
 export declare enum TotalType {
     SUM = 0,
     AVERAGE = 1,
@@ -47,6 +51,10 @@ export interface RequestTableHelisa {
 export interface DropElement<T> {
     value: T;
     order: number;
+}
+export interface SelectObject<T> {
+    value: T;
+    scope: EventScope;
 }
 export declare enum TableHelisaType {
     REMOTE = 0,
