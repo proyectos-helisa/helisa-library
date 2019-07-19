@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('lodash.clonedeep'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree')) :
-    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'lodash.clonedeep', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree'], factory) :
-    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.clonedeep,global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree));
-}(this, (function (exports,i1,clonedeep,tree,router,_,operators,rxjs,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('lodash.clonedeep'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree'), require('@angular/core'), require('@angular/material'), require('rxjs/operators'), require('rxjs')) :
+    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'lodash.clonedeep', '@angular/cdk/tree', '@angular/router', 'lodash', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree', '@angular/core', '@angular/material', 'rxjs/operators', 'rxjs'], factory) :
+    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.clonedeep,global.ng.cdk.tree,global.ng.router,global._,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree,global.ng.core,global.ng.material,global.rxjs.operators,global.rxjs));
+}(this, (function (exports,i1,clonedeep,tree,router,_,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1,i0,material,operators,rxjs) { 'use strict';
 
     clonedeep = clonedeep && clonedeep.hasOwnProperty('default') ? clonedeep['default'] : clonedeep;
 
@@ -612,7 +612,6 @@
          * @return {?}
          */
             function (index, event) {
-                console.log(event);
                 this.selectedObject = { index: index, data: event };
                 this.selected.emit({ index: index, data: event.value });
                 this.selectObject.emit({ index: index, data: event });
@@ -2648,6 +2647,7 @@
             this.myControl = new forms.FormControl();
             this.options = new Array();
             this.onSelectedValue = new i0.EventEmitter();
+            this.nextPage = new i0.EventEmitter();
             this.isRemote = false;
             this.isLoading = false;
         }
@@ -2664,14 +2664,29 @@
                      * @param {?} data
                      * @return {?}
                      */function (data) {
-                        _this.options = data;
-                        _this.filteredOptions = rxjs.of(_this.options);
+                        setTimeout(( /**
+                         * @return {?}
+                         */function () {
+                            _this.options = data;
+                            _this.filteredOptions = rxjs.of(_this.options);
+                        }));
                     }));
                 }
                 this.filteredOptions = this.myControl.valueChanges.pipe(operators.startWith(''), operators.map(( /**
                  * @param {?} value
                  * @return {?}
                  */function (value) { return _this._filter(value); })));
+            };
+        /**
+         * @param {?=} option
+         * @return {?}
+         */
+        AutocompleteHelisaComponent.prototype.displayFn = /**
+         * @param {?=} option
+         * @return {?}
+         */
+            function (option) {
+                return option ? option.displayText : undefined;
             };
         /**
          * @return {?}
@@ -2693,10 +2708,7 @@
          * @return {?}
          */
             function (value) {
-                if (value instanceof Object) {
-                    this.myControl.setValue(value.displayText);
-                }
-                else {
+                if (!(value instanceof Object)) {
                     if (!this.isRemote) {
                         /** @type {?} */
                         var filterValue_1 = value.toLowerCase().split(' ');
@@ -2730,10 +2742,19 @@
                 this.selectedValue = event.option.value;
                 this.onSelectedValue.emit(this.selectedValue.value);
             };
+        /**
+         * @return {?}
+         */
+        AutocompleteHelisaComponent.prototype.getNextPage = /**
+         * @return {?}
+         */
+            function () {
+                this.nextPage.emit();
+            };
         AutocompleteHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-autocomplete',
-                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
                         providers: [AutocompleteHelisaService],
                         styles: [""]
                     }] }
@@ -2748,9 +2769,105 @@
             myControl: [{ type: i0.Input }],
             options: [{ type: i0.Input }],
             onSelectedValue: [{ type: i0.Output }],
+            nextPage: [{ type: i0.Output }],
             isRemote: [{ type: i0.Input }]
         };
         return AutocompleteHelisaComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var OptionsScrollDirective = /** @class */ (function () {
+        function OptionsScrollDirective(autoComplete) {
+            var _this = this;
+            this.autoComplete = autoComplete;
+            this.thresholdPercent = .8;
+            this.scroll = new i0.EventEmitter();
+            this._onDestroy = new rxjs.Subject();
+            this.autoComplete.opened.pipe(operators.tap(( /**
+             * @return {?}
+             */function () {
+                // Note: When autocomplete raises opened, panel is not yet created (by Overlay)
+                // Note: The panel will be available on next tick
+                // Note: The panel wil NOT open if there are no options to display
+                setTimeout(( /**
+                 * @return {?}
+                 */function () {
+                    // Note: remove listner just for safety, in case the close event is skipped.
+                    _this.removeScrollEventListener();
+                    _this.autoComplete.panel.nativeElement
+                        .addEventListener('scroll', _this.onScroll.bind(_this));
+                }));
+            })), operators.takeUntil(this._onDestroy)).subscribe();
+            this.autoComplete.closed.pipe(operators.tap(( /**
+             * @return {?}
+             */function () { return _this.removeScrollEventListener(); })), operators.takeUntil(this._onDestroy)).subscribe();
+        }
+        /**
+         * @private
+         * @return {?}
+         */
+        OptionsScrollDirective.prototype.removeScrollEventListener = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                this.autoComplete.panel.nativeElement
+                    .removeEventListener('scroll', this.onScroll);
+            };
+        /**
+         * @return {?}
+         */
+        OptionsScrollDirective.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._onDestroy.next();
+                this._onDestroy.complete();
+                this.removeScrollEventListener();
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        OptionsScrollDirective.prototype.onScroll = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                if (this.thresholdPercent === undefined) {
+                    this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                }
+                else {
+                    /** @type {?} */
+                    var threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
+                    /** @type {?} */
+                    var current = event.target.scrollTop + event.target.clientHeight;
+                    //console.log(`scroll ${current}, threshold: ${threshold}`)
+                    if (current > threshold) {
+                        //console.log('load next page');
+                        this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                    }
+                }
+            };
+        OptionsScrollDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: 'mat-autocomplete[optionsScroll]'
+                    },] }
+        ];
+        /** @nocollapse */
+        OptionsScrollDirective.ctorParameters = function () {
+            return [
+                { type: material.MatAutocomplete }
+            ];
+        };
+        OptionsScrollDirective.propDecorators = {
+            thresholdPercent: [{ type: i0.Input }],
+            scroll: [{ type: i0.Output, args: ['optionsScroll',] }]
+        };
+        return OptionsScrollDirective;
     }());
 
     /**
@@ -2771,7 +2888,8 @@
                             TableHelisaComponent,
                             TreeHelisaComponent,
                             DateHelisaComponent,
-                            AutocompleteHelisaComponent
+                            AutocompleteHelisaComponent,
+                            OptionsScrollDirective
                         ],
                         imports: [
                             common.CommonModule,
@@ -2825,6 +2943,7 @@
                             TreeHelisaComponent,
                             DateHelisaComponent,
                             AutocompleteHelisaComponent,
+                            OptionsScrollDirective,
                             material.MatButtonModule,
                             material.MatCheckboxModule,
                             toolbar.MatToolbarModule,
@@ -2905,6 +3024,7 @@
     exports.AutocompleteHelisaComponent = AutocompleteHelisaComponent;
     exports.AutocompleteHelisaService = AutocompleteHelisaService;
     exports.HelisaLibModule = HelisaLibModule;
+    exports.ɵa = OptionsScrollDirective;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

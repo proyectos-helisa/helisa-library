@@ -3,10 +3,6 @@ import clonedeep from 'lodash.clonedeep';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
-import { map, startWith } from 'rxjs/operators';
-import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +21,10 @@ import { moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { Subject, BehaviorSubject, of } from 'rxjs';
 
 /**
  * @fileoverview added by tsickle
@@ -498,7 +498,6 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onSelectedDependency(index, event) {
-        console.log(event);
         this.selectedObject = { index: index, data: event };
         this.selected.emit({ index: index, data: event.value });
         this.selectObject.emit({ index: index, data: event });
@@ -2145,6 +2144,7 @@ class AutocompleteHelisaComponent {
         this.myControl = new FormControl();
         this.options = new Array();
         this.onSelectedValue = new EventEmitter();
+        this.nextPage = new EventEmitter();
         this.isRemote = false;
         this.isLoading = false;
     }
@@ -2158,8 +2158,13 @@ class AutocompleteHelisaComponent {
              * @return {?}
              */
             data => {
-                this.options = data;
-                this.filteredOptions = of(this.options);
+                setTimeout((/**
+                 * @return {?}
+                 */
+                () => {
+                    this.options = data;
+                    this.filteredOptions = of(this.options);
+                }));
             }));
         }
         this.filteredOptions = this.myControl.valueChanges.pipe(startWith(''), map((/**
@@ -2167,6 +2172,13 @@ class AutocompleteHelisaComponent {
          * @return {?}
          */
         value => this._filter(value))));
+    }
+    /**
+     * @param {?=} option
+     * @return {?}
+     */
+    displayFn(option) {
+        return option ? option.displayText : undefined;
     }
     /**
      * @return {?}
@@ -2180,10 +2192,7 @@ class AutocompleteHelisaComponent {
      * @return {?}
      */
     _filter(value) {
-        if (value instanceof Object) {
-            this.myControl.setValue(value.displayText);
-        }
-        else {
+        if (!(value instanceof Object)) {
             if (!this.isRemote) {
                 /** @type {?} */
                 const filterValue = value.toLowerCase().split(' ');
@@ -2215,11 +2224,17 @@ class AutocompleteHelisaComponent {
         this.selectedValue = event.option.value;
         this.onSelectedValue.emit(this.selectedValue.value);
     }
+    /**
+     * @return {?}
+     */
+    getNextPage() {
+        this.nextPage.emit();
+    }
 }
 AutocompleteHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-autocomplete',
-                template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
                 providers: [AutocompleteHelisaService],
                 styles: [""]
             }] }
@@ -2232,7 +2247,94 @@ AutocompleteHelisaComponent.propDecorators = {
     myControl: [{ type: Input }],
     options: [{ type: Input }],
     onSelectedValue: [{ type: Output }],
+    nextPage: [{ type: Output }],
     isRemote: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class OptionsScrollDirective {
+    /**
+     * @param {?} autoComplete
+     */
+    constructor(autoComplete) {
+        this.autoComplete = autoComplete;
+        this.thresholdPercent = .8;
+        this.scroll = new EventEmitter();
+        this._onDestroy = new Subject();
+        this.autoComplete.opened.pipe(tap((/**
+         * @return {?}
+         */
+        () => {
+            // Note: When autocomplete raises opened, panel is not yet created (by Overlay)
+            // Note: The panel will be available on next tick
+            // Note: The panel wil NOT open if there are no options to display
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
+                // Note: remove listner just for safety, in case the close event is skipped.
+                this.removeScrollEventListener();
+                this.autoComplete.panel.nativeElement
+                    .addEventListener('scroll', this.onScroll.bind(this));
+            }));
+        })), takeUntil(this._onDestroy)).subscribe();
+        this.autoComplete.closed.pipe(tap((/**
+         * @return {?}
+         */
+        () => this.removeScrollEventListener())), takeUntil(this._onDestroy)).subscribe();
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    removeScrollEventListener() {
+        this.autoComplete.panel.nativeElement
+            .removeEventListener('scroll', this.onScroll);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this._onDestroy.next();
+        this._onDestroy.complete();
+        this.removeScrollEventListener();
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    onScroll(event) {
+        if (this.thresholdPercent === undefined) {
+            this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+        }
+        else {
+            /** @type {?} */
+            const threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
+            /** @type {?} */
+            const current = event.target.scrollTop + event.target.clientHeight;
+            //console.log(`scroll ${current}, threshold: ${threshold}`)
+            if (current > threshold) {
+                //console.log('load next page');
+                this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+            }
+        }
+    }
+}
+OptionsScrollDirective.decorators = [
+    { type: Directive, args: [{
+                selector: 'mat-autocomplete[optionsScroll]'
+            },] }
+];
+/** @nocollapse */
+OptionsScrollDirective.ctorParameters = () => [
+    { type: MatAutocomplete }
+];
+OptionsScrollDirective.propDecorators = {
+    thresholdPercent: [{ type: Input }],
+    scroll: [{ type: Output, args: ['optionsScroll',] }]
 };
 
 /**
@@ -2252,7 +2354,8 @@ HelisaLibModule.decorators = [
                     TableHelisaComponent,
                     TreeHelisaComponent,
                     DateHelisaComponent,
-                    AutocompleteHelisaComponent
+                    AutocompleteHelisaComponent,
+                    OptionsScrollDirective
                 ],
                 imports: [
                     CommonModule,
@@ -2306,6 +2409,7 @@ HelisaLibModule.decorators = [
                     TreeHelisaComponent,
                     DateHelisaComponent,
                     AutocompleteHelisaComponent,
+                    OptionsScrollDirective,
                     MatButtonModule,
                     MatCheckboxModule,
                     MatToolbarModule,
@@ -2360,6 +2464,6 @@ HelisaLibModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, HelisaLibModule };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, HelisaLibModule, OptionsScrollDirective as ɵa };
 
 //# sourceMappingURL=helisa-lib.js.map
