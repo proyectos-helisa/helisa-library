@@ -3,6 +3,10 @@ import clonedeep from 'lodash.clonedeep';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { Subject, BehaviorSubject, of } from 'rxjs';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,10 +25,6 @@ import { moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
-import { Subject, BehaviorSubject, of } from 'rxjs';
 
 /**
  * @fileoverview added by tsickle
@@ -2277,8 +2277,12 @@ class OptionsScrollDirective {
             () => {
                 // Note: remove listner just for safety, in case the close event is skipped.
                 this.removeScrollEventListener();
-                this.autoComplete.panel.nativeElement
-                    .addEventListener('scroll', this.onScroll.bind(this));
+                if (!!this.autoComplete &&
+                    !!this.autoComplete.panel &&
+                    !!this.autoComplete.panel.nativeElement) {
+                    this.autoComplete.panel.nativeElement
+                        .addEventListener('scroll', this.onScroll.bind(this));
+                }
             }));
         })), takeUntil(this._onDestroy)).subscribe();
         this.autoComplete.closed.pipe(tap((/**
@@ -2291,8 +2295,12 @@ class OptionsScrollDirective {
      * @return {?}
      */
     removeScrollEventListener() {
-        this.autoComplete.panel.nativeElement
-            .removeEventListener('scroll', this.onScroll);
+        if (!!this.autoComplete &&
+            !!this.autoComplete.panel &&
+            !!this.autoComplete.panel.nativeElement) {
+            this.autoComplete.panel.nativeElement
+                .removeEventListener('scroll', this.onScroll);
+        }
     }
     /**
      * @return {?}
@@ -2464,6 +2472,6 @@ HelisaLibModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, HelisaLibModule, OptionsScrollDirective as ɵa };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelisaLibModule };
 
 //# sourceMappingURL=helisa-lib.js.map
