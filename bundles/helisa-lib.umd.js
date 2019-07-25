@@ -1506,7 +1506,7 @@
                 /** @type {?} */
                 var array = this.data.data;
                 dragDrop.moveItemInArray(array, event.previousIndex, event.currentIndex);
-                this.drop.emit({ value: array[event.previousIndex].data, order: event.currentIndex });
+                this.drop.emit({ value: array[event.currentIndex].data, order: event.currentIndex });
                 this.data.data = clonedeep(array);
             };
         /**
