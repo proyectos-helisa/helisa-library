@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChild, ElementRef, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -108,7 +108,7 @@ var ToastHelisaComponent = /** @class */ (function () {
     ToastHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-toast',
-                    template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n</div>\r\n",
+                    template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\r\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n  </ng-container>    \r\n</div>\r\n",
                     styles: [""]
                 }] }
     ];

@@ -99,7 +99,7 @@ class ToastHelisaComponent {
 ToastHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-toast',
-                template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n</div>\r\n",
+                template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\r\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n  </ng-container>    \r\n</div>\r\n",
                 styles: [""]
             }] }
 ];
@@ -129,7 +129,7 @@ class ToastHelisaService {
     showToast(type, message, subMessages) {
         subMessages = subMessages ? subMessages : [];
         this.snackBar.openFromComponent(ToastHelisaComponent, {
-            data: { message: message, type: type, subMessages },
+            data: { message: message, type: type, subMessages: subMessages },
             duration: this.durationInSeconds * 1000
         });
     }
