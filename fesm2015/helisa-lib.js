@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -1990,11 +1990,13 @@ class TreeHelisaComponent {
      * @return {?}
      */
     upSelectNode(node) {
-        node.isSelected = false;
-        if (!!node.children)
-            for (var i = 0; i < node.children.length; i++) {
-                this.upSelectNode(node.children[i]);
-            }
+        if (!!node && !!node.isSelected) {
+            node.isSelected = false;
+            if (!!node.children)
+                for (var i = 0; i < node.children.length; i++) {
+                    this.upSelectNode(node.children[i]);
+                }
+        }
     }
     /**
      * @param {?} node

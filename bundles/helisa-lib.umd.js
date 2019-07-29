@@ -2470,11 +2470,13 @@
          * @return {?}
          */
             function (node) {
-                node.isSelected = false;
-                if (!!node.children)
-                    for (var i = 0; i < node.children.length; i++) {
-                        this.upSelectNode(node.children[i]);
-                    }
+                if (!!node && !!node.isSelected) {
+                    node.isSelected = false;
+                    if (!!node.children)
+                        for (var i = 0; i < node.children.length; i++) {
+                            this.upSelectNode(node.children[i]);
+                        }
+                }
             };
         /**
          * @param {?} node
