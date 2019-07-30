@@ -2472,6 +2472,9 @@ var TreeHelisaComponent = /** @class */ (function () {
      */
     function (node, id) {
         this.upSelectNode(node);
+        if (node == undefined || node.id == undefined) {
+            return null;
+        }
         if (node.id == id) {
             node.isSelected = true;
             this.expandAllParents(node);
@@ -2522,7 +2525,7 @@ var TreeHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (node) {
-        if (!!node && !!node.isSelected) {
+        if (!!node && node.isSelected != undefined) {
             node.isSelected = false;
             if (!!node.children)
                 for (var i = 0; i < node.children.length; i++) {
