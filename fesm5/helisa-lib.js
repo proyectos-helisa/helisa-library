@@ -278,6 +278,8 @@ var DependencyTableHelisaService = /** @class */ (function () {
         this.emitVisibilityButton = this.emitVisibilityButton$.asObservable();
         this.emitVisibilityAllButtons$ = new Subject();
         this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
+        this.emitIsCellSelection$ = new Subject();
+        this.emitIsCellSelection = this.emitIsCellSelection$.asObservable();
         this.emitTotal = new Subject();
         this.emitNextPage = new Subject();
     }
@@ -418,6 +420,23 @@ var DependencyTableHelisaService = /** @class */ (function () {
     function (show) {
         this.emitVisibilityAllButtons$.next(show);
     };
+    /**
+     * Para habilitar el manejo de selección de celda
+     * @param event para indicar el index de la tabla y en "data" true o false
+     */
+    /**
+     * Para habilitar el manejo de selección de celda
+     * @param {?} event para indicar el index de la tabla y en "data" true o false
+     * @return {?}
+     */
+    DependencyTableHelisaService.prototype.changeisCellSelection = /**
+     * Para habilitar el manejo de selección de celda
+     * @param {?} event para indicar el index de la tabla y en "data" true o false
+     * @return {?}
+     */
+    function (event) {
+        this.emitIsCellSelection$.next(event);
+    };
     DependencyTableHelisaService.decorators = [
         { type: Injectable }
     ];
@@ -516,6 +535,7 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
         this.sort = new EventEmitter();
         this.drop = new EventEmitter();
         this.addRow = new EventEmitter();
+        this.selectCell = new EventEmitter();
         this.selectedObject = null;
     }
     /**
@@ -571,6 +591,20 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
                         element.addRowButton.showButton = data;
                     }
                 }));
+            }
+        }));
+        //Observable para manejo de selección de celdas
+        this.dependencyTableHelisaService.emitIsCellSelection.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        function (data) {
+            if (!!data && data.index != undefined) {
+                /** @type {?} */
+                var table = _this.tables[data.index];
+                if (table) {
+                    table.isCellSelection = data.data;
+                }
             }
         }));
     };
@@ -729,10 +763,25 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
     function (index) {
         this.addRow.emit(index);
     };
+    /**
+     * @param {?} index
+     * @param {?} event
+     * @return {?}
+     */
+    DependencyTableHelisaComponent.prototype.selectedCell = /**
+     * @param {?} index
+     * @param {?} event
+     * @return {?}
+     */
+    function (index, event) {
+        if (this.tables[index].isCellSelection) {
+            this.selectCell.emit({ index: index, data: event });
+        }
+    };
     DependencyTableHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-dependency-table',
-                    template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\">\r\n  </hel-table>\r\n</div>\r\n",
+                    template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\">\r\n  </hel-table>\r\n</div>\r\n",
                     providers: [DependencyTableHelisaService],
                     styles: [""]
                 }] }
@@ -750,7 +799,8 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
         total: [{ type: Output }],
         sort: [{ type: Output }],
         drop: [{ type: Output }],
-        addRow: [{ type: Output }]
+        addRow: [{ type: Output }],
+        selectCell: [{ type: Output }]
     };
     return DependencyTableHelisaComponent;
 }());
@@ -945,8 +995,7 @@ var TableHelisaComponent = /** @class */ (function () {
         this.selectObject = new EventEmitter();
         this.nextPage = new EventEmitter();
         this.showTitle = true;
-        this.multipleCell = false;
-        this.selectedCells = new Array();
+        this.isCellSelection = false;
         this.drop = new EventEmitter();
         this.isDragged = false;
         this.addRowButton = { showButton: false, text: "" };
@@ -1020,7 +1069,7 @@ var TableHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        if (this.multipleCell) {
+        if (this.isCellSelection) {
             this.matTable.renderRows();
         }
     };
@@ -1444,36 +1493,29 @@ var TableHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (element, column) {
-        /** @type {?} */
-        var index = this.isSelectedCell(element, column);
-        if (index >= 0) {
-            this.selectedCells.splice(index, 1);
-        }
-        else {
-            this.selectedCells.push({ column: column, row: element });
-        }
+        this.selectedCells = { column: column, row: element };
         this.selectCell.emit(this.selectedCells);
     };
     /**
-     * @param {?} element
+     * @param {?} row
      * @param {?} column
      * @return {?}
      */
     TableHelisaComponent.prototype.isSelectedCell = /**
-     * @param {?} element
+     * @param {?} row
      * @param {?} column
      * @return {?}
      */
-    function (element, column) {
-        if (this.multipleCell) {
-            for (var index = 0; index < this.selectedCells.length; index++) {
-                if (this.selectedCells[index].column.name === column.name &&
-                    this.selectedCells[index].row.data === element.data) {
-                    return index;
+    function (row, column) {
+        if (this.isCellSelection) {
+            if (this.selectedCells != null) {
+                if (this.selectedCells.column.name === column.name &&
+                    this.selectedCells.row.data === row.data) {
+                    return true;
                 }
             }
         }
-        return -1;
+        return false;
     };
     /**
      * @param {?} row
@@ -1556,7 +1598,7 @@ var TableHelisaComponent = /** @class */ (function () {
      */
     function (event) {
         var _this = this;
-        if (!this.multipleCell) {
+        if (!this.isCellSelection) {
             /** @type {?} */
             var currentIndex_1 = this.data.data.findIndex((/**
              * @param {?} row
@@ -1620,7 +1662,7 @@ var TableHelisaComponent = /** @class */ (function () {
     TableHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-table',
-                    template: "\r\n<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table cdkDropList (cdkDropListDropped)=\"onDrop($event)\" mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" >\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef> {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n          [class.selected-row]=\"isSelectedCell(element, column) >= 0\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n          {{ getValue(element.data, column) }}\r\n        </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"isDragged\">\r\n        <tr cdkDrag [cdkDragData]=\"row\" mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !multipleCell\"\r\n          [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <div *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !multipleCell\" [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>\r\n",
+                    template: "\r\n<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table cdkDropList (cdkDropListDropped)=\"onDrop($event)\" mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" >\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef> {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n          [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n          {{ getValue(element.data, column) }}\r\n        </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"isDragged\">\r\n        <tr cdkDrag [cdkDragData]=\"row\" mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\r\n          [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <div *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>\r\n",
                     styles: ["/deep/ hel-table{position:relative}/deep/ hel-table>button{justify-content:center;align-items:flex-start;background:0 0;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}/deep/ hel-table>button:focus{outline:0}/deep/ hel-table>button:hover{opacity:1}/deep/ hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:'+';color:#fff;height:26px;width:20px}/deep/ hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}/deep/ hel-table .div-table-helisa .container-table{width:100%;height:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa{width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{padding:2px 10px 0}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                 }] }
     ];
@@ -1639,7 +1681,7 @@ var TableHelisaComponent = /** @class */ (function () {
         selectObject: [{ type: Output }],
         nextPage: [{ type: Output }],
         showTitle: [{ type: Input }],
-        multipleCell: [{ type: Input }],
+        isCellSelection: [{ type: Input }],
         count: [{ type: Input }],
         configCellStyles: [{ type: Input }],
         configRowStylesFromColumn: [{ type: Input }],

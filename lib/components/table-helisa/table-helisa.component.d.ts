@@ -35,15 +35,15 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      * Deprecado, cambiar por electObject
      */
     select: EventEmitter<T>;
-    selectCell: EventEmitter<Cell[]>;
+    selectCell: EventEmitter<Cell>;
     selectObject: EventEmitter<SelectObject<T>>;
     nextPage: EventEmitter<RequestTableHelisa>;
     showTitle: boolean;
-    multipleCell: boolean;
+    isCellSelection: boolean;
     count: number;
     configCellStyles: Array<ConfigCellStyles>;
     configRowStylesFromColumn: Array<ConfigRowStyles>;
-    selectedCells: Array<Cell>;
+    selectedCells: Cell;
     drop: EventEmitter<DropElement<T>>;
     isDragged: boolean;
     addRowButton: AddRowButton;
@@ -74,7 +74,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     private receivePage;
     dblClickCell(): void;
     selectedCell(element: any, column: ColumnConfig): void;
-    isSelectedCell(element: any, column: ColumnConfig): number;
+    isSelectedCell(row: any, column: ColumnConfig): boolean;
     getClassToCell(row: any, column: ColumnConfig): string;
     getClassToRow(row: any): string;
     onDrop(event: CdkDragDrop<any>): void;

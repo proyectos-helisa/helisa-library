@@ -22,6 +22,7 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     sort: EventEmitter<EventDependency>;
     drop: EventEmitter<EventDependency>;
     addRow: EventEmitter<number>;
+    selectCell: EventEmitter<EventDependency>;
     selectedObject: EventDependency;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;
@@ -68,4 +69,5 @@ export declare class DependencyTableHelisaComponent implements OnInit {
      * @param index indica el indice de la tabla de la cual se dispara el evento
      */
     onAddRow(index: number): void;
+    selectedCell(index: number, event: any): void;
 }

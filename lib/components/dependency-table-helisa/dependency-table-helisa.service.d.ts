@@ -12,6 +12,7 @@ export interface ConfigTable {
     isDragged?: Boolean;
     addRowButton?: AddRowButton;
     configRowStylesFromColumn?: Array<ConfigRowStyles>;
+    isCellSelection?: boolean;
 }
 export declare class DependencyTableHelisaService {
     tables: Subject<ConfigTable[]>;
@@ -20,6 +21,8 @@ export declare class DependencyTableHelisaService {
     emitVisibilityButton: Observable<EventDependency>;
     private emitVisibilityAllButtons$;
     emitVisibilityAllButtons: Observable<boolean>;
+    private emitIsCellSelection$;
+    emitIsCellSelection: Observable<EventDependency>;
     emitTotal: Subject<EventDependency>;
     emitNextPage: Subject<EventDependency>;
     constructor();
@@ -55,4 +58,9 @@ export declare class DependencyTableHelisaService {
      * @param show indicar si se muestran o no todos los botones de las tablas
      */
     changeVisibilityAllButtons(show: boolean): void;
+    /**
+     * Para habilitar el manejo de selección de celda
+     * @param event para indicar el index de la tabla y en "data" true o false
+     */
+    changeisCellSelection(event: EventDependency): void;
 }
