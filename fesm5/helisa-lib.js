@@ -280,6 +280,8 @@ var DependencyTableHelisaService = /** @class */ (function () {
         this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
         this.emitIsCellSelection$ = new Subject();
         this.emitIsCellSelection = this.emitIsCellSelection$.asObservable();
+        this.emitChangeColumns$ = new Subject();
+        this.emitChangeColumns = this.emitChangeColumns$.asObservable();
         this.emitTotal = new Subject();
         this.emitNextPage = new Subject();
     }
@@ -436,6 +438,23 @@ var DependencyTableHelisaService = /** @class */ (function () {
      */
     function (event) {
         this.emitIsCellSelection$.next(event);
+    };
+    /**
+    * Para habilitar el cambio de columnas
+    * @param event para indicar el index de la tabla y en "data" columnas
+    */
+    /**
+     * Para habilitar el cambio de columnas
+     * @param {?} event para indicar el index de la tabla y en "data" columnas
+     * @return {?}
+     */
+    DependencyTableHelisaService.prototype.changeChangeColumns = /**
+     * Para habilitar el cambio de columnas
+     * @param {?} event para indicar el index de la tabla y en "data" columnas
+     * @return {?}
+     */
+    function (event) {
+        this.emitChangeColumns$.next(event);
     };
     DependencyTableHelisaService.decorators = [
         { type: Injectable }
@@ -604,6 +623,20 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
                 var table = _this.tables[data.index];
                 if (table) {
                     table.isCellSelection = data.data;
+                }
+            }
+        }));
+        //Observable para manejo de columnas
+        this.dependencyTableHelisaService.emitChangeColumns.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        function (data) {
+            if (!!data && data.index != undefined) {
+                /** @type {?} */
+                var table = _this.tables[data.index];
+                if (table) {
+                    table.columns = data.data;
                 }
             }
         }));

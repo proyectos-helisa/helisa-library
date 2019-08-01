@@ -9,7 +9,7 @@ export interface ConfigTable {
     order?: number;
     showTitle?: boolean;
     indexRowSelect?: number;
-    isDragged?: Boolean;
+    isDragged?: boolean;
     addRowButton?: AddRowButton;
     configRowStylesFromColumn?: Array<ConfigRowStyles>;
     isCellSelection?: boolean;
@@ -23,6 +23,8 @@ export declare class DependencyTableHelisaService {
     emitVisibilityAllButtons: Observable<boolean>;
     private emitIsCellSelection$;
     emitIsCellSelection: Observable<EventDependency>;
+    private emitChangeColumns$;
+    emitChangeColumns: Observable<EventDependency>;
     emitTotal: Subject<EventDependency>;
     emitNextPage: Subject<EventDependency>;
     constructor();
@@ -63,4 +65,9 @@ export declare class DependencyTableHelisaService {
      * @param event para indicar el index de la tabla y en "data" true o false
      */
     changeisCellSelection(event: EventDependency): void;
+    /**
+    * Para habilitar el cambio de columnas
+    * @param event para indicar el index de la tabla y en "data" columnas
+    */
+    changeChangeColumns(event: EventDependency): void;
 }

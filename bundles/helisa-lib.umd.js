@@ -268,6 +268,8 @@
             this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
             this.emitIsCellSelection$ = new rxjs.Subject();
             this.emitIsCellSelection = this.emitIsCellSelection$.asObservable();
+            this.emitChangeColumns$ = new rxjs.Subject();
+            this.emitChangeColumns = this.emitChangeColumns$.asObservable();
             this.emitTotal = new rxjs.Subject();
             this.emitNextPage = new rxjs.Subject();
         }
@@ -426,6 +428,23 @@
          */
             function (event) {
                 this.emitIsCellSelection$.next(event);
+            };
+        /**
+        * Para habilitar el cambio de columnas
+        * @param event para indicar el index de la tabla y en "data" columnas
+        */
+        /**
+         * Para habilitar el cambio de columnas
+         * @param {?} event para indicar el index de la tabla y en "data" columnas
+         * @return {?}
+         */
+        DependencyTableHelisaService.prototype.changeChangeColumns = /**
+         * Para habilitar el cambio de columnas
+         * @param {?} event para indicar el index de la tabla y en "data" columnas
+         * @return {?}
+         */
+            function (event) {
+                this.emitChangeColumns$.next(event);
             };
         DependencyTableHelisaService.decorators = [
             { type: i0.Injectable }
@@ -588,6 +607,19 @@
                         var table = _this.tables[data.index];
                         if (table) {
                             table.isCellSelection = data.data;
+                        }
+                    }
+                }));
+                //Observable para manejo de columnas
+                this.dependencyTableHelisaService.emitChangeColumns.subscribe(( /**
+                 * @param {?} data
+                 * @return {?}
+                 */function (data) {
+                    if (!!data && data.index != undefined) {
+                        /** @type {?} */
+                        var table = _this.tables[data.index];
+                        if (table) {
+                            table.columns = data.data;
                         }
                     }
                 }));

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, ViewChildren, NgModule, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -258,6 +258,8 @@ class DependencyTableHelisaService {
         this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
         this.emitIsCellSelection$ = new Subject();
         this.emitIsCellSelection = this.emitIsCellSelection$.asObservable();
+        this.emitChangeColumns$ = new Subject();
+        this.emitChangeColumns = this.emitChangeColumns$.asObservable();
         this.emitTotal = new Subject();
         this.emitNextPage = new Subject();
     }
@@ -344,6 +346,14 @@ class DependencyTableHelisaService {
      */
     changeisCellSelection(event) {
         this.emitIsCellSelection$.next(event);
+    }
+    /**
+     * Para habilitar el cambio de columnas
+     * @param {?} event para indicar el index de la tabla y en "data" columnas
+     * @return {?}
+     */
+    changeChangeColumns(event) {
+        this.emitChangeColumns$.next(event);
     }
 }
 DependencyTableHelisaService.decorators = [
@@ -491,6 +501,20 @@ class DependencyTableHelisaComponent {
                 let table = this.tables[data.index];
                 if (table) {
                     table.isCellSelection = data.data;
+                }
+            }
+        }));
+        //Observable para manejo de columnas
+        this.dependencyTableHelisaService.emitChangeColumns.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        data => {
+            if (!!data && data.index != undefined) {
+                /** @type {?} */
+                let table = this.tables[data.index];
+                if (table) {
+                    table.columns = data.data;
                 }
             }
         }));
