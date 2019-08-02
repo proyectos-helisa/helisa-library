@@ -352,7 +352,7 @@ class DependencyTableHelisaService {
      * @param {?} event para indicar el index de la tabla y en "data" columnas
      * @return {?}
      */
-    changeChangeColumns(event) {
+    changeColumnsByTable(event) {
         this.emitChangeColumns$.next(event);
     }
 }

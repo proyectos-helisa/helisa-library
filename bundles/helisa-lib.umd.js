@@ -438,7 +438,7 @@
          * @param {?} event para indicar el index de la tabla y en "data" columnas
          * @return {?}
          */
-        DependencyTableHelisaService.prototype.changeChangeColumns = /**
+        DependencyTableHelisaService.prototype.changeColumnsByTable = /**
          * Para habilitar el cambio de columnas
          * @param {?} event para indicar el index de la tabla y en "data" columnas
          * @return {?}

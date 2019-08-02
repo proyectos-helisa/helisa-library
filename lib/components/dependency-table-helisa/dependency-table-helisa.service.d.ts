@@ -69,5 +69,5 @@ export declare class DependencyTableHelisaService {
     * Para habilitar el cambio de columnas
     * @param event para indicar el index de la tabla y en "data" columnas
     */
-    changeChangeColumns(event: EventDependency): void;
+    changeColumnsByTable(event: EventDependency): void;
 }
