@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, ViewChildren, ViewChild, ElementRef, NgModule, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -322,7 +322,7 @@ var DependencyTableHelisaService = /** @class */ (function () {
     function (configTable, withRemoveDependency) {
         if (withRemoveDependency === void 0) { withRemoveDependency = false; }
         if (withRemoveDependency) {
-            this.infoTables = this.infoTables.splice(!configTable.order ? 0 : configTable.order, this.infoTables.length);
+            this.infoTables = this.infoTables.slice(0, !configTable.order ? 0 : configTable.order);
         }
         if (!configTable.order || configTable.order >= this.infoTables.length) {
             configTable.order = this.infoTables.length;

@@ -312,7 +312,7 @@
                     withRemoveDependency = false;
                 }
                 if (withRemoveDependency) {
-                    this.infoTables = this.infoTables.splice(!configTable.order ? 0 : configTable.order, this.infoTables.length);
+                    this.infoTables = this.infoTables.slice(0, !configTable.order ? 0 : configTable.order);
                 }
                 if (!configTable.order || configTable.order >= this.infoTables.length) {
                     configTable.order = this.infoTables.length;
