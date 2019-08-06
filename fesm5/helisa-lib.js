@@ -1,11 +1,12 @@
 import { MatSnackBar as MatSnackBar$1 } from '@angular/material/snack-bar';
 import clonedeep from 'lodash.clonedeep';
+import { __spread } from 'tslib';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, ViewChildren, ViewChild, ElementRef, NgModule, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -16,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -2698,6 +2699,30 @@ var TreeHelisaComponent = /** @class */ (function () {
         /** @type {?} */
         var obj = { formControl: new FormControl(array), editMode: editMode };
         this.selectedOptions.set(node.id, obj);
+    };
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    TreeHelisaComponent.prototype.getNodeById = /**
+     * @param {?} id
+     * @return {?}
+     */
+    function (id) {
+        /** @type {?} */
+        var queue = __spread(this.dataSource.data);
+        while (queue.length > 0) {
+            /** @type {?} */
+            var curr = queue.shift();
+            if (curr.id === id) {
+                return curr;
+            }
+            else {
+                if (!!curr.children)
+                    queue.push.apply(queue, __spread(curr.children));
+            }
+        }
+        return null;
     };
     TreeHelisaComponent.decorators = [
         { type: Component, args: [{
