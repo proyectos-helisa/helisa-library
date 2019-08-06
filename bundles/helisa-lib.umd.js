@@ -2689,12 +2689,19 @@
                 this.selectedOptions.set(node.id, obj);
             };
         /**
-         * @param {?} id
-         * @return {?}
+         * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
+         * @param id  number | string
+         * @returns Node o null si no hay un nodo con ese id
+         */
+        /**
+         * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
+         * @param {?} id  number | string
+         * @return {?} Node o null si no hay un nodo con ese id
          */
         TreeHelisaComponent.prototype.getNodeById = /**
-         * @param {?} id
-         * @return {?}
+         * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
+         * @param {?} id  number | string
+         * @return {?} Node o null si no hay un nodo con ese id
          */
             function (id) {
                 /** @type {?} */

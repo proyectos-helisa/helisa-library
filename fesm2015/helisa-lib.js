@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -2121,8 +2121,9 @@ class TreeHelisaComponent {
         this.selectedOptions.set(node.id, obj);
     }
     /**
-     * @param {?} id
-     * @return {?}
+     * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
+     * @param {?} id  number | string
+     * @return {?} Node o null si no hay un nodo con ese id
      */
     getNodeById(id) {
         /** @type {?} */
