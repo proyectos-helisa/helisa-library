@@ -48,6 +48,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     isDragged: boolean;
     addRowButton: AddRowButton;
     addRow: EventEmitter<void>;
+    bookClicked: EventEmitter<T>;
+    addBookButton: boolean;
     showFooter: boolean;
     showSearch: boolean;
     constructor(tableService: TableHelisaService<T>);
@@ -83,5 +85,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      * Emite el evento cuando se da click al boton AddRow
      */
     onAddRow(): void;
+    onBookClicked(selectedObject: any): void;
 }
 export {};

@@ -13,6 +13,7 @@ export interface ConfigTable {
     addRowButton?: AddRowButton;
     configRowStylesFromColumn?: Array<ConfigRowStyles>;
     isCellSelection?: boolean;
+    addBookButton?: boolean;
 }
 export declare class DependencyTableHelisaService {
     tables: Subject<ConfigTable[]>;

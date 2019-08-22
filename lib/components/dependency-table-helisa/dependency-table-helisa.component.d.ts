@@ -23,6 +23,7 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     drop: EventEmitter<EventDependency>;
     addRow: EventEmitter<number>;
     selectCell: EventEmitter<EventDependency>;
+    bookClicked: EventEmitter<EventDependency>;
     selectedObject: EventDependency;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;
@@ -70,4 +71,5 @@ export declare class DependencyTableHelisaComponent implements OnInit {
      */
     onAddRow(index: number): void;
     selectedCell(index: number, event: any): void;
+    onBookClicked(index: any, event: any): void;
 }
