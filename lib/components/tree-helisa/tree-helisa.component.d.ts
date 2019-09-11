@@ -113,4 +113,5 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      * @returns Node o null si no hay un nodo con ese id
      */
     getNodeById(id: number | string): Node;
+    reorderByOrderIndex(node: Node[]): Node[];
 }

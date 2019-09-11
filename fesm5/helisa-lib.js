@@ -3,7 +3,7 @@ import clonedeep from 'lodash.clonedeep';
 import { __spread } from 'tslib';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router';
-import { remove } from 'lodash';
+import { remove, orderBy } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
 import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
@@ -2520,6 +2520,7 @@ var TreeHelisaComponent = /** @class */ (function () {
         function (node) {
             _this.fillParent(node, _this.data);
         }));
+        this.data.children = this.reorderByOrderIndex(this.data.children);
         this.dataSource.data = this.data.children;
         this.treeControl.dataNodes = this.data.children;
         this.treeHelisaConnect.isLastPage = data.length === 0;
@@ -2760,6 +2761,39 @@ var TreeHelisaComponent = /** @class */ (function () {
             }
         }
         return null;
+    };
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    TreeHelisaComponent.prototype.reorderByOrderIndex = /**
+     * @param {?} node
+     * @return {?}
+     */
+    function (node) {
+        var _this = this;
+        if (!!node && node.length > 0) {
+            try {
+                node = orderBy(node, (/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                function (x) { return x.orderIndex; }), ['asc']);
+                node.forEach((/**
+                 * @param {?} element
+                 * @return {?}
+                 */
+                function (element) {
+                    if (!!element.children && element != null) {
+                        element.children = _this.reorderByOrderIndex(element.children);
+                    }
+                }));
+                return node;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
     };
     TreeHelisaComponent.decorators = [
         { type: Component, args: [{

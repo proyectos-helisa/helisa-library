@@ -2510,6 +2510,7 @@
                  */function (node) {
                     _this.fillParent(node, _this.data);
                 }));
+                this.data.children = this.reorderByOrderIndex(this.data.children);
                 this.dataSource.data = this.data.children;
                 this.treeControl.dataNodes = this.data.children;
                 this.treeHelisaConnect.isLastPage = data.length === 0;
@@ -2748,6 +2749,37 @@
                     }
                 }
                 return null;
+            };
+        /**
+         * @param {?} node
+         * @return {?}
+         */
+        TreeHelisaComponent.prototype.reorderByOrderIndex = /**
+         * @param {?} node
+         * @return {?}
+         */
+            function (node) {
+                var _this = this;
+                if (!!node && node.length > 0) {
+                    try {
+                        node = _.orderBy(node, ( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) { return x.orderIndex; }), ['asc']);
+                        node.forEach(( /**
+                         * @param {?} element
+                         * @return {?}
+                         */function (element) {
+                            if (!!element.children && element != null) {
+                                element.children = _this.reorderByOrderIndex(element.children);
+                            }
+                        }));
+                        return node;
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
+                }
             };
         TreeHelisaComponent.decorators = [
             { type: i0.Component, args: [{

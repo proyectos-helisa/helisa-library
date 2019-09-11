@@ -2,10 +2,10 @@ import { MatSnackBar as MatSnackBar$1 } from '@angular/material/snack-bar';
 import clonedeep from 'lodash.clonedeep';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router';
-import { remove } from 'lodash';
+import { remove, orderBy } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -1995,6 +1995,7 @@ class TreeHelisaComponent {
         node => {
             this.fillParent(node, this.data);
         }));
+        this.data.children = this.reorderByOrderIndex(this.data.children);
         this.dataSource.data = this.data.children;
         this.treeControl.dataNodes = this.data.children;
         this.treeHelisaConnect.isLastPage = data.length === 0;
@@ -2161,6 +2162,34 @@ class TreeHelisaComponent {
             }
         }
         return null;
+    }
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    reorderByOrderIndex(node) {
+        if (!!node && node.length > 0) {
+            try {
+                node = orderBy(node, (/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => x.orderIndex), ['asc']);
+                node.forEach((/**
+                 * @param {?} element
+                 * @return {?}
+                 */
+                element => {
+                    if (!!element.children && element != null) {
+                        element.children = this.reorderByOrderIndex(element.children);
+                    }
+                }));
+                return node;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
     }
 }
 TreeHelisaComponent.decorators = [
