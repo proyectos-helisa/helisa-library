@@ -1105,12 +1105,9 @@
              * @return {?}
              */ function (w) {
                 this.type = w ? TableHelisaType.REMOTE : TableHelisaType.LOCAL;
+                this.tableHelisaConnectComponent = new TableHelisaConnectComponent();
                 if (this.type === TableHelisaType.REMOTE) {
-                    this.tableHelisaConnectComponent = new TableHelisaConnectComponent();
                     this.goNextPage();
-                }
-                else {
-                    this.tableHelisaConnectComponent = undefined;
                 }
             },
             enumerable: true,
