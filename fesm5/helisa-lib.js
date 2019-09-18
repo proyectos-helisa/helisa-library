@@ -1519,10 +1519,10 @@ var TableHelisaComponent = /** @class */ (function () {
         }
         this.rawData = this.rawData.concat(data);
         this.dataSource = this.rawData;
-        if (this.type === TableHelisaType.REMOTE) {
-            this.tableHelisaConnectComponent.isLastPage = data.length === 0;
-            this.tableHelisaConnectComponent.isUsed = false;
-        }
+        //if (this.type === TableHelisaType.REMOTE) {
+        this.tableHelisaConnectComponent.isLastPage = data.length === 0;
+        this.tableHelisaConnectComponent.isUsed = false;
+        //}
     };
     /**
      * @return {?}
