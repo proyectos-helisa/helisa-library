@@ -1457,7 +1457,7 @@
          * @return {?}
          */
             function () {
-                if (this.type === TableHelisaType.REMOTE && !this.tableHelisaConnectComponent.isLastPage && !this.tableHelisaConnectComponent.isUsed) {
+                if (!this.tableHelisaConnectComponent.isLastPage && !this.tableHelisaConnectComponent.isUsed) {
                     this.tableHelisaConnectComponent.isUsed = true;
                     this.nextPage.emit({
                         page: this.tableHelisaConnectComponent.nextPage(),

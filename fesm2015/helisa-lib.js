@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove, orderBy } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, ViewChildren, ViewChild, ElementRef, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, ViewChild, ElementRef, Directive, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1163,7 +1163,7 @@ class TableHelisaComponent {
      * @return {?}
      */
     goNextPage() {
-        if (this.type === TableHelisaType.REMOTE && !this.tableHelisaConnectComponent.isLastPage && !this.tableHelisaConnectComponent.isUsed) {
+        if (!this.tableHelisaConnectComponent.isLastPage && !this.tableHelisaConnectComponent.isUsed) {
             this.tableHelisaConnectComponent.isUsed = true;
             this.nextPage.emit({
                 page: this.tableHelisaConnectComponent.nextPage(),
