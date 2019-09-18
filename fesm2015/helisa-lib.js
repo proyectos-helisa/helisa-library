@@ -885,6 +885,9 @@ class TableHelisaComponent {
         if (this.type === TableHelisaType.REMOTE) {
             this.goNextPage();
         }
+        else {
+            this.tableHelisaConnectComponent.page++;
+        }
     }
     /**
      * @param {?} columnConfiguration

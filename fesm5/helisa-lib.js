@@ -1135,6 +1135,9 @@ var TableHelisaComponent = /** @class */ (function () {
             if (this.type === TableHelisaType.REMOTE) {
                 this.goNextPage();
             }
+            else {
+                this.tableHelisaConnectComponent.page++;
+            }
         },
         enumerable: true,
         configurable: true
