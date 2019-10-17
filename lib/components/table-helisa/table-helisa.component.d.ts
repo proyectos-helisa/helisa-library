@@ -26,6 +26,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     isSetSelectedRow: boolean;
     indexRowSelect: number;
     private scrollCount;
+    hasSubtitle: boolean;
     matSort: MatSort;
     matTable: MatTable<any>;
     sort: EventEmitter<EventColumn>;
@@ -50,8 +51,10 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     addRow: EventEmitter<void>;
     bookClicked: EventEmitter<T>;
     addBookButton: boolean;
+    showToolTip: boolean;
     showFooter: boolean;
     showSearch: boolean;
+    private timeTooltip;
     constructor(tableService: TableHelisaService<T>);
     ngOnInit(): void;
     ngAfterViewInit(): void;
@@ -69,6 +72,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     footerDisplayedColumns(): Array<string>;
     getGroupValue(column: ColumnConfig, data: TotalGroup): number;
     getValue(obj: any, column: ColumnConfig): any;
+    getValueTooltip(obj: any, column: ColumnConfig): any;
     searchText(text: any): void;
     selectRow(row: any, isUser: any): void;
     onScroll(event: any): void;
@@ -86,5 +90,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      */
     onAddRow(): void;
     onBookClicked(selectedObject: any): void;
+    getHeaderSubtitle(): string[];
+    getColumnsWithTitle(): string[];
 }
 export {};

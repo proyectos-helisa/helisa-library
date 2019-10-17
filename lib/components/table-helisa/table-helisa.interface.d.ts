@@ -1,13 +1,16 @@
 import { SortDirection } from "@angular/material";
 export interface ColumnConfig {
     name: string;
-    title: string;
+    title?: string;
     visible?: boolean;
     sortable?: boolean;
     groupable?: boolean;
     totalType?: TotalType;
     searchable?: boolean;
     sortDirection?: SortDirection;
+    subtitle?: string;
+    colspanTitle?: number;
+    colspanSubtitle?: number;
 }
 export interface AddRowButton {
     text: string;
