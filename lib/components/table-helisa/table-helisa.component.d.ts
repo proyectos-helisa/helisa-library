@@ -19,6 +19,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     rawData: Array<T>;
     data: MatTableDataSource<RowData>;
     displayedColumns: string[];
+    displayedColumnsWithTitle: string[];
+    displayedColumnsWithSubtitle: string[];
+    displayedColumnsWithFooter: string[];
     columnConfig: Array<ColumnConfig>;
     selectedObject: T;
     lastSearch: string;
