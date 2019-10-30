@@ -13,14 +13,11 @@ export declare class AutocompleteHelisaComponent<T> implements OnInit {
     filteredOptions: Observable<OptionAutocompleteHelisa<T>[]>;
     selectedValue: OptionAutocompleteHelisa<T>;
     onSelectedValue: EventEmitter<T>;
-    nextPage: EventEmitter<void>;
     isRemote: boolean;
     isLoading: boolean;
     constructor(autocompleteHelisaService: AutocompleteHelisaService<T>);
     ngOnInit(): void;
-    displayFn(option?: OptionAutocompleteHelisa<T>): string | undefined;
     getService(): AutocompleteHelisaService<T>;
     private _filter;
     onSelected(event: any): void;
-    getNextPage(): void;
 }

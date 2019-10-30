@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('lodash.clonedeep'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree'), require('@angular/material/tooltip')) :
-    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'lodash.clonedeep', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree', '@angular/material/tooltip'], factory) :
-    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.clonedeep,global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree,global.ng.material.tooltip));
-}(this, (function (exports,i1,clonedeep,tree,router,_,operators,rxjs,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1,tooltip) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('lodash.clonedeep'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/core'), require('@angular/material'), require('@angular/material/toolbar'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/select'), require('@angular/material/list'), require('@angular/material/icon'), require('@angular/material/card'), require('@angular/cdk/layout'), require('@angular/material/progress-spinner'), require('@angular/material/dialog'), require('@angular/material/tabs'), require('@angular/material/datepicker'), require('@angular/material/stepper'), require('@angular/material/chips'), require('@angular/cdk/drag-drop'), require('@angular/forms'), require('@angular/common'), require('@angular/material/tree')) :
+    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'lodash.clonedeep', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/core', '@angular/material', '@angular/material/toolbar', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/select', '@angular/material/list', '@angular/material/icon', '@angular/material/card', '@angular/cdk/layout', '@angular/material/progress-spinner', '@angular/material/dialog', '@angular/material/tabs', '@angular/material/datepicker', '@angular/material/stepper', '@angular/material/chips', '@angular/cdk/drag-drop', '@angular/forms', '@angular/common', '@angular/material/tree'], factory) :
+    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.clonedeep,global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.core,global.ng.material,global.ng.material.toolbar,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.select,global.ng.material.list,global.ng.material.icon,global.ng.material.card,global.ng.cdk.layout,global.ng.material['progress-spinner'],global.ng.material.dialog,global.ng.material.tabs,global.ng.material.datepicker,global.ng.material.stepper,global.ng.material.chips,global.ng.cdk['drag-drop'],global.ng.forms,global.ng.common,global.ng.material.tree));
+}(this, (function (exports,i1,clonedeep,tree,router,_,operators,rxjs,i0,material,toolbar,expansion,formField,select,list,icon,card,layout,progressSpinner,i1$1,tabs,datepicker,stepper,chips,dragDrop,forms,common,tree$1) { 'use strict';
 
     clonedeep = clonedeep && clonedeep.hasOwnProperty('default') ? clonedeep['default'] : clonedeep;
 
@@ -88,7 +88,7 @@
         ToastHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-toast',
-                        template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\r\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n  </ng-container>    \r\n</div>\r\n",
+                        template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n</div>\r\n",
                         styles: [""]
                     }] }
         ];
@@ -262,16 +262,10 @@
         function DependencyTableHelisaService() {
             this.tables = new rxjs.Subject();
             this.infoTables = new Array();
-            this.emitVisibilityButton$ = new rxjs.Subject();
-            this.emitVisibilityButton = this.emitVisibilityButton$.asObservable();
-            this.emitVisibilityAllButtons$ = new rxjs.Subject();
-            this.emitVisibilityAllButtons = this.emitVisibilityAllButtons$.asObservable();
-            this.emitIsCellSelection$ = new rxjs.Subject();
-            this.emitIsCellSelection = this.emitIsCellSelection$.asObservable();
-            this.emitChangeColumns$ = new rxjs.Subject();
-            this.emitChangeColumns = this.emitChangeColumns$.asObservable();
             this.emitTotal = new rxjs.Subject();
             this.emitNextPage = new rxjs.Subject();
+            this.selectedIndexRow$ = new rxjs.Subject();
+            this.selectedIndexRow = this.selectedIndexRow$.asObservable();
         }
         /**
          * retorna un Observable<ConfigTable[]>
@@ -365,86 +359,15 @@
                 this.emitNextPage.next(event);
             };
         /**
-         * @param {?} config
+         * @param {?} index
          * @return {?}
          */
         DependencyTableHelisaService.prototype.selectIndexRow = /**
-         * @param {?} config
+         * @param {?} index
          * @return {?}
          */
-            function (config) {
-                if (this.infoTables[config.order]) {
-                    this.infoTables[config.order].indexRowSelect = config.indexRowSelect;
-                    this.tables.next(this.infoTables);
-                }
-            };
-        /**
-         * Muestra o esconde el boton una tabla en especifico
-         * @param event para indicar el index de la tabla y en "data" true o false
-         */
-        /**
-         * Muestra o esconde el boton una tabla en especifico
-         * @param {?} event para indicar el index de la tabla y en "data" true o false
-         * @return {?}
-         */
-        DependencyTableHelisaService.prototype.changeVisibilityButton = /**
-         * Muestra o esconde el boton una tabla en especifico
-         * @param {?} event para indicar el index de la tabla y en "data" true o false
-         * @return {?}
-         */
-            function (event) {
-                this.emitVisibilityButton$.next(event);
-            };
-        /**
-         * Esconde los botones de todas las tablas
-         * @param show indicar si se muestran o no todos los botones de las tablas
-         */
-        /**
-         * Esconde los botones de todas las tablas
-         * @param {?} show indicar si se muestran o no todos los botones de las tablas
-         * @return {?}
-         */
-        DependencyTableHelisaService.prototype.changeVisibilityAllButtons = /**
-         * Esconde los botones de todas las tablas
-         * @param {?} show indicar si se muestran o no todos los botones de las tablas
-         * @return {?}
-         */
-            function (show) {
-                this.emitVisibilityAllButtons$.next(show);
-            };
-        /**
-         * Para habilitar el manejo de selección de celda
-         * @param event para indicar el index de la tabla y en "data" true o false
-         */
-        /**
-         * Para habilitar el manejo de selección de celda
-         * @param {?} event para indicar el index de la tabla y en "data" true o false
-         * @return {?}
-         */
-        DependencyTableHelisaService.prototype.changeisCellSelection = /**
-         * Para habilitar el manejo de selección de celda
-         * @param {?} event para indicar el index de la tabla y en "data" true o false
-         * @return {?}
-         */
-            function (event) {
-                this.emitIsCellSelection$.next(event);
-            };
-        /**
-        * Para habilitar el cambio de columnas
-        * @param event para indicar el index de la tabla y en "data" columnas
-        */
-        /**
-         * Para habilitar el cambio de columnas
-         * @param {?} event para indicar el index de la tabla y en "data" columnas
-         * @return {?}
-         */
-        DependencyTableHelisaService.prototype.changeColumnsByTable = /**
-         * Para habilitar el cambio de columnas
-         * @param {?} event para indicar el index de la tabla y en "data" columnas
-         * @return {?}
-         */
-            function (event) {
-                this.emitChangeColumns$.next(event);
+            function (index) {
+                this.selectedIndexRow$.next(index);
             };
         DependencyTableHelisaService.decorators = [
             { type: i0.Injectable }
@@ -467,11 +390,6 @@
             this.emitNextPage = new rxjs.Subject();
             this.totalReturn = this.emitChangeSource.asObservable();
             this.nextPageReturn = this.emitNextPage.asObservable();
-            this.emitVisibleButton$ = new rxjs.Subject();
-            /**
-             * Observable para saber si se debe mostrar o esconder el boton de add row
-             */
-            this.emitVisibleButton = this.emitVisibleButton$.asObservable();
         }
         /**
          * @param {?} total
@@ -499,23 +417,6 @@
             function (page, table) {
                 this.emitNextPage.next({ obj: page, table: table });
             };
-        /**
-         * para modificar el valor de si se muestra o no el boton de add row de la tabla
-         * @param change indicar si se muestra o no el boton de add row de la tabla
-         */
-        /**
-         * para modificar el valor de si se muestra o no el boton de add row de la tabla
-         * @param {?} change indicar si se muestra o no el boton de add row de la tabla
-         * @return {?}
-         */
-        TableHelisaService.prototype.changeVisibilityButton = /**
-         * para modificar el valor de si se muestra o no el boton de add row de la tabla
-         * @param {?} change indicar si se muestra o no el boton de add row de la tabla
-         * @return {?}
-         */
-            function (change) {
-                this.emitVisibleButton$.next(change);
-            };
         TableHelisaService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
@@ -534,19 +435,11 @@
             this.dependencyTableHelisaService = dependencyTableHelisaService;
             this.tableService = tableService;
             this.tables = [];
-            this.showToolTip = true;
-            /**
-             * deprecated, use selectObject
-             */
             this.selected = new i0.EventEmitter();
-            this.selectObject = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.sort = new i0.EventEmitter();
-            this.drop = new i0.EventEmitter();
-            this.addRow = new i0.EventEmitter();
-            this.selectCell = new i0.EventEmitter();
-            this.bookClicked = new i0.EventEmitter();
+            this.isDragged = false;
             this.selectedObject = null;
         }
         /**
@@ -570,60 +463,11 @@
                  */function (event) {
                     _this.tableService.setTotal(event.data, _this.viewTables[event.index]);
                 }));
-                // Observable para mostrar o esconder el boton de una tabla
-                this.dependencyTableHelisaService.emitVisibilityButton.subscribe(( /**
-                 * @param {?} data
+                this.dependencyTableHelisaService.selectedIndexRow.subscribe(( /**
+                 * @param {?} event
                  * @return {?}
-                 */function (data) {
-                    if (!!data && data.index != undefined) {
-                        /** @type {?} */
-                        var table = _this.tables[data.index];
-                        if (!!table) {
-                            table.addRowButton.showButton = data.data;
-                        }
-                    }
-                }));
-                //Observable para mostrar o esconder los botones de todas las tablas
-                this.dependencyTableHelisaService.emitVisibilityAllButtons.subscribe(( /**
-                 * @param {?} data
-                 * @return {?}
-                 */function (data) {
-                    if (data != undefined && data != null) {
-                        _this.tables.forEach(( /**
-                         * @param {?} element
-                         * @return {?}
-                         */function (element) {
-                            if (!!element.addRowButton) {
-                                element.addRowButton.showButton = data;
-                            }
-                        }));
-                    }
-                }));
-                //Observable para manejo de selección de celdas
-                this.dependencyTableHelisaService.emitIsCellSelection.subscribe(( /**
-                 * @param {?} data
-                 * @return {?}
-                 */function (data) {
-                    if (!!data && data.index != undefined) {
-                        /** @type {?} */
-                        var table = _this.tables[data.index];
-                        if (table) {
-                            table.isCellSelection = data.data;
-                        }
-                    }
-                }));
-                //Observable para manejo de columnas
-                this.dependencyTableHelisaService.emitChangeColumns.subscribe(( /**
-                 * @param {?} data
-                 * @return {?}
-                 */function (data) {
-                    if (!!data && data.index != undefined) {
-                        /** @type {?} */
-                        var table = _this.tables[data.index];
-                        if (table) {
-                            table.columns = data.data;
-                        }
-                    }
+                 */function (event) {
+                    _this.indexRowSelect = event;
                 }));
             };
         /**
@@ -680,8 +524,7 @@
          */
             function (index, event) {
                 this.selectedObject = { index: index, data: event };
-                this.selected.emit({ index: index, data: event.value });
-                this.selectObject.emit({ index: index, data: event });
+                this.selected.emit({ index: index, data: event });
             };
         /**
          * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
@@ -743,75 +586,10 @@
             function (index, event) {
                 this.sort.emit({ index: index, data: event });
             };
-        /**
-         * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
-         * @param index indica el indice de la tabla que genera el evento
-         * @param event evento generado desde la tabla
-         */
-        /**
-         * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
-         * @param {?} index indica el indice de la tabla que genera el evento
-         * @param {?} event evento generado desde la tabla
-         * @return {?}
-         */
-        DependencyTableHelisaComponent.prototype.onDrop = /**
-         * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
-         * @param {?} index indica el indice de la tabla que genera el evento
-         * @param {?} event evento generado desde la tabla
-         * @return {?}
-         */
-            function (index, event) {
-                this.drop.emit({ index: index, data: event });
-            };
-        /**
-         * Evento que se dispara desde una tabla, emite el indice de la tabla al cual se le debe añadir una nueva fila
-         * @param index indica el indice de la tabla de la cual se dispara el evento
-         */
-        /**
-         * Evento que se dispara desde una tabla, emite el indice de la tabla al cual se le debe añadir una nueva fila
-         * @param {?} index indica el indice de la tabla de la cual se dispara el evento
-         * @return {?}
-         */
-        DependencyTableHelisaComponent.prototype.onAddRow = /**
-         * Evento que se dispara desde una tabla, emite el indice de la tabla al cual se le debe añadir una nueva fila
-         * @param {?} index indica el indice de la tabla de la cual se dispara el evento
-         * @return {?}
-         */
-            function (index) {
-                this.addRow.emit(index);
-            };
-        /**
-         * @param {?} index
-         * @param {?} event
-         * @return {?}
-         */
-        DependencyTableHelisaComponent.prototype.selectedCell = /**
-         * @param {?} index
-         * @param {?} event
-         * @return {?}
-         */
-            function (index, event) {
-                if (this.tables[index].isCellSelection) {
-                    this.selectCell.emit({ index: index, data: event });
-                }
-            };
-        /**
-         * @param {?} index
-         * @param {?} event
-         * @return {?}
-         */
-        DependencyTableHelisaComponent.prototype.onBookClicked = /**
-         * @param {?} index
-         * @param {?} event
-         * @return {?}
-         */
-            function (index, event) {
-                this.bookClicked.emit({ index: index, data: event });
-            };
         DependencyTableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-dependency-table',
-                        template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\r\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\r\n    (bookClicked)=\"onBookClicked(i,$event)\"\r\n    [showToolTip]=\"showToolTip\">\r\n  </hel-table>\r\n</div>\r\n",
+                        template: "<div>\r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (select)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\" (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"true\">\r\n  </hel-table>\r\n</div>\r\n",
                         providers: [DependencyTableHelisaService],
                         styles: [""]
                     }] }
@@ -825,16 +603,12 @@
         };
         DependencyTableHelisaComponent.propDecorators = {
             viewTables: [{ type: i0.ViewChildren, args: ['viewTables',] }],
-            showToolTip: [{ type: i0.Input }],
             selected: [{ type: i0.Output }],
-            selectObject: [{ type: i0.Output }],
             nextPage: [{ type: i0.Output }],
             total: [{ type: i0.Output }],
             sort: [{ type: i0.Output }],
-            drop: [{ type: i0.Output }],
-            addRow: [{ type: i0.Output }],
-            selectCell: [{ type: i0.Output }],
-            bookClicked: [{ type: i0.Output }]
+            isDragged: [{ type: i0.Input }],
+            indexRowSelect: [{ type: i0.Input }]
         };
         return DependencyTableHelisaComponent;
     }());
@@ -850,7 +624,6 @@
             this.isSearch = false;
             this.inputFormControl = new forms.FormControl('');
             this.isFocused = false;
-            this.disabled = false;
         }
         /**
          * @return {?}
@@ -875,7 +648,7 @@
         InputHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-input',
-                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
+                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\">\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                         styles: [""]
                     }] }
         ];
@@ -887,7 +660,6 @@
             isSearch: [{ type: i0.Input }],
             inputFormControl: [{ type: i0.Input }],
             isFocused: [{ type: i0.Input }],
-            disabled: [{ type: i0.Input }],
             nameInput: [{ type: i0.ViewChild, args: ['inputText',] }]
         };
         return InputHelisaComponent;
@@ -897,12 +669,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @enum {number} */
-    var EventScope = {
-        USER: 0, CODE_CALL: 1,
-    };
-    EventScope[EventScope.USER] = 'USER';
-    EventScope[EventScope.CODE_CALL] = 'CODE_CALL';
     /** @enum {number} */
     var TotalType = {
         SUM: 0, AVERAGE: 1, COUNT: 2,
@@ -1013,32 +779,19 @@
         function TableHelisaComponent(tableService) {
             this.tableService = tableService;
             this.displayedColumns = [];
-            this.displayedColumnsWithTitle = [];
-            this.displayedColumnsWithSubtitle = [];
-            this.displayedColumnsWithFooter = [];
             this.type = TableHelisaType.LOCAL;
             this.isSetSelectedRow = false;
-            this.scrollCount = 0;
-            this.hasSubtitle = false;
             this.sort = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.search = new i0.EventEmitter();
-            /**
-             * Deprecado, cambiar por electObject
-             */
             this.select = new i0.EventEmitter();
             this.selectCell = new i0.EventEmitter();
-            this.selectObject = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.showTitle = true;
-            this.isCellSelection = false;
+            this.multipleCell = false;
+            this.selectedCells = new Array();
             this.drop = new i0.EventEmitter();
             this.isDragged = false;
-            this.addRowButton = { showButton: false, text: "" };
-            this.addRow = new i0.EventEmitter();
-            this.bookClicked = new i0.EventEmitter();
-            this.addBookButton = false;
-            this.showToolTip = true;
             this.showFooter = false;
             this.showSearch = false;
         }
@@ -1086,14 +839,6 @@
                     column.sortDirection = event.direction;
                     _this.sort.emit({ column: column, columnConfigurations: _this.columnConfig, type: ChangeColumnConfigurationType.SORT });
                 }));
-                this.tableService.emitVisibleButton.subscribe(( /**
-                 * @param {?} data
-                 * @return {?}
-                 */function (data) {
-                    if (data != undefined && data != null) {
-                        _this.addRowButton.showButton = data;
-                    }
-                }));
             };
         /**
          * @return {?}
@@ -1102,7 +847,7 @@
          * @return {?}
          */
             function () {
-                if (this.isCellSelection) {
+                if (this.multipleCell) {
                     this.matTable.renderRows();
                 }
             };
@@ -1112,12 +857,12 @@
              * @return {?}
              */ function (w) {
                 this.type = w ? TableHelisaType.REMOTE : TableHelisaType.LOCAL;
-                this.tableHelisaConnectComponent = new TableHelisaConnectComponent();
                 if (this.type === TableHelisaType.REMOTE) {
+                    this.tableHelisaConnectComponent = new TableHelisaConnectComponent();
                     this.goNextPage();
                 }
                 else {
-                    this.tableHelisaConnectComponent.page++;
+                    this.tableHelisaConnectComponent = undefined;
                 }
             },
             enumerable: true,
@@ -1129,7 +874,6 @@
              * @return {?}
              */ function (columnConfiguration) {
                 var _this = this;
-                this.hasSubtitle = false;
                 this.columnConfig = columnConfiguration;
                 this.displayedColumns.splice(0, this.displayedColumns.length);
                 if (columnConfiguration) {
@@ -1140,29 +884,11 @@
                         if (column.visible) {
                             _this.displayedColumns.push(column.name);
                         }
-                        if (!_this.hasSubtitle) {
-                            _this.hasSubtitle = column.subtitle != undefined;
-                        }
                     }));
                     if (this.rawData) {
                         this.dataSource = this.rawData;
                     }
                 }
-                this.displayedColumnsWithTitle.splice(0, this.displayedColumnsWithTitle.length);
-                this.displayedColumnsWithSubtitle.splice(0, this.displayedColumnsWithSubtitle.length);
-                this.displayedColumnsWithFooter.splice(0, this.displayedColumnsWithFooter.length);
-                this.getColumnsWithTitle().forEach(( /**
-                 * @param {?} col
-                 * @return {?}
-                 */function (col) { return _this.displayedColumnsWithTitle.push(col); }));
-                this.getHeaderSubtitle().forEach(( /**
-                 * @param {?} col
-                 * @return {?}
-                 */function (col) { return _this.displayedColumnsWithSubtitle.push(col); }));
-                this.footerDisplayedColumns().forEach(( /**
-                 * @param {?} col
-                 * @return {?}
-                 */function (col) { return _this.displayedColumnsWithFooter.push(col); }));
             },
             enumerable: true,
             configurable: true
@@ -1190,7 +916,7 @@
                     if ((idRowSelected >= this.rawData.length || idRowSelected < 0)) {
                         this.indexRowSelect = 0;
                     }
-                    this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW }, false);
+                    this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW });
                 }
             },
             enumerable: true,
@@ -1263,7 +989,7 @@
                 if (this.rawData && this.rawData.length && this.indexRowSelect && !this.selectedObject) {
                     if (this.indexRowSelect >= this.rawData.length || this.indexRowSelect < 0)
                         this.indexRowSelect = 0;
-                    this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW }, false);
+                    this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW });
                 }
             };
         /**
@@ -1433,24 +1159,6 @@
                 return ColumnConfigUtil.getValue(obj, column);
             };
         /**
-         * @param {?} obj
-         * @param {?} column
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.getValueTooltip = /**
-         * @param {?} obj
-         * @param {?} column
-         * @return {?}
-         */
-            function (obj, column) {
-                if (this.showToolTip) {
-                    return ColumnConfigUtil.getValue(obj, column);
-                }
-                else {
-                    return null;
-                }
-            };
-        /**
          * @param {?} text
          * @return {?}
          */
@@ -1464,18 +1172,15 @@
             };
         /**
          * @param {?} row
-         * @param {?} isUser
          * @return {?}
          */
         TableHelisaComponent.prototype.selectRow = /**
          * @param {?} row
-         * @param {?} isUser
          * @return {?}
          */
-            function (row, isUser) {
+            function (row) {
                 this.selectedObject = row.data;
                 this.select.emit(this.selectedObject);
-                this.selectObject.emit({ value: this.selectedObject, scope: isUser ? EventScope.USER : EventScope.CODE_CALL });
             };
         /**
          * @param {?} event
@@ -1501,7 +1206,7 @@
          * @return {?}
          */
             function () {
-                if (!this.tableHelisaConnectComponent.isLastPage && !this.tableHelisaConnectComponent.isUsed) {
+                if (this.type === TableHelisaType.REMOTE && !this.tableHelisaConnectComponent.isLastPage && !this.tableHelisaConnectComponent.isUsed) {
                     this.tableHelisaConnectComponent.isUsed = true;
                     this.nextPage.emit({
                         page: this.tableHelisaConnectComponent.nextPage(),
@@ -1525,8 +1230,10 @@
                 }
                 this.rawData = this.rawData.concat(data);
                 this.dataSource = this.rawData;
-                this.tableHelisaConnectComponent.isLastPage = data.length === 0;
-                this.tableHelisaConnectComponent.isUsed = false;
+                if (this.type === TableHelisaType.REMOTE) {
+                    this.tableHelisaConnectComponent.isLastPage = data.length === 0;
+                    this.tableHelisaConnectComponent.isUsed = false;
+                }
             };
         /**
          * @return {?}
@@ -1548,29 +1255,36 @@
          * @return {?}
          */
             function (element, column) {
-                this.selectedCells = { column: column, row: element };
+                /** @type {?} */
+                var index = this.isSelectedCell(element, column);
+                if (index >= 0) {
+                    this.selectedCells.splice(index, 1);
+                }
+                else {
+                    this.selectedCells.push({ column: column, row: element });
+                }
                 this.selectCell.emit(this.selectedCells);
             };
         /**
-         * @param {?} row
+         * @param {?} element
          * @param {?} column
          * @return {?}
          */
         TableHelisaComponent.prototype.isSelectedCell = /**
-         * @param {?} row
+         * @param {?} element
          * @param {?} column
          * @return {?}
          */
-            function (row, column) {
-                if (this.isCellSelection) {
-                    if (this.selectedCells != null) {
-                        if (this.selectedCells.column.name === column.name &&
-                            this.selectedCells.row.data === row.data) {
-                            return true;
+            function (element, column) {
+                if (this.multipleCell) {
+                    for (var index = 0; index < this.selectedCells.length; index++) {
+                        if (this.selectedCells[index].column.name === column.name &&
+                            this.selectedCells[index].row.data === element.data) {
+                            return index;
                         }
                     }
                 }
-                return false;
+                return -1;
             };
         /**
          * @param {?} row
@@ -1638,133 +1352,14 @@
                 /** @type {?} */
                 var array = this.data.data;
                 dragDrop.moveItemInArray(array, event.previousIndex, event.currentIndex);
-                this.drop.emit({ value: array[event.currentIndex].data, order: event.currentIndex });
+                this.drop.emit({ value: array[event.previousIndex].data, order: event.currentIndex });
                 this.data.data = clonedeep(array);
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.tableKeydown = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                var _this = this;
-                if (!this.isCellSelection) {
-                    /** @type {?} */
-                    var currentIndex_1 = this.data.data.findIndex(( /**
-                     * @param {?} row
-                     * @return {?}
-                     */function (row) { return row.data === _this.selectedObject; }));
-                    /** @type {?} */
-                    var newSelection_1 = -10;
-                    if (event.key === 'ArrowDown') {
-                        this.scrollCount++;
-                        this.data.data.forEach(( /**
-                         * @param {?} row
-                         * @param {?} index
-                         * @return {?}
-                         */function (row, index) {
-                            if (newSelection_1 == -10 && index > currentIndex_1 && row.rowType == RowType.ROW)
-                                newSelection_1 = index;
-                        }));
-                    }
-                    if (event.key === 'ArrowUp') {
-                        this.scrollCount--;
-                        currentIndex_1 = this.data.data.length - currentIndex_1 - 1;
-                        this.data.data.reverse().forEach(( /**
-                         * @param {?} row
-                         * @param {?} index
-                         * @return {?}
-                         */function (row, index) {
-                            if (newSelection_1 == -10 && index > currentIndex_1 && row.rowType == RowType.ROW)
-                                newSelection_1 = index;
-                        }));
-                        this.data.data.reverse();
-                        if (newSelection_1 != -10) {
-                            newSelection_1 = this.data.data.length - newSelection_1 - 1;
-                        }
-                    }
-                    if (newSelection_1 != -10) {
-                        this.selectedObject = this.data.data[newSelection_1].data;
-                    }
-                    if (Math.abs(this.scrollCount) >= 2)
-                        this.scrollCount = 0;
-                    else
-                        event.preventDefault();
-                }
-            };
-        /**
-         * Emite el evento cuando se da click al boton AddRow
-         */
-        /**
-         * Emite el evento cuando se da click al boton AddRow
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.onAddRow = /**
-         * Emite el evento cuando se da click al boton AddRow
-         * @return {?}
-         */
-            function () {
-                this.addRow.emit();
-            };
-        /**
-         * @param {?} selectedObject
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.onBookClicked = /**
-         * @param {?} selectedObject
-         * @return {?}
-         */
-            function (selectedObject) {
-                this.bookClicked.emit(selectedObject);
-            };
-        /**
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.getHeaderSubtitle = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var x = this.columnConfig.map(( /**
-                 * @param {?} column
-                 * @param {?} index
-                 * @return {?}
-                 */function (column, index) {
-                    if (column.visible && column.subtitle != undefined)
-                        return 'subtitle' + index;
-                    else
-                        return null;
-                })).filter(( /**
-                 * @param {?} data
-                 * @return {?}
-                 */function (data) { return data != null; }));
-                return x;
-            };
-        /**
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.getColumnsWithTitle = /**
-         * @return {?}
-         */
-            function () {
-                return this.columnConfig.filter(( /**
-                 * @param {?} column
-                 * @return {?}
-                 */function (column) {
-                    return column.visible && column.title != undefined;
-                })).map(( /**
-                 * @param {?} col
-                 * @return {?}
-                 */function (col) { return col.name; }));
             };
         TableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-table',
-                        template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <ng-container *ngIf=\"addBookButton\">\r\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\r\n        <div *ngFor=\"let item of rawData\">\r\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\r\n            <mat-icon>import_contacts</mat-icon>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n    <table cdkDropList (cdkDropListDropped)=\"onDrop($event)\" mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\">\r\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <ng-container [matColumnDef]=\"column.name\">\r\n          <ng-container *ngIf=\"column.title != undefined\">\r\n            <div *ngIf=\"!column.sortable\">\r\n              <th mat-header-cell [matTooltip]=\"column.title\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\r\n                {{column.title}} </th>\r\n            </div>\r\n            <div *ngIf=\"column.sortable\">\r\n              <th mat-header-cell [matTooltip]=\"column.title\" *matHeaderCellDef mat-sort-header\r\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\r\n            </div>\r\n          </ng-container>\r\n          <td mat-cell [matTooltip]=\"getValueTooltip(element.data, column)\" *matCellDef=\"let element\"\r\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n            {{ getValue(element.data, column) }}\r\n          </td>\r\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n        </ng-container>\r\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\r\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\r\n            {{column.subtitle}}</th>\r\n        </ng-container>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"isDragged\">\r\n        <tr cdkDrag [cdkDragData]=\"row\" mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\r\n          [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\r\n        </tr>\r\n      </ng-container>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>",
-                        styles: ["/deep/ hel-table{position:relative}/deep/ hel-table>button{justify-content:center;align-items:flex-start;background:0 0;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}/deep/ hel-table>button:focus{outline:0}/deep/ hel-table>button:hover{opacity:1}/deep/ hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:'+';color:#fff;height:26px;width:20px}/deep/ hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}/deep/ hel-table .buttons-container{order:2}/deep/ hel-table .buttons-container.hasTitle{padding-top:26px}/deep/ hel-table .buttons-container.hasSubtitle{padding-top:26px}/deep/ hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}/deep/ hel-table .buttons-container>div{height:26px}/deep/ hel-table .buttons-container>div button{justify-content:center;align-items:center;display:flex;height:26px}/deep/ hel-table .buttons-container>div button>*{display:flex;height:100%}/deep/ hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa{width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{padding:2px 10px 0}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
+                        template: "<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <table cdkDropList (cdkDropListDropped)=\"onDrop($event)\" mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable>\r\n      <ng-container [matColumnDef]=\"column.name\" *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <div *ngIf=\"!column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef> {{column.title}} </th>\r\n        </div>\r\n        <div *ngIf=\"column.sortable\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>\r\n        </div>\r\n        <td mat-cell *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n          [class.selected-row]=\"isSelectedCell(element, column) >= 0\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n          {{ getValue(element.data, column) }}\r\n        </td>\r\n        <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <div *ngIf=\"showFooter\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"showTitle\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns;sticky: true\"></tr>\r\n      </div>\r\n      <div *ngIf=\"isDragged\">\r\n        <tr cdkDrag [cdkDragData]=\"row\" mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row)\" [class.selected-row]=\"row.data === selectedObject && !multipleCell\"\r\n          [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <div *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !multipleCell\" [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </div>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: footerDisplayedColumns(); when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>",
+                        styles: [".div-table-helisa .container-table{width:100%;height:100%}.div-table-helisa .container-table .table-helisa{width:100%}.div-table-helisa .container-table .table-helisa /deep/ tbody tr,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr,.div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td,.div-table-helisa .container-table .table-helisa /deep/ tbody tr th,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,.div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,.div-table-helisa .container-table .table-helisa /deep/ thead tr td,.div-table-helisa .container-table .table-helisa /deep/ thead tr th{padding:2px 10px 0}.div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}.div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}.div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}.div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}.div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1781,21 +1376,15 @@
             search: [{ type: i0.Output }],
             select: [{ type: i0.Output }],
             selectCell: [{ type: i0.Output }],
-            selectObject: [{ type: i0.Output }],
             nextPage: [{ type: i0.Output }],
             showTitle: [{ type: i0.Input }],
-            isCellSelection: [{ type: i0.Input }],
+            multipleCell: [{ type: i0.Input }],
             count: [{ type: i0.Input }],
             configCellStyles: [{ type: i0.Input }],
             configRowStylesFromColumn: [{ type: i0.Input }],
             selectedCells: [{ type: i0.Input }],
             drop: [{ type: i0.Output }],
             isDragged: [{ type: i0.Input }],
-            addRowButton: [{ type: i0.Input }],
-            addRow: [{ type: i0.Output }],
-            bookClicked: [{ type: i0.Output }],
-            addBookButton: [{ type: i0.Input }],
-            showToolTip: [{ type: i0.Input }],
             isRemote: [{ type: i0.Input }],
             columnConfiguration: [{ type: i0.Input }],
             dataSource: [{ type: i0.Input }],
@@ -1836,50 +1425,6 @@
         };
         return DateHelisaComponent;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    function __read(o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-            return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-                ar.push(r.value);
-        }
-        catch (error) {
-            e = { error: error };
-        }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"]))
-                    m.call(i);
-            }
-            finally {
-                if (e)
-                    throw e.error;
-            }
-        }
-        return ar;
-    }
-    function __spread() {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-            ar = ar.concat(__read(arguments[i]));
-        return ar;
-    }
 
     /**
      * @fileoverview added by tsickle
@@ -2593,7 +2138,6 @@
                  */function (node) {
                     _this.fillParent(node, _this.data);
                 }));
-                this.data.children = this.reorderByOrderIndex(this.data.children);
                 this.dataSource.data = this.data.children;
                 this.treeControl.dataNodes = this.data.children;
                 this.treeHelisaConnect.isLastPage = data.length === 0;
@@ -2651,9 +2195,6 @@
          */
             function (node, id) {
                 this.upSelectNode(node);
-                if (node == undefined || node.id == undefined) {
-                    return null;
-                }
                 if (node.id == id) {
                     node.isSelected = true;
                     this.expandAllParents(node);
@@ -2704,13 +2245,11 @@
          * @return {?}
          */
             function (node) {
-                if (!!node && node.isSelected != undefined) {
-                    node.isSelected = false;
-                    if (!!node.children)
-                        for (var i = 0; i < node.children.length; i++) {
-                            this.upSelectNode(node.children[i]);
-                        }
-                }
+                node.isSelected = false;
+                if (!!node.children)
+                    for (var i = 0; i < node.children.length; i++) {
+                        this.upSelectNode(node.children[i]);
+                    }
             };
         /**
          * @param {?} node
@@ -2802,68 +2341,6 @@
                 var obj = { formControl: new forms.FormControl(array), editMode: editMode };
                 this.selectedOptions.set(node.id, obj);
             };
-        /**
-         * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
-         * @param id  number | string
-         * @returns Node o null si no hay un nodo con ese id
-         */
-        /**
-         * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
-         * @param {?} id  number | string
-         * @return {?} Node o null si no hay un nodo con ese id
-         */
-        TreeHelisaComponent.prototype.getNodeById = /**
-         * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
-         * @param {?} id  number | string
-         * @return {?} Node o null si no hay un nodo con ese id
-         */
-            function (id) {
-                /** @type {?} */
-                var queue = __spread(this.dataSource.data);
-                while (queue.length > 0) {
-                    /** @type {?} */
-                    var curr = queue.shift();
-                    if (curr.id === id) {
-                        return curr;
-                    }
-                    else {
-                        if (!!curr.children)
-                            queue.push.apply(queue, __spread(curr.children));
-                    }
-                }
-                return null;
-            };
-        /**
-         * @param {?} node
-         * @return {?}
-         */
-        TreeHelisaComponent.prototype.reorderByOrderIndex = /**
-         * @param {?} node
-         * @return {?}
-         */
-            function (node) {
-                var _this = this;
-                if (!!node && node.length > 0) {
-                    try {
-                        node = _.orderBy(node, ( /**
-                         * @param {?} x
-                         * @return {?}
-                         */function (x) { return x.orderIndex; }), ['asc']);
-                        node.forEach(( /**
-                         * @param {?} element
-                         * @return {?}
-                         */function (element) {
-                            if (!!element.children && element != null) {
-                                element.children = _this.reorderByOrderIndex(element.children);
-                            }
-                        }));
-                        return node;
-                    }
-                    catch (error) {
-                        console.log(error);
-                    }
-                }
-            };
         TreeHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-tree',
@@ -2945,7 +2422,6 @@
             this.myControl = new forms.FormControl();
             this.options = new Array();
             this.onSelectedValue = new i0.EventEmitter();
-            this.nextPage = new i0.EventEmitter();
             this.isRemote = false;
             this.isLoading = false;
         }
@@ -2962,29 +2438,14 @@
                      * @param {?} data
                      * @return {?}
                      */function (data) {
-                        setTimeout(( /**
-                         * @return {?}
-                         */function () {
-                            _this.options = data;
-                            _this.filteredOptions = rxjs.of(_this.options);
-                        }));
+                        _this.options = data;
+                        _this.filteredOptions = rxjs.of(_this.options);
                     }));
                 }
                 this.filteredOptions = this.myControl.valueChanges.pipe(operators.startWith(''), operators.map(( /**
                  * @param {?} value
                  * @return {?}
                  */function (value) { return _this._filter(value); })));
-            };
-        /**
-         * @param {?=} option
-         * @return {?}
-         */
-        AutocompleteHelisaComponent.prototype.displayFn = /**
-         * @param {?=} option
-         * @return {?}
-         */
-            function (option) {
-                return option ? option.displayText : undefined;
             };
         /**
          * @return {?}
@@ -3006,7 +2467,10 @@
          * @return {?}
          */
             function (value) {
-                if (!(value instanceof Object)) {
+                if (value instanceof Object) {
+                    this.myControl.setValue(value.displayText);
+                }
+                else {
                     if (!this.isRemote) {
                         /** @type {?} */
                         var filterValue_1 = value.toLowerCase().split(' ');
@@ -3040,19 +2504,10 @@
                 this.selectedValue = event.option.value;
                 this.onSelectedValue.emit(this.selectedValue.value);
             };
-        /**
-         * @return {?}
-         */
-        AutocompleteHelisaComponent.prototype.getNextPage = /**
-         * @return {?}
-         */
-            function () {
-                this.nextPage.emit();
-            };
         AutocompleteHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-autocomplete',
-                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\">\r\n      {{option.displayText}}\r\n    </mat-option>\r\n  </mat-autocomplete>\r\n</mat-form-field>",
                         providers: [AutocompleteHelisaService],
                         styles: [""]
                     }] }
@@ -3067,113 +2522,9 @@
             myControl: [{ type: i0.Input }],
             options: [{ type: i0.Input }],
             onSelectedValue: [{ type: i0.Output }],
-            nextPage: [{ type: i0.Output }],
             isRemote: [{ type: i0.Input }]
         };
         return AutocompleteHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var OptionsScrollDirective = /** @class */ (function () {
-        function OptionsScrollDirective(autoComplete) {
-            var _this = this;
-            this.autoComplete = autoComplete;
-            this.thresholdPercent = .8;
-            this.scroll = new i0.EventEmitter();
-            this._onDestroy = new rxjs.Subject();
-            this.autoComplete.opened.pipe(operators.tap(( /**
-             * @return {?}
-             */function () {
-                // Note: When autocomplete raises opened, panel is not yet created (by Overlay)
-                // Note: The panel will be available on next tick
-                // Note: The panel wil NOT open if there are no options to display
-                setTimeout(( /**
-                 * @return {?}
-                 */function () {
-                    // Note: remove listner just for safety, in case the close event is skipped.
-                    _this.removeScrollEventListener();
-                    if (!!_this.autoComplete &&
-                        !!_this.autoComplete.panel &&
-                        !!_this.autoComplete.panel.nativeElement) {
-                        _this.autoComplete.panel.nativeElement
-                            .addEventListener('scroll', _this.onScroll.bind(_this));
-                    }
-                }));
-            })), operators.takeUntil(this._onDestroy)).subscribe();
-            this.autoComplete.closed.pipe(operators.tap(( /**
-             * @return {?}
-             */function () { return _this.removeScrollEventListener(); })), operators.takeUntil(this._onDestroy)).subscribe();
-        }
-        /**
-         * @private
-         * @return {?}
-         */
-        OptionsScrollDirective.prototype.removeScrollEventListener = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                if (!!this.autoComplete &&
-                    !!this.autoComplete.panel &&
-                    !!this.autoComplete.panel.nativeElement) {
-                    this.autoComplete.panel.nativeElement
-                        .removeEventListener('scroll', this.onScroll);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        OptionsScrollDirective.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._onDestroy.next();
-                this._onDestroy.complete();
-                this.removeScrollEventListener();
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        OptionsScrollDirective.prototype.onScroll = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                if (this.thresholdPercent === undefined) {
-                    this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
-                }
-                else {
-                    /** @type {?} */
-                    var threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
-                    /** @type {?} */
-                    var current = event.target.scrollTop + event.target.clientHeight;
-                    //console.log(`scroll ${current}, threshold: ${threshold}`)
-                    if (current > threshold) {
-                        //console.log('load next page');
-                        this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
-                    }
-                }
-            };
-        OptionsScrollDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: 'mat-autocomplete[optionsScroll]'
-                    },] }
-        ];
-        /** @nocollapse */
-        OptionsScrollDirective.ctorParameters = function () {
-            return [
-                { type: material.MatAutocomplete }
-            ];
-        };
-        OptionsScrollDirective.propDecorators = {
-            thresholdPercent: [{ type: i0.Input }],
-            scroll: [{ type: i0.Output, args: ['optionsScroll',] }]
-        };
-        return OptionsScrollDirective;
     }());
 
     /**
@@ -3194,8 +2545,7 @@
                             TableHelisaComponent,
                             TreeHelisaComponent,
                             DateHelisaComponent,
-                            AutocompleteHelisaComponent,
-                            OptionsScrollDirective
+                            AutocompleteHelisaComponent
                         ],
                         imports: [
                             common.CommonModule,
@@ -3215,7 +2565,7 @@
                             material.MatSnackBarModule,
                             card.MatCardModule,
                             layout.LayoutModule,
-                            tooltip.MatTooltipModule,
+                            toolbar.MatToolbarModule,
                             material.MatButtonModule,
                             material.MatSidenavModule,
                             icon.MatIconModule,
@@ -3249,7 +2599,6 @@
                             TreeHelisaComponent,
                             DateHelisaComponent,
                             AutocompleteHelisaComponent,
-                            OptionsScrollDirective,
                             material.MatButtonModule,
                             material.MatCheckboxModule,
                             toolbar.MatToolbarModule,
@@ -3263,7 +2612,7 @@
                             material.MatSnackBarModule,
                             card.MatCardModule,
                             layout.LayoutModule,
-                            tooltip.MatTooltipModule,
+                            toolbar.MatToolbarModule,
                             material.MatButtonModule,
                             material.MatSidenavModule,
                             icon.MatIconModule,
@@ -3317,7 +2666,6 @@
     exports.DependencyTableHelisaService = DependencyTableHelisaService;
     exports.InputHelisaComponent = InputHelisaComponent;
     exports.TableHelisaComponent = TableHelisaComponent;
-    exports.EventScope = EventScope;
     exports.TotalType = TotalType;
     exports.ChangeColumnConfigurationType = ChangeColumnConfigurationType;
     exports.TableHelisaType = TableHelisaType;
@@ -3329,7 +2677,6 @@
     exports.TreeHelisaService = TreeHelisaService;
     exports.AutocompleteHelisaComponent = AutocompleteHelisaComponent;
     exports.AutocompleteHelisaService = AutocompleteHelisaService;
-    exports.OptionsScrollDirective = OptionsScrollDirective;
     exports.HelisaLibModule = HelisaLibModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
