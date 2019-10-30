@@ -9,4 +9,5 @@ export interface Node {
     classNode?: string | null;
     options?: Node[];
     isCheckedOption?: boolean;
+    orderIndex?: number;
 }

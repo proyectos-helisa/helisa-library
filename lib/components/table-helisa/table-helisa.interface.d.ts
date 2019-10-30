@@ -1,13 +1,24 @@
 import { SortDirection } from "@angular/material";
 export interface ColumnConfig {
     name: string;
-    title: string;
+    title?: string;
     visible?: boolean;
     sortable?: boolean;
     groupable?: boolean;
     totalType?: TotalType;
     searchable?: boolean;
     sortDirection?: SortDirection;
+    subtitle?: string;
+    colspanTitle?: number;
+    colspanSubtitle?: number;
+}
+export interface AddRowButton {
+    text: string;
+    showButton: boolean;
+}
+export declare enum EventScope {
+    USER = 0,
+    CODE_CALL = 1
 }
 export declare enum TotalType {
     SUM = 0,
@@ -43,6 +54,10 @@ export interface RequestTableHelisa {
 export interface DropElement<T> {
     value: T;
     order: number;
+}
+export interface SelectObject<T> {
+    value: T;
+    scope: EventScope;
 }
 export declare enum TableHelisaType {
     REMOTE = 0,
