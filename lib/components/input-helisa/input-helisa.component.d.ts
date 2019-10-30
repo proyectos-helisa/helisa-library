@@ -6,7 +6,6 @@ export declare class InputHelisaComponent implements OnInit {
     isSearch: boolean;
     inputFormControl: FormControl;
     isFocused: boolean;
-    disabled: boolean;
     nameInput: ElementRef;
     constructor();
     ngOnInit(): void;

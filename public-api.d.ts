@@ -18,5 +18,4 @@ export * from './lib/components/tree-helisa/tree-helisa.service';
 export * from './lib/components/tree-helisa/node';
 export * from './lib/components/autocomplete-helisa/autocomplete-helisa.component';
 export * from './lib/components/autocomplete-helisa/autocomplete-helisa.component.service';
-export * from './lib/directives/options-scroll.directive';
 export * from './lib/helisa-lib.module';

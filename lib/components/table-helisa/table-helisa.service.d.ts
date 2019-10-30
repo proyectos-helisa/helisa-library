@@ -12,14 +12,4 @@ export declare class TableHelisaService<T> {
     nextPageReturn: Observable<TableHelisaServiceInfo<T[]>>;
     setTotal(total: TotalTableHelisa, table?: TableHelisaComponent<T>): void;
     addPage(page: T[], table?: TableHelisaComponent<T>): void;
-    private emitVisibleButton$;
-    /**
-     * Observable para saber si se debe mostrar o esconder el boton de add row
-     */
-    emitVisibleButton: Observable<boolean>;
-    /**
-     * para modificar el valor de si se muestra o no el boton de add row de la tabla
-     * @param change indicar si se muestra o no el boton de add row de la tabla
-     */
-    changeVisibilityButton(change: boolean): void;
 }
