@@ -107,4 +107,11 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     onSelectOption(event: any, node: any): void;
     getSelectedOptions(node: Node): any;
     private reloadSelectedOptions;
+    /**
+     * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno
+     * @param id  number | string
+     * @returns Node o null si no hay un nodo con ese id
+     */
+    getNodeById(id: number | string): Node;
+    reorderByOrderIndex(node: Node[]): Node[];
 }

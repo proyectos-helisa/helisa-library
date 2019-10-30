@@ -1,6 +1,6 @@
 import { OnInit, EventEmitter, QueryList } from '@angular/core';
 import { DependencyTableHelisaService, ConfigTable } from './dependency-table-helisa.service';
-import { RequestTableHelisa } from '../table-helisa/table-helisa.interface';
+import { RequestTableHelisa, SelectObject } from '../table-helisa/table-helisa.interface';
 import { TableHelisaService } from '../table-helisa/table-helisa.service';
 import { TableHelisaComponent } from '../table-helisa/table-helisa.component';
 export interface EventDependency {
@@ -12,13 +12,28 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     private tableService;
     tables: Array<ConfigTable>;
     viewTables: QueryList<TableHelisaComponent<any>>;
+    showToolTip: boolean;
+    /**
+     * deprecated, use selectObject
+     */
     selected: EventEmitter<EventDependency>;
+    selectObject: EventEmitter<EventDependency>;
     nextPage: EventEmitter<EventDependency>;
     total: EventEmitter<EventDependency>;
     sort: EventEmitter<EventDependency>;
-    isDragged: boolean;
-    indexRowSelect: number;
+    drop: EventEmitter<EventDependency>;
+    addRow: EventEmitter<number>;
+    selectCell: EventEmitter<EventDependency>;
+    bookClicked: EventEmitter<EventDependency>;
     selectedObject: EventDependency;
+    /**
+       * Tiempo antes de ocultarla el mensaje del tooltip
+       */
+    hideDelay: number;
+    /**
+     * Tiempo antes de mostra el mensaje del tooltip
+     */
+    showDelay: number;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;
     /**
@@ -34,7 +49,7 @@ export declare class DependencyTableHelisaComponent implements OnInit {
      * @param index indica el indice de la tabla seleccionada
      * @param data retorna la fila que fue seleccionada
      */
-    onSelectedDependency(index: number, event: any): void;
+    onSelectedDependency(index: number, event: SelectObject<any>): void;
     /**
      * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
      * @param index indica el indice de la tabla que genera el evento
@@ -53,4 +68,17 @@ export declare class DependencyTableHelisaComponent implements OnInit {
      * @param event evento generado desde la tabla
      */
     onSort(index: number, event: any): void;
+    /**
+     * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
+     * @param index indica el indice de la tabla que genera el evento
+     * @param event evento generado desde la tabla
+     */
+    onDrop(index: number, event: any): void;
+    /**
+     * Evento que se dispara desde una tabla, emite el indice de la tabla al cual se le debe añadir una nueva fila
+     * @param index indica el indice de la tabla de la cual se dispara el evento
+     */
+    onAddRow(index: number): void;
+    selectedCell(index: number, event: any): void;
+    onBookClicked(index: any, event: any): void;
 }

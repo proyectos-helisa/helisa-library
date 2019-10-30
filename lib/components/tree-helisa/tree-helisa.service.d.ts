@@ -1,8 +1,8 @@
 import { Node } from './node';
 export declare class TreeHelisaService {
     private emitNodeSelected;
-    nodeSelected: import("rxjs").Observable<number>;
-    changeNodeSelected(idResidentialArea: number): void;
+    nodeSelected: import("rxjs").Observable<string | number>;
+    changeNodeSelected(idResidentialArea: number | string): void;
     private emitDataSource;
     dataSourceObservable: import("rxjs").Observable<Node>;
     changeDataSource(data: Node): void;
