@@ -26,6 +26,14 @@ export declare class DependencyTableHelisaComponent implements OnInit {
     selectCell: EventEmitter<EventDependency>;
     bookClicked: EventEmitter<EventDependency>;
     selectedObject: EventDependency;
+    /**
+       * Tiempo antes de ocultarla el mensaje del tooltip
+       */
+    hideDelay: number;
+    /**
+     * Tiempo antes de mostra el mensaje del tooltip
+     */
+    showDelay: number;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService, tableService: TableHelisaService<any>);
     ngOnInit(): void;
     /**

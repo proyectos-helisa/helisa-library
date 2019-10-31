@@ -57,7 +57,14 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     showToolTip: boolean;
     showFooter: boolean;
     showSearch: boolean;
-    private timeTooltip;
+    /**
+       * Tiempo antes de ocultarla el mensaje del tooltip
+       */
+    hideDelay: number;
+    /**
+     * Tiempo antes de mostra el mensaje del tooltip
+     */
+    showDelay: number;
     constructor(tableService: TableHelisaService<T>);
     ngOnInit(): void;
     ngAfterViewInit(): void;
