@@ -1377,7 +1377,7 @@ class TableHelisaComponent {
                 }
             }
             if (newSelection != -10) {
-                this.selectedObject = this.data.data[newSelection].data;
+                this.selectRow(this.data.data[newSelection].data, true);
             }
             if (Math.abs(this.scrollCount) >= 2)
                 this.scrollCount = 0;
