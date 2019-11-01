@@ -1705,7 +1705,7 @@
                         }
                     }
                     if (newSelection_1 != -10) {
-                        this.selectRow(this.data.data[newSelection_1].data, true);
+                        this.selectRow(this.data.data[newSelection_1], true);
                     }
                     if (Math.abs(this.scrollCount) >= 2)
                         this.scrollCount = 0;

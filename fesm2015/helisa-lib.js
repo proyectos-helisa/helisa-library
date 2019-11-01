@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { remove, orderBy } from 'lodash';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, HostListener, ElementRef, ViewChildren, ViewChild, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, NgModule, HostListener, ElementRef, ViewChildren, ViewChild, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -1377,7 +1377,7 @@ class TableHelisaComponent {
                 }
             }
             if (newSelection != -10) {
-                this.selectRow(this.data.data[newSelection].data, true);
+                this.selectRow(this.data.data[newSelection], true);
             }
             if (Math.abs(this.scrollCount) >= 2)
                 this.scrollCount = 0;
