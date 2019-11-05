@@ -91,7 +91,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     dblClickCell(): void;
     selectedCell(element: any, column: ColumnConfig): void;
     isSelectedCell(row: any, column: ColumnConfig): boolean;
-    getClassToCell(row: any, column: ColumnConfig): string;
+    getClassToCell(row: any, column: ColumnConfig): string[];
     getClassToRow(row: any): string;
     onDrop(event: CdkDragDrop<any>): void;
     tableKeydown(event: KeyboardEvent): void;
