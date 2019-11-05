@@ -32,7 +32,7 @@ InputHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-input',
                 template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
-                styles: [""]
+                styles: ["/deep/ hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
             }] }
 ];
 /** @nocollapse */
