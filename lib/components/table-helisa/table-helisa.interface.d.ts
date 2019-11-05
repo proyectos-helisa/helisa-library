@@ -11,6 +11,7 @@ export interface ColumnConfig {
     subtitle?: string;
     colspanTitle?: number;
     colspanSubtitle?: number;
+    columnStyle?: string;
 }
 export interface AddRowButton {
     text: string;
