@@ -17,4 +17,5 @@ export declare class HelTooltipDirective {
     showDelay: number;
     constructor(tooltip: MatTooltip, _elemRef: ElementRef);
     mouseover(): void;
+    private isEllipsisActive;
 }

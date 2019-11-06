@@ -3482,12 +3482,25 @@ var HelTooltipDirective = /** @class */ (function () {
         /** @type {?} */
         var currentContent = this._elemRef.nativeElement.innerText;
         if (!!currentContent && !!this.message) {
-            if (currentContent.toUpperCase() != this.message.toUpperCase()) {
+            if ((currentContent.toUpperCase() != this.message.toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
                 this.tooltip.message = this.message;
             }
         }
         this.tooltip.showDelay = this.showDelay;
         this.tooltip.hideDelay = this.hideDelay;
+    };
+    /**
+     * @private
+     * @param {?} e
+     * @return {?}
+     */
+    HelTooltipDirective.prototype.isEllipsisActive = /**
+     * @private
+     * @param {?} e
+     * @return {?}
+     */
+    function (e) {
+        return (e.offsetWidth < e.scrollWidth);
     };
     HelTooltipDirective.decorators = [
         { type: Directive, args: [{
