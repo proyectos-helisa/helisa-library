@@ -26,7 +26,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     selectedObject: T;
     lastSearch: string;
     type: TableHelisaType;
-    isSetSelectedRow: boolean;
     indexRowSelect: number;
     private scrollCount;
     hasSubtitle: boolean;
@@ -92,7 +91,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     selectedCell(element: any, column: ColumnConfig): void;
     isSelectedCell(row: any, column: ColumnConfig): boolean;
     getClassToCell(row: any, column: ColumnConfig): string[];
-    getClassToRow(row: any): string;
+    getClassToRow(row: any): string[];
     onDrop(event: CdkDragDrop<any>): void;
     tableKeydown(event: KeyboardEvent): void;
     /**

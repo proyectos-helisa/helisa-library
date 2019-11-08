@@ -1,5 +1,4 @@
 import { MatSnackBar as MatSnackBar$1 } from '@angular/material/snack-bar';
-import clonedeep from 'lodash.clonedeep';
 import * as moment_ from 'moment';
 import { __spread } from 'tslib';
 import { NestedTreeControl } from '@angular/cdk/tree';
@@ -7,7 +6,7 @@ import { Router } from '@angular/router';
 import { remove, orderBy } from 'lodash';
 import { filter, tap, map, startWith, takeUntil } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, HostListener, ElementRef, ViewChildren, ViewChild, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, HostListener, ElementRef, ViewChild, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -18,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1058,7 +1057,6 @@ var TableHelisaComponent = /** @class */ (function () {
         this.displayedColumnsWithSubtitle = [];
         this.displayedColumnsWithFooter = [];
         this.type = TableHelisaType.LOCAL;
-        this.isSetSelectedRow = false;
         this.scrollCount = 0;
         this.hasSubtitle = false;
         this.sort = new EventEmitter();
@@ -1685,7 +1683,9 @@ var TableHelisaComponent = /** @class */ (function () {
     function (row) {
         var _this = this;
         /** @type {?} */
-        var classToRow = '';
+        var classToRow = new Array();
+        if (row === this.selectedObject && !this.isCellSelection)
+            classToRow.push('');
         if (this.configRowStylesFromColumn) {
             /** @type {?} */
             var found = this.configRowStylesFromColumn.find((/**
@@ -1696,7 +1696,7 @@ var TableHelisaComponent = /** @class */ (function () {
                 return c.data === _this.getValue(row, c.column);
             }));
             if (found) {
-                classToRow = found.classRow;
+                classToRow.push(found.classRow);
             }
         }
         return classToRow;
@@ -1714,7 +1714,7 @@ var TableHelisaComponent = /** @class */ (function () {
         var array = this.data.data;
         moveItemInArray(array, event.previousIndex, event.currentIndex);
         this.drop.emit({ value: array[event.currentIndex].data, order: event.currentIndex });
-        this.data.data = clonedeep(array);
+        this.data = new MatTableDataSource(array);
     };
     /**
      * @param {?} event
