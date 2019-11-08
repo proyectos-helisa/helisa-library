@@ -1847,6 +1847,7 @@
     };
     var DateHelisaComponent = /** @class */ (function () {
         function DateHelisaComponent() {
+            this.floatLabel = 'never';
             this.dateFormControl = new forms.FormControl('');
             this.date = new Date();
             /**
@@ -2062,13 +2063,14 @@
         DateHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-date-helisa',
-                        template: "<div>\r\n  <mat-form-field class=\"example-full-width\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
+                        template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
                         styles: [""]
                     }] }
         ];
         /** @nocollapse */
         DateHelisaComponent.ctorParameters = function () { return []; };
         DateHelisaComponent.propDecorators = {
+            floatLabel: [{ type: i0.Input }],
             dateFormControl: [{ type: i0.Input }],
             dateFormat: [{ type: i0.Input }],
             errorMessage: [{ type: i0.Input }],
@@ -3189,6 +3191,7 @@
             this.nextPage = new i0.EventEmitter();
             this.isRemote = false;
             this.isLoading = false;
+            this.onScrollObservable = new rxjs.Subject();
         }
         /**
          * @return {?}
@@ -3198,6 +3201,14 @@
          */
             function () {
                 var _this = this;
+                this.onScrollObservable.asObservable()
+                    .pipe(operators.debounceTime(500), operators.throttleTime(500))
+                    .subscribe(( /**
+             * @param {?} data
+             * @return {?}
+             */function (data) {
+                    _this.nextPage.emit();
+                }));
                 if (this.isRemote) {
                     this.autocompleteHelisaService.dataSource$.subscribe(( /**
                      * @param {?} data
@@ -3282,18 +3293,20 @@
                 this.onSelectedValue.emit(this.selectedValue.value);
             };
         /**
+         * @param {?} event
          * @return {?}
          */
         AutocompleteHelisaComponent.prototype.getNextPage = /**
+         * @param {?} event
          * @return {?}
          */
-            function () {
-                this.nextPage.emit();
+            function (event) {
+                this.onScrollObservable.next(event);
             };
         AutocompleteHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-autocomplete',
-                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
                         providers: [AutocompleteHelisaService],
                         styles: [""]
                     }] }
@@ -3322,9 +3335,13 @@
         function OptionsScrollDirective(autoComplete) {
             var _this = this;
             this.autoComplete = autoComplete;
-            this.thresholdPercent = .8;
+            /**
+             * This value would different depends of styles
+             */
+            this.thresholdPercent = .9;
             this.scroll = new i0.EventEmitter();
             this._onDestroy = new rxjs.Subject();
+            this.lastScrollTop = 0;
             this.autoComplete.opened.pipe(operators.tap(( /**
              * @return {?}
              */function () {
@@ -3340,7 +3357,7 @@
                         !!_this.autoComplete.panel &&
                         !!_this.autoComplete.panel.nativeElement) {
                         _this.autoComplete.panel.nativeElement
-                            .addEventListener('scroll', _this.onScroll.bind(_this));
+                            .addEventListener('scroll', _this.onScroll.bind(_this), false);
                     }
                 }));
             })), operators.takeUntil(this._onDestroy)).subscribe();
@@ -3384,20 +3401,26 @@
          * @return {?}
          */
             function (event) {
-                if (this.thresholdPercent === undefined) {
-                    this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
-                }
-                else {
-                    /** @type {?} */
-                    var threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
-                    /** @type {?} */
-                    var current = event.target.scrollTop + event.target.clientHeight;
-                    //console.log(`scroll ${current}, threshold: ${threshold}`)
-                    if (current > threshold) {
-                        //console.log('load next page');
+                /** @type {?} */
+                var st = event.target.pageYOffset || event.target.scrollTop;
+                if (st > this.lastScrollTop) {
+                    // downscroll code       
+                    if (this.thresholdPercent === undefined) {
                         this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
                     }
+                    else {
+                        /** @type {?} */
+                        var threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
+                        /** @type {?} */
+                        var current = event.target.scrollTop + event.target.clientHeight;
+                        //console.log(`scroll ${current}, threshold: ${threshold}`)     
+                        if (current > threshold) {
+                            //console.log('load next page');        
+                            this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                        }
+                    }
                 }
+                this.lastScrollTop = st <= 0 ? 0 : st;
             };
         OptionsScrollDirective.decorators = [
             { type: i0.Directive, args: [{

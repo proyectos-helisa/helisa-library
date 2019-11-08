@@ -3,9 +3,9 @@ import * as moment_ from 'moment';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router';
 import { remove, orderBy } from 'lodash';
-import { filter, tap, map, startWith, takeUntil } from 'rxjs/operators';
+import { filter, tap, map, startWith, throttleTime, debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, HostListener, ElementRef, ViewChild, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, HostListener, ElementRef, ViewChildren, ViewChild, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -1503,6 +1503,7 @@ const TypeCalendarEnum = {
 };
 class DateHelisaComponent {
     constructor() {
+        this.floatLabel = 'never';
         this.dateFormControl = new FormControl('');
         this.date = new Date();
         /**
@@ -1681,13 +1682,14 @@ class DateHelisaComponent {
 DateHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-date-helisa',
-                template: "<div>\r\n  <mat-form-field class=\"example-full-width\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
+                template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
                 styles: [""]
             }] }
 ];
 /** @nocollapse */
 DateHelisaComponent.ctorParameters = () => [];
 DateHelisaComponent.propDecorators = {
+    floatLabel: [{ type: Input }],
     dateFormControl: [{ type: Input }],
     dateFormat: [{ type: Input }],
     errorMessage: [{ type: Input }],
@@ -2561,11 +2563,21 @@ class AutocompleteHelisaComponent {
         this.nextPage = new EventEmitter();
         this.isRemote = false;
         this.isLoading = false;
+        this.onScrollObservable = new Subject();
     }
     /**
      * @return {?}
      */
     ngOnInit() {
+        this.onScrollObservable.asObservable()
+            .pipe(debounceTime(500), throttleTime(500))
+            .subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        (data) => {
+            this.nextPage.emit();
+        }));
         if (this.isRemote) {
             this.autocompleteHelisaService.dataSource$.subscribe((/**
              * @param {?} data
@@ -2639,16 +2651,17 @@ class AutocompleteHelisaComponent {
         this.onSelectedValue.emit(this.selectedValue.value);
     }
     /**
+     * @param {?} event
      * @return {?}
      */
-    getNextPage() {
-        this.nextPage.emit();
+    getNextPage(event) {
+        this.onScrollObservable.next(event);
     }
 }
 AutocompleteHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-autocomplete',
-                template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\" [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
+                template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage($event)\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
                 providers: [AutocompleteHelisaService],
                 styles: [""]
             }] }
@@ -2675,9 +2688,13 @@ class OptionsScrollDirective {
      */
     constructor(autoComplete) {
         this.autoComplete = autoComplete;
-        this.thresholdPercent = .8;
+        /**
+         * This value would different depends of styles
+         */
+        this.thresholdPercent = .9;
         this.scroll = new EventEmitter();
         this._onDestroy = new Subject();
+        this.lastScrollTop = 0;
         this.autoComplete.opened.pipe(tap((/**
          * @return {?}
          */
@@ -2695,7 +2712,7 @@ class OptionsScrollDirective {
                     !!this.autoComplete.panel &&
                     !!this.autoComplete.panel.nativeElement) {
                     this.autoComplete.panel.nativeElement
-                        .addEventListener('scroll', this.onScroll.bind(this));
+                        .addEventListener('scroll', this.onScroll.bind(this), false);
                 }
             }));
         })), takeUntil(this._onDestroy)).subscribe();
@@ -2729,20 +2746,26 @@ class OptionsScrollDirective {
      * @return {?}
      */
     onScroll(event) {
-        if (this.thresholdPercent === undefined) {
-            this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
-        }
-        else {
-            /** @type {?} */
-            const threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
-            /** @type {?} */
-            const current = event.target.scrollTop + event.target.clientHeight;
-            //console.log(`scroll ${current}, threshold: ${threshold}`)
-            if (current > threshold) {
-                //console.log('load next page');
+        /** @type {?} */
+        var st = event.target.pageYOffset || event.target.scrollTop;
+        if (st > this.lastScrollTop) {
+            // downscroll code       
+            if (this.thresholdPercent === undefined) {
                 this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
             }
+            else {
+                /** @type {?} */
+                const threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
+                /** @type {?} */
+                const current = event.target.scrollTop + event.target.clientHeight;
+                //console.log(`scroll ${current}, threshold: ${threshold}`)     
+                if (current > threshold) {
+                    //console.log('load next page');        
+                    this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                }
+            }
         }
+        this.lastScrollTop = st <= 0 ? 0 : st;
     }
 }
 OptionsScrollDirective.decorators = [
