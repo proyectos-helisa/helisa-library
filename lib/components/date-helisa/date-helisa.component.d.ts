@@ -7,6 +7,7 @@ export declare enum TypeCalendarEnum {
     MONTH_YEAR = "mounth-year"
 }
 export declare class DateHelisaComponent implements OnInit {
+    floatLabel: 'never' | 'always' | 'auto';
     dateFormControl: FormControl;
     private date;
     /**

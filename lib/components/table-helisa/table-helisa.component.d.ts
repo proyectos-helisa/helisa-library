@@ -1,4 +1,4 @@
-import { AfterViewInit, EventEmitter, OnInit } from '@angular/core';
+import { AfterViewInit, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
@@ -31,6 +31,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     hasSubtitle: boolean;
     matSort: MatSort;
     matTable: MatTable<any>;
+    matTableElement: ElementRef;
+    divTableHelisa: ElementRef;
     sort: EventEmitter<EventColumn>;
     total: EventEmitter<EventColumn>;
     search: EventEmitter<EventSearch>;
@@ -101,5 +103,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     onBookClicked(selectedObject: any): void;
     getHeaderSubtitle(): string[];
     getColumnsWithTitle(): string[];
+    dragger(event: any): void;
 }
 export {};
