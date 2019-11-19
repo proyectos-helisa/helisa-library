@@ -1893,13 +1893,21 @@
          */
             function (pageY) {
                 /** @type {?} */
+                var offsetTop = 0;
+                /** @type {?} */
+                var container = this.containerTable.nativeElement;
+                while ((container != null) && (offsetTop == 0)) {
+                    offsetTop = container.offsetTop;
+                    container = container.parentElement;
+                }
+                /** @type {?} */
                 var rowIndex = -1;
                 /** @type {?} */
                 var rows = this.matTableElement.nativeElement.children[1].children;
                 for (var i = 0; i < rows.length; i++) {
                     /** @type {?} */
                     var row = (( /** @type {?} */(rows[i])));
-                    if (pageY - this.containerTable.nativeElement.offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
+                    if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
                         rowIndex = i;
                 }
                 if (rowIndex < 0)

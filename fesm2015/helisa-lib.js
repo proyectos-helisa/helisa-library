@@ -1495,13 +1495,21 @@ class TableHelisaComponent {
      */
     getRowIndex(pageY) {
         /** @type {?} */
+        let offsetTop = 0;
+        /** @type {?} */
+        let container = this.containerTable.nativeElement;
+        while ((container != null) && (offsetTop == 0)) {
+            offsetTop = container.offsetTop;
+            container = container.parentElement;
+        }
+        /** @type {?} */
         let rowIndex = -1;
         /** @type {?} */
         const rows = this.matTableElement.nativeElement.children[1].children;
         for (let i = 0; i < rows.length; i++) {
             /** @type {?} */
             const row = ((/** @type {?} */ (rows[i])));
-            if (pageY - this.containerTable.nativeElement.offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
+            if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
                 rowIndex = i;
         }
         if (rowIndex < 0)
