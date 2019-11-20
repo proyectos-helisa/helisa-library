@@ -953,11 +953,11 @@ var InputHelisaComponent = /** @class */ (function () {
         this.realValue = this.getRealValue(event);
         if (this.getMaskedValue(this.realValue) != this.formControlMask.value) {
             this.formControlMask.setValue(this.getMaskedValue(this.realValue));
-            this.inputFormReal.setValue(this.realValue);
             position += this.nameInput.nativeElement.value.length - length;
             this.nameInput.nativeElement.selectionStart = position;
             this.nameInput.nativeElement.selectionEnd = position;
         }
+        this.inputFormReal.setValue(this.realValue);
     };
     /**
      * @private
