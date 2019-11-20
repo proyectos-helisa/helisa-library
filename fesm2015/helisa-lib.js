@@ -694,6 +694,14 @@ class InputHelisaComponent {
      */
     set inputFormControl(formControl) {
         this.inputFormReal = formControl;
+        this.inputFormReal.valueChanges.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        data => {
+            if (this.getMaskedValue(data) != this.formControlMask.value)
+                this.change(data);
+        }));
         if (this.inputFormReal.value)
             this.change(this.inputFormReal.value);
         else

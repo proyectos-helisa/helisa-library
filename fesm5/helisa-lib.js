@@ -908,7 +908,16 @@ var InputHelisaComponent = /** @class */ (function () {
          * @return {?}
          */
         function (formControl) {
+            var _this = this;
             this.inputFormReal = formControl;
+            this.inputFormReal.valueChanges.subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            function (data) {
+                if (_this.getMaskedValue(data) != _this.formControlMask.value)
+                    _this.change(data);
+            }));
             if (this.inputFormReal.value)
                 this.change(this.inputFormReal.value);
             else
