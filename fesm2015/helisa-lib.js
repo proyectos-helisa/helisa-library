@@ -723,7 +723,7 @@ class InputHelisaComponent {
      * @return {?}
      */
     change(event) {
-        if (event)
+        if (event != null)
             event = event + '';
         /** @type {?} */
         let position = this.nameInput.nativeElement.selectionStart;
@@ -746,6 +746,7 @@ class InputHelisaComponent {
     getMaskedValue(str) {
         if (str == null)
             return str;
+        str = str + '';
         if (this.type == InputHelisaType.DEFAULT)
             return str;
         /** @type {?} */
@@ -784,6 +785,7 @@ class InputHelisaComponent {
     getRealValue(str) {
         if (str == null)
             return str;
+        str = str + '';
         /** @type {?} */
         let realStr = '';
         if (this.type == InputHelisaType.DEFAULT)

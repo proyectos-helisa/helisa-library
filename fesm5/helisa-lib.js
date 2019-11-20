@@ -952,7 +952,7 @@ var InputHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (event) {
-        if (event)
+        if (event != null)
             event = event + '';
         /** @type {?} */
         var position = this.nameInput.nativeElement.selectionStart;
@@ -980,6 +980,7 @@ var InputHelisaComponent = /** @class */ (function () {
     function (str) {
         if (str == null)
             return str;
+        str = str + '';
         if (this.type == InputHelisaType.DEFAULT)
             return str;
         /** @type {?} */
@@ -1023,6 +1024,7 @@ var InputHelisaComponent = /** @class */ (function () {
     function (str) {
         if (str == null)
             return str;
+        str = str + '';
         /** @type {?} */
         var realStr = '';
         if (this.type == InputHelisaType.DEFAULT)
