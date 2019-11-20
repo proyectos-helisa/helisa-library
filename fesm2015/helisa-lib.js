@@ -723,6 +723,8 @@ class InputHelisaComponent {
      * @return {?}
      */
     change(event) {
+        if (event)
+            event = event + '';
         /** @type {?} */
         let position = this.nameInput.nativeElement.selectionStart;
         /** @type {?} */

@@ -952,6 +952,8 @@ var InputHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (event) {
+        if (event)
+            event = event + '';
         /** @type {?} */
         var position = this.nameInput.nativeElement.selectionStart;
         /** @type {?} */
