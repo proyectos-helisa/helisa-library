@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { remove, orderBy } from 'lodash';
 import { filter, tap, map, startWith, throttleTime, debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, HostListener, ElementRef, ViewChild, NgModule, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, HostListener, ElementRef, NgModule, ViewChild, ViewChildren, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -881,6 +881,14 @@ var DependencyTableHelisaComponent = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @enum {number} */
+var InputHelisaType = {
+    DEFAULT: 0, IDENTITY: 1, NUMERIC: 2, DOUBLE: 3,
+};
+InputHelisaType[InputHelisaType.DEFAULT] = 'DEFAULT';
+InputHelisaType[InputHelisaType.IDENTITY] = 'IDENTITY';
+InputHelisaType[InputHelisaType.NUMERIC] = 'NUMERIC';
+InputHelisaType[InputHelisaType.DOUBLE] = 'DOUBLE';
 var InputHelisaComponent = /** @class */ (function () {
     function InputHelisaComponent() {
         this.placeholder = '';
@@ -889,6 +897,9 @@ var InputHelisaComponent = /** @class */ (function () {
         this.inputFormControl = new FormControl('');
         this.isFocused = false;
         this.disabled = false;
+        this.type = InputHelisaType.DEFAULT;
+        this.formControlMask = new FormControl('');
+        this.realValue = '';
     }
     /**
      * @return {?}
@@ -910,10 +921,107 @@ var InputHelisaComponent = /** @class */ (function () {
     function () {
         this.setValue.emit(this.inputFormControl.value);
     };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    InputHelisaComponent.prototype.change = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        /** @type {?} */
+        var position = this.nameInput.nativeElement.selectionStart;
+        /** @type {?} */
+        var length = event.length;
+        this.realValue = this.getRealValue(event);
+        this.nameInput.nativeElement.value = this.getMaskedValue(this.realValue);
+        this.inputFormControl.setValue(this.realValue);
+        position += this.nameInput.nativeElement.value.length - length;
+        this.nameInput.nativeElement.selectionStart = position;
+        this.nameInput.nativeElement.selectionEnd = position;
+    };
+    /**
+     * @private
+     * @param {?} str
+     * @return {?}
+     */
+    InputHelisaComponent.prototype.getMaskedValue = /**
+     * @private
+     * @param {?} str
+     * @return {?}
+     */
+    function (str) {
+        if (this.type == InputHelisaType.DEFAULT)
+            return str;
+        /** @type {?} */
+        var maskedStr = '';
+        if (this.type == InputHelisaType.IDENTITY) {
+            for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
+                if (j > 0 && j % 3 == 0)
+                    maskedStr = '.' + maskedStr;
+                maskedStr = str[i] + maskedStr;
+            }
+        }
+        if (this.type == InputHelisaType.NUMERIC) {
+            for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
+                if (j > 0 && j % 3 == 0)
+                    maskedStr = ',' + maskedStr;
+                maskedStr = str[i] + maskedStr;
+            }
+        }
+        if (this.type == InputHelisaType.DOUBLE) {
+            if (str.indexOf('.') >= 0)
+                for (var i = str.indexOf('.'); i < str.length; i++)
+                    maskedStr += str[i];
+            for (var i = (str.indexOf('.') >= 0 ? str.indexOf('.') : str.length) - 1, j = 0; i >= 0; i--, j++) {
+                if (j > 0 && j % 3 == 0)
+                    maskedStr = ',' + maskedStr;
+                maskedStr = str[i] + maskedStr;
+            }
+        }
+        return maskedStr;
+    };
+    /**
+     * @private
+     * @param {?} str
+     * @return {?}
+     */
+    InputHelisaComponent.prototype.getRealValue = /**
+     * @private
+     * @param {?} str
+     * @return {?}
+     */
+    function (str) {
+        /** @type {?} */
+        var realStr = '';
+        if (this.type == InputHelisaType.DEFAULT)
+            return str;
+        if (this.type == InputHelisaType.IDENTITY) {
+            for (var i = 0; i < str.length; i++)
+                if (str[i].match('[a-zA-Z0-9]'))
+                    realStr += str[i];
+        }
+        if (this.type == InputHelisaType.NUMERIC) {
+            for (var i = 0; i < str.length; i++)
+                if (str[i].match('[0-9]'))
+                    realStr += str[i];
+        }
+        if (this.type == InputHelisaType.DOUBLE) {
+            /** @type {?} */
+            var haveDot = false;
+            for (var i = 0; i < str.length; i++) {
+                if (str[i].match('[0-9]') || ((str[i] == '.') && !haveDot))
+                    realStr += str[i];
+                haveDot = haveDot || (str[i] == '.');
+            }
+        }
+        return realStr;
+    };
     InputHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-input',
-                    template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
+                    template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                     styles: ["/deep/ hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
                 }] }
     ];
@@ -926,6 +1034,7 @@ var InputHelisaComponent = /** @class */ (function () {
         inputFormControl: [{ type: Input }],
         isFocused: [{ type: Input }],
         disabled: [{ type: Input }],
+        type: [{ type: Input }],
         nameInput: [{ type: ViewChild, args: ['inputText',] }]
     };
     return InputHelisaComponent;
@@ -3762,6 +3871,6 @@ var HelisaLibModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaComponent, TableHelisaComponent, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule };
 
 //# sourceMappingURL=helisa-lib.js.map

@@ -860,6 +860,14 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @enum {number} */
+    var InputHelisaType = {
+        DEFAULT: 0, IDENTITY: 1, NUMERIC: 2, DOUBLE: 3,
+    };
+    InputHelisaType[InputHelisaType.DEFAULT] = 'DEFAULT';
+    InputHelisaType[InputHelisaType.IDENTITY] = 'IDENTITY';
+    InputHelisaType[InputHelisaType.NUMERIC] = 'NUMERIC';
+    InputHelisaType[InputHelisaType.DOUBLE] = 'DOUBLE';
     var InputHelisaComponent = /** @class */ (function () {
         function InputHelisaComponent() {
             this.placeholder = '';
@@ -868,6 +876,9 @@
             this.inputFormControl = new forms.FormControl('');
             this.isFocused = false;
             this.disabled = false;
+            this.type = InputHelisaType.DEFAULT;
+            this.formControlMask = new forms.FormControl('');
+            this.realValue = '';
         }
         /**
          * @return {?}
@@ -889,10 +900,107 @@
             function () {
                 this.setValue.emit(this.inputFormControl.value);
             };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        InputHelisaComponent.prototype.change = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                /** @type {?} */
+                var position = this.nameInput.nativeElement.selectionStart;
+                /** @type {?} */
+                var length = event.length;
+                this.realValue = this.getRealValue(event);
+                this.nameInput.nativeElement.value = this.getMaskedValue(this.realValue);
+                this.inputFormControl.setValue(this.realValue);
+                position += this.nameInput.nativeElement.value.length - length;
+                this.nameInput.nativeElement.selectionStart = position;
+                this.nameInput.nativeElement.selectionEnd = position;
+            };
+        /**
+         * @private
+         * @param {?} str
+         * @return {?}
+         */
+        InputHelisaComponent.prototype.getMaskedValue = /**
+         * @private
+         * @param {?} str
+         * @return {?}
+         */
+            function (str) {
+                if (this.type == InputHelisaType.DEFAULT)
+                    return str;
+                /** @type {?} */
+                var maskedStr = '';
+                if (this.type == InputHelisaType.IDENTITY) {
+                    for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
+                        if (j > 0 && j % 3 == 0)
+                            maskedStr = '.' + maskedStr;
+                        maskedStr = str[i] + maskedStr;
+                    }
+                }
+                if (this.type == InputHelisaType.NUMERIC) {
+                    for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
+                        if (j > 0 && j % 3 == 0)
+                            maskedStr = ',' + maskedStr;
+                        maskedStr = str[i] + maskedStr;
+                    }
+                }
+                if (this.type == InputHelisaType.DOUBLE) {
+                    if (str.indexOf('.') >= 0)
+                        for (var i = str.indexOf('.'); i < str.length; i++)
+                            maskedStr += str[i];
+                    for (var i = (str.indexOf('.') >= 0 ? str.indexOf('.') : str.length) - 1, j = 0; i >= 0; i--, j++) {
+                        if (j > 0 && j % 3 == 0)
+                            maskedStr = ',' + maskedStr;
+                        maskedStr = str[i] + maskedStr;
+                    }
+                }
+                return maskedStr;
+            };
+        /**
+         * @private
+         * @param {?} str
+         * @return {?}
+         */
+        InputHelisaComponent.prototype.getRealValue = /**
+         * @private
+         * @param {?} str
+         * @return {?}
+         */
+            function (str) {
+                /** @type {?} */
+                var realStr = '';
+                if (this.type == InputHelisaType.DEFAULT)
+                    return str;
+                if (this.type == InputHelisaType.IDENTITY) {
+                    for (var i = 0; i < str.length; i++)
+                        if (str[i].match('[a-zA-Z0-9]'))
+                            realStr += str[i];
+                }
+                if (this.type == InputHelisaType.NUMERIC) {
+                    for (var i = 0; i < str.length; i++)
+                        if (str[i].match('[0-9]'))
+                            realStr += str[i];
+                }
+                if (this.type == InputHelisaType.DOUBLE) {
+                    /** @type {?} */
+                    var haveDot = false;
+                    for (var i = 0; i < str.length; i++) {
+                        if (str[i].match('[0-9]') || ((str[i] == '.') && !haveDot))
+                            realStr += str[i];
+                        haveDot = haveDot || (str[i] == '.');
+                    }
+                }
+                return realStr;
+            };
         InputHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-input',
-                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
+                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                         styles: ["/deep/ hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
                     }] }
         ];
@@ -905,6 +1013,7 @@
             inputFormControl: [{ type: i0.Input }],
             isFocused: [{ type: i0.Input }],
             disabled: [{ type: i0.Input }],
+            type: [{ type: i0.Input }],
             nameInput: [{ type: i0.ViewChild, args: ['inputText',] }]
         };
         return InputHelisaComponent;
@@ -3734,6 +3843,7 @@
     exports.AlertHelisaService = AlertHelisaService;
     exports.DependencyTableHelisaComponent = DependencyTableHelisaComponent;
     exports.DependencyTableHelisaService = DependencyTableHelisaService;
+    exports.InputHelisaType = InputHelisaType;
     exports.InputHelisaComponent = InputHelisaComponent;
     exports.TableHelisaComponent = TableHelisaComponent;
     exports.EventScope = EventScope;
