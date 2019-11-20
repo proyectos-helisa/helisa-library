@@ -897,7 +897,7 @@ var InputHelisaComponent = /** @class */ (function () {
         //@Input() inputFormControl: FormControl = new FormControl('');
         this.isFocused = false;
         this.disabled = false;
-        this.type = InputHelisaType.DEFAULT;
+        this.type = InputHelisaType.IDENTITY;
         this.formControlMask = new FormControl('');
         this.realValue = '';
         this.inputFormReal = new FormControl('');
@@ -918,10 +918,7 @@ var InputHelisaComponent = /** @class */ (function () {
                 if (_this.getMaskedValue(data) != _this.formControlMask.value)
                     _this.change(data);
             }));
-            if (this.inputFormReal.value)
-                this.change(this.inputFormReal.value);
-            else
-                this.change('');
+            this.change(this.inputFormReal.value);
         },
         enumerable: true,
         configurable: true
@@ -958,7 +955,7 @@ var InputHelisaComponent = /** @class */ (function () {
         /** @type {?} */
         var position = this.nameInput.nativeElement.selectionStart;
         /** @type {?} */
-        var length = event.length;
+        var length = event ? event.length : 0;
         this.realValue = this.getRealValue(event);
         if (this.getMaskedValue(this.realValue) != this.formControlMask.value) {
             this.formControlMask.setValue(this.getMaskedValue(this.realValue));
@@ -979,6 +976,8 @@ var InputHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (str) {
+        if (str == null)
+            return str;
         if (this.type == InputHelisaType.DEFAULT)
             return str;
         /** @type {?} */
@@ -1020,6 +1019,8 @@ var InputHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (str) {
+        if (str == null)
+            return str;
         /** @type {?} */
         var realStr = '';
         if (this.type == InputHelisaType.DEFAULT)
