@@ -876,7 +876,7 @@
             //@Input() inputFormControl: FormControl = new FormControl('');
             this.isFocused = false;
             this.disabled = false;
-            this.type = InputHelisaType.IDENTITY;
+            this.type = InputHelisaType.DEFAULT;
             this.formControlMask = new forms.FormControl('');
             this.realValue = '';
             this.inputFormReal = new forms.FormControl('');
