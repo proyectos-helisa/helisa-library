@@ -873,13 +873,28 @@
             this.placeholder = '';
             this.setValue = new i0.EventEmitter();
             this.isSearch = false;
-            this.inputFormControl = new forms.FormControl('');
+            //@Input() inputFormControl: FormControl = new FormControl('');
             this.isFocused = false;
             this.disabled = false;
             this.type = InputHelisaType.DEFAULT;
             this.formControlMask = new forms.FormControl('');
             this.realValue = '';
+            this.inputFormReal = new forms.FormControl('');
         }
+        Object.defineProperty(InputHelisaComponent.prototype, "inputFormControl", {
+            set: /**
+             * @param {?} formControl
+             * @return {?}
+             */ function (formControl) {
+                this.inputFormReal = formControl;
+                if (this.inputFormReal.value)
+                    this.change(this.inputFormReal.value);
+                else
+                    this.change('');
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -898,7 +913,7 @@
          * @return {?}
          */
             function () {
-                this.setValue.emit(this.inputFormControl.value);
+                this.setValue.emit(this.realValue);
             };
         /**
          * @param {?} event
@@ -914,11 +929,13 @@
                 /** @type {?} */
                 var length = event.length;
                 this.realValue = this.getRealValue(event);
-                this.nameInput.nativeElement.value = this.getMaskedValue(this.realValue);
-                this.inputFormControl.setValue(this.realValue);
-                position += this.nameInput.nativeElement.value.length - length;
-                this.nameInput.nativeElement.selectionStart = position;
-                this.nameInput.nativeElement.selectionEnd = position;
+                if (this.getMaskedValue(this.realValue) != this.formControlMask.value) {
+                    this.formControlMask.setValue(this.getMaskedValue(this.realValue));
+                    this.inputFormReal.setValue(this.realValue);
+                    position += this.nameInput.nativeElement.value.length - length;
+                    this.nameInput.nativeElement.selectionStart = position;
+                    this.nameInput.nativeElement.selectionEnd = position;
+                }
             };
         /**
          * @private
@@ -1010,11 +1027,11 @@
             placeholder: [{ type: i0.Input }],
             setValue: [{ type: i0.Output }],
             isSearch: [{ type: i0.Input }],
-            inputFormControl: [{ type: i0.Input }],
             isFocused: [{ type: i0.Input }],
             disabled: [{ type: i0.Input }],
             type: [{ type: i0.Input }],
-            nameInput: [{ type: i0.ViewChild, args: ['inputText',] }]
+            nameInput: [{ type: i0.ViewChild, args: ['inputText',] }],
+            inputFormControl: [{ type: i0.Input }]
         };
         return InputHelisaComponent;
     }());

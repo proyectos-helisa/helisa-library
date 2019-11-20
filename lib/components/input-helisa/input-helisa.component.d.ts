@@ -10,14 +10,15 @@ export declare class InputHelisaComponent implements OnInit {
     placeholder: string;
     setValue: EventEmitter<string>;
     isSearch: boolean;
-    inputFormControl: FormControl;
     isFocused: boolean;
     disabled: boolean;
     type: InputHelisaType;
     formControlMask: FormControl;
     private realValue;
+    private inputFormReal;
     nameInput: ElementRef;
     constructor();
+    inputFormControl: FormControl;
     ngOnInit(): void;
     search(): void;
     change(event: any): void;
