@@ -891,6 +891,8 @@ InputHelisaType[InputHelisaType.NUMERIC] = 'NUMERIC';
 InputHelisaType[InputHelisaType.DOUBLE] = 'DOUBLE';
 var InputHelisaComponent = /** @class */ (function () {
     function InputHelisaComponent() {
+        this.DECIMAL_SEPARATOR = ',';
+        this.THOUSAND_SEPARATOR = '.';
         this.placeholder = '';
         this.setValue = new EventEmitter();
         this.isSearch = false;
@@ -988,24 +990,24 @@ var InputHelisaComponent = /** @class */ (function () {
         if (this.type == InputHelisaType.IDENTITY) {
             for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 == 0)
-                    maskedStr = '.' + maskedStr;
+                    maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
                 maskedStr = str[i] + maskedStr;
             }
         }
         if (this.type == InputHelisaType.NUMERIC) {
             for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 == 0)
-                    maskedStr = ',' + maskedStr;
+                    maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
                 maskedStr = str[i] + maskedStr;
             }
         }
         if (this.type == InputHelisaType.DOUBLE) {
-            if (str.indexOf('.') >= 0)
-                for (var i = str.indexOf('.'); i < str.length; i++)
+            if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0)
+                for (var i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++)
                     maskedStr += str[i];
-            for (var i = (str.indexOf('.') >= 0 ? str.indexOf('.') : str.length) - 1, j = 0; i >= 0; i--, j++) {
+            for (var i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 == 0)
-                    maskedStr = ',' + maskedStr;
+                    maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
                 maskedStr = str[i] + maskedStr;
             }
         }
@@ -1043,9 +1045,9 @@ var InputHelisaComponent = /** @class */ (function () {
             /** @type {?} */
             var haveDot = false;
             for (var i = 0; i < str.length; i++) {
-                if (str[i].match('[0-9]') || ((str[i] == '.') && !haveDot))
+                if (str[i].match('[0-9]') || ((str[i] == this.DECIMAL_SEPARATOR) && !haveDot))
                     realStr += str[i];
-                haveDot = haveDot || (str[i] == '.');
+                haveDot = haveDot || (str[i] == this.DECIMAL_SEPARATOR);
             }
         }
         return realStr;

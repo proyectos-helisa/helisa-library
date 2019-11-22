@@ -7,6 +7,8 @@ export declare enum InputHelisaType {
     DOUBLE = 3
 }
 export declare class InputHelisaComponent implements OnInit {
+    private readonly DECIMAL_SEPARATOR;
+    private readonly THOUSAND_SEPARATOR;
     placeholder: string;
     setValue: EventEmitter<string>;
     isSearch: boolean;

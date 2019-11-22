@@ -677,6 +677,8 @@ InputHelisaType[InputHelisaType.NUMERIC] = 'NUMERIC';
 InputHelisaType[InputHelisaType.DOUBLE] = 'DOUBLE';
 class InputHelisaComponent {
     constructor() {
+        this.DECIMAL_SEPARATOR = ',';
+        this.THOUSAND_SEPARATOR = '.';
         this.placeholder = '';
         this.setValue = new EventEmitter();
         this.isSearch = false;
@@ -754,24 +756,24 @@ class InputHelisaComponent {
         if (this.type == InputHelisaType.IDENTITY) {
             for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 == 0)
-                    maskedStr = '.' + maskedStr;
+                    maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
                 maskedStr = str[i] + maskedStr;
             }
         }
         if (this.type == InputHelisaType.NUMERIC) {
             for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 == 0)
-                    maskedStr = ',' + maskedStr;
+                    maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
                 maskedStr = str[i] + maskedStr;
             }
         }
         if (this.type == InputHelisaType.DOUBLE) {
-            if (str.indexOf('.') >= 0)
-                for (let i = str.indexOf('.'); i < str.length; i++)
+            if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0)
+                for (let i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++)
                     maskedStr += str[i];
-            for (let i = (str.indexOf('.') >= 0 ? str.indexOf('.') : str.length) - 1, j = 0; i >= 0; i--, j++) {
+            for (let i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 == 0)
-                    maskedStr = ',' + maskedStr;
+                    maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
                 maskedStr = str[i] + maskedStr;
             }
         }
@@ -804,9 +806,9 @@ class InputHelisaComponent {
             /** @type {?} */
             let haveDot = false;
             for (let i = 0; i < str.length; i++) {
-                if (str[i].match('[0-9]') || ((str[i] == '.') && !haveDot))
+                if (str[i].match('[0-9]') || ((str[i] == this.DECIMAL_SEPARATOR) && !haveDot))
                     realStr += str[i];
-                haveDot = haveDot || (str[i] == '.');
+                haveDot = haveDot || (str[i] == this.DECIMAL_SEPARATOR);
             }
         }
         return realStr;
