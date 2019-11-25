@@ -891,8 +891,8 @@ InputHelisaType[InputHelisaType.NUMERIC] = 'NUMERIC';
 InputHelisaType[InputHelisaType.DOUBLE] = 'DOUBLE';
 var InputHelisaComponent = /** @class */ (function () {
     function InputHelisaComponent() {
-        this.DECIMAL_SEPARATOR = ',';
-        this.THOUSAND_SEPARATOR = '.';
+        this.DECIMAL_SEPARATOR = '.';
+        this.THOUSAND_SEPARATOR = ',';
         this.placeholder = '';
         this.setValue = new EventEmitter();
         this.isSearch = false;
@@ -982,8 +982,6 @@ var InputHelisaComponent = /** @class */ (function () {
     function (str) {
         if (str == null)
             return str;
-        if (this.type == InputHelisaType.DOUBLE)
-            str = str.replace('.', ',');
         str = str + '';
         if (this.type == InputHelisaType.DEFAULT)
             return str;
@@ -1028,8 +1026,6 @@ var InputHelisaComponent = /** @class */ (function () {
     function (str) {
         if (str == null)
             return str;
-        if (this.type == InputHelisaType.DOUBLE)
-            str = str.replace('.', ',');
         str = str + '';
         /** @type {?} */
         var realStr = '';
