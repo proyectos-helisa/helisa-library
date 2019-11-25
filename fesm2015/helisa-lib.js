@@ -748,6 +748,8 @@ class InputHelisaComponent {
     getMaskedValue(str) {
         if (str == null)
             return str;
+        if (this.type == InputHelisaType.DOUBLE)
+            str = str.replace('.', ',');
         str = str + '';
         if (this.type == InputHelisaType.DEFAULT)
             return str;
@@ -787,6 +789,8 @@ class InputHelisaComponent {
     getRealValue(str) {
         if (str == null)
             return str;
+        if (this.type == InputHelisaType.DOUBLE)
+            str = str.replace('.', ',');
         str = str + '';
         /** @type {?} */
         let realStr = '';
