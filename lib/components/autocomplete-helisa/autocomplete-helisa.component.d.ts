@@ -21,6 +21,8 @@ export declare class AutocompleteHelisaComponent<T> implements OnInit {
     ngOnInit(): void;
     displayFn(option?: OptionAutocompleteHelisa<T>): string | undefined;
     getService(): AutocompleteHelisaService<T>;
+    /** Elimina caracteres extraños */
+    private _checkRegex;
     private _filter;
     onSelected(event: any): void;
     getNextPage(event: any): void;

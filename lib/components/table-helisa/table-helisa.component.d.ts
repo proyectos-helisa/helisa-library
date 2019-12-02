@@ -1,8 +1,7 @@
-import { AfterViewInit, EventEmitter, OnInit } from '@angular/core';
+import { AfterViewInit, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 interface RowData {
     data: any;
     rowType: RowType;
@@ -29,8 +28,13 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     indexRowSelect: number;
     private scrollCount;
     hasSubtitle: boolean;
+    private indexRowStartDrag;
+    private lastIndexRowDrag;
+    private dataBeforeDrag;
     matSort: MatSort;
     matTable: MatTable<any>;
+    matTableElement: ElementRef;
+    containerTable: ElementRef;
     sort: EventEmitter<EventColumn>;
     total: EventEmitter<EventColumn>;
     search: EventEmitter<EventSearch>;
@@ -93,7 +97,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     isSelectedCell(row: any, column: ColumnConfig): boolean;
     getClassToCell(row: any, column: ColumnConfig): string[];
     getClassToRow(row: any): string[];
-    onDrop(event: CdkDragDrop<any>): void;
+    onDrop(event: any): void;
     tableKeydown(event: KeyboardEvent): void;
     /**
      * Emite el evento cuando se da click al boton AddRow
@@ -102,5 +106,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     onBookClicked(selectedObject: any): void;
     getHeaderSubtitle(): string[];
     getColumnsWithTitle(): string[];
+    dragger(event: any): boolean;
+    startDrag(event: any): void;
+    private getRowIndex;
 }
 export {};
