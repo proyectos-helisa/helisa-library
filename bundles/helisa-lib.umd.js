@@ -826,7 +826,7 @@
         DependencyTableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-dependency-table',
-                        template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\r\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\r\n    (bookClicked)=\"onBookClicked(i,$event)\"\r\n    [showToolTip]=\"showToolTip\"\r\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\r\n  </hel-table>\r\n</div>\r\n",
+                        template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\" \r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\r\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\r\n    (bookClicked)=\"onBookClicked(i,$event)\"\r\n    [showToolTip]=\"showToolTip\"\r\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\r\n  </hel-table>\r\n</div>\r\n",
                         providers: [DependencyTableHelisaService],
                         styles: [""]
                     }] }
@@ -860,48 +860,15 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @enum {number} */
-    var InputHelisaType = {
-        DEFAULT: 0, IDENTITY: 1, NUMERIC: 2, DOUBLE: 3,
-    };
-    InputHelisaType[InputHelisaType.DEFAULT] = 'DEFAULT';
-    InputHelisaType[InputHelisaType.IDENTITY] = 'IDENTITY';
-    InputHelisaType[InputHelisaType.NUMERIC] = 'NUMERIC';
-    InputHelisaType[InputHelisaType.DOUBLE] = 'DOUBLE';
     var InputHelisaComponent = /** @class */ (function () {
         function InputHelisaComponent() {
-            this.DECIMAL_SEPARATOR = '.';
-            this.THOUSAND_SEPARATOR = ',';
             this.placeholder = '';
             this.setValue = new i0.EventEmitter();
             this.isSearch = false;
-            //@Input() inputFormControl: FormControl = new FormControl('');
+            this.inputFormControl = new forms.FormControl('');
             this.isFocused = false;
             this.disabled = false;
-            this.type = InputHelisaType.DEFAULT;
-            this.formControlMask = new forms.FormControl('');
-            this.realValue = '';
-            this.inputFormReal = new forms.FormControl('');
         }
-        Object.defineProperty(InputHelisaComponent.prototype, "inputFormControl", {
-            set: /**
-             * @param {?} formControl
-             * @return {?}
-             */ function (formControl) {
-                var _this = this;
-                this.inputFormReal = formControl;
-                this.inputFormReal.valueChanges.subscribe(( /**
-                 * @param {?} data
-                 * @return {?}
-                 */function (data) {
-                    if (_this.getMaskedValue(data) != _this.formControlMask.value)
-                        _this.change(data);
-                }));
-                this.change(this.inputFormReal.value);
-            },
-            enumerable: true,
-            configurable: true
-        });
         /**
          * @return {?}
          */
@@ -920,119 +887,12 @@
          * @return {?}
          */
             function () {
-                this.setValue.emit(this.realValue);
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        InputHelisaComponent.prototype.change = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                if (event != null)
-                    event = event + '';
-                /** @type {?} */
-                var position = this.nameInput.nativeElement.selectionStart;
-                /** @type {?} */
-                var length = event ? event.length : 0;
-                this.realValue = this.getRealValue(event);
-                if (this.getMaskedValue(this.realValue) != this.formControlMask.value) {
-                    this.formControlMask.setValue(this.getMaskedValue(this.realValue));
-                    position += this.nameInput.nativeElement.value.length - length;
-                    this.nameInput.nativeElement.selectionStart = position;
-                    this.nameInput.nativeElement.selectionEnd = position;
-                }
-                this.inputFormReal.setValue(this.realValue);
-            };
-        /**
-         * @private
-         * @param {?} str
-         * @return {?}
-         */
-        InputHelisaComponent.prototype.getMaskedValue = /**
-         * @private
-         * @param {?} str
-         * @return {?}
-         */
-            function (str) {
-                if (str == null)
-                    return str;
-                str = str + '';
-                if (this.type == InputHelisaType.DEFAULT)
-                    return str;
-                /** @type {?} */
-                var maskedStr = '';
-                if (this.type == InputHelisaType.IDENTITY) {
-                    for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
-                        if (j > 0 && j % 3 == 0)
-                            maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
-                        maskedStr = str[i] + maskedStr;
-                    }
-                }
-                if (this.type == InputHelisaType.NUMERIC) {
-                    for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
-                        if (j > 0 && j % 3 == 0)
-                            maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
-                        maskedStr = str[i] + maskedStr;
-                    }
-                }
-                if (this.type == InputHelisaType.DOUBLE) {
-                    if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0)
-                        for (var i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++)
-                            maskedStr += str[i];
-                    for (var i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
-                        if (j > 0 && j % 3 == 0)
-                            maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
-                        maskedStr = str[i] + maskedStr;
-                    }
-                }
-                return maskedStr;
-            };
-        /**
-         * @private
-         * @param {?} str
-         * @return {?}
-         */
-        InputHelisaComponent.prototype.getRealValue = /**
-         * @private
-         * @param {?} str
-         * @return {?}
-         */
-            function (str) {
-                if (str == null)
-                    return str;
-                str = str + '';
-                /** @type {?} */
-                var realStr = '';
-                if (this.type == InputHelisaType.DEFAULT)
-                    return str;
-                if (this.type == InputHelisaType.IDENTITY) {
-                    for (var i = 0; i < str.length; i++)
-                        if (str[i].match('[a-zA-Z0-9]'))
-                            realStr += str[i];
-                }
-                if (this.type == InputHelisaType.NUMERIC) {
-                    for (var i = 0; i < str.length; i++)
-                        if (str[i].match('[0-9]'))
-                            realStr += str[i];
-                }
-                if (this.type == InputHelisaType.DOUBLE) {
-                    /** @type {?} */
-                    var haveDot = false;
-                    for (var i = 0; i < str.length; i++) {
-                        if (str[i].match('[0-9]') || ((str[i] == this.DECIMAL_SEPARATOR) && !haveDot))
-                            realStr += str[i];
-                        haveDot = haveDot || (str[i] == this.DECIMAL_SEPARATOR);
-                    }
-                }
-                return realStr;
+                this.setValue.emit(this.inputFormControl.value);
             };
         InputHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-input',
-                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
+                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"inputFormControl\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                         styles: ["/deep/ hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
                     }] }
         ];
@@ -1042,58 +902,13 @@
             placeholder: [{ type: i0.Input }],
             setValue: [{ type: i0.Output }],
             isSearch: [{ type: i0.Input }],
+            inputFormControl: [{ type: i0.Input }],
             isFocused: [{ type: i0.Input }],
             disabled: [{ type: i0.Input }],
-            type: [{ type: i0.Input }],
-            nameInput: [{ type: i0.ViewChild, args: ['inputText',] }],
-            inputFormControl: [{ type: i0.Input }]
+            nameInput: [{ type: i0.ViewChild, args: ['inputText',] }]
         };
         return InputHelisaComponent;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    function __read(o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-            return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-                ar.push(r.value);
-        }
-        catch (error) {
-            e = { error: error };
-        }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"]))
-                    m.call(i);
-            }
-            finally {
-                if (e)
-                    throw e.error;
-            }
-        }
-        return ar;
-    }
-    function __spread() {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-            ar = ar.concat(__read(arguments[i]));
-        return ar;
-    }
 
     /**
      * @fileoverview added by tsickle
@@ -1221,9 +1036,6 @@
             this.type = TableHelisaType.LOCAL;
             this.scrollCount = 0;
             this.hasSubtitle = false;
-            this.indexRowStartDrag = -1;
-            this.lastIndexRowDrag = -1;
-            this.dataBeforeDrag = null;
             this.sort = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.search = new i0.EventEmitter();
@@ -1253,6 +1065,7 @@
              * Tiempo antes de mostra el mensaje del tooltip
              */
             this.showDelay = 500;
+            this._dataSource = [];
         }
         /**
          * @return {?}
@@ -1380,10 +1193,16 @@
             configurable: true
         });
         Object.defineProperty(TableHelisaComponent.prototype, "dataSource", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._dataSource;
+            },
             set: /**
              * @param {?} dataSource
              * @return {?}
              */ function (dataSource) {
+                this._dataSource = dataSource;
                 this.rawData = dataSource;
                 if (this.rawData) {
                     this.prepareDataSource();
@@ -1851,20 +1670,11 @@
          * @return {?}
          */
             function (event) {
-                if (this.isDragged && this.indexRowStartDrag >= 0) {
-                    /** @type {?} */
-                    var rowIndex = this.getRowIndex(event.pageY);
-                    /** @type {?} */
-                    var array = this.dataBeforeDrag.data;
-                    /** @type {?} */
-                    var rawData = this.rawData;
-                    dragDrop.moveItemInArray(array, this.indexRowStartDrag, rowIndex);
-                    dragDrop.moveItemInArray(rawData, this.indexRowStartDrag, rowIndex);
-                    this.drop.emit({ value: array[rowIndex].data, order: rowIndex });
-                    this.rawData = rawData;
-                    this.data = new material.MatTableDataSource(array);
-                    event.stopPropagation();
-                }
+                /** @type {?} */
+                var array = this.data.data;
+                dragDrop.moveItemInArray(array, event.previousIndex, event.currentIndex);
+                this.drop.emit({ value: array[event.currentIndex].data, order: event.currentIndex });
+                this.data = new material.MatTableDataSource(array);
             };
         /**
          * @param {?} event
@@ -1985,81 +1795,11 @@
                  * @return {?}
                  */function (col) { return col.name; }));
             };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.dragger = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                if (this.isDragged && this.indexRowStartDrag >= 0) {
-                    /** @type {?} */
-                    var rowIndex = this.getRowIndex(event.pageY);
-                    if (rowIndex != this.lastIndexRowDrag) {
-                        this.lastIndexRowDrag = rowIndex;
-                        //This can have a memory problem with big data
-                        /** @type {?} */
-                        var array = __spread(this.dataBeforeDrag.data);
-                        dragDrop.moveItemInArray(array, this.indexRowStartDrag, rowIndex);
-                        this.data = new material.MatTableDataSource(array);
-                    }
-                    event.preventDefault();
-                    return true;
-                }
-            };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.startDrag = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                this.indexRowStartDrag = this.getRowIndex(event.pageY);
-                this.lastIndexRowDrag = this.indexRowStartDrag;
-                this.dataBeforeDrag = this.data;
-            };
-        /**
-         * @private
-         * @param {?} pageY
-         * @return {?}
-         */
-        TableHelisaComponent.prototype.getRowIndex = /**
-         * @private
-         * @param {?} pageY
-         * @return {?}
-         */
-            function (pageY) {
-                /** @type {?} */
-                var offsetTop = 0;
-                /** @type {?} */
-                var container = this.containerTable.nativeElement;
-                while ((container != null) && (offsetTop == 0)) {
-                    offsetTop = container.offsetTop;
-                    container = container.parentElement;
-                }
-                /** @type {?} */
-                var rowIndex = -1;
-                /** @type {?} */
-                var rows = this.matTableElement.nativeElement.children[1].children;
-                for (var i = 0; i < rows.length; i++) {
-                    /** @type {?} */
-                    var row = (( /** @type {?} */(rows[i])));
-                    if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
-                        rowIndex = i;
-                }
-                if (rowIndex < 0)
-                    rowIndex = 0;
-                return rowIndex;
-            };
         TableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-table',
-                        template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\r\n    <ng-container *ngIf=\"addBookButton\">\r\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\r\n        <div *ngFor=\"let item of rawData\">\r\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\r\n            <i class=\"material-icons-outlined\">description</i>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\r\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <ng-container [matColumnDef]=\"column.name\">\r\n          <ng-container *ngIf=\"column.title != undefined\">\r\n            <div *ngIf=\"!column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\r\n                {{column.title}} </th>\r\n            </div>\r\n            <div *ngIf=\"column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef mat-sort-header\r\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\r\n            </div>\r\n          </ng-container>\r\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matCellDef=\"let element\"\r\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n            {{ getValue(element.data, column) }}\r\n          </td>\r\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n        </ng-container>\r\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\r\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\r\n            {{column.subtitle}}</th>\r\n        </ng-container>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\r\n          [ngClass]=\"getClassToRow(row.data)\" [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\r\n        </tr>\r\n      </ng-container>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>\r\n",
-                        styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table{position:relative}/deep/ hel-table>button{justify-content:center;align-items:flex-start;background:0 0;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}/deep/ hel-table>button:focus{outline:0}/deep/ hel-table>button:hover{opacity:1}/deep/ hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:'+';color:#fff;height:26px;width:20px}/deep/ hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}/deep/ hel-table .buttons-container{order:2}/deep/ hel-table .buttons-container.hasTitle{padding-top:26px}/deep/ hel-table .buttons-container.hasSubtitle{padding-top:26px}/deep/ hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}/deep/ hel-table .buttons-container>div{height:26px}/deep/ hel-table .buttons-container>div button{justify-content:center;align-items:center;display:flex;height:26px}/deep/ hel-table .buttons-container>div button>*{display:flex;height:100%}/deep/ hel-table .div-table-helisa{height:100%}/deep/ hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa{width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ table{table-layout:fixed}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
+                        template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\">\r\n    <ng-container *ngIf=\"addBookButton\">\r\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\r\n        <div *ngFor=\"let item of rawData\">\r\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\r\n            <i class=\"material-icons-outlined\">description</i>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n    <table cdkDropList (cdkDropListDropped)=\"onDrop($event)\" mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\">\r\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <ng-container [matColumnDef]=\"column.name\">\r\n          <ng-container *ngIf=\"column.title != undefined\">\r\n            <div *ngIf=\"!column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\r\n                {{column.title}} </th>\r\n            </div>\r\n            <div *ngIf=\"column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef mat-sort-header\r\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\r\n            </div>\r\n          </ng-container>\r\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matCellDef=\"let element\"\r\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n            {{ getValue(element.data, column) }}\r\n          </td>\r\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n        </ng-container>\r\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\r\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\r\n            {{column.subtitle}}</th>\r\n        </ng-container>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"isDragged\">\r\n        <tr cdkDrag [cdkDragData]=\"row\" mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\r\n          [ngClass]=\"getClassToRow(row.data)\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\r\n        </tr>\r\n      </ng-container>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>\r\n",
+                        styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table{position:relative}/deep/ hel-table>button{justify-content:center;align-items:flex-start;background:0 0;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}/deep/ hel-table>button:focus{outline:0}/deep/ hel-table>button:hover{opacity:1}/deep/ hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:'+';color:#fff;height:26px;width:20px}/deep/ hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}/deep/ hel-table .buttons-container{order:2}/deep/ hel-table .buttons-container.hasTitle{padding-top:26px}/deep/ hel-table .buttons-container.hasSubtitle{padding-top:26px}/deep/ hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}/deep/ hel-table .buttons-container>div{height:26px}/deep/ hel-table .buttons-container>div button{justify-content:center;align-items:center;display:flex;height:26px}/deep/ hel-table .buttons-container>div button>*{display:flex;height:100%}/deep/ hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa{width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ table{table-layout:fixed}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                     }] }
         ];
         /** @nocollapse */
@@ -2071,8 +1811,6 @@
         TableHelisaComponent.propDecorators = {
             matSort: [{ type: i0.ViewChild, args: [material.MatSort,] }],
             matTable: [{ type: i0.ViewChild, args: [material.MatTable,] }],
-            matTableElement: [{ type: i0.ViewChild, args: [material.MatTable, { read: i0.ElementRef },] }],
-            containerTable: [{ type: i0.ViewChild, args: ["containerTable",] }],
             sort: [{ type: i0.Output }],
             total: [{ type: i0.Output }],
             search: [{ type: i0.Output }],
@@ -2348,6 +2086,50 @@
         };
         return DateHelisaComponent;
     }());
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
 
     /**
      * @fileoverview added by tsickle
@@ -3875,7 +3657,6 @@
     exports.AlertHelisaService = AlertHelisaService;
     exports.DependencyTableHelisaComponent = DependencyTableHelisaComponent;
     exports.DependencyTableHelisaService = DependencyTableHelisaService;
-    exports.InputHelisaType = InputHelisaType;
     exports.InputHelisaComponent = InputHelisaComponent;
     exports.TableHelisaComponent = TableHelisaComponent;
     exports.EventScope = EventScope;
