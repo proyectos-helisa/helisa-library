@@ -921,6 +921,14 @@ var InputHelisaComponent = /** @class */ (function () {
                     _this.change(data);
             }));
             this.change(this.inputFormReal.value);
+            this.inputFormReal.statusChanges.subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            function (data) {
+                if (data == 'INVALID')
+                    _this.formControlMask.setErrors({ key: 'Error de validación.' });
+            }));
         },
         enumerable: true,
         configurable: true
