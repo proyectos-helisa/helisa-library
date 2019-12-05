@@ -3726,7 +3726,7 @@
                 /** @type {?} */
                 var currentContent = this._elemRef.nativeElement.innerText;
                 if (!!currentContent && !!this.message) {
-                    if ((currentContent.toUpperCase() != this.message.toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
+                    if ((currentContent.toUpperCase() != this.message.toString().toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
                         this.tooltip.message = this.message;
                     }
                 }
