@@ -920,7 +920,16 @@ var InputHelisaComponent = /** @class */ (function () {
                 if (_this.getMaskedValue(data) != _this.formControlMask.value)
                     _this.change(data);
             }));
+            this.formControlMask.markAsUntouched();
             this.change(this.inputFormReal.value);
+            this.inputFormReal.statusChanges.subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            function (data) {
+                if (data == 'INVALID')
+                    _this.formControlMask.setErrors({ key: 'Error de validación.' });
+            }));
         },
         enumerable: true,
         configurable: true
@@ -1234,6 +1243,7 @@ var TableHelisaComponent = /** @class */ (function () {
          * Tiempo antes de mostra el mensaje del tooltip
          */
         this.showDelay = 500;
+        this._dataSource = [];
     }
     /**
      * @return {?}
@@ -1373,11 +1383,18 @@ var TableHelisaComponent = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(TableHelisaComponent.prototype, "dataSource", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._dataSource;
+        },
         set: /**
          * @param {?} dataSource
          * @return {?}
          */
         function (dataSource) {
+            this._dataSource = dataSource;
             this.rawData = dataSource;
             if (this.rawData) {
                 this.prepareDataSource();
@@ -3487,6 +3504,10 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
             }));
         }
         this.filteredOptions = this.myControl.valueChanges.pipe(startWith(''), map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this._checkRegex(x); })), map((/**
          * @param {?} value
          * @return {?}
          */
@@ -3511,6 +3532,23 @@ var AutocompleteHelisaComponent = /** @class */ (function () {
      */
     function () {
         return this.autocompleteHelisaService;
+    };
+    /** Elimina caracteres extraños */
+    /**
+     * Elimina caracteres extraños
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    AutocompleteHelisaComponent.prototype._checkRegex = /**
+     * Elimina caracteres extraños
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '');
+        return value;
     };
     /**
      * @private
@@ -3733,7 +3771,7 @@ var HelTooltipDirective = /** @class */ (function () {
         /** @type {?} */
         var currentContent = this._elemRef.nativeElement.innerText;
         if (!!currentContent && !!this.message) {
-            if ((currentContent.toUpperCase() != this.message.toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
+            if ((currentContent.toUpperCase() != this.message.toString().toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
                 this.tooltip.message = this.message;
             }
         }

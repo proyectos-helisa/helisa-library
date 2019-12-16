@@ -704,7 +704,16 @@ class InputHelisaComponent {
             if (this.getMaskedValue(data) != this.formControlMask.value)
                 this.change(data);
         }));
+        this.formControlMask.markAsUntouched();
         this.change(this.inputFormReal.value);
+        this.inputFormReal.statusChanges.subscribe((/**
+         * @param {?} data
+         * @return {?}
+         */
+        data => {
+            if (data == 'INVALID')
+                this.formControlMask.setErrors({ key: 'Error de validación.' });
+        }));
     }
     /**
      * @return {?}
@@ -972,6 +981,7 @@ class TableHelisaComponent {
          * Tiempo antes de mostra el mensaje del tooltip
          */
         this.showDelay = 500;
+        this._dataSource = [];
     }
     /**
      * @return {?}
@@ -1099,10 +1109,17 @@ class TableHelisaComponent {
      * @return {?}
      */
     set dataSource(dataSource) {
+        this._dataSource = dataSource;
         this.rawData = dataSource;
         if (this.rawData) {
             this.prepareDataSource();
         }
+    }
+    /**
+     * @return {?}
+     */
+    get dataSource() {
+        return this._dataSource;
     }
     /**
      * @param {?} idRowSelected
@@ -2789,6 +2806,10 @@ class AutocompleteHelisaComponent {
             }));
         }
         this.filteredOptions = this.myControl.valueChanges.pipe(startWith(''), map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this._checkRegex(x))), map((/**
          * @param {?} value
          * @return {?}
          */
@@ -2806,6 +2827,16 @@ class AutocompleteHelisaComponent {
      */
     getService() {
         return this.autocompleteHelisaService;
+    }
+    /**
+     * Elimina caracteres extraños
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    _checkRegex(value) {
+        value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '');
+        return value;
     }
     /**
      * @private
@@ -3005,7 +3036,7 @@ class HelTooltipDirective {
         /** @type {?} */
         let currentContent = this._elemRef.nativeElement.innerText;
         if (!!currentContent && !!this.message) {
-            if ((currentContent.toUpperCase() != this.message.toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
+            if ((currentContent.toUpperCase() != this.message.toString().toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
                 this.tooltip.message = this.message;
             }
         }

@@ -73,6 +73,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     ngAfterViewInit(): void;
     isRemote: boolean;
     columnConfiguration: Array<ColumnConfig>;
+    private _dataSource;
     dataSource: Array<any>;
     selectedIndexRow: number;
     private prepareDataSource;
