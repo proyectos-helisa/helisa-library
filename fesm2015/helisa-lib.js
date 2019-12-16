@@ -701,19 +701,29 @@ class InputHelisaComponent {
          * @return {?}
          */
         data => {
+            this.statusChange(this.inputFormReal.status);
             if (this.getMaskedValue(data) != this.formControlMask.value)
                 this.change(data);
         }));
-        this.formControlMask.markAsTouched();
+        this.formControlMask.setValidators(this.inputFormReal.validator);
         this.change(this.inputFormReal.value);
         this.inputFormReal.statusChanges.subscribe((/**
          * @param {?} data
          * @return {?}
          */
         data => {
-            if (data == 'INVALID')
-                this.formControlMask.setErrors({ key: 'Error de validación.' });
+            this.statusChange(data);
         }));
+    }
+    /**
+     * @private
+     * @param {?} data
+     * @return {?}
+     */
+    statusChange(data) {
+        if (data == 'INVALID') {
+            this.formControlMask.setErrors({ key: 'Error de validación.' });
+        }
     }
     /**
      * @return {?}
@@ -748,6 +758,10 @@ class InputHelisaComponent {
             this.nameInput.nativeElement.selectionEnd = position;
         }
         this.inputFormReal.setValue(this.realValue);
+        //this.formControlMask.updateValueAndValidity();
+        //this.formControlMask.markAsTouched();
+        //    this.inputFormReal.updateValueAndValidity();
+        //this.formControlMask.updateValueAndValidity();
     }
     /**
      * @private

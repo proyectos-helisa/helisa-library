@@ -21,6 +21,7 @@ export declare class InputHelisaComponent implements OnInit {
     nameInput: ElementRef;
     constructor();
     inputFormControl: FormControl;
+    private statusChange;
     ngOnInit(): void;
     search(): void;
     change(event: any): void;

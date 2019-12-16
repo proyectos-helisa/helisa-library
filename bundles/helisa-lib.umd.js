@@ -894,22 +894,37 @@
                  * @param {?} data
                  * @return {?}
                  */function (data) {
+                    _this.statusChange(_this.inputFormReal.status);
                     if (_this.getMaskedValue(data) != _this.formControlMask.value)
                         _this.change(data);
                 }));
-                this.formControlMask.markAsTouched();
+                this.formControlMask.setValidators(this.inputFormReal.validator);
                 this.change(this.inputFormReal.value);
                 this.inputFormReal.statusChanges.subscribe(( /**
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (data == 'INVALID')
-                        _this.formControlMask.setErrors({ key: 'Error de validación.' });
+                    _this.statusChange(data);
                 }));
             },
             enumerable: true,
             configurable: true
         });
+        /**
+         * @private
+         * @param {?} data
+         * @return {?}
+         */
+        InputHelisaComponent.prototype.statusChange = /**
+         * @private
+         * @param {?} data
+         * @return {?}
+         */
+            function (data) {
+                if (data == 'INVALID') {
+                    this.formControlMask.setErrors({ key: 'Error de validación.' });
+                }
+            };
         /**
          * @return {?}
          */
@@ -953,6 +968,10 @@
                     this.nameInput.nativeElement.selectionEnd = position;
                 }
                 this.inputFormReal.setValue(this.realValue);
+                //this.formControlMask.updateValueAndValidity();
+                //this.formControlMask.markAsTouched();
+                //    this.inputFormReal.updateValueAndValidity();
+                //this.formControlMask.updateValueAndValidity();
             };
         /**
          * @private
