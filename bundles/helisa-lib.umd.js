@@ -897,7 +897,7 @@
                     if (_this.getMaskedValue(data) != _this.formControlMask.value)
                         _this.change(data);
                 }));
-                this.formControlMask.markAsUntouched();
+                this.formControlMask.markAsTouched();
                 this.change(this.inputFormReal.value);
                 this.inputFormReal.statusChanges.subscribe(( /**
                  * @param {?} data
