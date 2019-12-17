@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { remove, orderBy } from 'lodash';
 import { filter, tap, map, startWith, throttleTime, debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, BehaviorSubject, of } from 'rxjs';
-import { Component, Input, Output, EventEmitter, Inject, Injectable, Directive, HostListener, ElementRef, NgModule, ViewChild, ViewChildren, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, Injectable, NgModule, Directive, HostListener, ElementRef, ViewChildren, ViewChild, defineInjectable, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatSidenavModule, MatGridListModule, MatMenuModule, MatRadioModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog as MatDialog$1 } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -923,6 +923,10 @@ var InputHelisaComponent = /** @class */ (function () {
             }));
             this.formControlMask.setValidators(this.inputFormReal.validator);
             this.change(this.inputFormReal.value);
+            // disable control
+            if (formControl.disabled) {
+                this.formControlMask.disable({ onlySelf: true });
+            }
             this.inputFormReal.statusChanges.subscribe((/**
              * @param {?} data
              * @return {?}

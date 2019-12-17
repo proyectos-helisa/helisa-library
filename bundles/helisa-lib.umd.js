@@ -900,6 +900,10 @@
                 }));
                 this.formControlMask.setValidators(this.inputFormReal.validator);
                 this.change(this.inputFormReal.value);
+                // disable control
+                if (formControl.disabled) {
+                    this.formControlMask.disable({ onlySelf: true });
+                }
                 this.inputFormReal.statusChanges.subscribe(( /**
                  * @param {?} data
                  * @return {?}
