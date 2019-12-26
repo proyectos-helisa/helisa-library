@@ -1,6 +1,6 @@
 import { AfterViewInit, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { MatSort, MatTable, MatTableDataSource } from '@angular/material';
-import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup } from './table-helisa.interface';
+import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
 interface RowData {
     data: any;
@@ -109,5 +109,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     dragger(event: any): boolean;
     startDrag(event: any): void;
     private getRowIndex;
+    readonly columnType: typeof ColumnType;
 }
 export {};

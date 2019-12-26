@@ -1,4 +1,8 @@
 import { SortDirection } from "@angular/material";
+export declare enum ColumnType {
+    NORMAL = 0,
+    URL = 1
+}
 export interface ColumnConfig {
     name: string;
     title?: string;
@@ -12,6 +16,7 @@ export interface ColumnConfig {
     colspanTitle?: number;
     colspanSubtitle?: number;
     columnStyle?: string;
+    columnType?: ColumnType;
 }
 export interface AddRowButton {
     text: string;
