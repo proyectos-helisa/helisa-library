@@ -1,4 +1,5 @@
-import { SortDirection } from "@angular/material";
+import { SortDirection } from '@angular/material';
+import { RowData } from './table-helisa.component';
 export declare enum ColumnType {
     NORMAL = 0,
     URL = 1
@@ -53,9 +54,9 @@ export interface EventSearch {
     text: string;
     columnConfigurations: Array<ColumnConfig>;
 }
-export interface RequestTableHelisa {
+export interface RequestTableHelisa<T> {
     page: number;
-    body: any;
+    body: {} | T;
 }
 export interface DropElement<T> {
     value: T;
@@ -69,19 +70,19 @@ export declare enum TableHelisaType {
     REMOTE = 0,
     LOCAL = 1
 }
-export interface Cell {
+export interface Cell<T> {
     column: ColumnConfig;
-    row: any;
+    row: RowData<T> | T;
 }
-export interface ConfigCellStyles {
-    cellData: any;
+export interface ConfigCellStyles<T> {
+    cellData: T;
     classCell: string;
 }
-export interface ConfigRowStyles {
+export interface ConfigRowStyles<T> {
     column: ColumnConfig;
-    data: any;
+    data: {} | T;
     classRow: string;
 }
-export declare abstract class ColumnConfigUtil {
-    static getValue(obj: any, column: ColumnConfig): any;
+export declare class ColumnConfigUtil<T> {
+    getValue(obj: T, column: ColumnConfig): T | number | string;
 }

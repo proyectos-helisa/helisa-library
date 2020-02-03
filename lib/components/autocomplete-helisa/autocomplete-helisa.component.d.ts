@@ -9,14 +9,14 @@ export interface OptionAutocompleteHelisa<T> {
 export declare class AutocompleteHelisaComponent<T> implements OnInit {
     private autocompleteHelisaService;
     myControl: FormControl;
-    options: OptionAutocompleteHelisa<T>[];
+    options: Array<OptionAutocompleteHelisa<T>>;
     filteredOptions: Observable<OptionAutocompleteHelisa<T>[]>;
     selectedValue: OptionAutocompleteHelisa<T>;
-    onSelectedValue: EventEmitter<T>;
+    selectedValueEmmiter: EventEmitter<T>;
     nextPage: EventEmitter<void>;
     isRemote: boolean;
     isLoading: boolean;
-    onScrollObservable: Subject<any>;
+    onScrollObservable: Subject<void>;
     constructor(autocompleteHelisaService: AutocompleteHelisaService<T>);
     ngOnInit(): void;
     displayFn(option?: OptionAutocompleteHelisa<T>): string | undefined;
@@ -24,6 +24,10 @@ export declare class AutocompleteHelisaComponent<T> implements OnInit {
     /** Elimina caracteres extraños */
     private _checkRegex;
     private _filter;
-    onSelected(event: any): void;
-    getNextPage(event: any): void;
+    onSelected(event: {
+        option: {
+            value: OptionAutocompleteHelisa<T>;
+        };
+    }): void;
+    getNextPage(): void;
 }

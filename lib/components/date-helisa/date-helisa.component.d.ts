@@ -42,14 +42,10 @@ export declare class DateHelisaComponent implements OnInit {
     private formHandler;
     /**
      * Evento que se dispara luego seleccionar un mes
-     * @param chosenMonthDate
-     * @param datepicker
      */
     monthSelectedHandler(chosenMonthDate: moment_.Moment, datepicker: MatDatepicker<moment_.Moment>): void;
     /**
      * Evento desde el control touch del calendar
-     * @param type
-     * @param event
      */
     dateChange(type: string, event: MatDatepickerInputEvent<Date>): void;
     getErrorMessage(): string;

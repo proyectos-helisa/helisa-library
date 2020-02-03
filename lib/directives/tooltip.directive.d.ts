@@ -1,11 +1,11 @@
 import { ElementRef } from '@angular/core';
 import { MatTooltip } from '@angular/material';
 export declare class HelTooltipDirective {
-    private _elemRef;
+    private elemRef;
     tooltip: MatTooltip;
     /**
      * Mensaje a mostrar
-     *  */
+     */
     message: string;
     /**
      * Tiempo antes de ocultarla el mensaje
@@ -15,7 +15,7 @@ export declare class HelTooltipDirective {
      * Tiempo antes de mostra el mensaje
      */
     showDelay: number;
-    constructor(tooltip: MatTooltip, _elemRef: ElementRef);
+    constructor(tooltip: MatTooltip, elemRef: ElementRef);
     mouseover(): void;
     private isEllipsisActive;
 }

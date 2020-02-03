@@ -10,10 +10,10 @@
      */
     var InputWithButtonComponent = /** @class */ (function () {
         function InputWithButtonComponent() {
-            this.placeholder = "";
+            this.placeholder = '';
             this.inputFormControl = new forms.FormControl('', forms.Validators.required);
-            this.requiredMessage = "El campo es requerido";
-            this.value = "";
+            this.requiredMessage = 'El campo es requerido';
+            this.value = '';
             this.done = new i0.EventEmitter();
             this.cancel = new i0.EventEmitter();
         }
@@ -24,7 +24,7 @@
          * @return {?}
          */
             function () {
-                if (this.value != "") {
+                if (this.value !== '') {
                     this.inputFormControl.setValue(this.value);
                 }
             };
@@ -51,7 +51,7 @@
         InputWithButtonComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-input-with-button',
-                        template: "<div>\n  <mat-form-field>\n    <input matInput [placeholder]=\"placeholder\" [formControl]= \"inputFormControl\">    \n    <mat-icon matSuffix (click)=\"onDone()\">done</mat-icon>\n    <mat-icon matSuffix (click)=\"onCancel()\">close</mat-icon>\n    <mat-error *ngIf=\"inputFormControl.hasError('required')\">\n      {{ requiredMessage }}\n    </mat-error>\n  </mat-form-field>\n</div>\n",
+                        template: "<div>\r\n  <mat-form-field>\r\n    <input matInput [placeholder]=\"placeholder\" [formControl]= \"inputFormControl\">    \r\n    <mat-icon matSuffix (click)=\"onDone()\">done</mat-icon>\r\n    <mat-icon matSuffix (click)=\"onCancel()\">close</mat-icon>\r\n    <mat-error *ngIf=\"inputFormControl.hasError('required')\">\r\n      {{ requiredMessage }}\r\n    </mat-error>\r\n  </mat-form-field>\r\n</div>\r\n",
                         styles: [""]
                     }] }
         ];
@@ -72,6 +72,7 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    // @dynamic
     var ToastHelisaComponent = /** @class */ (function () {
         function ToastHelisaComponent(data) {
             this.data = data;
@@ -86,7 +87,7 @@
         ToastHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-toast',
-                        template: "<div [ngClass]=\"'toast-'+data.type\">\n  <span class=\"toast-message\">{{ data.message }}</span>\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\n  </ng-container>    \n</div>\n",
+                        template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\r\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n  </ng-container>    \r\n</div>\r\n",
                         styles: [""]
                     }] }
         ];
@@ -148,9 +149,9 @@
      */
     /** @enum {string} */
     var ToastType = {
-        DONE: "done",
-        ERROR: "error",
-        INFO: "info",
+        DONE: 'done',
+        ERROR: 'error',
+        INFO: 'info',
     };
 
     /**
@@ -159,8 +160,8 @@
      */
     /** @enum {string} */
     var AlertHelisaType = {
-        ERROR: "ERROR",
-        CONFIRMATION: "CONFIRMATION",
+        ERROR: 'ERROR',
+        CONFIRMATION: 'CONFIRMATION',
     };
 
     /**
@@ -205,7 +206,7 @@
         AlertHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-alert',
-                        template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelar</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>aceptar</button>\n</div>",
+                        template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelar</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>aceptar</button>\r\n</div>",
                         styles: [""]
                     }] }
         ];
@@ -265,6 +266,9 @@
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @template T
      */
     var DependencyTableHelisaService = /** @class */ (function () {
         function DependencyTableHelisaService() {
@@ -328,12 +332,14 @@
                 this.infoTables[configTable.order] = configTable;
                 if (configTable.isRemote) {
                     configTable.dataSource = null;
-                    if (configTable.count === null)
-                        throw "hace falta el count";
+                    if (configTable.count === null) {
+                        throw new Error('hace falta el count');
+                    }
                 }
                 else {
-                    if (configTable.dataSource === null)
-                        throw "hace falta el dataSource";
+                    if (configTable.dataSource === null) {
+                        throw new Error('hace falta el dataSource');
+                    }
                     configTable.count = configTable.dataSource.length;
                 }
                 this.tables.next(this.infoTables);
@@ -438,9 +444,9 @@
                 this.emitIsCellSelection$.next(event);
             };
         /**
-        * Para habilitar el cambio de columnas
-        * @param event para indicar el index de la tabla y en "data" columnas
-        */
+         * Para habilitar el cambio de columnas
+         * @param event para indicar el index de la tabla y en "data" columnas
+         */
         /**
          * Para habilitar el cambio de columnas
          * @param {?} event para indicar el index de la tabla y en "data" columnas
@@ -537,6 +543,9 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * @template T
+     */
     var DependencyTableHelisaComponent = /** @class */ (function () {
         function DependencyTableHelisaComponent(dependencyTableHelisaService, tableService) {
             this.dependencyTableHelisaService = dependencyTableHelisaService;
@@ -591,7 +600,7 @@
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (!!data && data.index != undefined) {
+                    if (!!data && data.index !== undefined) {
                         /** @type {?} */
                         var table = _this.tables[data.index];
                         if (!!table) {
@@ -599,12 +608,12 @@
                         }
                     }
                 }));
-                //Observable para mostrar o esconder los botones de todas las tablas
+                // Observable para mostrar o esconder los botones de todas las tablas
                 this.dependencyTableHelisaService.emitVisibilityAllButtons.subscribe(( /**
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (data != undefined && data != null) {
+                    if (data !== undefined && data != null) {
                         _this.tables.forEach(( /**
                          * @param {?} element
                          * @return {?}
@@ -615,12 +624,12 @@
                         }));
                     }
                 }));
-                //Observable para manejo de selección de celdas
+                // Observable para manejo de selección de celdas
                 this.dependencyTableHelisaService.emitIsCellSelection.subscribe(( /**
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (!!data && data.index != undefined) {
+                    if (!!data && data.index !== undefined) {
                         /** @type {?} */
                         var table = _this.tables[data.index];
                         if (table) {
@@ -628,12 +637,12 @@
                         }
                     }
                 }));
-                //Observable para manejo de columnas
+                // Observable para manejo de columnas
                 this.dependencyTableHelisaService.emitChangeColumns.subscribe(( /**
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (!!data && data.index != undefined) {
+                    if (!!data && data.index !== undefined) {
                         /** @type {?} */
                         var table = _this.tables[data.index];
                         if (table) {
@@ -827,7 +836,7 @@
         DependencyTableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-dependency-table',
-                        template: "<div>    \n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\n  </hel-table>\n</div>\n",
+                        template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\r\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\r\n    (bookClicked)=\"onBookClicked(i,$event)\"\r\n    [showToolTip]=\"showToolTip\"\r\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\r\n  </hel-table>\r\n</div>\r\n",
                         providers: [DependencyTableHelisaService],
                         styles: [""]
                     }] }
@@ -851,11 +860,67 @@
             addRow: [{ type: i0.Output }],
             selectCell: [{ type: i0.Output }],
             bookClicked: [{ type: i0.Output }],
-            hideDelay: [{ type: i0.Input, args: ['hideDelay',] }],
-            showDelay: [{ type: i0.Input, args: ['showDelay',] }]
+            hideDelay: [{ type: i0.Input }],
+            showDelay: [{ type: i0.Input }]
         };
         return DependencyTableHelisaComponent;
     }());
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m)
+            return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length)
+                    o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
 
     /**
      * @fileoverview added by tsickle
@@ -874,12 +939,19 @@
             this.DECIMAL_SEPARATOR = '.';
             this.THOUSAND_SEPARATOR = ',';
             this.placeholder = '';
-            this.setValue = new i0.EventEmitter();
+            // Mostrar o no el icono de buscar
             this.isSearch = false;
-            //@Input() inputFormControl: FormControl = new FormControl('');
+            // @Input() inputFormControl: FormControl = new FormControl('');
             this.isFocused = false;
+            /**
+             * Deprecated
+             */
             this.disabled = false;
             this.type = InputHelisaType.DEFAULT;
+            /**
+             * Deprecated
+             */
+            this.setValue = new i0.EventEmitter();
             this.formControlMask = new forms.FormControl('');
             this.realValue = '';
             this.inputFormReal = new forms.FormControl('');
@@ -896,8 +968,9 @@
                  * @return {?}
                  */function (data) {
                     _this.statusChange(_this.inputFormReal.status);
-                    if (_this.getMaskedValue(data) != _this.formControlMask.value)
+                    if (_this.getMaskedValue(data) !== _this.formControlMask.value) {
                         _this.change(data);
+                    }
                 }));
                 this.formControlMask.setValidators(this.inputFormReal.validator);
                 this.change(this.inputFormReal.value);
@@ -926,7 +999,7 @@
          * @return {?}
          */
             function (data) {
-                if (data == 'INVALID') {
+                if (data === 'INVALID') {
                     this.formControlMask.setErrors({ key: 'Error de validación.' });
                 }
             };
@@ -959,24 +1032,21 @@
          * @return {?}
          */
             function (event) {
-                if (event != null)
+                if (event != null) {
                     event = event + '';
+                }
                 /** @type {?} */
                 var position = this.nameInput.nativeElement.selectionStart;
                 /** @type {?} */
                 var length = event ? event.length : 0;
                 this.realValue = this.getRealValue(event);
-                if (this.getMaskedValue(this.realValue) != this.formControlMask.value) {
+                if (this.getMaskedValue(this.realValue) !== this.formControlMask.value) {
                     this.formControlMask.setValue(this.getMaskedValue(this.realValue));
                     position += this.nameInput.nativeElement.value.length - length;
                     this.nameInput.nativeElement.selectionStart = position;
                     this.nameInput.nativeElement.selectionEnd = position;
                 }
                 this.inputFormReal.setValue(this.realValue);
-                //this.formControlMask.updateValueAndValidity();
-                //this.formControlMask.markAsTouched();
-                //    this.inputFormReal.updateValueAndValidity();
-                //this.formControlMask.updateValueAndValidity();
             };
         /**
          * @private
@@ -989,34 +1059,41 @@
          * @return {?}
          */
             function (str) {
-                if (str == null)
+                if (str == null) {
                     return str;
+                }
                 str = str + '';
-                if (this.type == InputHelisaType.DEFAULT)
+                if (this.type === InputHelisaType.DEFAULT) {
                     return str;
+                }
                 /** @type {?} */
                 var maskedStr = '';
-                if (this.type == InputHelisaType.IDENTITY) {
+                if (this.type === InputHelisaType.IDENTITY) {
                     for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
-                        if (j > 0 && j % 3 == 0)
+                        if (j > 0 && j % 3 === 0) {
                             maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
+                        }
                         maskedStr = str[i] + maskedStr;
                     }
                 }
-                if (this.type == InputHelisaType.NUMERIC) {
+                if (this.type === InputHelisaType.NUMERIC) {
                     for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
-                        if (j > 0 && j % 3 == 0)
+                        if (j > 0 && j % 3 === 0) {
                             maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
+                        }
                         maskedStr = str[i] + maskedStr;
                     }
                 }
-                if (this.type == InputHelisaType.DOUBLE) {
-                    if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0)
-                        for (var i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++)
+                if (this.type === InputHelisaType.DOUBLE) {
+                    if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0) {
+                        for (var i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++) {
                             maskedStr += str[i];
+                        }
+                    }
                     for (var i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
-                        if (j > 0 && j % 3 == 0)
+                        if (j > 0 && j % 3 === 0) {
                             maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
+                        }
                         maskedStr = str[i] + maskedStr;
                     }
                 }
@@ -1033,30 +1110,86 @@
          * @return {?}
          */
             function (str) {
-                if (str == null)
+                var e_1, _a, e_2, _b, e_3, _c;
+                if (str == null) {
                     return str;
+                }
                 str = str + '';
                 /** @type {?} */
                 var realStr = '';
-                if (this.type == InputHelisaType.DEFAULT)
+                if (this.type === InputHelisaType.DEFAULT) {
                     return str;
-                if (this.type == InputHelisaType.IDENTITY) {
-                    for (var i = 0; i < str.length; i++)
-                        if (str[i].match('[a-zA-Z0-9]'))
-                            realStr += str[i];
                 }
-                if (this.type == InputHelisaType.NUMERIC) {
-                    for (var i = 0; i < str.length; i++)
-                        if (str[i].match('[0-9]'))
-                            realStr += str[i];
+                if (this.type === InputHelisaType.IDENTITY) {
+                    try {
+                        for (var str_1 = __values(str), str_1_1 = str_1.next(); !str_1_1.done; str_1_1 = str_1.next()) {
+                            var strItem = str_1_1.value;
+                            if (strItem.match('[a-zA-Z0-9]')) {
+                                realStr += strItem;
+                            }
+                        }
+                    }
+                    catch (e_1_1) {
+                        e_1 = { error: e_1_1 };
+                    }
+                    finally {
+                        try {
+                            if (str_1_1 && !str_1_1.done && (_a = str_1.return))
+                                _a.call(str_1);
+                        }
+                        finally {
+                            if (e_1)
+                                throw e_1.error;
+                        }
+                    }
                 }
-                if (this.type == InputHelisaType.DOUBLE) {
+                if (this.type === InputHelisaType.NUMERIC) {
+                    try {
+                        for (var str_2 = __values(str), str_2_1 = str_2.next(); !str_2_1.done; str_2_1 = str_2.next()) {
+                            var strItem = str_2_1.value;
+                            if (strItem.match('[0-9]')) {
+                                realStr += strItem;
+                            }
+                        }
+                    }
+                    catch (e_2_1) {
+                        e_2 = { error: e_2_1 };
+                    }
+                    finally {
+                        try {
+                            if (str_2_1 && !str_2_1.done && (_b = str_2.return))
+                                _b.call(str_2);
+                        }
+                        finally {
+                            if (e_2)
+                                throw e_2.error;
+                        }
+                    }
+                }
+                if (this.type === InputHelisaType.DOUBLE) {
                     /** @type {?} */
                     var haveDot = false;
-                    for (var i = 0; i < str.length; i++) {
-                        if (str[i].match('[0-9]') || ((str[i] == this.DECIMAL_SEPARATOR) && !haveDot))
-                            realStr += str[i];
-                        haveDot = haveDot || (str[i] == this.DECIMAL_SEPARATOR);
+                    try {
+                        for (var str_3 = __values(str), str_3_1 = str_3.next(); !str_3_1.done; str_3_1 = str_3.next()) {
+                            var strItem = str_3_1.value;
+                            if (strItem.match('[0-9]') || ((strItem === this.DECIMAL_SEPARATOR) && !haveDot)) {
+                                realStr += strItem;
+                            }
+                            haveDot = haveDot || (strItem === this.DECIMAL_SEPARATOR);
+                        }
+                    }
+                    catch (e_3_1) {
+                        e_3 = { error: e_3_1 };
+                    }
+                    finally {
+                        try {
+                            if (str_3_1 && !str_3_1.done && (_c = str_3.return))
+                                _c.call(str_3);
+                        }
+                        finally {
+                            if (e_3)
+                                throw e_3.error;
+                        }
                     }
                 }
                 return realStr;
@@ -1064,7 +1197,7 @@
         InputHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-input',
-                        template: "<mat-form-field>\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\n  >\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
+                        template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                         styles: ["/deep/ hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
                     }] }
         ];
@@ -1072,60 +1205,16 @@
         InputHelisaComponent.ctorParameters = function () { return []; };
         InputHelisaComponent.propDecorators = {
             placeholder: [{ type: i0.Input }],
-            setValue: [{ type: i0.Output }],
             isSearch: [{ type: i0.Input }],
             isFocused: [{ type: i0.Input }],
             disabled: [{ type: i0.Input }],
             type: [{ type: i0.Input }],
+            setValue: [{ type: i0.Output }],
             nameInput: [{ type: i0.ViewChild, args: ['inputText',] }],
             inputFormControl: [{ type: i0.Input }]
         };
         return InputHelisaComponent;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    function __read(o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-            return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-                ar.push(r.value);
-        }
-        catch (error) {
-            e = { error: error };
-        }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"]))
-                    m.call(i);
-            }
-            finally {
-                if (e)
-                    throw e.error;
-            }
-        }
-        return ar;
-    }
-    function __spread() {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-            ar = ar.concat(__read(arguments[i]));
-        return ar;
-    }
 
     /**
      * @fileoverview added by tsickle
@@ -1163,14 +1252,14 @@
     };
     TableHelisaType[TableHelisaType.REMOTE] = 'REMOTE';
     TableHelisaType[TableHelisaType.LOCAL] = 'LOCAL';
-    //@dynamic
+    // @dynamic
     /**
-     * @abstract
+     * @template T
      */
     var  
-    //@dynamic
+    // @dynamic
     /**
-     * @abstract
+     * @template T
      */
     ColumnConfigUtil = /** @class */ (function () {
         function ColumnConfigUtil() {
@@ -1180,7 +1269,7 @@
          * @param {?} column
          * @return {?}
          */
-        ColumnConfigUtil.getValue = /**
+        ColumnConfigUtil.prototype.getValue = /**
          * @param {?} obj
          * @param {?} column
          * @return {?}
@@ -1262,6 +1351,7 @@
             this.indexRowStartDrag = -1;
             this.lastIndexRowDrag = -1;
             this.dataBeforeDrag = null;
+            this.dataSource$ = [];
             this.sort = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.search = new i0.EventEmitter();
@@ -1276,7 +1366,7 @@
             this.isCellSelection = false;
             this.drop = new i0.EventEmitter();
             this.isDragged = false;
-            this.addRowButton = { showButton: false, text: "" };
+            this.addRowButton = { showButton: false, text: '' };
             this.addRow = new i0.EventEmitter();
             this.bookClicked = new i0.EventEmitter();
             this.addBookButton = false;
@@ -1291,7 +1381,6 @@
              * Tiempo antes de mostra el mensaje del tooltip
              */
             this.showDelay = 500;
-            this._dataSource = [];
         }
         /**
          * @return {?}
@@ -1305,7 +1394,7 @@
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (!data.table || data.table === _this) {
+                    if (!data.table || data.table) {
                         _this.receivePage(data.obj);
                     }
                 }));
@@ -1341,7 +1430,7 @@
                  * @param {?} data
                  * @return {?}
                  */function (data) {
-                    if (data != undefined && data != null) {
+                    if (data !== undefined && data != null) {
                         _this.addRowButton.showButton = data;
                     }
                 }));
@@ -1392,7 +1481,7 @@
                             _this.displayedColumns.push(column.name);
                         }
                         if (!_this.hasSubtitle) {
-                            _this.hasSubtitle = column.subtitle != undefined;
+                            _this.hasSubtitle = column.subtitle !== undefined;
                         }
                     }));
                     if (this.rawData) {
@@ -1422,13 +1511,13 @@
             get: /**
              * @return {?}
              */ function () {
-                return this._dataSource;
+                return this.dataSource$;
             },
             set: /**
              * @param {?} dataSource
              * @return {?}
              */ function (dataSource) {
-                this._dataSource = dataSource;
+                this.dataSource$ = dataSource;
                 this.rawData = dataSource;
                 if (this.rawData) {
                     this.prepareDataSource();
@@ -1504,7 +1593,7 @@
                  * @param {?} row
                  * @return {?}
                  */function (row) {
-                    if (haveGroup && (changeData.length === 0 || _this.compare(changeData[changeData.length - 1].data, row) !== 0)) {
+                    if (haveGroup && (changeData.length === 0 || _this.compare(( /** @type {?} */(changeData[changeData.length - 1].data)), row) !== 0)) {
                         if (groupFooter) {
                             changeData.push({ data: groupFooter, rowType: RowType.GROUP_FOOTER });
                         }
@@ -1518,8 +1607,9 @@
                 }));
                 this.data = new material.MatTableDataSource(changeData);
                 if (this.rawData && this.rawData.length && this.indexRowSelect && !this.selectedObject) {
-                    if (this.indexRowSelect >= this.rawData.length || this.indexRowSelect < 0)
+                    if (this.indexRowSelect >= this.rawData.length || this.indexRowSelect < 0) {
                         this.indexRowSelect = 0;
+                    }
                     this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW }, false);
                 }
             };
@@ -1543,10 +1633,10 @@
                  */function (column, index) {
                     if (column.totalType !== undefined) {
                         if (rowTotal[index] === undefined) {
-                            rowTotal[index] = { sum: ColumnConfigUtil.getValue(row, column), count: 1 };
+                            rowTotal[index] = { sum: (( /** @type {?} */(new ColumnConfigUtil().getValue(row, column)))), count: 1 };
                         }
                         else {
-                            rowTotal[index].sum += ColumnConfigUtil.getValue(row, column);
+                            rowTotal[index].sum += (( /** @type {?} */(new ColumnConfigUtil().getValue(row, column))));
                             rowTotal[index].count++;
                         }
                     }
@@ -1572,10 +1662,10 @@
                  * @return {?}
                  */function (column) {
                     if (ws === 0 && column.groupable) {
-                        if (ColumnConfigUtil.getValue(a, column) < ColumnConfigUtil.getValue(b, column)) {
+                        if ((( /** @type {?} */(new ColumnConfigUtil().getValue(a, column)))) < (( /** @type {?} */(new ColumnConfigUtil().getValue(b, column))))) {
                             ws = -1;
                         }
-                        else if (ColumnConfigUtil.getValue(a, column) > ColumnConfigUtil.getValue(b, column)) {
+                        else if ((( /** @type {?} */(new ColumnConfigUtil().getValue(a, column)))) > (( /** @type {?} */(new ColumnConfigUtil().getValue(b, column))))) {
                             ws = 1;
                         }
                     }
@@ -1598,7 +1688,7 @@
                  * @return {?}
                  */function (column) {
                     if (column.groupable) {
-                        result += (result.length ? ' - ' : '') + ColumnConfigUtil.getValue(obj, column);
+                        result += (result.length ? ' - ' : '') + (new ColumnConfigUtil().getValue(obj, column));
                     }
                 }));
                 return result;
@@ -1687,7 +1777,7 @@
          * @return {?}
          */
             function (obj, column) {
-                return ColumnConfigUtil.getValue(obj, column);
+                return ( /** @type {?} */(new ColumnConfigUtil().getValue(obj, column)));
             };
         /**
          * @param {?} obj
@@ -1701,7 +1791,7 @@
          */
             function (obj, column) {
                 if (this.showToolTip) {
-                    return ColumnConfigUtil.getValue(obj, column);
+                    return ( /** @type {?} */(new ColumnConfigUtil().getValue(obj, column)));
                 }
                 else {
                     return null;
@@ -1730,7 +1820,7 @@
          * @return {?}
          */
             function (row, isUser) {
-                this.selectedObject = row.data;
+                this.selectedObject = ( /** @type {?} */(row.data));
                 this.select.emit(this.selectedObject);
                 this.selectObject.emit({ value: this.selectedObject, scope: isUser ? EventScope.USER : EventScope.CODE_CALL });
             };
@@ -1744,7 +1834,7 @@
          */
             function (event) {
                 /** @type {?} */
-                var element = event.target;
+                var element = ( /** @type {?} */(event.target));
                 if (element.scrollHeight - element.scrollTop < 1000) {
                     this.goNextPage();
                 }
@@ -1792,7 +1882,7 @@
          * @return {?}
          */
             function () {
-                this.selectCell.emit(this.selectedCells);
+                this.selectCell.emit(( /** @type {?} */(this.selectedCells)));
             };
         /**
          * @param {?} element
@@ -1822,7 +1912,7 @@
                 if (this.isCellSelection) {
                     if (this.selectedCells != null) {
                         if (this.selectedCells.column.name === column.name &&
-                            this.selectedCells.row.data === row.data) {
+                            (( /** @type {?} */(this.selectedCells.row))).data === row.data) {
                             return true;
                         }
                     }
@@ -1855,8 +1945,9 @@
                         classToCell.push(found.classCell);
                     }
                 }
-                if (column.columnStyle)
+                if (column.columnStyle) {
                     classToCell.push(column.columnStyle);
+                }
                 return classToCell;
             };
         /**
@@ -1871,8 +1962,9 @@
                 var _this = this;
                 /** @type {?} */
                 var classToRow = new Array();
-                if (row === this.selectedObject && !this.isCellSelection)
+                if (row === this.selectedObject && !this.isCellSelection) {
                     classToRow.push('');
+                }
                 if (this.configRowStylesFromColumn) {
                     /** @type {?} */
                     var found = this.configRowStylesFromColumn.find(( /**
@@ -1905,7 +1997,7 @@
                     var rawData = this.rawData;
                     dragDrop.moveItemInArray(array, this.indexRowStartDrag, rowIndex);
                     dragDrop.moveItemInArray(rawData, this.indexRowStartDrag, rowIndex);
-                    this.drop.emit({ value: array[rowIndex].data, order: rowIndex });
+                    this.drop.emit({ value: ( /** @type {?} */(array[rowIndex].data)), order: rowIndex });
                     this.rawData = rawData;
                     this.data = new material.MatTableDataSource(array);
                     event.stopPropagation();
@@ -1936,8 +2028,9 @@
                          * @param {?} index
                          * @return {?}
                          */function (row, index) {
-                            if (newSelection_1 == -10 && index > currentIndex_1 && row.rowType == RowType.ROW)
+                            if (newSelection_1 === -10 && index > currentIndex_1 && row.rowType === RowType.ROW) {
                                 newSelection_1 = index;
+                            }
                         }));
                     }
                     if (event.key === 'ArrowUp') {
@@ -1948,21 +2041,24 @@
                          * @param {?} index
                          * @return {?}
                          */function (row, index) {
-                            if (newSelection_1 == -10 && index > currentIndex_1 && row.rowType == RowType.ROW)
+                            if (newSelection_1 === -10 && index > currentIndex_1 && row.rowType === RowType.ROW) {
                                 newSelection_1 = index;
+                            }
                         }));
                         this.data.data.reverse();
-                        if (newSelection_1 != -10) {
+                        if (newSelection_1 !== -10) {
                             newSelection_1 = this.data.data.length - newSelection_1 - 1;
                         }
                     }
-                    if (newSelection_1 != -10) {
+                    if (newSelection_1 !== -10) {
                         this.selectRow(this.data.data[newSelection_1], true);
                     }
-                    if (Math.abs(this.scrollCount) >= 2)
+                    if (Math.abs(this.scrollCount) >= 2) {
                         this.scrollCount = 0;
-                    else
+                    }
+                    else {
                         event.preventDefault();
+                    }
                 }
             };
         /**
@@ -2003,10 +2099,12 @@
                  * @param {?} index
                  * @return {?}
                  */function (column, index) {
-                    if (column.visible && column.subtitle != undefined)
+                    if (column.visible && column.subtitle !== undefined) {
                         return 'subtitle' + index;
-                    else
+                    }
+                    else {
                         return null;
+                    }
                 })).filter(( /**
                  * @param {?} data
                  * @return {?}
@@ -2024,7 +2122,7 @@
                  * @param {?} column
                  * @return {?}
                  */function (column) {
-                    return column.visible && column.title != undefined;
+                    return column.visible && column.title !== undefined;
                 })).map(( /**
                  * @param {?} col
                  * @return {?}
@@ -2042,9 +2140,9 @@
                 if (this.isDragged && this.indexRowStartDrag >= 0) {
                     /** @type {?} */
                     var rowIndex = this.getRowIndex(event.pageY);
-                    if (rowIndex != this.lastIndexRowDrag) {
+                    if (rowIndex !== this.lastIndexRowDrag) {
                         this.lastIndexRowDrag = rowIndex;
-                        //This can have a memory problem with big data
+                        // This can have a memory problem with big data
                         /** @type {?} */
                         var array = __spread(this.dataBeforeDrag.data);
                         dragDrop.moveItemInArray(array, this.indexRowStartDrag, rowIndex);
@@ -2082,7 +2180,7 @@
                 var offsetTop = 0;
                 /** @type {?} */
                 var container = this.containerTable.nativeElement;
-                while ((container != null) && (offsetTop == 0)) {
+                while ((container !== null) && (offsetTop === 0)) {
                     offsetTop = container.offsetTop;
                     container = container.parentElement;
                 }
@@ -2093,11 +2191,13 @@
                 for (var i = 0; i < rows.length; i++) {
                     /** @type {?} */
                     var row = (( /** @type {?} */(rows[i])));
-                    if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
+                    if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop) {
                         rowIndex = i;
+                    }
                 }
-                if (rowIndex < 0)
+                if (rowIndex < 0) {
                     rowIndex = 0;
+                }
                 return rowIndex;
             };
         Object.defineProperty(TableHelisaComponent.prototype, "columnType", {
@@ -2112,7 +2212,7 @@
         TableHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-table',
-                        template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\n<div class=\"div-table-helisa\">\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\n    <ng-container *ngIf=\"addBookButton\">\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\n        <div *ngFor=\"let item of rawData\">\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\n            <i class=\"material-icons-outlined\">description</i>\n          </button>\n        </div>\n      </div>\n    </ng-container>\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\n        <ng-container [matColumnDef]=\"column.name\">\n          <ng-container *ngIf=\"column.title != undefined\">\n            <div *ngIf=\"!column.sortable\">\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\n                {{column.title}} </th>\n            </div>\n            <div *ngIf=\"column.sortable\">\n              <th mat-header-cell [helTooltip]=\"column.title\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef mat-sort-header\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\n            </div>\n          </ng-container>\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matCellDef=\"let element\"\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{ getValue(element.data, column) }}</a>\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\n          </td>\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\n        </ng-container>\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\n            {{column.subtitle}}</th>\n        </ng-container>\n      </ng-container>\n\n      <ng-container matColumnDef=\"groupHeader\">\n        <td mat-cell *matCellDef=\"let group\">\n          <strong>{{ getGroupDescription(group.data) }}</strong>\n        </td>\n      </ng-container>\n\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\n      </ng-container>\n\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\n          [ngClass]=\"getClassToRow(row.data)\" [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"!isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\n        </tr>\n      </ng-container>\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\n    </table>\n  </div>\n</div>\n",
+                        template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\r\n    <ng-container *ngIf=\"addBookButton\">\r\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\r\n        <div *ngFor=\"let item of rawData\">\r\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\r\n            <i class=\"material-icons-outlined\">description</i>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\r\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <ng-container [matColumnDef]=\"column.name\">\r\n          <ng-container *ngIf=\"column.title != undefined\">\r\n            <div *ngIf=\"!column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\r\n                {{column.title}} </th>\r\n            </div>\r\n            <div *ngIf=\"column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef mat-sort-header\r\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\r\n            </div>\r\n          </ng-container>\r\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matCellDef=\"let element\"\r\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{ getValue(element.data, column) }}</a>\r\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\r\n          </td>\r\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n        </ng-container>\r\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\r\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\r\n            {{column.subtitle}}</th>\r\n        </ng-container>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\r\n          [ngClass]=\"getClassToRow(row.data)\" [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\r\n        </tr>\r\n      </ng-container>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>\r\n",
                         styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table{position:relative}/deep/ hel-table>button{justify-content:center;align-items:flex-start;background:0 0;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}/deep/ hel-table>button:focus{outline:0}/deep/ hel-table>button:hover{opacity:1}/deep/ hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:'+';color:#fff;height:26px;width:20px}/deep/ hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}/deep/ hel-table .buttons-container{order:2}/deep/ hel-table .buttons-container.hasTitle{padding-top:26px}/deep/ hel-table .buttons-container.hasSubtitle{padding-top:26px}/deep/ hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}/deep/ hel-table .buttons-container>div{height:26px}/deep/ hel-table .buttons-container>div button{justify-content:center;align-items:center;display:flex;height:26px}/deep/ hel-table .buttons-container>div button>*{display:flex;height:100%}/deep/ hel-table .div-table-helisa{height:100%}/deep/ hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa{width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ table{table-layout:fixed}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                     }] }
         ];
@@ -2126,7 +2226,7 @@
             matSort: [{ type: i0.ViewChild, args: [material.MatSort,] }],
             matTable: [{ type: i0.ViewChild, args: [material.MatTable,] }],
             matTableElement: [{ type: i0.ViewChild, args: [material.MatTable, { read: i0.ElementRef },] }],
-            containerTable: [{ type: i0.ViewChild, args: ["containerTable",] }],
+            containerTable: [{ type: i0.ViewChild, args: ['containerTable',] }],
             sort: [{ type: i0.Output }],
             total: [{ type: i0.Output }],
             search: [{ type: i0.Output }],
@@ -2147,8 +2247,8 @@
             bookClicked: [{ type: i0.Output }],
             addBookButton: [{ type: i0.Input }],
             showToolTip: [{ type: i0.Input }],
-            hideDelay: [{ type: i0.Input, args: ['hideDelay',] }],
-            showDelay: [{ type: i0.Input, args: ['showDelay',] }],
+            hideDelay: [{ type: i0.Input }],
+            showDelay: [{ type: i0.Input }],
             isRemote: [{ type: i0.Input }],
             columnConfiguration: [{ type: i0.Input }],
             dataSource: [{ type: i0.Input }],
@@ -2204,7 +2304,7 @@
             function () {
                 this.dateToVisualize = new forms.FormControl('', this.dateFormControl.validator);
                 this.formHandler();
-                if (this.typeCalendar == TypeCalendarEnum.MONTH_YEAR) {
+                if (this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
                     this.dateFormat = 'MM/YYYY';
                     this.placeholder = this.dateFormat;
                 }
@@ -2213,7 +2313,7 @@
                  * @type {?}
                  */
                 var incommingDate = moment(this.dateFormControl.value, this.dateFormat).format(this.dateFormat);
-                if (this.dateFormControl.value != '' && incommingDate != 'Invalid date') {
+                if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
                     this.dateToVisualize.setValue(incommingDate);
                 }
             };
@@ -2238,8 +2338,8 @@
          * @return {?}
          */
             function () {
-                //multi-year
-                if (this.typeCalendar == this.typeCalendarEnum.MONTH_YEAR) {
+                // multi-year
+                if (this.typeCalendar === this.typeCalendarEnum.MONTH_YEAR) {
                     return 'multi-year';
                 }
                 else {
@@ -2270,7 +2370,7 @@
                 })), operators.filter(( /**
                  * @param {?} date
                  * @return {?}
-                 */function (date) { return date.length == _this.dateFormat.length; })))
+                 */function (date) { return date.length === _this.dateFormat.length; })))
                     .subscribe(( /**
              * @param {?} date
              * @return {?}
@@ -2280,7 +2380,7 @@
                     var isValid = moment(date, _this.dateFormat, true).isValid();
                     /** @type {?} */
                     var result = moment(date, _this.dateFormat).format('YYYY-MM-DD');
-                    if (!!result && (result == 'Invalid date' || !isValid)) {
+                    if (!!result && (result === 'Invalid date' || !isValid)) {
                         _this.invalidFormat = true;
                         return;
                     }
@@ -2299,7 +2399,7 @@
                             _this.date.setDate(day);
                             _this.date.setMonth(month - 1); // -1 por que los meses se toman como los indices en un array
                             /** cuando es de tipo MOUNTH_YEAR retorna el ultimo dia del mes seleccionado */
-                            if (_this.typeCalendar == TypeCalendarEnum.MONTH_YEAR) {
+                            if (_this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
                                 _this.date = moment(_this.date).endOf('month').toDate();
                             }
                             _this.dateToVisualize.setValue(moment(_this.date, 'YYYY-MM-DD').format(_this.dateFormat));
@@ -2322,15 +2422,13 @@
              */function (date) {
                     /** @type {?} */
                     var incommingDate = moment(date, _this.dateFormat).format(_this.dateFormat);
-                    if (_this.dateFormControl.value != '' && incommingDate != 'Invalid date') {
+                    if (_this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
                         _this.dateToVisualize.setValue(incommingDate);
                     }
                 }));
             };
         /**
          * Evento que se dispara luego seleccionar un mes
-         * @param chosenMonthDate
-         * @param datepicker
          */
         /**
          * Evento que se dispara luego seleccionar un mes
@@ -2345,7 +2443,7 @@
          * @return {?}
          */
             function (chosenMonthDate, datepicker$$1) {
-                if (this.typeCalendar == TypeCalendarEnum.MONTH_YEAR) {
+                if (this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
                     datepicker$$1.close();
                     /** @type {?} */
                     var date = moment(chosenMonthDate).endOf('month').toDate();
@@ -2355,8 +2453,6 @@
             };
         /**
          * Evento desde el control touch del calendar
-         * @param type
-         * @param event
          */
         /**
          * Evento desde el control touch del calendar
@@ -2386,7 +2482,7 @@
         DateHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-date-helisa',
-                        template: "<div>\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\n    <input matInput \n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\n    \n    \n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \n      ya que el valor es diferente cuando se escribe directamente en este\n    -->\n    <input matInput \n    [matDatepicker]=\"picker\" \n    hidden=\"hide\" \n    [value]=\"dateToVisualize.value\" \n    (dateChange)=\"dateChange('change', $event)\">\n    <!--  -->\n  \n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\n    \n  </mat-form-field>\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\n  </div>",
+                        template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
                         styles: [""]
                     }] }
         ];
@@ -2610,11 +2706,13 @@
              * Verifica si el nodo tiene hijos
              */
             this.hasChild = ( /**
-             * @param {?} _
+             * @param {?} t
              * @param {?} node
              * @return {?}
-             */function (_$$1, node) { return !!node.children && node.children.length > 0; });
-            //cargar datos pasados por el @Input
+             */function (t, node) {
+                return !!node.children && node.children.length > 0;
+            });
+            // cargar datos pasados por el @Input
             if (!!this.data) {
                 /** @type {?} */
                 var data = this.data;
@@ -2626,6 +2724,42 @@
                 this.treeControl.dataNodes = [];
             }
         }
+        /**
+         * Obtiene la descripcion completa del nodo
+         * @example Nodo padre,nodo hijo,nodo nieto
+         * @param node Debe tener todos los parent llenos hacia arriba
+         */
+        /**
+         * Obtiene la descripcion completa del nodo
+         * \@example Nodo padre,nodo hijo,nodo nieto
+         * @param {?} node Debe tener todos los parent llenos hacia arriba
+         * @return {?}
+         */
+        TreeHelisaComponent.getDescription = /**
+         * Obtiene la descripcion completa del nodo
+         * \@example Nodo padre,nodo hijo,nodo nieto
+         * @param {?} node Debe tener todos los parent llenos hacia arriba
+         * @return {?}
+         */
+            function (node) {
+                /** @type {?} */
+                var result = [node.name];
+                /** @type {?} */
+                var concat = '';
+                if (node.parent) {
+                    result.push(this.getDescription(node.parent));
+                }
+                if (result.length === 1) {
+                    return node.name;
+                }
+                result = result.reverse();
+                for (var i = 0; i < result.length; i++) {
+                    /** @type {?} */
+                    var element = result[i];
+                    concat = concat + element + ((i === result.length - 1) ? '' : ',');
+                }
+                return concat;
+            };
         /**
          * @return {?}
          */
@@ -2654,8 +2788,9 @@
              * @param {?} res
              * @return {?}
              */function (res) {
-                    if (!!_this.data && !!_this.data.children)
+                    if (!!_this.data && !!_this.data.children) {
                         _this.selectNode(_this.data, res);
+                    }
                 }));
                 this.treeHelisaService.refreshTreeObservable
                     .subscribe(( /**
@@ -2694,7 +2829,7 @@
                  * @param {?} res
                  * @return {?}
                  */function (res) {
-                    if (res != null) {
+                    if (res !== null) {
                         if (res) {
                             _this.tree.treeControl.collapseAll();
                         }
@@ -2705,7 +2840,7 @@
              * @param {?} res
              * @return {?}
              */function (res) {
-                    if (res != undefined) {
+                    if (res !== undefined) {
                         _this.treeControl.expand(res);
                     }
                 }));
@@ -2714,7 +2849,7 @@
              * @param {?} res
              * @return {?}
              */function (res) {
-                    if (res != undefined) {
+                    if (res !== undefined) {
                         _this.treeControl.collapse(res);
                     }
                 }));
@@ -2757,7 +2892,7 @@
          */
             function (event) {
                 /** @type {?} */
-                var element = event.target;
+                var element = ( /** @type {?} */(event.target));
                 if ((element.offsetHeight + element.scrollTop) >= element.scrollHeight) {
                     this.goNextPage();
                 }
@@ -2788,7 +2923,7 @@
                 }
                 node.children.push({
                     id: null,
-                    name: "",
+                    name: '',
                     isSelected: false,
                     parent: node,
                     isEditable: true
@@ -2804,7 +2939,7 @@
          * @return {?}
          */
             function (node) {
-                // Remueve el nodo utilizando la libreria de lodash   
+                // Remueve el nodo utilizando la libreria de lodash
                 _.remove(node.parent.children, node);
                 this.refreshTree();
                 this.removed.emit(node.id);
@@ -2821,15 +2956,15 @@
          */
             function (node, value) {
                 node.name = value;
-                if (node.id == null && node.name == "") {
+                if (node.id == null && node.name === '') {
                     _.remove(node.parent.children, node);
                     this.refreshTree();
                 }
-                else if (node.id && node.id != null && node.name.trim() !== "") {
+                else if (node.id && node.id != null && node.name.trim() !== '') {
                     this.edited.emit(node);
                     node.isEditable = false;
                 }
-                else if (!!node.id && node.id == null && node.name.trim() !== "") {
+                else if (!!node.id && node.id == null && node.name.trim() !== '') {
                     this.added.emit(node);
                     node.isEditable = false;
                 }
@@ -2918,11 +3053,11 @@
                             // obtiene el indice del nodo seleccionado actualmente
                             /** @type {?} */
                             var index = this.currentNode.parent.children.indexOf(this.currentNode);
-                            if (this.currentNode.parent.id == null && index == 0) {
+                            if (this.currentNode.parent.id == null && index === 0) {
                                 return 0;
                             }
                             else { // si tiene nodos al mismo nivel salta al nodo anterior
-                                if (index != undefined && index == 0) {
+                                if (index !== undefined && index === 0) {
                                     this.currentNode = this.currentNode.parent;
                                     this.selectNode(this.data, this.currentNode.id);
                                     if (!!this.currentNode.children && this.currentNode.children.length > 0) {
@@ -2962,7 +3097,9 @@
                         if (!!this.currentNode) {
                             // obtiene el indice del nodo seleccionado actualmente
                             /** @type {?} */
-                            var index = (!!this.currentNode && !!this.currentNode.parent) ? this.currentNode.parent.children.indexOf(this.currentNode) : null;
+                            var index = (!!this.currentNode && !!this.currentNode.parent) ?
+                                this.currentNode.parent.children.indexOf(this.currentNode) :
+                                null;
                             // si tiene childrens pasa al primer children
                             if (!!this.currentNode.children &&
                                 this.currentNode.children.length > 0) {
@@ -2972,15 +3109,15 @@
                                     this.treeHelisaService.expandOneNode(this.currentNode);
                                 }
                             }
-                            // Si es el ultimo nodo del array pasa al nodo hermano del padre (tio) hacia abajo
-                            else if (index != undefined &&
-                                index == this.currentNode.parent.children.length - 1 &&
+                            else if (index !== undefined &&
+                                index === this.currentNode.parent.children.length - 1 &&
                                 this.currentNode.parent.parent != null &&
                                 this.currentNode.parent.parent.children != null &&
                                 this.currentNode.parent.parent.children.length > 0) {
                                 /** @type {?} */
                                 var indexOfParent = this.currentNode.parent.parent.children.indexOf(this.currentNode.parent);
-                                this.currentNode = (this.currentNode.parent.parent.children[indexOfParent + 1] == undefined) ? this.currentNode : this.currentNode.parent.parent.children[indexOfParent + 1];
+                                this.currentNode = (this.currentNode.parent.parent.children[indexOfParent + 1] === undefined) ?
+                                    this.currentNode : this.currentNode.parent.parent.children[indexOfParent + 1];
                                 this.selectNode(this.data, this.currentNode.id);
                                 if (!!this.currentNode.children && this.currentNode.children.length > 0) {
                                     this.treeHelisaService.expandOneNode(this.currentNode);
@@ -2998,41 +3135,6 @@
                 }
             };
         /**
-         * Obtiene la descripcion completa del nodo
-         * @example Nodo padre,nodo hijo,nodo nieto
-         * @param node Debe tener todos los parent llenos hacia arriba
-         */
-        /**
-         * Obtiene la descripcion completa del nodo
-         * \@example Nodo padre,nodo hijo,nodo nieto
-         * @param {?} node Debe tener todos los parent llenos hacia arriba
-         * @return {?}
-         */
-        TreeHelisaComponent.getDescription = /**
-         * Obtiene la descripcion completa del nodo
-         * \@example Nodo padre,nodo hijo,nodo nieto
-         * @param {?} node Debe tener todos los parent llenos hacia arriba
-         * @return {?}
-         */
-            function (node) {
-                /** @type {?} */
-                var result = [node.name];
-                /** @type {?} */
-                var concat = "";
-                if (node.parent) {
-                    result.push(this.getDescription(node.parent));
-                }
-                if (result.length == 1)
-                    return node.name;
-                result = result.reverse();
-                for (var i = 0; i < result.length; i++) {
-                    /** @type {?} */
-                    var element = result[i];
-                    concat = concat + element + ((i == result.length - 1) ? "" : ",");
-                }
-                return concat;
-            };
-        /**
          * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
          */
         /**
@@ -3048,10 +3150,10 @@
             function () {
                 this.data = null;
                 /** @type {?} */
-                var _data = this.dataSource.data;
+                var datasourceData = this.dataSource.data;
                 this.dataSource.data = null;
-                this.dataSource.data = _data;
-                this.treeControl.dataNodes = _data;
+                this.dataSource.data = datasourceData;
+                this.treeControl.dataNodes = datasourceData;
             };
         /**
          * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
@@ -3068,10 +3170,10 @@
          */
             function () {
                 /** @type {?} */
-                var _data = this.dataSource.data;
+                var datasourceData = this.dataSource.data;
                 this.dataSource.data = null;
-                this.dataSource.data = _data;
-                this.treeControl.dataNodes = _data;
+                this.dataSource.data = datasourceData;
+                this.treeControl.dataNodes = datasourceData;
             };
         /**
          * @private
@@ -3102,7 +3204,7 @@
             function (data) {
                 var _this = this;
                 if (!this.data) {
-                    this.data = { id: null, name: "root", isSelected: false };
+                    this.data = { id: null, name: 'root', isSelected: false };
                 }
                 if (!this.data.children) {
                     this.data.children = new Array();
@@ -3123,8 +3225,6 @@
             };
         /**
          * Llenan el campo parent de todos los nodos hijos
-         * @param node
-         * @param parent
          */
         /**
          * Llenan el campo parent de todos los nodos hijos
@@ -3154,8 +3254,6 @@
             };
         /**
          * coloca como true del isSelected del nodo que concuerde con el id
-         * @param node
-         * @param id
          */
         /**
          * coloca como true del isSelected del nodo que concuerde con el id
@@ -3173,17 +3271,17 @@
          */
             function (node, id) {
                 this.upSelectNode(node);
-                if (node == undefined || node.id == undefined) {
+                if (node === undefined || node.id === undefined) {
                     return null;
                 }
-                if (node.id == id) {
+                if (node.id === id) {
                     node.isSelected = true;
                     this.expandAllParents(node);
                     return node;
                 }
                 else if (node.children != null) {
                     /** @type {?} */
-                    var i;
+                    var i = void 0;
                     /** @type {?} */
                     var result = null;
                     for (i = 0; result == null && i < node.children.length; i++) {
@@ -3211,7 +3309,6 @@
             };
         /**
          * Elimina el isSelected de todos los nodos
-         * @param node
          */
         /**
          * Elimina el isSelected de todos los nodos
@@ -3226,12 +3323,30 @@
          * @return {?}
          */
             function (node) {
-                if (!!node && node.isSelected != undefined) {
+                var e_1, _a;
+                if (!!node && node.isSelected !== undefined) {
                     node.isSelected = false;
-                    if (!!node.children)
-                        for (var i = 0; i < node.children.length; i++) {
-                            this.upSelectNode(node.children[i]);
+                    if (!!node.children) {
+                        try {
+                            for (var _b = __values(node.children), _c = _b.next(); !_c.done; _c = _b.next()) {
+                                var childrenNode = _c.value;
+                                this.upSelectNode(childrenNode);
+                            }
                         }
+                        catch (e_1_1) {
+                            e_1 = { error: e_1_1 };
+                        }
+                        finally {
+                            try {
+                                if (_c && !_c.done && (_a = _b.return))
+                                    _a.call(_b);
+                            }
+                            finally {
+                                if (e_1)
+                                    throw e_1.error;
+                            }
+                        }
+                    }
                 }
             };
         /**
@@ -3246,7 +3361,7 @@
                 /** @type {?} */
                 var classNode = [];
                 if (node.isSelected) {
-                    classNode.push("isSelected");
+                    classNode.push('isSelected');
                 }
                 if (node.classNode) {
                     classNode.push(node.classNode);
@@ -3278,10 +3393,12 @@
          */
             function (event, node) {
                 node.isCheckedOption = event.source.selected;
-                if (node.isCheckedOption)
+                if (node.isCheckedOption) {
                     this.checkedOptionNode.emit(node.id);
-                else
+                }
+                else {
                     this.uncheckedOptionNode.emit(node.id);
+                }
             };
         /**
          * @param {?} node
@@ -3292,10 +3409,12 @@
          * @return {?}
          */
             function (node) {
-                if (this.selectedOptions.has(node.id))
+                if (this.selectedOptions.has(node.id)) {
                     this.reloadSelectedOptions(node, this.selectedOptions.get(node.id).editMode);
-                else
+                }
+                else {
                     this.reloadSelectedOptions(node, false);
+                }
                 return this.selectedOptions.get(node.id);
             };
         /**
@@ -3317,8 +3436,9 @@
                  * @param {?} option
                  * @return {?}
                  */function (option) {
-                    if (option.isCheckedOption)
+                    if (option.isCheckedOption) {
                         array.push(option.id);
+                    }
                 }));
                 /** @type {?} */
                 var obj = { formControl: new forms.FormControl(array), editMode: editMode };
@@ -3349,8 +3469,9 @@
                         return curr;
                     }
                     else {
-                        if (!!curr.children)
+                        if (!!curr.children) {
                             queue.push.apply(queue, __spread(curr.children));
+                        }
                     }
                 }
                 return null;
@@ -3389,10 +3510,7 @@
         TreeHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-tree',
-                        template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\n  <mat-tree #tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\n    <!-- This is the tree node template for leaf nodes -->\n    <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\n      <li class=\"mat-tree-node\" [ngClass]=\"getClassNode(node)\"\n          (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" *ngIf=\"!node.isEditable\" class=\"tree-node\">\n        <!-- use a disabled button to provide padding for tree leaf -->\n        <button mat-icon-button disabled></button>\n        {{node.name}}\n      </li>\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\n        <button mat-icon-button (click)=\"onEdit(node)\">\n          <mat-icon>edit</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onAdd(node)\">\n          <mat-icon>add</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onDelete(node)\">\n          <mat-icon>delete</mat-icon>\n        </button>\n\n      </li>\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\n          <mat-icon>more_vert</mat-icon>\n        </button>\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\n          </mat-select>\n        </mat-form-field>\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\n          <mat-icon>done</mat-icon>\n        </button>\n      </div>\n\n\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\n      </li>\n    </mat-tree-node>\n    <!-- This is the tree node template for expandable nodes -->\n    <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\n      <li>\n        <div class=\"mat-tree-node tree-options tree-node\" *ngIf=\"!node.isEditable\">\n\n          <button mat-icon-button matTreeNodeToggle\n                  [attr.aria-label]=\"'toggle ' + node.name\">\n            <mat-icon class=\"mat-icon-rtl-mirror\">\n              {{treeControl.isExpanded(node) ? 'remove' : 'add'}}\n            </mat-icon>\n          </button>\n          <p class=\"tree-node-text\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\"\n             [ngClass]=\"getClassNode(node)\">{{node.name}}</p>\n        </div>\n        <div class=\"tree-options\">\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\n        <button mat-icon-button (click)=\"onEdit(node)\">\n          <mat-icon>edit</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onAdd(node)\">\n          <mat-icon>add</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onDelete(node)\">\n          <mat-icon>delete</mat-icon>\n        </button>\n      </li>\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\n          <mat-icon>more_vert</mat-icon>\n        </button>\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\n          </mat-select>\n        </mat-form-field>\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\n          <mat-icon>done</mat-icon>\n        </button>\n      </div>\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\n      </li>\n</div>\n<ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\n  <ng-container matTreeNodeOutlet></ng-container>\n</ul>\n</li>\n</mat-nested-tree-node>\n</mat-tree>\n</div>\n",
-                        host: {
-                            '(document:keyup)': 'onKeyDown($event)'
-                        },
+                        template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\r\n  <mat-tree #tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n    <!-- This is the tree node template for leaf nodes -->\r\n    <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n      <li class=\"mat-tree-node\" [ngClass]=\"getClassNode(node)\"\r\n          (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" *ngIf=\"!node.isEditable\" class=\"tree-node\">\r\n        <!-- use a disabled button to provide padding for tree leaf -->\r\n        <button mat-icon-button disabled></button>\r\n        {{node.name}}\r\n      </li>\r\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\">\r\n          <mat-icon>edit</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\">\r\n          <mat-icon>add</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\">\r\n          <mat-icon>delete</mat-icon>\r\n        </button>\r\n\r\n      </li>\r\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\r\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\r\n          <mat-icon>more_vert</mat-icon>\r\n        </button>\r\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\r\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\r\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\r\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\r\n          <mat-icon>done</mat-icon>\r\n        </button>\r\n      </div>\r\n\r\n\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\r\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n    </mat-tree-node>\r\n    <!-- This is the tree node template for expandable nodes -->\r\n    <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\r\n      <li>\r\n        <div class=\"mat-tree-node tree-options tree-node\" *ngIf=\"!node.isEditable\">\r\n\r\n          <button mat-icon-button matTreeNodeToggle\r\n                  [attr.aria-label]=\"'toggle ' + node.name\">\r\n            <mat-icon class=\"mat-icon-rtl-mirror\">\r\n              {{treeControl.isExpanded(node) ? 'remove' : 'add'}}\r\n            </mat-icon>\r\n          </button>\r\n          <p class=\"tree-node-text\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\"\r\n             [ngClass]=\"getClassNode(node)\">{{node.name}}</p>\r\n        </div>\r\n        <div class=\"tree-options\">\r\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\">\r\n          <mat-icon>edit</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\">\r\n          <mat-icon>add</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\">\r\n          <mat-icon>delete</mat-icon>\r\n        </button>\r\n      </li>\r\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\r\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\r\n          <mat-icon>more_vert</mat-icon>\r\n        </button>\r\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\r\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\r\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\r\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\r\n          <mat-icon>done</mat-icon>\r\n        </button>\r\n      </div>\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\r\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n</div>\r\n<ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\r\n  <ng-container matTreeNodeOutlet></ng-container>\r\n</ul>\r\n</li>\r\n</mat-nested-tree-node>\r\n</mat-tree>\r\n</div>\r\n",
                         styles: [".example-tree-invisible{display:none}.example-tree li,.example-tree ul{margin-top:0;margin-bottom:0;list-style-type:none}.isSelected{background:red}.tree-options{display:inline}.container-tree{overflow:scroll;height:350px;width:100%}.tree-node{-webkit-user-select:none;-moz-user-select:none;-khtml-user-select:none;-ms-user-select:none}.tree-node-text{display:inline;margin-bottom:0}"]
                     }] }
         ];
@@ -3418,7 +3536,8 @@
             keypressDelete: [{ type: i0.Output }],
             keypressInsert: [{ type: i0.Output }],
             checkedOptionNode: [{ type: i0.Output }],
-            uncheckedOptionNode: [{ type: i0.Output }]
+            uncheckedOptionNode: [{ type: i0.Output }],
+            onKeyDown: [{ type: i0.HostListener, args: ['document:keyup', ['$event'],] }]
         };
         return TreeHelisaComponent;
     }());
@@ -3466,7 +3585,7 @@
             this.autocompleteHelisaService = autocompleteHelisaService;
             this.myControl = new forms.FormControl();
             this.options = new Array();
-            this.onSelectedValue = new i0.EventEmitter();
+            this.selectedValueEmmiter = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.isRemote = false;
             this.isLoading = false;
@@ -3483,9 +3602,8 @@
                 this.onScrollObservable.asObservable()
                     .pipe(operators.debounceTime(500), operators.throttleTime(500))
                     .subscribe(( /**
-             * @param {?} data
              * @return {?}
-             */function (data) {
+             */function () {
                     _this.nextPage.emit();
                 }));
                 if (this.isRemote) {
@@ -3557,7 +3675,7 @@
          * @return {?}
          */
             function (value) {
-                if (!(value instanceof Object)) {
+                if (!(value)) {
                     if (!this.isRemote) {
                         /** @type {?} */
                         var filterValue_1 = value.toLowerCase().split(' ');
@@ -3589,23 +3707,21 @@
          */
             function (event) {
                 this.selectedValue = event.option.value;
-                this.onSelectedValue.emit(this.selectedValue.value);
+                this.selectedValueEmmiter.emit(this.selectedValue.value);
             };
         /**
-         * @param {?} event
          * @return {?}
          */
         AutocompleteHelisaComponent.prototype.getNextPage = /**
-         * @param {?} event
          * @return {?}
          */
-            function (event) {
-                this.onScrollObservable.next(event);
+            function () {
+                this.onScrollObservable.next();
             };
         AutocompleteHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-autocomplete',
-                        template: "<mat-form-field>\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage($event)\">\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\n      {{option.displayText}}\n    </mat-option>    \n  </mat-autocomplete>\n</mat-form-field>",
+                        template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
                         providers: [AutocompleteHelisaService],
                         styles: [""]
                     }] }
@@ -3619,7 +3735,7 @@
         AutocompleteHelisaComponent.propDecorators = {
             myControl: [{ type: i0.Input }],
             options: [{ type: i0.Input }],
-            onSelectedValue: [{ type: i0.Output }],
+            selectedValueEmmiter: [{ type: i0.Output }],
             nextPage: [{ type: i0.Output }],
             isRemote: [{ type: i0.Input }]
         };
@@ -3638,8 +3754,8 @@
              * This value would different depends of styles
              */
             this.thresholdPercent = .9;
-            this.scroll = new i0.EventEmitter();
-            this._onDestroy = new rxjs.Subject();
+            this.optionsScroll = new i0.EventEmitter();
+            this.destroy = new rxjs.Subject();
             this.lastScrollTop = 0;
             this.autoComplete.opened.pipe(operators.tap(( /**
              * @return {?}
@@ -3659,10 +3775,10 @@
                             .addEventListener('scroll', _this.onScroll.bind(_this), false);
                     }
                 }));
-            })), operators.takeUntil(this._onDestroy)).subscribe();
+            })), operators.takeUntil(this.destroy)).subscribe();
             this.autoComplete.closed.pipe(operators.tap(( /**
              * @return {?}
-             */function () { return _this.removeScrollEventListener(); })), operators.takeUntil(this._onDestroy)).subscribe();
+             */function () { return _this.removeScrollEventListener(); })), operators.takeUntil(this.destroy)).subscribe();
         }
         /**
          * @private
@@ -3687,8 +3803,8 @@
          * @return {?}
          */
             function () {
-                this._onDestroy.next();
-                this._onDestroy.complete();
+                this.destroy.next();
+                this.destroy.complete();
                 this.removeScrollEventListener();
             };
         /**
@@ -3700,22 +3816,23 @@
          * @return {?}
          */
             function (event) {
+                // Credits: how to know if it's down or up scroll "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
                 /** @type {?} */
-                var st = event.target.pageYOffset || event.target.scrollTop;
+                var st = (( /** @type {?} */(event.target))).pageYOffset || (( /** @type {?} */(event.target))).scrollTop;
                 if (st > this.lastScrollTop) {
-                    // downscroll code       
+                    // downscroll code
                     if (this.thresholdPercent === undefined) {
-                        this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                        this.optionsScroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
                     }
                     else {
                         /** @type {?} */
-                        var threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
+                        var threshold = this.thresholdPercent * 100 * (( /** @type {?} */(event.target))).scrollHeight / 100;
                         /** @type {?} */
-                        var current = event.target.scrollTop + event.target.clientHeight;
-                        //console.log(`scroll ${current}, threshold: ${threshold}`)     
+                        var current = (( /** @type {?} */(event.target))).scrollTop + (( /** @type {?} */(event.target))).clientHeight;
+                        // console.log(`scroll ${current}, threshold: ${threshold}`)
                         if (current > threshold) {
-                            //console.log('load next page');        
-                            this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                            // console.log('load next page');
+                            this.optionsScroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
                         }
                     }
                 }
@@ -3734,7 +3851,7 @@
         };
         OptionsScrollDirective.propDecorators = {
             thresholdPercent: [{ type: i0.Input }],
-            scroll: [{ type: i0.Output, args: ['optionsScroll',] }]
+            optionsScroll: [{ type: i0.Output }]
         };
         return OptionsScrollDirective;
     }());
@@ -3744,8 +3861,8 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var HelTooltipDirective = /** @class */ (function () {
-        function HelTooltipDirective(tooltip$$1, _elemRef) {
-            this._elemRef = _elemRef;
+        function HelTooltipDirective(tooltip$$1, elemRef) {
+            this.elemRef = elemRef;
             /**
              * Tiempo antes de ocultarla el mensaje
              */
@@ -3764,9 +3881,9 @@
          */
             function () {
                 /** @type {?} */
-                var currentContent = this._elemRef.nativeElement.innerText;
+                var currentContent = this.elemRef.nativeElement.innerText;
                 if (!!currentContent && !!this.message) {
-                    if ((currentContent.toUpperCase() != this.message.toString().toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
+                    if ((currentContent.toUpperCase() !== this.message.toString().toUpperCase()) || this.isEllipsisActive(this.elemRef.nativeElement)) {
                         this.tooltip.message = this.message;
                     }
                 }
@@ -3801,8 +3918,8 @@
         };
         HelTooltipDirective.propDecorators = {
             message: [{ type: i0.Input, args: ['helTooltip',] }],
-            hideDelay: [{ type: i0.Input, args: ['hideDelay',] }],
-            showDelay: [{ type: i0.Input, args: ['showDelay',] }],
+            hideDelay: [{ type: i0.Input }],
+            showDelay: [{ type: i0.Input }],
             mouseover: [{ type: i0.HostListener, args: ['mouseover',] }]
         };
         return HelTooltipDirective;

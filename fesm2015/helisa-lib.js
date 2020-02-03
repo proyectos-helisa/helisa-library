@@ -33,10 +33,10 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
  */
 class InputWithButtonComponent {
     constructor() {
-        this.placeholder = "";
+        this.placeholder = '';
         this.inputFormControl = new FormControl('', Validators.required);
-        this.requiredMessage = "El campo es requerido";
-        this.value = "";
+        this.requiredMessage = 'El campo es requerido';
+        this.value = '';
         this.done = new EventEmitter();
         this.cancel = new EventEmitter();
     }
@@ -44,7 +44,7 @@ class InputWithButtonComponent {
      * @return {?}
      */
     ngOnInit() {
-        if (this.value != "") {
+        if (this.value !== '') {
             this.inputFormControl.setValue(this.value);
         }
     }
@@ -66,7 +66,7 @@ class InputWithButtonComponent {
 InputWithButtonComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-input-with-button',
-                template: "<div>\n  <mat-form-field>\n    <input matInput [placeholder]=\"placeholder\" [formControl]= \"inputFormControl\">    \n    <mat-icon matSuffix (click)=\"onDone()\">done</mat-icon>\n    <mat-icon matSuffix (click)=\"onCancel()\">close</mat-icon>\n    <mat-error *ngIf=\"inputFormControl.hasError('required')\">\n      {{ requiredMessage }}\n    </mat-error>\n  </mat-form-field>\n</div>\n",
+                template: "<div>\r\n  <mat-form-field>\r\n    <input matInput [placeholder]=\"placeholder\" [formControl]= \"inputFormControl\">    \r\n    <mat-icon matSuffix (click)=\"onDone()\">done</mat-icon>\r\n    <mat-icon matSuffix (click)=\"onCancel()\">close</mat-icon>\r\n    <mat-error *ngIf=\"inputFormControl.hasError('required')\">\r\n      {{ requiredMessage }}\r\n    </mat-error>\r\n  </mat-form-field>\r\n</div>\r\n",
                 styles: [""]
             }] }
 ];
@@ -85,6 +85,7 @@ InputWithButtonComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+// @dynamic
 class ToastHelisaComponent {
     /**
      * @param {?} data
@@ -100,7 +101,7 @@ class ToastHelisaComponent {
 ToastHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-toast',
-                template: "<div [ngClass]=\"'toast-'+data.type\">\n  <span class=\"toast-message\">{{ data.message }}</span>\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\n  </ng-container>    \n</div>\n",
+                template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\r\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n  </ng-container>    \r\n</div>\r\n",
                 styles: [""]
             }] }
 ];
@@ -130,7 +131,7 @@ class ToastHelisaService {
     showToast(type, message, subMessages) {
         subMessages = subMessages ? subMessages : [];
         this.snackBar.openFromComponent(ToastHelisaComponent, {
-            data: { message: message, type: type, subMessages: subMessages },
+            data: { message, type, subMessages },
             duration: this.durationInSeconds * 1000
         });
     }
@@ -152,9 +153,9 @@ ToastHelisaService.ctorParameters = () => [
  */
 /** @enum {string} */
 const ToastType = {
-    DONE: "done",
-    ERROR: "error",
-    INFO: "info",
+    DONE: 'done',
+    ERROR: 'error',
+    INFO: 'info',
 };
 
 /**
@@ -163,8 +164,8 @@ const ToastType = {
  */
 /** @enum {string} */
 const AlertHelisaType = {
-    ERROR: "ERROR",
-    CONFIRMATION: "CONFIRMATION",
+    ERROR: 'ERROR',
+    CONFIRMATION: 'CONFIRMATION',
 };
 
 /**
@@ -208,7 +209,7 @@ class AlertHelisaComponent {
 AlertHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-alert',
-                template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelar</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>aceptar</button>\n</div>",
+                template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelar</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>aceptar</button>\r\n</div>",
                 styles: [""]
             }] }
 ];
@@ -259,6 +260,9 @@ AlertHelisaService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @template T
+ */
 class DependencyTableHelisaService {
     constructor() {
         this.tables = new Subject();
@@ -298,12 +302,14 @@ class DependencyTableHelisaService {
         this.infoTables[configTable.order] = configTable;
         if (configTable.isRemote) {
             configTable.dataSource = null;
-            if (configTable.count === null)
-                throw "hace falta el count";
+            if (configTable.count === null) {
+                throw new Error('hace falta el count');
+            }
         }
         else {
-            if (configTable.dataSource === null)
-                throw "hace falta el dataSource";
+            if (configTable.dataSource === null) {
+                throw new Error('hace falta el dataSource');
+            }
             configTable.count = configTable.dataSource.length;
         }
         this.tables.next(this.infoTables);
@@ -398,7 +404,7 @@ class TableHelisaService {
      * @return {?}
      */
     setTotal(total, table) {
-        this.emitChangeSource.next({ obj: total, table: table });
+        this.emitChangeSource.next({ obj: total, table });
     }
     /**
      * @param {?} page
@@ -406,7 +412,7 @@ class TableHelisaService {
      * @return {?}
      */
     addPage(page, table) {
-        this.emitNextPage.next({ obj: page, table: table });
+        this.emitNextPage.next({ obj: page, table });
     }
     /**
      * para modificar el valor de si se muestra o no el boton de add row de la tabla
@@ -427,6 +433,9 @@ TableHelisaService.decorators = [
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
  */
 class DependencyTableHelisaComponent {
     /**
@@ -469,14 +478,14 @@ class DependencyTableHelisaComponent {
          * @param {?} event
          * @return {?}
          */
-        event => {
+        (event) => {
             this.tableService.addPage(event.data, this.viewTables.toArray()[event.index]);
         }));
         this.dependencyTableHelisaService.emitTotal.subscribe((/**
          * @param {?} event
          * @return {?}
          */
-        event => {
+        (event) => {
             this.tableService.setTotal(event.data, this.viewTables[event.index]);
         }));
         // Observable para mostrar o esconder el boton de una tabla
@@ -484,56 +493,56 @@ class DependencyTableHelisaComponent {
          * @param {?} data
          * @return {?}
          */
-        data => {
-            if (!!data && data.index != undefined) {
+        (data) => {
+            if (!!data && data.index !== undefined) {
                 /** @type {?} */
-                let table = this.tables[data.index];
+                const table = this.tables[data.index];
                 if (!!table) {
                     table.addRowButton.showButton = data.data;
                 }
             }
         }));
-        //Observable para mostrar o esconder los botones de todas las tablas
+        // Observable para mostrar o esconder los botones de todas las tablas
         this.dependencyTableHelisaService.emitVisibilityAllButtons.subscribe((/**
          * @param {?} data
          * @return {?}
          */
-        data => {
-            if (data != undefined && data != null) {
+        (data) => {
+            if (data !== undefined && data != null) {
                 this.tables.forEach((/**
                  * @param {?} element
                  * @return {?}
                  */
-                element => {
+                (element) => {
                     if (!!element.addRowButton) {
                         element.addRowButton.showButton = data;
                     }
                 }));
             }
         }));
-        //Observable para manejo de selección de celdas
+        // Observable para manejo de selección de celdas
         this.dependencyTableHelisaService.emitIsCellSelection.subscribe((/**
          * @param {?} data
          * @return {?}
          */
-        data => {
-            if (!!data && data.index != undefined) {
+        (data) => {
+            if (!!data && data.index !== undefined) {
                 /** @type {?} */
-                let table = this.tables[data.index];
+                const table = this.tables[data.index];
                 if (table) {
                     table.isCellSelection = data.data;
                 }
             }
         }));
-        //Observable para manejo de columnas
+        // Observable para manejo de columnas
         this.dependencyTableHelisaService.emitChangeColumns.subscribe((/**
          * @param {?} data
          * @return {?}
          */
-        data => {
-            if (!!data && data.index != undefined) {
+        (data) => {
+            if (!!data && data.index !== undefined) {
                 /** @type {?} */
-                let table = this.tables[data.index];
+                const table = this.tables[data.index];
                 if (table) {
                     table.columns = data.data;
                 }
@@ -557,7 +566,7 @@ class DependencyTableHelisaComponent {
          * @param {?} tables
          * @return {?}
          */
-        tables => {
+        (tables) => {
             this.tables = tables;
         }));
     }
@@ -568,9 +577,9 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onSelectedDependency(index, event) {
-        this.selectedObject = { index: index, data: event };
-        this.selected.emit({ index: index, data: event.value });
-        this.selectObject.emit({ index: index, data: event });
+        this.selectedObject = { index, data: event };
+        this.selected.emit({ index, data: event.value });
+        this.selectObject.emit({ index, data: event });
     }
     /**
      * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
@@ -579,7 +588,7 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onNextPage(index, event) {
-        this.nextPage.emit({ index: index, data: event });
+        this.nextPage.emit({ index, data: event });
     }
     /**
      * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
@@ -588,7 +597,7 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onTotal(index, event) {
-        this.total.emit({ index: index, data: event });
+        this.total.emit({ index, data: event });
     }
     /**
      * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
@@ -597,7 +606,7 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onSort(index, event) {
-        this.sort.emit({ index: index, data: event });
+        this.sort.emit({ index, data: event });
     }
     /**
      * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
@@ -606,7 +615,7 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onDrop(index, event) {
-        this.drop.emit({ index: index, data: event });
+        this.drop.emit({ index, data: event });
     }
     /**
      * Evento que se dispara desde una tabla, emite el indice de la tabla al cual se le debe añadir una nueva fila
@@ -623,7 +632,7 @@ class DependencyTableHelisaComponent {
      */
     selectedCell(index, event) {
         if (this.tables[index].isCellSelection) {
-            this.selectCell.emit({ index: index, data: event });
+            this.selectCell.emit({ index, data: event });
         }
     }
     /**
@@ -632,13 +641,13 @@ class DependencyTableHelisaComponent {
      * @return {?}
      */
     onBookClicked(index, event) {
-        this.bookClicked.emit({ index: index, data: event });
+        this.bookClicked.emit({ index, data: event });
     }
 }
 DependencyTableHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-dependency-table',
-                template: "<div>    \n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\n  </hel-table>\n</div>\n",
+                template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\r\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\r\n    (bookClicked)=\"onBookClicked(i,$event)\"\r\n    [showToolTip]=\"showToolTip\"\r\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\r\n  </hel-table>\r\n</div>\r\n",
                 providers: [DependencyTableHelisaService],
                 styles: [""]
             }] }
@@ -660,8 +669,8 @@ DependencyTableHelisaComponent.propDecorators = {
     addRow: [{ type: Output }],
     selectCell: [{ type: Output }],
     bookClicked: [{ type: Output }],
-    hideDelay: [{ type: Input, args: ['hideDelay',] }],
-    showDelay: [{ type: Input, args: ['showDelay',] }]
+    hideDelay: [{ type: Input }],
+    showDelay: [{ type: Input }]
 };
 
 /**
@@ -681,12 +690,19 @@ class InputHelisaComponent {
         this.DECIMAL_SEPARATOR = '.';
         this.THOUSAND_SEPARATOR = ',';
         this.placeholder = '';
-        this.setValue = new EventEmitter();
+        // Mostrar o no el icono de buscar
         this.isSearch = false;
-        //@Input() inputFormControl: FormControl = new FormControl('');
+        // @Input() inputFormControl: FormControl = new FormControl('');
         this.isFocused = false;
+        /**
+         * Deprecated
+         */
         this.disabled = false;
         this.type = InputHelisaType.DEFAULT;
+        /**
+         * Deprecated
+         */
+        this.setValue = new EventEmitter();
         this.formControlMask = new FormControl('');
         this.realValue = '';
         this.inputFormReal = new FormControl('');
@@ -701,10 +717,11 @@ class InputHelisaComponent {
          * @param {?} data
          * @return {?}
          */
-        data => {
+        (data) => {
             this.statusChange(this.inputFormReal.status);
-            if (this.getMaskedValue(data) != this.formControlMask.value)
+            if (this.getMaskedValue(data) !== this.formControlMask.value) {
                 this.change(data);
+            }
         }));
         this.formControlMask.setValidators(this.inputFormReal.validator);
         this.change(this.inputFormReal.value);
@@ -716,7 +733,7 @@ class InputHelisaComponent {
          * @param {?} data
          * @return {?}
          */
-        data => {
+        (data) => {
             this.statusChange(data);
         }));
     }
@@ -726,7 +743,7 @@ class InputHelisaComponent {
      * @return {?}
      */
     statusChange(data) {
-        if (data == 'INVALID') {
+        if (data === 'INVALID') {
             this.formControlMask.setErrors({ key: 'Error de validación.' });
         }
     }
@@ -749,24 +766,21 @@ class InputHelisaComponent {
      * @return {?}
      */
     change(event) {
-        if (event != null)
+        if (event != null) {
             event = event + '';
+        }
         /** @type {?} */
         let position = this.nameInput.nativeElement.selectionStart;
         /** @type {?} */
         const length = event ? event.length : 0;
         this.realValue = this.getRealValue(event);
-        if (this.getMaskedValue(this.realValue) != this.formControlMask.value) {
+        if (this.getMaskedValue(this.realValue) !== this.formControlMask.value) {
             this.formControlMask.setValue(this.getMaskedValue(this.realValue));
             position += this.nameInput.nativeElement.value.length - length;
             this.nameInput.nativeElement.selectionStart = position;
             this.nameInput.nativeElement.selectionEnd = position;
         }
         this.inputFormReal.setValue(this.realValue);
-        //this.formControlMask.updateValueAndValidity();
-        //this.formControlMask.markAsTouched();
-        //    this.inputFormReal.updateValueAndValidity();
-        //this.formControlMask.updateValueAndValidity();
     }
     /**
      * @private
@@ -774,34 +788,41 @@ class InputHelisaComponent {
      * @return {?}
      */
     getMaskedValue(str) {
-        if (str == null)
+        if (str == null) {
             return str;
+        }
         str = str + '';
-        if (this.type == InputHelisaType.DEFAULT)
+        if (this.type === InputHelisaType.DEFAULT) {
             return str;
+        }
         /** @type {?} */
         let maskedStr = '';
-        if (this.type == InputHelisaType.IDENTITY) {
+        if (this.type === InputHelisaType.IDENTITY) {
             for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
-                if (j > 0 && j % 3 == 0)
+                if (j > 0 && j % 3 === 0) {
                     maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
+                }
                 maskedStr = str[i] + maskedStr;
             }
         }
-        if (this.type == InputHelisaType.NUMERIC) {
+        if (this.type === InputHelisaType.NUMERIC) {
             for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
-                if (j > 0 && j % 3 == 0)
+                if (j > 0 && j % 3 === 0) {
                     maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
+                }
                 maskedStr = str[i] + maskedStr;
             }
         }
-        if (this.type == InputHelisaType.DOUBLE) {
-            if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0)
-                for (let i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++)
+        if (this.type === InputHelisaType.DOUBLE) {
+            if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0) {
+                for (let i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++) {
                     maskedStr += str[i];
+                }
+            }
             for (let i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
-                if (j > 0 && j % 3 == 0)
+                if (j > 0 && j % 3 === 0) {
                     maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
+                }
                 maskedStr = str[i] + maskedStr;
             }
         }
@@ -813,30 +834,37 @@ class InputHelisaComponent {
      * @return {?}
      */
     getRealValue(str) {
-        if (str == null)
+        if (str == null) {
             return str;
+        }
         str = str + '';
         /** @type {?} */
         let realStr = '';
-        if (this.type == InputHelisaType.DEFAULT)
+        if (this.type === InputHelisaType.DEFAULT) {
             return str;
-        if (this.type == InputHelisaType.IDENTITY) {
-            for (let i = 0; i < str.length; i++)
-                if (str[i].match('[a-zA-Z0-9]'))
-                    realStr += str[i];
         }
-        if (this.type == InputHelisaType.NUMERIC) {
-            for (let i = 0; i < str.length; i++)
-                if (str[i].match('[0-9]'))
-                    realStr += str[i];
+        if (this.type === InputHelisaType.IDENTITY) {
+            for (const strItem of str) {
+                if (strItem.match('[a-zA-Z0-9]')) {
+                    realStr += strItem;
+                }
+            }
         }
-        if (this.type == InputHelisaType.DOUBLE) {
+        if (this.type === InputHelisaType.NUMERIC) {
+            for (const strItem of str) {
+                if (strItem.match('[0-9]')) {
+                    realStr += strItem;
+                }
+            }
+        }
+        if (this.type === InputHelisaType.DOUBLE) {
             /** @type {?} */
             let haveDot = false;
-            for (let i = 0; i < str.length; i++) {
-                if (str[i].match('[0-9]') || ((str[i] == this.DECIMAL_SEPARATOR) && !haveDot))
-                    realStr += str[i];
-                haveDot = haveDot || (str[i] == this.DECIMAL_SEPARATOR);
+            for (const strItem of str) {
+                if (strItem.match('[0-9]') || ((strItem === this.DECIMAL_SEPARATOR) && !haveDot)) {
+                    realStr += strItem;
+                }
+                haveDot = haveDot || (strItem === this.DECIMAL_SEPARATOR);
             }
         }
         return realStr;
@@ -845,7 +873,7 @@ class InputHelisaComponent {
 InputHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-input',
-                template: "<mat-form-field>\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\n  >\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
+                template: "<mat-form-field>\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\" \r\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\r\n  >\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                 styles: ["/deep/ hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
             }] }
 ];
@@ -853,11 +881,11 @@ InputHelisaComponent.decorators = [
 InputHelisaComponent.ctorParameters = () => [];
 InputHelisaComponent.propDecorators = {
     placeholder: [{ type: Input }],
-    setValue: [{ type: Output }],
     isSearch: [{ type: Input }],
     isFocused: [{ type: Input }],
     disabled: [{ type: Input }],
     type: [{ type: Input }],
+    setValue: [{ type: Output }],
     nameInput: [{ type: ViewChild, args: ['inputText',] }],
     inputFormControl: [{ type: Input }]
 };
@@ -898,9 +926,9 @@ const TableHelisaType = {
 };
 TableHelisaType[TableHelisaType.REMOTE] = 'REMOTE';
 TableHelisaType[TableHelisaType.LOCAL] = 'LOCAL';
-//@dynamic
+// @dynamic
 /**
- * @abstract
+ * @template T
  */
 class ColumnConfigUtil {
     /**
@@ -908,7 +936,7 @@ class ColumnConfigUtil {
      * @param {?} column
      * @return {?}
      */
-    static getValue(obj, column) {
+    getValue(obj, column) {
         return column.name.split('.').reduce((/**
          * @param {?} o
          * @param {?} field
@@ -977,6 +1005,7 @@ class TableHelisaComponent {
         this.indexRowStartDrag = -1;
         this.lastIndexRowDrag = -1;
         this.dataBeforeDrag = null;
+        this.dataSource$ = [];
         this.sort = new EventEmitter();
         this.total = new EventEmitter();
         this.search = new EventEmitter();
@@ -991,7 +1020,7 @@ class TableHelisaComponent {
         this.isCellSelection = false;
         this.drop = new EventEmitter();
         this.isDragged = false;
-        this.addRowButton = { showButton: false, text: "" };
+        this.addRowButton = { showButton: false, text: '' };
         this.addRow = new EventEmitter();
         this.bookClicked = new EventEmitter();
         this.addBookButton = false;
@@ -1006,7 +1035,6 @@ class TableHelisaComponent {
          * Tiempo antes de mostra el mensaje del tooltip
          */
         this.showDelay = 500;
-        this._dataSource = [];
     }
     /**
      * @return {?}
@@ -1016,8 +1044,8 @@ class TableHelisaComponent {
          * @param {?} data
          * @return {?}
          */
-        data => {
-            if (!data.table || data.table === this) {
+        (data) => {
+            if (!data.table || data.table) {
                 this.receivePage(data.obj);
             }
         }));
@@ -1025,7 +1053,7 @@ class TableHelisaComponent {
          * @param {?} info
          * @return {?}
          */
-        info => {
+        (info) => {
             if (info) {
                 this.columnConfig.forEach((/**
                  * @param {?} column
@@ -1049,7 +1077,7 @@ class TableHelisaComponent {
              * @param {?} c
              * @return {?}
              */
-            c => c.name === event.active));
+            (c) => c.name === event.active));
             column.sortDirection = event.direction;
             this.sort.emit({ column, columnConfigurations: this.columnConfig, type: ChangeColumnConfigurationType.SORT });
         }));
@@ -1057,8 +1085,8 @@ class TableHelisaComponent {
          * @param {?} data
          * @return {?}
          */
-        data => {
-            if (data != undefined && data != null) {
+        (data) => {
+            if (data !== undefined && data != null) {
                 this.addRowButton.showButton = data;
             }
         }));
@@ -1098,12 +1126,12 @@ class TableHelisaComponent {
              * @param {?} column
              * @return {?}
              */
-            column => {
+            (column) => {
                 if (column.visible) {
                     this.displayedColumns.push(column.name);
                 }
                 if (!this.hasSubtitle) {
-                    this.hasSubtitle = column.subtitle != undefined;
+                    this.hasSubtitle = column.subtitle !== undefined;
                 }
             }));
             if (this.rawData) {
@@ -1117,24 +1145,24 @@ class TableHelisaComponent {
          * @param {?} col
          * @return {?}
          */
-        col => this.displayedColumnsWithTitle.push(col)));
+        (col) => this.displayedColumnsWithTitle.push(col)));
         this.getHeaderSubtitle().forEach((/**
          * @param {?} col
          * @return {?}
          */
-        col => this.displayedColumnsWithSubtitle.push(col)));
+        (col) => this.displayedColumnsWithSubtitle.push(col)));
         this.footerDisplayedColumns().forEach((/**
          * @param {?} col
          * @return {?}
          */
-        col => this.displayedColumnsWithFooter.push(col)));
+        (col) => this.displayedColumnsWithFooter.push(col)));
     }
     /**
      * @param {?} dataSource
      * @return {?}
      */
     set dataSource(dataSource) {
-        this._dataSource = dataSource;
+        this.dataSource$ = dataSource;
         this.rawData = dataSource;
         if (this.rawData) {
             this.prepareDataSource();
@@ -1144,7 +1172,7 @@ class TableHelisaComponent {
      * @return {?}
      */
     get dataSource() {
-        return this._dataSource;
+        return this.dataSource$;
     }
     /**
      * @param {?} idRowSelected
@@ -1174,7 +1202,7 @@ class TableHelisaComponent {
          * @param {?} column
          * @return {?}
          */
-        column => {
+        (column) => {
             if (column.totalType !== undefined && (this.type === TableHelisaType.LOCAL || this.tableHelisaConnectComponent.page <= 1)) {
                 this.totalData = new Array(this.columnConfig.length);
                 this.showFooter = true;
@@ -1196,7 +1224,7 @@ class TableHelisaComponent {
                  * @param {?} column
                  * @return {?}
                  */
-                column => {
+                (column) => {
                     if (result === 0) {
                         result = this.compare(a, b);
                     }
@@ -1208,8 +1236,8 @@ class TableHelisaComponent {
          * @param {?} row
          * @return {?}
          */
-        row => {
-            if (haveGroup && (changeData.length === 0 || this.compare(changeData[changeData.length - 1].data, row) !== 0)) {
+        (row) => {
+            if (haveGroup && (changeData.length === 0 || this.compare((/** @type {?} */ (changeData[changeData.length - 1].data)), row) !== 0)) {
                 if (groupFooter) {
                     changeData.push({ data: groupFooter, rowType: RowType.GROUP_FOOTER });
                 }
@@ -1223,8 +1251,9 @@ class TableHelisaComponent {
         }));
         this.data = new MatTableDataSource(changeData);
         if (this.rawData && this.rawData.length && this.indexRowSelect && !this.selectedObject) {
-            if (this.indexRowSelect >= this.rawData.length || this.indexRowSelect < 0)
+            if (this.indexRowSelect >= this.rawData.length || this.indexRowSelect < 0) {
                 this.indexRowSelect = 0;
+            }
             this.selectRow({ data: this.rawData[this.indexRowSelect], rowType: RowType.ROW }, false);
         }
     }
@@ -1243,10 +1272,10 @@ class TableHelisaComponent {
         (column, index) => {
             if (column.totalType !== undefined) {
                 if (rowTotal[index] === undefined) {
-                    rowTotal[index] = { sum: ColumnConfigUtil.getValue(row, column), count: 1 };
+                    rowTotal[index] = { sum: ((/** @type {?} */ (new ColumnConfigUtil().getValue(row, column)))), count: 1 };
                 }
                 else {
-                    rowTotal[index].sum += ColumnConfigUtil.getValue(row, column);
+                    rowTotal[index].sum += ((/** @type {?} */ (new ColumnConfigUtil().getValue(row, column))));
                     rowTotal[index].count++;
                 }
             }
@@ -1265,12 +1294,12 @@ class TableHelisaComponent {
          * @param {?} column
          * @return {?}
          */
-        column => {
+        (column) => {
             if (ws === 0 && column.groupable) {
-                if (ColumnConfigUtil.getValue(a, column) < ColumnConfigUtil.getValue(b, column)) {
+                if (((/** @type {?} */ (new ColumnConfigUtil().getValue(a, column)))) < ((/** @type {?} */ (new ColumnConfigUtil().getValue(b, column))))) {
                     ws = -1;
                 }
-                else if (ColumnConfigUtil.getValue(a, column) > ColumnConfigUtil.getValue(b, column)) {
+                else if (((/** @type {?} */ (new ColumnConfigUtil().getValue(a, column)))) > ((/** @type {?} */ (new ColumnConfigUtil().getValue(b, column))))) {
                     ws = 1;
                 }
             }
@@ -1288,9 +1317,9 @@ class TableHelisaComponent {
          * @param {?} column
          * @return {?}
          */
-        column => {
+        (column) => {
             if (column.groupable) {
-                result += (result.length ? ' - ' : '') + ColumnConfigUtil.getValue(obj, column);
+                result += (result.length ? ' - ' : '') + (new ColumnConfigUtil().getValue(obj, column));
             }
         }));
         return result;
@@ -1327,7 +1356,7 @@ class TableHelisaComponent {
          * @param {?} name
          * @return {?}
          */
-        name => 'footer-' + name));
+        (name) => 'footer-' + name));
     }
     /**
      * @param {?} column
@@ -1352,7 +1381,7 @@ class TableHelisaComponent {
      * @return {?}
      */
     getValue(obj, column) {
-        return ColumnConfigUtil.getValue(obj, column);
+        return (/** @type {?} */ (new ColumnConfigUtil().getValue(obj, column)));
     }
     /**
      * @param {?} obj
@@ -1361,7 +1390,7 @@ class TableHelisaComponent {
      */
     getValueTooltip(obj, column) {
         if (this.showToolTip) {
-            return ColumnConfigUtil.getValue(obj, column);
+            return (/** @type {?} */ (new ColumnConfigUtil().getValue(obj, column)));
         }
         else {
             return null;
@@ -1381,7 +1410,7 @@ class TableHelisaComponent {
      * @return {?}
      */
     selectRow(row, isUser) {
-        this.selectedObject = row.data;
+        this.selectedObject = (/** @type {?} */ (row.data));
         this.select.emit(this.selectedObject);
         this.selectObject.emit({ value: this.selectedObject, scope: isUser ? EventScope.USER : EventScope.CODE_CALL });
     }
@@ -1391,7 +1420,7 @@ class TableHelisaComponent {
      */
     onScroll(event) {
         /** @type {?} */
-        const element = event.target;
+        const element = (/** @type {?} */ (event.target));
         if (element.scrollHeight - element.scrollTop < 1000) {
             this.goNextPage();
         }
@@ -1427,7 +1456,7 @@ class TableHelisaComponent {
      * @return {?}
      */
     dblClickCell() {
-        this.selectCell.emit(this.selectedCells);
+        this.selectCell.emit((/** @type {?} */ (this.selectedCells)));
     }
     /**
      * @param {?} element
@@ -1435,7 +1464,7 @@ class TableHelisaComponent {
      * @return {?}
      */
     selectedCell(element, column) {
-        this.selectedCells = { column: column, row: element };
+        this.selectedCells = { column, row: element };
         this.selectCell.emit(this.selectedCells);
     }
     /**
@@ -1447,7 +1476,7 @@ class TableHelisaComponent {
         if (this.isCellSelection) {
             if (this.selectedCells != null) {
                 if (this.selectedCells.column.name === column.name &&
-                    this.selectedCells.row.data === row.data) {
+                    ((/** @type {?} */ (this.selectedCells.row))).data === row.data) {
                     return true;
                 }
             }
@@ -1461,22 +1490,23 @@ class TableHelisaComponent {
      */
     getClassToCell(row, column) {
         /** @type {?} */
-        let classToCell = new Array();
+        const classToCell = new Array();
         if (this.configCellStyles) {
             /** @type {?} */
-            let found = this.configCellStyles.find((/**
+            const found = this.configCellStyles.find((/**
              * @param {?} c
              * @return {?}
              */
-            c => {
+            (c) => {
                 return c.cellData === this.getValue(row, column);
             }));
             if (found) {
                 classToCell.push(found.classCell);
             }
         }
-        if (column.columnStyle)
+        if (column.columnStyle) {
             classToCell.push(column.columnStyle);
+        }
         return classToCell;
     }
     /**
@@ -1486,15 +1516,16 @@ class TableHelisaComponent {
     getClassToRow(row) {
         /** @type {?} */
         const classToRow = new Array();
-        if (row === this.selectedObject && !this.isCellSelection)
+        if (row === this.selectedObject && !this.isCellSelection) {
             classToRow.push('');
+        }
         if (this.configRowStylesFromColumn) {
             /** @type {?} */
-            let found = this.configRowStylesFromColumn.find((/**
+            const found = this.configRowStylesFromColumn.find((/**
              * @param {?} c
              * @return {?}
              */
-            c => {
+            (c) => {
                 return c.data === this.getValue(row, c.column);
             }));
             if (found) {
@@ -1517,7 +1548,7 @@ class TableHelisaComponent {
             const rawData = this.rawData;
             moveItemInArray(array, this.indexRowStartDrag, rowIndex);
             moveItemInArray(rawData, this.indexRowStartDrag, rowIndex);
-            this.drop.emit({ value: array[rowIndex].data, order: rowIndex });
+            this.drop.emit({ value: (/** @type {?} */ (array[rowIndex].data)), order: rowIndex });
             this.rawData = rawData;
             this.data = new MatTableDataSource(array);
             event.stopPropagation();
@@ -1534,7 +1565,7 @@ class TableHelisaComponent {
              * @param {?} row
              * @return {?}
              */
-            row => row.data === this.selectedObject));
+            (row) => row.data === this.selectedObject));
             /** @type {?} */
             let newSelection = -10;
             if (event.key === 'ArrowDown') {
@@ -1545,8 +1576,9 @@ class TableHelisaComponent {
                  * @return {?}
                  */
                 (row, index) => {
-                    if (newSelection == -10 && index > currentIndex && row.rowType == RowType.ROW)
+                    if (newSelection === -10 && index > currentIndex && row.rowType === RowType.ROW) {
                         newSelection = index;
+                    }
                 }));
             }
             if (event.key === 'ArrowUp') {
@@ -1558,21 +1590,24 @@ class TableHelisaComponent {
                  * @return {?}
                  */
                 (row, index) => {
-                    if (newSelection == -10 && index > currentIndex && row.rowType == RowType.ROW)
+                    if (newSelection === -10 && index > currentIndex && row.rowType === RowType.ROW) {
                         newSelection = index;
+                    }
                 }));
                 this.data.data.reverse();
-                if (newSelection != -10) {
+                if (newSelection !== -10) {
                     newSelection = this.data.data.length - newSelection - 1;
                 }
             }
-            if (newSelection != -10) {
+            if (newSelection !== -10) {
                 this.selectRow(this.data.data[newSelection], true);
             }
-            if (Math.abs(this.scrollCount) >= 2)
+            if (Math.abs(this.scrollCount) >= 2) {
                 this.scrollCount = 0;
-            else
+            }
+            else {
                 event.preventDefault();
+            }
         }
     }
     /**
@@ -1594,21 +1629,23 @@ class TableHelisaComponent {
      */
     getHeaderSubtitle() {
         /** @type {?} */
-        let x = this.columnConfig.map((/**
+        const x = this.columnConfig.map((/**
          * @param {?} column
          * @param {?} index
          * @return {?}
          */
         (column, index) => {
-            if (column.visible && column.subtitle != undefined)
+            if (column.visible && column.subtitle !== undefined) {
                 return 'subtitle' + index;
-            else
+            }
+            else {
                 return null;
+            }
         })).filter((/**
          * @param {?} data
          * @return {?}
          */
-        data => data != null));
+        (data) => data != null));
         return x;
     }
     /**
@@ -1619,11 +1656,11 @@ class TableHelisaComponent {
          * @param {?} column
          * @return {?}
          */
-        column => column.visible && column.title != undefined)).map((/**
+        (column) => column.visible && column.title !== undefined)).map((/**
          * @param {?} col
          * @return {?}
          */
-        col => col.name));
+        (col) => col.name));
     }
     /**
      * @param {?} event
@@ -1633,9 +1670,9 @@ class TableHelisaComponent {
         if (this.isDragged && this.indexRowStartDrag >= 0) {
             /** @type {?} */
             const rowIndex = this.getRowIndex(event.pageY);
-            if (rowIndex != this.lastIndexRowDrag) {
+            if (rowIndex !== this.lastIndexRowDrag) {
                 this.lastIndexRowDrag = rowIndex;
-                //This can have a memory problem with big data
+                // This can have a memory problem with big data
                 /** @type {?} */
                 const array = [...this.dataBeforeDrag.data];
                 moveItemInArray(array, this.indexRowStartDrag, rowIndex);
@@ -1664,7 +1701,7 @@ class TableHelisaComponent {
         let offsetTop = 0;
         /** @type {?} */
         let container = this.containerTable.nativeElement;
-        while ((container != null) && (offsetTop == 0)) {
+        while ((container !== null) && (offsetTop === 0)) {
             offsetTop = container.offsetTop;
             container = container.parentElement;
         }
@@ -1675,11 +1712,13 @@ class TableHelisaComponent {
         for (let i = 0; i < rows.length; i++) {
             /** @type {?} */
             const row = ((/** @type {?} */ (rows[i])));
-            if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop)
+            if (pageY - offsetTop > row.offsetTop - this.containerTable.nativeElement.scrollTop) {
                 rowIndex = i;
+            }
         }
-        if (rowIndex < 0)
+        if (rowIndex < 0) {
             rowIndex = 0;
+        }
         return rowIndex;
     }
     /**
@@ -1692,7 +1731,7 @@ class TableHelisaComponent {
 TableHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-table',
-                template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\n<div class=\"div-table-helisa\">\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\n    <ng-container *ngIf=\"addBookButton\">\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\n        <div *ngFor=\"let item of rawData\">\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\n            <i class=\"material-icons-outlined\">description</i>\n          </button>\n        </div>\n      </div>\n    </ng-container>\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\n        <ng-container [matColumnDef]=\"column.name\">\n          <ng-container *ngIf=\"column.title != undefined\">\n            <div *ngIf=\"!column.sortable\">\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\n                {{column.title}} </th>\n            </div>\n            <div *ngIf=\"column.sortable\">\n              <th mat-header-cell [helTooltip]=\"column.title\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef mat-sort-header\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\n            </div>\n          </ng-container>\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matCellDef=\"let element\"\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{ getValue(element.data, column) }}</a>\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\n          </td>\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\n        </ng-container>\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\n            {{column.subtitle}}</th>\n        </ng-container>\n      </ng-container>\n\n      <ng-container matColumnDef=\"groupHeader\">\n        <td mat-cell *matCellDef=\"let group\">\n          <strong>{{ getGroupDescription(group.data) }}</strong>\n        </td>\n      </ng-container>\n\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\n      </ng-container>\n\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\n          [ngClass]=\"getClassToRow(row.data)\" [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"!isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\n        </tr>\n      </ng-container>\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\n    </table>\n  </div>\n</div>\n",
+                template: "<button *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\r\n    <ng-container *ngIf=\"addBookButton\">\r\n      <div class=\"buttons-container\" [ngClass]=\"{'hasTitle':showTitle, 'hasSubtitle': hasSubtitle}\">\r\n        <div *ngFor=\"let item of rawData\">\r\n          <button mat-icon-button *ngIf=\"item === selectedObject\" (click)=\"onBookClicked(selectedObject)\">\r\n            <i class=\"material-icons-outlined\">description</i>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort\r\n      matTable (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\r\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <ng-container [matColumnDef]=\"column.name\">\r\n          <ng-container *ngIf=\"column.title != undefined\">\r\n            <div *ngIf=\"!column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\r\n                {{column.title}} </th>\r\n            </div>\r\n            <div *ngIf=\"column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matHeaderCellDef mat-sort-header\r\n                [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\r\n            </div>\r\n          </ng-container>\r\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\"  [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\" *matCellDef=\"let element\"\r\n            (dblclick)=\"dblClickCell()\" (click)=\"selectedCell(element, column)\"\r\n            [class.selected-row]=\"isSelectedCell(element, column)\" [ngClass]=\"getClassToCell(element.data, column)\">\r\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{ getValue(element.data, column) }}</a>\r\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\r\n          </td>\r\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n        </ng-container>\r\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\r\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\r\n            {{column.subtitle}}</th>\r\n        </ng-container>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          (click)=\"selectRow(row, true)\" [class.selected-row]=\"row.data === selectedObject && !isCellSelection\"\r\n          [ngClass]=\"getClassToRow(row.data)\" [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\r\n        </tr>\r\n      </ng-container>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n</div>\r\n",
                 styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table{position:relative}/deep/ hel-table>button{justify-content:center;align-items:flex-start;background:0 0;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}/deep/ hel-table>button:focus{outline:0}/deep/ hel-table>button:hover{opacity:1}/deep/ hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:'+';color:#fff;height:26px;width:20px}/deep/ hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}/deep/ hel-table .buttons-container{order:2}/deep/ hel-table .buttons-container.hasTitle{padding-top:26px}/deep/ hel-table .buttons-container.hasSubtitle{padding-top:26px}/deep/ hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}/deep/ hel-table .buttons-container>div{height:26px}/deep/ hel-table .buttons-container>div button{justify-content:center;align-items:center;display:flex;height:26px}/deep/ hel-table .buttons-container>div button>*{display:flex;height:100%}/deep/ hel-table .div-table-helisa{height:100%}/deep/ hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa{width:100%}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ table{table-layout:fixed}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr{height:26px}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr th,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr td,/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}/deep/ hel-table .div-table-helisa .container-table .table-helisa /deep/ tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}/deep/ hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
             }] }
 ];
@@ -1704,7 +1743,7 @@ TableHelisaComponent.propDecorators = {
     matSort: [{ type: ViewChild, args: [MatSort,] }],
     matTable: [{ type: ViewChild, args: [MatTable,] }],
     matTableElement: [{ type: ViewChild, args: [MatTable, { read: ElementRef },] }],
-    containerTable: [{ type: ViewChild, args: ["containerTable",] }],
+    containerTable: [{ type: ViewChild, args: ['containerTable',] }],
     sort: [{ type: Output }],
     total: [{ type: Output }],
     search: [{ type: Output }],
@@ -1725,8 +1764,8 @@ TableHelisaComponent.propDecorators = {
     bookClicked: [{ type: Output }],
     addBookButton: [{ type: Input }],
     showToolTip: [{ type: Input }],
-    hideDelay: [{ type: Input, args: ['hideDelay',] }],
-    showDelay: [{ type: Input, args: ['showDelay',] }],
+    hideDelay: [{ type: Input }],
+    showDelay: [{ type: Input }],
     isRemote: [{ type: Input }],
     columnConfiguration: [{ type: Input }],
     dataSource: [{ type: Input }],
@@ -1777,7 +1816,7 @@ class DateHelisaComponent {
     ngOnInit() {
         this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
-        if (this.typeCalendar == TypeCalendarEnum.MONTH_YEAR) {
+        if (this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
             this.dateFormat = 'MM/YYYY';
             this.placeholder = this.dateFormat;
         }
@@ -1785,8 +1824,8 @@ class DateHelisaComponent {
          * establecer valor por defecto de la fecha
          * @type {?}
          */
-        let incommingDate = moment(this.dateFormControl.value, this.dateFormat).format(this.dateFormat);
-        if (this.dateFormControl.value != '' && incommingDate != 'Invalid date') {
+        const incommingDate = moment(this.dateFormControl.value, this.dateFormat).format(this.dateFormat);
+        if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
             this.dateToVisualize.setValue(incommingDate);
         }
     }
@@ -1801,8 +1840,8 @@ class DateHelisaComponent {
      * @return {?}
      */
     getStartView() {
-        //multi-year
-        if (this.typeCalendar == this.typeCalendarEnum.MONTH_YEAR) {
+        // multi-year
+        if (this.typeCalendar === this.typeCalendarEnum.MONTH_YEAR) {
             return 'multi-year';
         }
         else {
@@ -1819,7 +1858,7 @@ class DateHelisaComponent {
          * @param {?} date
          * @return {?}
          */
-        date => {
+        (date) => {
             if (date.length > this.dateFormat.length) {
                 this.invalidFormat = true;
             }
@@ -1830,18 +1869,18 @@ class DateHelisaComponent {
          * @param {?} date
          * @return {?}
          */
-        date => date.length == this.dateFormat.length)))
+        (date) => date.length === this.dateFormat.length)))
             .subscribe((/**
          * @param {?} date
          * @return {?}
          */
-        date => {
+        (date) => {
             this.invalidFormat = false;
             /** @type {?} */
-            let isValid = moment(date, this.dateFormat, true).isValid();
+            const isValid = moment(date, this.dateFormat, true).isValid();
             /** @type {?} */
-            let result = moment(date, this.dateFormat).format('YYYY-MM-DD');
-            if (!!result && (result == 'Invalid date' || !isValid)) {
+            const result = moment(date, this.dateFormat).format('YYYY-MM-DD');
+            if (!!result && (result === 'Invalid date' || !isValid)) {
                 this.invalidFormat = true;
                 return;
             }
@@ -1849,18 +1888,18 @@ class DateHelisaComponent {
                 if (!this.isFromInputEvent) {
                     this.isFromInputEvent = true;
                     /** @type {?} */
-                    let subString = result.split('-');
+                    const subString = result.split('-');
                     /** @type {?} */
-                    let year = parseFloat(subString[0]);
+                    const year = parseFloat(subString[0]);
                     /** @type {?} */
-                    let month = parseFloat(subString[1]);
+                    const month = parseFloat(subString[1]);
                     /** @type {?} */
-                    let day = parseFloat(subString[2]);
+                    const day = parseFloat(subString[2]);
                     this.date.setFullYear(year);
                     this.date.setDate(day);
                     this.date.setMonth(month - 1); // -1 por que los meses se toman como los indices en un array
                     /** cuando es de tipo MOUNTH_YEAR retorna el ultimo dia del mes seleccionado */
-                    if (this.typeCalendar == TypeCalendarEnum.MONTH_YEAR) {
+                    if (this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
                         this.date = moment(this.date).endOf('month').toDate();
                     }
                     this.dateToVisualize.setValue(moment(this.date, 'YYYY-MM-DD').format(this.dateFormat));
@@ -1882,10 +1921,10 @@ class DateHelisaComponent {
          * @param {?} date
          * @return {?}
          */
-        date => {
+        (date) => {
             /** @type {?} */
-            let incommingDate = moment(date, this.dateFormat).format(this.dateFormat);
-            if (this.dateFormControl.value != '' && incommingDate != 'Invalid date') {
+            const incommingDate = moment(date, this.dateFormat).format(this.dateFormat);
+            if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
                 this.dateToVisualize.setValue(incommingDate);
             }
         }));
@@ -1897,10 +1936,10 @@ class DateHelisaComponent {
      * @return {?}
      */
     monthSelectedHandler(chosenMonthDate, datepicker) {
-        if (this.typeCalendar == TypeCalendarEnum.MONTH_YEAR) {
+        if (this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
             datepicker.close();
             /** @type {?} */
-            let date = moment(chosenMonthDate).endOf('month').toDate();
+            const date = moment(chosenMonthDate).endOf('month').toDate();
             this.dateToVisualize.setValue(moment(date, 'YYYY-MM-DD').format(this.dateFormat));
             this.dateFormControl.setValue(date);
         }
@@ -1925,7 +1964,7 @@ class DateHelisaComponent {
 DateHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-date-helisa',
-                template: "<div>\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\n    <input matInput \n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\n    \n    \n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \n      ya que el valor es diferente cuando se escribe directamente en este\n    -->\n    <input matInput \n    [matDatepicker]=\"picker\" \n    hidden=\"hide\" \n    [value]=\"dateToVisualize.value\" \n    (dateChange)=\"dateChange('change', $event)\">\n    <!--  -->\n  \n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\n    \n  </mat-form-field>\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\n  </div>",
+                template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
                 styles: [""]
             }] }
 ];
@@ -2102,7 +2141,7 @@ class TreeHelisaComponent {
          * @param {?} node
          * @return {?}
          */
-        node => node.children));
+        (node) => node.children));
         this.dataSource = new MatTreeNestedDataSource();
         this.isSingleClick = true;
         this.currentNode = null;
@@ -2110,15 +2149,17 @@ class TreeHelisaComponent {
          * Verifica si el nodo tiene hijos
          */
         this.hasChild = (/**
-         * @param {?} _
+         * @param {?} t
          * @param {?} node
          * @return {?}
          */
-        (_, node) => !!node.children && node.children.length > 0);
-        //cargar datos pasados por el @Input
+        (t, node) => {
+            return !!node.children && node.children.length > 0;
+        });
+        // cargar datos pasados por el @Input
         if (!!this.data) {
             /** @type {?} */
-            let data = this.data;
+            const data = this.data;
             this.data = null;
             this.receivePage(data.children);
         }
@@ -2126,6 +2167,31 @@ class TreeHelisaComponent {
             this.dataSource.data = [];
             this.treeControl.dataNodes = [];
         }
+    }
+    /**
+     * Obtiene la descripcion completa del nodo
+     * \@example Nodo padre,nodo hijo,nodo nieto
+     * @param {?} node Debe tener todos los parent llenos hacia arriba
+     * @return {?}
+     */
+    static getDescription(node) {
+        /** @type {?} */
+        let result = [node.name];
+        /** @type {?} */
+        let concat = '';
+        if (node.parent) {
+            result.push(this.getDescription(node.parent));
+        }
+        if (result.length === 1) {
+            return node.name;
+        }
+        result = result.reverse();
+        for (let i = 0; i < result.length; i++) {
+            /** @type {?} */
+            const element = result[i];
+            concat = concat + element + ((i === result.length - 1) ? '' : ',');
+        }
+        return concat;
     }
     /**
      * @return {?}
@@ -2153,15 +2219,16 @@ class TreeHelisaComponent {
          * @return {?}
          */
         (res) => {
-            if (!!this.data && !!this.data.children)
+            if (!!this.data && !!this.data.children) {
                 this.selectNode(this.data, res);
+            }
         }));
         this.treeHelisaService.refreshTreeObservable
             .subscribe((/**
          * @param {?} res
          * @return {?}
          */
-        res => {
+        (res) => {
             this.refreshTree();
         }));
         this.treeHelisaService.refreshTreeWithPaginationObservable
@@ -2169,7 +2236,7 @@ class TreeHelisaComponent {
          * @param {?} res
          * @return {?}
          */
-        res => {
+        (res) => {
             this.refreshTreeWithPagination();
         }));
     }
@@ -2181,7 +2248,7 @@ class TreeHelisaComponent {
          * @param {?} res
          * @return {?}
          */
-        res => {
+        (res) => {
             if (res != null) {
                 if (res) {
                     this.tree.treeControl.expandAll();
@@ -2192,8 +2259,8 @@ class TreeHelisaComponent {
          * @param {?} res
          * @return {?}
          */
-        res => {
-            if (res != null) {
+        (res) => {
+            if (res !== null) {
                 if (res) {
                     this.tree.treeControl.collapseAll();
                 }
@@ -2204,8 +2271,8 @@ class TreeHelisaComponent {
          * @param {?} res
          * @return {?}
          */
-        res => {
-            if (res != undefined) {
+        (res) => {
+            if (res !== undefined) {
                 this.treeControl.expand(res);
             }
         }));
@@ -2214,8 +2281,8 @@ class TreeHelisaComponent {
          * @param {?} res
          * @return {?}
          */
-        res => {
-            if (res != undefined) {
+        (res) => {
+            if (res !== undefined) {
                 this.treeControl.collapse(res);
             }
         }));
@@ -2247,7 +2314,7 @@ class TreeHelisaComponent {
      */
     onScroll(event) {
         /** @type {?} */
-        const element = event.target;
+        const element = (/** @type {?} */ (event.target));
         if ((element.offsetHeight + element.scrollTop) >= element.scrollHeight) {
             this.goNextPage();
         }
@@ -2270,7 +2337,7 @@ class TreeHelisaComponent {
         }
         node.children.push({
             id: null,
-            name: "",
+            name: '',
             isSelected: false,
             parent: node,
             isEditable: true
@@ -2282,7 +2349,7 @@ class TreeHelisaComponent {
      * @return {?}
      */
     onDelete(node) {
-        // Remueve el nodo utilizando la libreria de lodash   
+        // Remueve el nodo utilizando la libreria de lodash
         remove(node.parent.children, node);
         this.refreshTree();
         this.removed.emit(node.id);
@@ -2294,15 +2361,15 @@ class TreeHelisaComponent {
      */
     onEdited(node, value) {
         node.name = value;
-        if (node.id == null && node.name == "") {
+        if (node.id == null && node.name === '') {
             remove(node.parent.children, node);
             this.refreshTree();
         }
-        else if (node.id && node.id != null && node.name.trim() !== "") {
+        else if (node.id && node.id != null && node.name.trim() !== '') {
             this.edited.emit(node);
             node.isEditable = false;
         }
-        else if (!!node.id && node.id == null && node.name.trim() !== "") {
+        else if (!!node.id && node.id == null && node.name.trim() !== '') {
             this.added.emit(node);
             node.isEditable = false;
         }
@@ -2368,12 +2435,12 @@ class TreeHelisaComponent {
                 if (!!this.currentNode.parent && this.currentNode.id != null) {
                     // obtiene el indice del nodo seleccionado actualmente
                     /** @type {?} */
-                    let index = this.currentNode.parent.children.indexOf(this.currentNode);
-                    if (this.currentNode.parent.id == null && index == 0) {
+                    const index = this.currentNode.parent.children.indexOf(this.currentNode);
+                    if (this.currentNode.parent.id == null && index === 0) {
                         return 0;
                     }
                     else { // si tiene nodos al mismo nivel salta al nodo anterior
-                        if (index != undefined && index == 0) {
+                        if (index !== undefined && index === 0) {
                             this.currentNode = this.currentNode.parent;
                             this.selectNode(this.data, this.currentNode.id);
                             if (!!this.currentNode.children && this.currentNode.children.length > 0) {
@@ -2409,7 +2476,9 @@ class TreeHelisaComponent {
                 if (!!this.currentNode) {
                     // obtiene el indice del nodo seleccionado actualmente
                     /** @type {?} */
-                    let index = (!!this.currentNode && !!this.currentNode.parent) ? this.currentNode.parent.children.indexOf(this.currentNode) : null;
+                    const index = (!!this.currentNode && !!this.currentNode.parent) ?
+                        this.currentNode.parent.children.indexOf(this.currentNode) :
+                        null;
                     // si tiene childrens pasa al primer children
                     if (!!this.currentNode.children &&
                         this.currentNode.children.length > 0) {
@@ -2419,15 +2488,15 @@ class TreeHelisaComponent {
                             this.treeHelisaService.expandOneNode(this.currentNode);
                         }
                     }
-                    // Si es el ultimo nodo del array pasa al nodo hermano del padre (tio) hacia abajo
-                    else if (index != undefined &&
-                        index == this.currentNode.parent.children.length - 1 &&
+                    else if (index !== undefined &&
+                        index === this.currentNode.parent.children.length - 1 &&
                         this.currentNode.parent.parent != null &&
                         this.currentNode.parent.parent.children != null &&
                         this.currentNode.parent.parent.children.length > 0) {
                         /** @type {?} */
-                        let indexOfParent = this.currentNode.parent.parent.children.indexOf(this.currentNode.parent);
-                        this.currentNode = (this.currentNode.parent.parent.children[indexOfParent + 1] == undefined) ? this.currentNode : this.currentNode.parent.parent.children[indexOfParent + 1];
+                        const indexOfParent = this.currentNode.parent.parent.children.indexOf(this.currentNode.parent);
+                        this.currentNode = (this.currentNode.parent.parent.children[indexOfParent + 1] === undefined) ?
+                            this.currentNode : this.currentNode.parent.parent.children[indexOfParent + 1];
                         this.selectNode(this.data, this.currentNode.id);
                         if (!!this.currentNode.children && this.currentNode.children.length > 0) {
                             this.treeHelisaService.expandOneNode(this.currentNode);
@@ -2445,30 +2514,6 @@ class TreeHelisaComponent {
         }
     }
     /**
-     * Obtiene la descripcion completa del nodo
-     * \@example Nodo padre,nodo hijo,nodo nieto
-     * @param {?} node Debe tener todos los parent llenos hacia arriba
-     * @return {?}
-     */
-    static getDescription(node) {
-        /** @type {?} */
-        let result = [node.name];
-        /** @type {?} */
-        let concat = "";
-        if (node.parent) {
-            result.push(this.getDescription(node.parent));
-        }
-        if (result.length == 1)
-            return node.name;
-        result = result.reverse();
-        for (let i = 0; i < result.length; i++) {
-            /** @type {?} */
-            let element = result[i];
-            concat = concat + element + ((i == result.length - 1) ? "" : ",");
-        }
-        return concat;
-    }
-    /**
      * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
      * @private
      * @return {?}
@@ -2476,10 +2521,10 @@ class TreeHelisaComponent {
     refreshTree() {
         this.data = null;
         /** @type {?} */
-        let _data = this.dataSource.data;
+        const datasourceData = this.dataSource.data;
         this.dataSource.data = null;
-        this.dataSource.data = _data;
-        this.treeControl.dataNodes = _data;
+        this.dataSource.data = datasourceData;
+        this.treeControl.dataNodes = datasourceData;
     }
     /**
      * Actualiza el arbol cuando se utiliza la paginacion (Cuando no , utilice el metodo refreshTree())
@@ -2488,10 +2533,10 @@ class TreeHelisaComponent {
      */
     refreshTreeWithPagination() {
         /** @type {?} */
-        let _data = this.dataSource.data;
+        const datasourceData = this.dataSource.data;
         this.dataSource.data = null;
-        this.dataSource.data = _data;
-        this.treeControl.dataNodes = _data;
+        this.dataSource.data = datasourceData;
+        this.treeControl.dataNodes = datasourceData;
     }
     /**
      * @private
@@ -2512,7 +2557,7 @@ class TreeHelisaComponent {
      */
     receivePage(data) {
         if (!this.data) {
-            this.data = { id: null, name: "root", isSelected: false };
+            this.data = { id: null, name: 'root', isSelected: false };
         }
         if (!this.data.children) {
             this.data.children = new Array();
@@ -2523,7 +2568,7 @@ class TreeHelisaComponent {
          * @param {?} node
          * @return {?}
          */
-        node => {
+        (node) => {
             this.fillParent(node, this.data);
         }));
         this.data.children = this.reorderByOrderIndex(this.data.children);
@@ -2546,7 +2591,7 @@ class TreeHelisaComponent {
              * @param {?} item
              * @return {?}
              */
-            item => {
+            (item) => {
                 this.fillParent(item, node);
             }));
         }
@@ -2560,19 +2605,19 @@ class TreeHelisaComponent {
      */
     selectNode(node, id) {
         this.upSelectNode(node);
-        if (node == undefined || node.id == undefined) {
+        if (node === undefined || node.id === undefined) {
             return null;
         }
-        if (node.id == id) {
+        if (node.id === id) {
             node.isSelected = true;
             this.expandAllParents(node);
             return node;
         }
         else if (node.children != null) {
             /** @type {?} */
-            var i;
+            let i;
             /** @type {?} */
-            var result = null;
+            let result = null;
             for (i = 0; result == null && i < node.children.length; i++) {
                 result = this.selectNode(node.children[i], id);
             }
@@ -2598,12 +2643,13 @@ class TreeHelisaComponent {
      * @return {?}
      */
     upSelectNode(node) {
-        if (!!node && node.isSelected != undefined) {
+        if (!!node && node.isSelected !== undefined) {
             node.isSelected = false;
-            if (!!node.children)
-                for (var i = 0; i < node.children.length; i++) {
-                    this.upSelectNode(node.children[i]);
+            if (!!node.children) {
+                for (const childrenNode of node.children) {
+                    this.upSelectNode(childrenNode);
                 }
+            }
         }
     }
     /**
@@ -2612,9 +2658,9 @@ class TreeHelisaComponent {
      */
     getClassNode(node) {
         /** @type {?} */
-        let classNode = [];
+        const classNode = [];
         if (node.isSelected) {
-            classNode.push("isSelected");
+            classNode.push('isSelected');
         }
         if (node.classNode) {
             classNode.push(node.classNode);
@@ -2636,20 +2682,24 @@ class TreeHelisaComponent {
      */
     onSelectOption(event, node) {
         node.isCheckedOption = event.source.selected;
-        if (node.isCheckedOption)
+        if (node.isCheckedOption) {
             this.checkedOptionNode.emit(node.id);
-        else
+        }
+        else {
             this.uncheckedOptionNode.emit(node.id);
+        }
     }
     /**
      * @param {?} node
      * @return {?}
      */
     getSelectedOptions(node) {
-        if (this.selectedOptions.has(node.id))
+        if (this.selectedOptions.has(node.id)) {
             this.reloadSelectedOptions(node, this.selectedOptions.get(node.id).editMode);
-        else
+        }
+        else {
             this.reloadSelectedOptions(node, false);
+        }
         return this.selectedOptions.get(node.id);
     }
     /**
@@ -2665,12 +2715,13 @@ class TreeHelisaComponent {
          * @param {?} option
          * @return {?}
          */
-        option => {
-            if (option.isCheckedOption)
+        (option) => {
+            if (option.isCheckedOption) {
                 array.push(option.id);
+            }
         }));
         /** @type {?} */
-        const obj = { formControl: new FormControl(array), editMode: editMode };
+        const obj = { formControl: new FormControl(array), editMode };
         this.selectedOptions.set(node.id, obj);
     }
     /**
@@ -2680,16 +2731,17 @@ class TreeHelisaComponent {
      */
     getNodeById(id) {
         /** @type {?} */
-        let queue = [...this.dataSource.data];
+        const queue = [...this.dataSource.data];
         while (queue.length > 0) {
             /** @type {?} */
-            let curr = queue.shift();
+            const curr = queue.shift();
             if (curr.id === id) {
                 return curr;
             }
             else {
-                if (!!curr.children)
+                if (!!curr.children) {
                     queue.push(...curr.children);
+                }
             }
         }
         return null;
@@ -2705,12 +2757,12 @@ class TreeHelisaComponent {
                  * @param {?} x
                  * @return {?}
                  */
-                x => x.orderIndex), ['asc']);
+                (x) => x.orderIndex), ['asc']);
                 node.forEach((/**
                  * @param {?} element
                  * @return {?}
                  */
-                element => {
+                (element) => {
                     if (!!element.children && element != null) {
                         element.children = this.reorderByOrderIndex(element.children);
                     }
@@ -2726,10 +2778,7 @@ class TreeHelisaComponent {
 TreeHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-tree',
-                template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\n  <mat-tree #tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\n    <!-- This is the tree node template for leaf nodes -->\n    <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\n      <li class=\"mat-tree-node\" [ngClass]=\"getClassNode(node)\"\n          (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" *ngIf=\"!node.isEditable\" class=\"tree-node\">\n        <!-- use a disabled button to provide padding for tree leaf -->\n        <button mat-icon-button disabled></button>\n        {{node.name}}\n      </li>\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\n        <button mat-icon-button (click)=\"onEdit(node)\">\n          <mat-icon>edit</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onAdd(node)\">\n          <mat-icon>add</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onDelete(node)\">\n          <mat-icon>delete</mat-icon>\n        </button>\n\n      </li>\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\n          <mat-icon>more_vert</mat-icon>\n        </button>\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\n          </mat-select>\n        </mat-form-field>\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\n          <mat-icon>done</mat-icon>\n        </button>\n      </div>\n\n\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\n      </li>\n    </mat-tree-node>\n    <!-- This is the tree node template for expandable nodes -->\n    <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\n      <li>\n        <div class=\"mat-tree-node tree-options tree-node\" *ngIf=\"!node.isEditable\">\n\n          <button mat-icon-button matTreeNodeToggle\n                  [attr.aria-label]=\"'toggle ' + node.name\">\n            <mat-icon class=\"mat-icon-rtl-mirror\">\n              {{treeControl.isExpanded(node) ? 'remove' : 'add'}}\n            </mat-icon>\n          </button>\n          <p class=\"tree-node-text\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\"\n             [ngClass]=\"getClassNode(node)\">{{node.name}}</p>\n        </div>\n        <div class=\"tree-options\">\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\n        <button mat-icon-button (click)=\"onEdit(node)\">\n          <mat-icon>edit</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onAdd(node)\">\n          <mat-icon>add</mat-icon>\n        </button>\n        <button mat-icon-button (click)=\"onDelete(node)\">\n          <mat-icon>delete</mat-icon>\n        </button>\n      </li>\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\n          <mat-icon>more_vert</mat-icon>\n        </button>\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\n          </mat-select>\n        </mat-form-field>\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\n          <mat-icon>done</mat-icon>\n        </button>\n      </div>\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\n      </li>\n</div>\n<ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\n  <ng-container matTreeNodeOutlet></ng-container>\n</ul>\n</li>\n</mat-nested-tree-node>\n</mat-tree>\n</div>\n",
-                host: {
-                    '(document:keyup)': 'onKeyDown($event)'
-                },
+                template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\r\n  <mat-tree #tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n    <!-- This is the tree node template for leaf nodes -->\r\n    <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n      <li class=\"mat-tree-node\" [ngClass]=\"getClassNode(node)\"\r\n          (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" *ngIf=\"!node.isEditable\" class=\"tree-node\">\r\n        <!-- use a disabled button to provide padding for tree leaf -->\r\n        <button mat-icon-button disabled></button>\r\n        {{node.name}}\r\n      </li>\r\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\">\r\n          <mat-icon>edit</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\">\r\n          <mat-icon>add</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\">\r\n          <mat-icon>delete</mat-icon>\r\n        </button>\r\n\r\n      </li>\r\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\r\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\r\n          <mat-icon>more_vert</mat-icon>\r\n        </button>\r\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\r\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\r\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\r\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\r\n          <mat-icon>done</mat-icon>\r\n        </button>\r\n      </div>\r\n\r\n\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\r\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n    </mat-tree-node>\r\n    <!-- This is the tree node template for expandable nodes -->\r\n    <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\r\n      <li>\r\n        <div class=\"mat-tree-node tree-options tree-node\" *ngIf=\"!node.isEditable\">\r\n\r\n          <button mat-icon-button matTreeNodeToggle\r\n                  [attr.aria-label]=\"'toggle ' + node.name\">\r\n            <mat-icon class=\"mat-icon-rtl-mirror\">\r\n              {{treeControl.isExpanded(node) ? 'remove' : 'add'}}\r\n            </mat-icon>\r\n          </button>\r\n          <p class=\"tree-node-text\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\"\r\n             [ngClass]=\"getClassNode(node)\">{{node.name}}</p>\r\n        </div>\r\n        <div class=\"tree-options\">\r\n      <li class=\"tree-options\" *ngIf=\"showOptionsNode && !node.isEditable\">\r\n        <button mat-icon-button (click)=\"onEdit(node)\">\r\n          <mat-icon>edit</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onAdd(node)\">\r\n          <mat-icon>add</mat-icon>\r\n        </button>\r\n        <button mat-icon-button (click)=\"onDelete(node)\">\r\n          <mat-icon>delete</mat-icon>\r\n        </button>\r\n      </li>\r\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\r\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\r\n          <mat-icon>more_vert</mat-icon>\r\n        </button>\r\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\r\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\r\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\"\r\n                        (onSelectionChange)=\"onSelectOption($event, option)\">{{option.name}}</mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\r\n          <mat-icon>done</mat-icon>\r\n        </button>\r\n      </div>\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n        <hel-input-with-button [value]=\"node.name\" (cancel)=\"onCancel(node,$event)\"\r\n                               (done)=\"onEdited(node,$event)\"></hel-input-with-button>\r\n      </li>\r\n</div>\r\n<ul [class.example-tree-invisible]=\"!treeControl.isExpanded(node)\">\r\n  <ng-container matTreeNodeOutlet></ng-container>\r\n</ul>\r\n</li>\r\n</mat-nested-tree-node>\r\n</mat-tree>\r\n</div>\r\n",
                 styles: [".example-tree-invisible{display:none}.example-tree li,.example-tree ul{margin-top:0;margin-bottom:0;list-style-type:none}.isSelected{background:red}.tree-options{display:inline}.container-tree{overflow:scroll;height:350px;width:100%}.tree-node{-webkit-user-select:none;-moz-user-select:none;-khtml-user-select:none;-ms-user-select:none}.tree-node-text{display:inline;margin-bottom:0}"]
             }] }
 ];
@@ -2753,7 +2802,8 @@ TreeHelisaComponent.propDecorators = {
     keypressDelete: [{ type: Output }],
     keypressInsert: [{ type: Output }],
     checkedOptionNode: [{ type: Output }],
-    uncheckedOptionNode: [{ type: Output }]
+    uncheckedOptionNode: [{ type: Output }],
+    onKeyDown: [{ type: HostListener, args: ['document:keyup', ['$event'],] }]
 };
 
 /**
@@ -2802,7 +2852,7 @@ class AutocompleteHelisaComponent {
         this.autocompleteHelisaService = autocompleteHelisaService;
         this.myControl = new FormControl();
         this.options = new Array();
-        this.onSelectedValue = new EventEmitter();
+        this.selectedValueEmmiter = new EventEmitter();
         this.nextPage = new EventEmitter();
         this.isRemote = false;
         this.isLoading = false;
@@ -2815,10 +2865,9 @@ class AutocompleteHelisaComponent {
         this.onScrollObservable.asObservable()
             .pipe(debounceTime(500), throttleTime(500))
             .subscribe((/**
-         * @param {?} data
          * @return {?}
          */
-        (data) => {
+        () => {
             this.nextPage.emit();
         }));
         if (this.isRemote) {
@@ -2826,7 +2875,7 @@ class AutocompleteHelisaComponent {
              * @param {?} data
              * @return {?}
              */
-            data => {
+            (data) => {
                 setTimeout((/**
                  * @return {?}
                  */
@@ -2840,11 +2889,11 @@ class AutocompleteHelisaComponent {
          * @param {?} x
          * @return {?}
          */
-        x => this._checkRegex(x))), map((/**
+        (x) => this._checkRegex(x))), map((/**
          * @param {?} value
          * @return {?}
          */
-        value => this._filter(value))));
+        (value) => this._filter(value))));
     }
     /**
      * @param {?=} option
@@ -2875,7 +2924,7 @@ class AutocompleteHelisaComponent {
      * @return {?}
      */
     _filter(value) {
-        if (!(value instanceof Object)) {
+        if (!(value)) {
             if (!this.isRemote) {
                 /** @type {?} */
                 const filterValue = value.toLowerCase().split(' ');
@@ -2883,14 +2932,14 @@ class AutocompleteHelisaComponent {
                  * @param {?} option
                  * @return {?}
                  */
-                option => {
+                (option) => {
                     /** @type {?} */
                     let ws = true;
                     filterValue.forEach((/**
                      * @param {?} text
                      * @return {?}
                      */
-                    text => ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0));
+                    (text) => ws = ws && option.displayText.toLowerCase().indexOf(text) >= 0));
                     return ws;
                 })).splice(0, 5);
             }
@@ -2905,20 +2954,19 @@ class AutocompleteHelisaComponent {
      */
     onSelected(event) {
         this.selectedValue = event.option.value;
-        this.onSelectedValue.emit(this.selectedValue.value);
+        this.selectedValueEmmiter.emit(this.selectedValue.value);
     }
     /**
-     * @param {?} event
      * @return {?}
      */
-    getNextPage(event) {
-        this.onScrollObservable.next(event);
+    getNextPage() {
+        this.onScrollObservable.next();
     }
 }
 AutocompleteHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-autocomplete',
-                template: "<mat-form-field>\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage($event)\">\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\n      {{option.displayText}}\n    </mat-option>    \n  </mat-autocomplete>\n</mat-form-field>",
+                template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
                 providers: [AutocompleteHelisaService],
                 styles: [""]
             }] }
@@ -2930,7 +2978,7 @@ AutocompleteHelisaComponent.ctorParameters = () => [
 AutocompleteHelisaComponent.propDecorators = {
     myControl: [{ type: Input }],
     options: [{ type: Input }],
-    onSelectedValue: [{ type: Output }],
+    selectedValueEmmiter: [{ type: Output }],
     nextPage: [{ type: Output }],
     isRemote: [{ type: Input }]
 };
@@ -2949,8 +2997,8 @@ class OptionsScrollDirective {
          * This value would different depends of styles
          */
         this.thresholdPercent = .9;
-        this.scroll = new EventEmitter();
-        this._onDestroy = new Subject();
+        this.optionsScroll = new EventEmitter();
+        this.destroy = new Subject();
         this.lastScrollTop = 0;
         this.autoComplete.opened.pipe(tap((/**
          * @return {?}
@@ -2972,11 +3020,11 @@ class OptionsScrollDirective {
                         .addEventListener('scroll', this.onScroll.bind(this), false);
                 }
             }));
-        })), takeUntil(this._onDestroy)).subscribe();
+        })), takeUntil(this.destroy)).subscribe();
         this.autoComplete.closed.pipe(tap((/**
          * @return {?}
          */
-        () => this.removeScrollEventListener())), takeUntil(this._onDestroy)).subscribe();
+        () => this.removeScrollEventListener())), takeUntil(this.destroy)).subscribe();
     }
     /**
      * @private
@@ -2994,8 +3042,8 @@ class OptionsScrollDirective {
      * @return {?}
      */
     ngOnDestroy() {
-        this._onDestroy.next();
-        this._onDestroy.complete();
+        this.destroy.next();
+        this.destroy.complete();
         this.removeScrollEventListener();
     }
     /**
@@ -3003,22 +3051,23 @@ class OptionsScrollDirective {
      * @return {?}
      */
     onScroll(event) {
+        // Credits: how to know if it's down or up scroll "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
         /** @type {?} */
-        var st = event.target.pageYOffset || event.target.scrollTop;
+        const st = ((/** @type {?} */ (event.target))).pageYOffset || ((/** @type {?} */ (event.target))).scrollTop;
         if (st > this.lastScrollTop) {
-            // downscroll code       
+            // downscroll code
             if (this.thresholdPercent === undefined) {
-                this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                this.optionsScroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
             }
             else {
                 /** @type {?} */
-                const threshold = this.thresholdPercent * 100 * event.target.scrollHeight / 100;
+                const threshold = this.thresholdPercent * 100 * ((/** @type {?} */ (event.target))).scrollHeight / 100;
                 /** @type {?} */
-                const current = event.target.scrollTop + event.target.clientHeight;
-                //console.log(`scroll ${current}, threshold: ${threshold}`)     
+                const current = ((/** @type {?} */ (event.target))).scrollTop + ((/** @type {?} */ (event.target))).clientHeight;
+                // console.log(`scroll ${current}, threshold: ${threshold}`)
                 if (current > threshold) {
-                    //console.log('load next page');        
-                    this.scroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
+                    // console.log('load next page');
+                    this.optionsScroll.next({ autoComplete: this.autoComplete, scrollEvent: event });
                 }
             }
         }
@@ -3036,7 +3085,7 @@ OptionsScrollDirective.ctorParameters = () => [
 ];
 OptionsScrollDirective.propDecorators = {
     thresholdPercent: [{ type: Input }],
-    scroll: [{ type: Output, args: ['optionsScroll',] }]
+    optionsScroll: [{ type: Output }]
 };
 
 /**
@@ -3046,10 +3095,10 @@ OptionsScrollDirective.propDecorators = {
 class HelTooltipDirective {
     /**
      * @param {?} tooltip
-     * @param {?} _elemRef
+     * @param {?} elemRef
      */
-    constructor(tooltip, _elemRef) {
-        this._elemRef = _elemRef;
+    constructor(tooltip, elemRef) {
+        this.elemRef = elemRef;
         /**
          * Tiempo antes de ocultarla el mensaje
          */
@@ -3065,9 +3114,9 @@ class HelTooltipDirective {
      */
     mouseover() {
         /** @type {?} */
-        let currentContent = this._elemRef.nativeElement.innerText;
+        const currentContent = this.elemRef.nativeElement.innerText;
         if (!!currentContent && !!this.message) {
-            if ((currentContent.toUpperCase() != this.message.toString().toUpperCase()) || this.isEllipsisActive(this._elemRef.nativeElement)) {
+            if ((currentContent.toUpperCase() !== this.message.toString().toUpperCase()) || this.isEllipsisActive(this.elemRef.nativeElement)) {
                 this.tooltip.message = this.message;
             }
         }
@@ -3096,8 +3145,8 @@ HelTooltipDirective.ctorParameters = () => [
 ];
 HelTooltipDirective.propDecorators = {
     message: [{ type: Input, args: ['helTooltip',] }],
-    hideDelay: [{ type: Input, args: ['hideDelay',] }],
-    showDelay: [{ type: Input, args: ['showDelay',] }],
+    hideDelay: [{ type: Input }],
+    showDelay: [{ type: Input }],
     mouseover: [{ type: HostListener, args: ['mouseover',] }]
 };
 

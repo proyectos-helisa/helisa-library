@@ -6,7 +6,7 @@ export declare class InputWithButtonComponent implements OnInit {
     requiredMessage: string;
     value: string;
     done: EventEmitter<string>;
-    cancel: EventEmitter<any>;
+    cancel: EventEmitter<void>;
     constructor();
     ngOnInit(): void;
     onDone(): void;

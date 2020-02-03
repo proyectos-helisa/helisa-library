@@ -1,6 +1,6 @@
 import { OnInit, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource, MatTree } from '@angular/material';
+import { MatTreeNestedDataSource, MatTree, MatOptionSelectionChange } from '@angular/material';
 import { Node } from './node';
 import { TreeHelisaService } from './tree-helisa.service';
 import { Router } from '@angular/router';
@@ -12,9 +12,10 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     private treeHelisaService;
     private router;
     private elementRef;
+    constructor(treeHelisaService: TreeHelisaService, router: Router, elementRef: ElementRef);
     private treeHelisaConnect;
     formEdit: FormControl;
-    tree: MatTree<any>;
+    tree: MatTree<{}>;
     private selectedOptions;
     /**
      * Datos del Arbol
@@ -40,25 +41,30 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     added: EventEmitter<Node>;
     collapseParent: EventEmitter<boolean>;
     rangeScrolled: EventEmitter<RequestTreeHelisa>;
-    nodeSelected: EventEmitter<string | number>;
-    dobleClick: EventEmitter<string | number>;
-    keypressDelete: EventEmitter<string | number>;
-    keypressInsert: EventEmitter<string | number>;
-    checkedOptionNode: EventEmitter<string | number>;
-    uncheckedOptionNode: EventEmitter<string | number>;
+    nodeSelected: EventEmitter<number | string>;
+    dobleClick: EventEmitter<number | string>;
+    keypressDelete: EventEmitter<number | string | null>;
+    keypressInsert: EventEmitter<number | string | null>;
+    checkedOptionNode: EventEmitter<number | string | null>;
+    uncheckedOptionNode: EventEmitter<number | string | null>;
     treeControl: NestedTreeControl<Node>;
     dataSource: MatTreeNestedDataSource<Node>;
-    isSingleClick: Boolean;
+    isSingleClick: boolean;
     currentNode: Node;
-    constructor(treeHelisaService: TreeHelisaService, router: Router, elementRef: ElementRef);
+    /**
+     * Obtiene la descripcion completa del nodo
+     * @example Nodo padre,nodo hijo,nodo nieto
+     * @param node Debe tener todos los parent llenos hacia arriba
+     */
+    static getDescription(node: Node): string;
     ngOnInit(): void;
     ngAfterViewInit(): void;
     onRedirect(node: Node): void;
-    onScroll(event: any): void;
+    onScroll(event: Event): void;
     onEdit(node: Node): void;
     onAdd(node: Node): void;
     onDelete(node: Node): void;
-    onEdited(node: Node, value: any): void;
+    onEdited(node: Node, value: string): void;
     onCancel(node: Node, value: string): void;
     onDblClick(node: Node): void;
     onKeyDown(event: KeyboardEvent): void;
@@ -67,13 +73,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     /**
      * Verifica si el nodo tiene hijos
      */
-    hasChild: (_: number, node: Node) => boolean;
-    /**
-     * Obtiene la descripcion completa del nodo
-     * @example Nodo padre,nodo hijo,nodo nieto
-     * @param node Debe tener todos los parent llenos hacia arriba
-     */
-    static getDescription(node: Node): string;
+    hasChild: (t: number, node: Node) => boolean;
     /**
      * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
      */
@@ -86,26 +86,24 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     private receivePage;
     /**
      * Llenan el campo parent de todos los nodos hijos
-     * @param node
-     * @param parent
      */
     private fillParent;
     /**
      * coloca como true del isSelected del nodo que concuerde con el id
-     * @param node
-     * @param id
      */
     private selectNode;
     private expandAllParents;
     /**
      * Elimina el isSelected de todos los nodos
-     * @param node
      */
     private upSelectNode;
     getClassNode(node: Node): string[];
-    onEditMode(node: any, editMode: any): void;
-    onSelectOption(event: any, node: any): void;
-    getSelectedOptions(node: Node): any;
+    onEditMode(node: Node, editMode: boolean): void;
+    onSelectOption(event: MatOptionSelectionChange, node: Node): void;
+    getSelectedOptions(node: Node): {
+        formControl: FormControl;
+        editMode: boolean;
+    };
     private reloadSelectedOptions;
     /**
      * Retorna el primer Node que encuentre segun el id enviado o null si no hay ninguno

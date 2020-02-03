@@ -2,8 +2,8 @@ import { AfterViewInit, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
-interface RowData {
-    data: any;
+export interface RowData<T> {
+    data: {} | T;
     rowType: RowType;
 }
 declare enum RowType {
@@ -16,7 +16,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     private tableHelisaConnectComponent;
     totalData: Array<number>;
     rawData: Array<T>;
-    data: MatTableDataSource<RowData>;
+    data: MatTableDataSource<RowData<T>>;
     displayedColumns: string[];
     displayedColumnsWithTitle: string[];
     displayedColumnsWithSubtitle: string[];
@@ -31,8 +31,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     private indexRowStartDrag;
     private lastIndexRowDrag;
     private dataBeforeDrag;
+    private dataSource$;
     matSort: MatSort;
-    matTable: MatTable<any>;
+    matTable: MatTable<T>;
     matTableElement: ElementRef;
     containerTable: ElementRef;
     sort: EventEmitter<EventColumn>;
@@ -42,15 +43,15 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      * Deprecado, cambiar por electObject
      */
     select: EventEmitter<T>;
-    selectCell: EventEmitter<Cell>;
+    selectCell: EventEmitter<Cell<T>>;
     selectObject: EventEmitter<SelectObject<T>>;
-    nextPage: EventEmitter<RequestTableHelisa>;
+    nextPage: EventEmitter<RequestTableHelisa<T>>;
     showTitle: boolean;
     isCellSelection: boolean;
     count: number;
-    configCellStyles: Array<ConfigCellStyles>;
-    configRowStylesFromColumn: Array<ConfigRowStyles>;
-    selectedCells: Cell;
+    configCellStyles: Array<ConfigCellStyles<T>>;
+    configRowStylesFromColumn: Array<ConfigRowStyles<T>>;
+    selectedCells: Cell<T>;
     drop: EventEmitter<DropElement<T>>;
     isDragged: boolean;
     addRowButton: AddRowButton;
@@ -61,8 +62,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     showFooter: boolean;
     showSearch: boolean;
     /**
-       * Tiempo antes de ocultarla el mensaje del tooltip
-       */
+     * Tiempo antes de ocultarla el mensaje del tooltip
+     */
     hideDelay: number;
     /**
      * Tiempo antes de mostra el mensaje del tooltip
@@ -73,41 +74,40 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     ngAfterViewInit(): void;
     isRemote: boolean;
     columnConfiguration: Array<ColumnConfig>;
-    private _dataSource;
-    dataSource: Array<any>;
+    dataSource: Array<T>;
     selectedIndexRow: number;
     private prepareDataSource;
     private addTotalGroup;
     private compare;
-    getGroupDescription(obj: any): string;
-    isGroupTitle(index: any, item: any): boolean;
-    isRow(index: any, item: any): boolean;
-    isGroupFooter(index: any, item: any): boolean;
+    getGroupDescription(obj: T): string;
+    isGroupTitle(index: number, item: RowData<T>): boolean;
+    isRow(index: number, item: RowData<T>): boolean;
+    isGroupFooter(index: number, item: RowData<T>): boolean;
     footerDisplayedColumns(): Array<string>;
     getGroupValue(column: ColumnConfig, data: TotalGroup): number;
-    getValue(obj: any, column: ColumnConfig): any;
-    getValueTooltip(obj: any, column: ColumnConfig): any;
-    searchText(text: any): void;
-    selectRow(row: any, isUser: any): void;
-    onScroll(event: any): void;
+    getValue(obj: T, column: ColumnConfig): T;
+    getValueTooltip(obj: T, column: ColumnConfig): string;
+    searchText(text: string): void;
+    selectRow(row: RowData<T>, isUser: boolean): void;
+    onScroll(event: Event): void;
     private goNextPage;
     private receivePage;
     dblClickCell(): void;
-    selectedCell(element: any, column: ColumnConfig): void;
-    isSelectedCell(row: any, column: ColumnConfig): boolean;
-    getClassToCell(row: any, column: ColumnConfig): string[];
-    getClassToRow(row: any): string[];
-    onDrop(event: any): void;
+    selectedCell(element: RowData<T>, column: ColumnConfig): void;
+    isSelectedCell(row: RowData<T>, column: ColumnConfig): boolean;
+    getClassToCell(row: T, column: ColumnConfig): string[];
+    getClassToRow(row: T): string[];
+    onDrop(event: MouseEvent): void;
     tableKeydown(event: KeyboardEvent): void;
     /**
      * Emite el evento cuando se da click al boton AddRow
      */
     onAddRow(): void;
-    onBookClicked(selectedObject: any): void;
+    onBookClicked(selectedObject: T): void;
     getHeaderSubtitle(): string[];
     getColumnsWithTitle(): string[];
-    dragger(event: any): boolean;
-    startDrag(event: any): void;
+    dragger(event: MouseEvent): boolean;
+    startDrag(event: MouseEvent): void;
     private getRowIndex;
     readonly columnType: typeof ColumnType;
 }

@@ -1,4 +1,5 @@
-export declare class ExternalLinkDirective {
+import { OnChanges } from '@angular/core';
+export declare class ExternalLinkDirective implements OnChanges {
     private platformId;
     relAttr: string;
     targetAttr: string;
