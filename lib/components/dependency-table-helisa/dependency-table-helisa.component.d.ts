@@ -11,7 +11,7 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
     private dependencyTableHelisaService;
     private tableService;
     tables: Array<ConfigTable<T>>;
-    viewTables: QueryList<TableHelisaComponent<T[]>>;
+    viewTables: QueryList<TableHelisaComponent<T>>;
     showToolTip: boolean;
     /**
      * deprecated, use selectObject
