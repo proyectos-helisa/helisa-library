@@ -32,6 +32,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     private lastIndexRowDrag;
     private dataBeforeDrag;
     private dataSource$;
+    private scrollX;
+    private scrollY;
     matSort: MatSort;
     matTable: MatTable<T>;
     matTableElement: ElementRef;
