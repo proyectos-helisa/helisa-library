@@ -22,11 +22,6 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      */
     data: Node;
     /**
-     * Establece si se mostraran las opciones de
-     * Creacion, edición y eliminacion del nodo
-     */
-    showOptionsNode: boolean;
-    /**
      * Retorna el id del nodo removido
      */
     removed: EventEmitter<string | number>;

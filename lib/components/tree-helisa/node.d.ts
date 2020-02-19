@@ -10,4 +10,7 @@ export interface Node {
     options?: Node[];
     isCheckedOption?: boolean;
     orderIndex?: number;
+    showAddButton?: boolean;
+    showEditButton?: boolean;
+    showDeleteButton?: boolean;
 }
