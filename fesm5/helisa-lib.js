@@ -3313,10 +3313,10 @@ var TreeHelisaComponent = /** @class */ (function () {
      */
     function (node, id) {
         this.upSelectNode(node);
-        if (node === undefined || node.id === undefined) {
+        if (!!!node) {
             return null;
         }
-        if (node.id === id) {
+        if (node.id !== undefined && node.id === id) {
             node.isSelected = true;
             this.expandAllParents(node);
             return node;
