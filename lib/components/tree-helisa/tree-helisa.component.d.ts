@@ -12,6 +12,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     private treeHelisaService;
     private router;
     private elementRef;
+    isDisabled: boolean;
     constructor(treeHelisaService: TreeHelisaService, router: Router, elementRef: ElementRef);
     private treeHelisaConnect;
     formEdit: FormControl;
@@ -68,7 +69,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     /**
      * Verifica si el nodo tiene hijos
      */
-    hasChild: (t: number, node: Node) => boolean;
+    hasChild(t: number, node: Node): boolean;
     /**
      * Actualiza el arbol borrando toda la data , solo cuando no se utiliza paginacion
      */

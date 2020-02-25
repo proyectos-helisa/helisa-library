@@ -1,3 +1,4 @@
+import { TemplateRef, Type } from '@angular/core';
 export interface Node {
     id: number | string | null;
     name: string;
@@ -13,4 +14,5 @@ export interface Node {
     showAddButton?: boolean;
     showEditButton?: boolean;
     showDeleteButton?: boolean;
+    template?: string | TemplateRef<object> | Type<object>;
 }
