@@ -90,7 +90,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     getValue(obj: T, column: ColumnConfig): T;
     getValueTooltip(obj: T, column: ColumnConfig): string;
     searchText(text: string): void;
-    selectRow(row: RowData<T>, isUser: boolean): void;
+    selectRow(row: RowData<T>, isUser: boolean, column?: ColumnConfig): void;
     onScroll(event: Event): void;
     private goNextPage;
     private receivePage;
