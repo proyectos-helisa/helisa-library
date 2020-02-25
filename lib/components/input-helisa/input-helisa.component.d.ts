@@ -10,6 +10,7 @@ export declare class InputHelisaComponent implements OnInit {
     private readonly DECIMAL_SEPARATOR;
     private readonly THOUSAND_SEPARATOR;
     placeholder: string;
+    floatLabel: 'never' | 'always' | 'auto';
     isSearch: boolean;
     isFocused: boolean;
     /**
