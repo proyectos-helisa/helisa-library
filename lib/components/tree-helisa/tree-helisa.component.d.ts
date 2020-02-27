@@ -13,6 +13,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     private router;
     private elementRef;
     isDisabled: boolean;
+    selectedNode: number | string | null;
     constructor(treeHelisaService: TreeHelisaService, router: Router, elementRef: ElementRef);
     private treeHelisaConnect;
     formEdit: FormControl;
