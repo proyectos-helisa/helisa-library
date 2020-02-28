@@ -3343,18 +3343,17 @@
          * @return {?}
          */
             function (node, id) {
-                this.upSelectNode(node);
-                if (!!node) {
-                    if (!!this.selectedNode) {
-                        /** @type {?} */
-                        var nodeSelected = this.getNodeById(this.selectedNode);
-                        if (nodeSelected !== undefined) {
-                            nodeSelected.isSelected = false;
-                        }
-                    }
-                }
-                if (!!!node) {
+                if (node == null) {
                     return null;
+                }
+                this.upSelectNode(node);
+                if (!!this.selectedNode) {
+                    /** @type {?} */
+                    var nodeSelected = this.getNodeById(this.selectedNode);
+                    if (nodeSelected != null) {
+                        nodeSelected.isSelected = false;
+                        this.selectedNode = null;
+                    }
                 }
                 if (node.id !== undefined && node.id === id) {
                     node.isSelected = true;
