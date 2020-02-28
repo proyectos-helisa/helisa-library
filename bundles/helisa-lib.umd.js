@@ -2967,7 +2967,7 @@
                     node.children = [];
                 }
                 node.children.push({
-                    id: Math.random(),
+                    id: null,
                     name: '',
                     isSelected: false,
                     parent: node,

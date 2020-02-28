@@ -26,7 +26,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, NgModule, defineInjectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -2966,7 +2966,7 @@ var TreeHelisaComponent = /** @class */ (function () {
             node.children = [];
         }
         node.children.push({
-            id: Math.random(),
+            id: null,
             name: '',
             isSelected: false,
             parent: node,
