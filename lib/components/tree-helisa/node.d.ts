@@ -15,7 +15,10 @@ export interface Node {
     isCheckedOption?: boolean;
     orderIndex?: number;
     showAddButton?: boolean;
+    disabledAddButton?: boolean;
     showEditButton?: boolean;
+    disabledEditButton?: boolean;
     showDeleteButton?: boolean;
+    disabledDeleteButton?: boolean;
     data?: Array<ColumnConfigNode>;
 }

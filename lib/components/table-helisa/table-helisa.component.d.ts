@@ -105,7 +105,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      * Emite el evento cuando se da click al boton AddRow
      */
     onAddRow(): void;
-    onBookClicked(selectedObject: T): void;
     getHeaderSubtitle(): string[];
     getColumnsWithTitle(): string[];
     dragger(event: MouseEvent): boolean;
