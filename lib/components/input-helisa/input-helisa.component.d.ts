@@ -27,6 +27,7 @@ export declare class InputHelisaComponent implements OnInit {
      * Deprecated
      */
     setValue: EventEmitter<string>;
+    blur: EventEmitter<any>;
     formControlMask: FormControl;
     private realValue;
     private inputFormReal;
