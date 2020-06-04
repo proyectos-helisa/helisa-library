@@ -186,6 +186,14 @@ class AlertHelisaComponent {
         this.data = data;
         this.content = data.content;
         this.title = data.title;
+        this.okLabel = data.okLabel;
+        if (this.okLabel === undefined) {
+            this.okLabel = 'aceptar';
+        }
+        this.cancelLabel = data.cancelLabel;
+        if (this.cancelLabel === undefined) {
+            this.cancelLabel = 'cancelar';
+        }
         this.hasCancel = data.type === AlertHelisaType.CONFIRMATION;
         dialogRef.disableClose = true;
         dialogRef.keydownEvents().subscribe((/**
@@ -213,7 +221,7 @@ class AlertHelisaComponent {
 AlertHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-alert',
-                template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelar</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>aceptar</button>\r\n</div>",
+                template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelLabel</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>okLabel</button>\r\n</div>",
                 styles: [""]
             }] }
 ];
@@ -238,13 +246,15 @@ class AlertHelisaService {
      * @param {?} type
      * @param {?} title
      * @param {?} content
+     * @param {?=} okLabel
+     * @param {?=} cancelLabel
      * @return {?}
      */
-    openDialog(type, title, content) {
+    openDialog(type, title, content, okLabel, cancelLabel) {
         /** @type {?} */
         const dialogRef = this.dialog.open(AlertHelisaComponent, {
             width: '250px',
-            data: { title, content, type }
+            data: { title, content, type, okLabel, cancelLabel }
         });
         return dialogRef.afterClosed();
     }
