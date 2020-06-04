@@ -221,7 +221,7 @@ class AlertHelisaComponent {
 AlertHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-alert',
-                template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >cancelLabel</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>okLabel</button>\r\n</div>",
+                template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\r\n</div>",
                 styles: [""]
             }] }
 ];
