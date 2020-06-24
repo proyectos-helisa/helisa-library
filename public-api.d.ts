@@ -21,3 +21,7 @@ export * from './lib/components/autocomplete-helisa/autocomplete-helisa.componen
 export * from './lib/directives/options-scroll.directive';
 export * from './lib/directives/tooltip.directive';
 export * from './lib/helisa-lib.module';
+export * from './lib/components/alert-uncompleted-data-helisa/alert-uncompleted-data-helisa.component';
+export * from './lib/components/alert-uncompleted-data-helisa/alert-uncompleted-data-helisa.service';
+export * from './lib/components/alert-lost-data-helisa/alert-lost-data-helisa.component';
+export * from './lib/components/alert-lost-data-helisa/alert-lost-data-helisa.service';

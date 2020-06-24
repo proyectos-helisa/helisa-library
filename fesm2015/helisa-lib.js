@@ -8,11 +8,9 @@ import { Subject, BehaviorSubject, of } from 'rxjs';
 import { moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
+import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
 /**
  * @fileoverview added by tsickle
@@ -3330,6 +3330,142 @@ ExternalLinkPipe.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const DEFAULT_TITLE = 'No ha suministrado la información necesaria.';
+/** @type {?} */
+const DEFAULT_CONTENT = 'Si insite en grabar así, este concepto no será utilizable hasta su conclusión satisfactoria, que deberá completar posteriormente modificando en concepto.';
+class AlertUncompletedDataHelisaComponent {
+    /**
+     * @param {?} dialogRef
+     * @param {?} data
+     */
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.title = data.title;
+        if (this.title === undefined) {
+            this.title = DEFAULT_TITLE;
+        }
+        this.content = data.content;
+        if (this.content === undefined) {
+            this.content = DEFAULT_CONTENT;
+        }
+        this.okLabel = data.okLabel;
+        if (this.okLabel === undefined) {
+            this.okLabel = 'Lo asumo';
+        }
+        this.cancelLabel = data.cancelLabel;
+        if (this.cancelLabel === undefined) {
+            this.cancelLabel = 'Me retracto';
+        }
+        dialogRef.disableClose = true;
+        dialogRef.keydownEvents().subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
+            if (event.code === 'Escape') {
+                this.dialogRef.close(this.onCancel());
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+    /**
+     * @return {?}
+     */
+    onCancel() {
+        this.dialogRef.close();
+    }
+}
+AlertUncompletedDataHelisaComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'hel-alert-uncompleted-data-helisa',
+                template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+AlertUncompletedDataHelisaComponent.ctorParameters = () => [
+    { type: MatDialogRef },
+    { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] }
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const DEFAULT_TITLE$1 = '¿Está seguro de querer perder lo ya hecho?';
+/** @type {?} */
+const DEFAULT_CONTENT$1 = 'Si no está seguro, puede continuar o "aplicar" y posteriormente cuando tenga clara las respuestas, usando la opción de modificar podrá completar el concepto.';
+class AlertLostDataHelisaComponent {
+    /**
+     * @param {?} dialogRef
+     * @param {?} data
+     */
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.title = data.title;
+        if (this.title === undefined) {
+            this.title = DEFAULT_TITLE$1;
+        }
+        this.content = data.content;
+        if (this.content === undefined) {
+            this.content = DEFAULT_CONTENT$1;
+        }
+        this.okLabel = data.okLabel;
+        if (this.okLabel === undefined) {
+            this.okLabel = 'Lo asumo';
+        }
+        this.cancelLabel = data.cancelLabel;
+        if (this.cancelLabel === undefined) {
+            this.cancelLabel = 'Me retracto';
+        }
+        dialogRef.disableClose = true;
+        dialogRef.keydownEvents().subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
+            if (event.code === 'Escape') {
+                this.dialogRef.close(this.onCancel());
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+    /**
+     * @return {?}
+     */
+    onCancel() {
+        this.dialogRef.close();
+    }
+}
+AlertLostDataHelisaComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'lib-alert-lost-data-helisa',
+                template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+AlertLostDataHelisaComponent.ctorParameters = () => [
+    { type: MatDialogRef },
+    { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] }
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class HelisaLibModule {
 }
 HelisaLibModule.decorators = [
@@ -3347,7 +3483,9 @@ HelisaLibModule.decorators = [
                     OptionsScrollDirective,
                     HelTooltipDirective,
                     ExternalLinkDirective,
-                    ExternalLinkPipe
+                    ExternalLinkPipe,
+                    AlertUncompletedDataHelisaComponent,
+                    AlertLostDataHelisaComponent
                 ],
                 imports: [
                     CommonModule,
@@ -3440,7 +3578,9 @@ HelisaLibModule.decorators = [
                     MatStepperModule,
                     MatChipsModule,
                     DragDropModule,
-                    MatTreeModule
+                    MatTreeModule,
+                    AlertUncompletedDataHelisaComponent,
+                    AlertLostDataHelisaComponent
                 ],
                 providers: [TableHelisaService, TreeHelisaService]
             },] }
@@ -3450,12 +3590,88 @@ HelisaLibModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class AlertUncompletedDataHelisaService {
+    /**
+     * @param {?} dialog
+     */
+    constructor(dialog) {
+        this.dialog = dialog;
+    }
+    /**
+     * @param {?=} title
+     * @param {?=} content
+     * @param {?=} okLabel
+     * @param {?=} cancelLabel
+     * @return {?}
+     */
+    openDialog(title, content, okLabel, cancelLabel) {
+        /** @type {?} */
+        const dialogRef = this.dialog.open(AlertUncompletedDataHelisaComponent, {
+            width: '250px',
+            data: { title, content, okLabel, cancelLabel }
+        });
+        return dialogRef.afterClosed();
+    }
+}
+AlertUncompletedDataHelisaService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+AlertUncompletedDataHelisaService.ctorParameters = () => [
+    { type: MatDialog }
+];
+/** @nocollapse */ AlertUncompletedDataHelisaService.ngInjectableDef = defineInjectable({ factory: function AlertUncompletedDataHelisaService_Factory() { return new AlertUncompletedDataHelisaService(inject(MatDialog$1)); }, token: AlertUncompletedDataHelisaService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class AlertLostDataHelisaService {
+    /**
+     * @param {?} dialog
+     */
+    constructor(dialog) {
+        this.dialog = dialog;
+    }
+    /**
+     * @param {?=} title
+     * @param {?=} content
+     * @param {?=} okLabel
+     * @param {?=} cancelLabel
+     * @return {?}
+     */
+    openDialog(title, content, okLabel, cancelLabel) {
+        /** @type {?} */
+        const dialogRef = this.dialog.open(AlertLostDataHelisaComponent, {
+            width: '250px',
+            data: { title, content, okLabel, cancelLabel }
+        });
+        return dialogRef.afterClosed();
+    }
+}
+AlertLostDataHelisaService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+AlertLostDataHelisaService.ctorParameters = () => [
+    { type: MatDialog }
+];
+/** @nocollapse */ AlertLostDataHelisaService.ngInjectableDef = defineInjectable({ factory: function AlertLostDataHelisaService_Factory() { return new AlertLostDataHelisaService(inject(MatDialog$1)); }, token: AlertLostDataHelisaService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
 
 //# sourceMappingURL=helisa-lib.js.map

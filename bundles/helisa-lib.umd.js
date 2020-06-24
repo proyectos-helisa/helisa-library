@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('moment'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/cdk/drag-drop'), require('@angular/cdk/layout'), require('@angular/forms'), require('@angular/material'), require('@angular/material/card'), require('@angular/material/chips'), require('@angular/material/datepicker'), require('@angular/material/dialog'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/progress-spinner'), require('@angular/material/select'), require('@angular/material/stepper'), require('@angular/material/tabs'), require('@angular/material/toolbar'), require('@angular/material/tooltip'), require('@angular/material/tree'), require('@angular/common'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'moment', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/cdk/drag-drop', '@angular/cdk/layout', '@angular/forms', '@angular/material', '@angular/material/card', '@angular/material/chips', '@angular/material/datepicker', '@angular/material/dialog', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/icon', '@angular/material/list', '@angular/material/progress-spinner', '@angular/material/select', '@angular/material/stepper', '@angular/material/tabs', '@angular/material/toolbar', '@angular/material/tooltip', '@angular/material/tree', '@angular/common', '@angular/core'], factory) :
-    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.moment_,global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.cdk['drag-drop'],global.ng.cdk.layout,global.ng.forms,global.ng.material,global.ng.material.card,global.ng.material.chips,global.ng.material.datepicker,global.ng.material.dialog,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.icon,global.ng.material.list,global.ng.material['progress-spinner'],global.ng.material.select,global.ng.material.stepper,global.ng.material.tabs,global.ng.material.toolbar,global.ng.material.tooltip,global.ng.material.tree,global.ng.common,global.ng.core));
-}(this, (function (exports,i1,moment_,tree,router,_,operators,rxjs,dragDrop,layout,forms,material,card,chips,datepicker,i1$1,expansion,formField,icon,list,progressSpinner,select,stepper,tabs,toolbar,tooltip,tree$1,common,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/material/snack-bar'), require('moment'), require('@angular/cdk/tree'), require('@angular/router'), require('lodash'), require('rxjs/operators'), require('rxjs'), require('@angular/cdk/drag-drop'), require('@angular/cdk/layout'), require('@angular/forms'), require('@angular/material/card'), require('@angular/material/chips'), require('@angular/material/datepicker'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/progress-spinner'), require('@angular/material/select'), require('@angular/material/stepper'), require('@angular/material/tabs'), require('@angular/material/toolbar'), require('@angular/material/tooltip'), require('@angular/material/tree'), require('@angular/common'), require('@angular/core'), require('@angular/material'), require('@angular/material/dialog')) :
+    typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/material/snack-bar', 'moment', '@angular/cdk/tree', '@angular/router', 'lodash', 'rxjs/operators', 'rxjs', '@angular/cdk/drag-drop', '@angular/cdk/layout', '@angular/forms', '@angular/material/card', '@angular/material/chips', '@angular/material/datepicker', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/icon', '@angular/material/list', '@angular/material/progress-spinner', '@angular/material/select', '@angular/material/stepper', '@angular/material/tabs', '@angular/material/toolbar', '@angular/material/tooltip', '@angular/material/tree', '@angular/common', '@angular/core', '@angular/material', '@angular/material/dialog'], factory) :
+    (factory((global['helisa-lib'] = {}),global.ng.material['snack-bar'],global.moment_,global.ng.cdk.tree,global.ng.router,global._,global.rxjs.operators,global.rxjs,global.ng.cdk['drag-drop'],global.ng.cdk.layout,global.ng.forms,global.ng.material.card,global.ng.material.chips,global.ng.material.datepicker,global.ng.material.expansion,global.ng.material['form-field'],global.ng.material.icon,global.ng.material.list,global.ng.material['progress-spinner'],global.ng.material.select,global.ng.material.stepper,global.ng.material.tabs,global.ng.material.toolbar,global.ng.material.tooltip,global.ng.material.tree,global.ng.common,global.ng.core,global.ng.material,global.ng.material.dialog));
+}(this, (function (exports,i1,moment_,tree,router,_,operators,rxjs,dragDrop,layout,forms,card,chips,datepicker,expansion,formField,icon,list,progressSpinner,select,stepper,tabs,toolbar,tooltip,tree$1,common,i0,material,i1$1) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -4134,6 +4134,152 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var DEFAULT_TITLE = 'No ha suministrado la información necesaria.';
+    /** @type {?} */
+    var DEFAULT_CONTENT = 'Si insite en grabar así, este concepto no será utilizable hasta su conclusión satisfactoria, que deberá completar posteriormente modificando en concepto.';
+    var AlertUncompletedDataHelisaComponent = /** @class */ (function () {
+        function AlertUncompletedDataHelisaComponent(dialogRef, data) {
+            var _this = this;
+            this.dialogRef = dialogRef;
+            this.data = data;
+            this.title = data.title;
+            if (this.title === undefined) {
+                this.title = DEFAULT_TITLE;
+            }
+            this.content = data.content;
+            if (this.content === undefined) {
+                this.content = DEFAULT_CONTENT;
+            }
+            this.okLabel = data.okLabel;
+            if (this.okLabel === undefined) {
+                this.okLabel = 'Lo asumo';
+            }
+            this.cancelLabel = data.cancelLabel;
+            if (this.cancelLabel === undefined) {
+                this.cancelLabel = 'Me retracto';
+            }
+            dialogRef.disableClose = true;
+            dialogRef.keydownEvents().subscribe(( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                if (event.code === 'Escape') {
+                    _this.dialogRef.close(_this.onCancel());
+                }
+            }));
+        }
+        /**
+         * @return {?}
+         */
+        AlertUncompletedDataHelisaComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        /**
+         * @return {?}
+         */
+        AlertUncompletedDataHelisaComponent.prototype.onCancel = /**
+         * @return {?}
+         */
+            function () {
+                this.dialogRef.close();
+            };
+        AlertUncompletedDataHelisaComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'hel-alert-uncompleted-data-helisa',
+                        template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        AlertUncompletedDataHelisaComponent.ctorParameters = function () {
+            return [
+                { type: material.MatDialogRef },
+                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
+            ];
+        };
+        return AlertUncompletedDataHelisaComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var DEFAULT_TITLE$1 = '¿Está seguro de querer perder lo ya hecho?';
+    /** @type {?} */
+    var DEFAULT_CONTENT$1 = 'Si no está seguro, puede continuar o "aplicar" y posteriormente cuando tenga clara las respuestas, usando la opción de modificar podrá completar el concepto.';
+    var AlertLostDataHelisaComponent = /** @class */ (function () {
+        function AlertLostDataHelisaComponent(dialogRef, data) {
+            var _this = this;
+            this.dialogRef = dialogRef;
+            this.data = data;
+            this.title = data.title;
+            if (this.title === undefined) {
+                this.title = DEFAULT_TITLE$1;
+            }
+            this.content = data.content;
+            if (this.content === undefined) {
+                this.content = DEFAULT_CONTENT$1;
+            }
+            this.okLabel = data.okLabel;
+            if (this.okLabel === undefined) {
+                this.okLabel = 'Lo asumo';
+            }
+            this.cancelLabel = data.cancelLabel;
+            if (this.cancelLabel === undefined) {
+                this.cancelLabel = 'Me retracto';
+            }
+            dialogRef.disableClose = true;
+            dialogRef.keydownEvents().subscribe(( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                if (event.code === 'Escape') {
+                    _this.dialogRef.close(_this.onCancel());
+                }
+            }));
+        }
+        /**
+         * @return {?}
+         */
+        AlertLostDataHelisaComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        /**
+         * @return {?}
+         */
+        AlertLostDataHelisaComponent.prototype.onCancel = /**
+         * @return {?}
+         */
+            function () {
+                this.dialogRef.close();
+            };
+        AlertLostDataHelisaComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'lib-alert-lost-data-helisa',
+                        template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>\n",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        AlertLostDataHelisaComponent.ctorParameters = function () {
+            return [
+                { type: material.MatDialogRef },
+                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
+            ];
+        };
+        return AlertLostDataHelisaComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var HelisaLibModule = /** @class */ (function () {
         function HelisaLibModule() {
         }
@@ -4152,7 +4298,9 @@
                             OptionsScrollDirective,
                             HelTooltipDirective,
                             ExternalLinkDirective,
-                            ExternalLinkPipe
+                            ExternalLinkPipe,
+                            AlertUncompletedDataHelisaComponent,
+                            AlertLostDataHelisaComponent
                         ],
                         imports: [
                             common.CommonModule,
@@ -4245,12 +4393,104 @@
                             stepper.MatStepperModule,
                             chips.MatChipsModule,
                             dragDrop.DragDropModule,
-                            tree$1.MatTreeModule
+                            tree$1.MatTreeModule,
+                            AlertUncompletedDataHelisaComponent,
+                            AlertLostDataHelisaComponent
                         ],
                         providers: [TableHelisaService, TreeHelisaService]
                     },] }
         ];
         return HelisaLibModule;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var AlertUncompletedDataHelisaService = /** @class */ (function () {
+        function AlertUncompletedDataHelisaService(dialog) {
+            this.dialog = dialog;
+        }
+        /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+        AlertUncompletedDataHelisaService.prototype.openDialog = /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+            function (title, content, okLabel, cancelLabel) {
+                /** @type {?} */
+                var dialogRef = this.dialog.open(AlertUncompletedDataHelisaComponent, {
+                    width: '250px',
+                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
+                });
+                return dialogRef.afterClosed();
+            };
+        AlertUncompletedDataHelisaService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        AlertUncompletedDataHelisaService.ctorParameters = function () {
+            return [
+                { type: material.MatDialog }
+            ];
+        };
+        /** @nocollapse */ AlertUncompletedDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertUncompletedDataHelisaService_Factory() { return new AlertUncompletedDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertUncompletedDataHelisaService, providedIn: "root" });
+        return AlertUncompletedDataHelisaService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var AlertLostDataHelisaService = /** @class */ (function () {
+        function AlertLostDataHelisaService(dialog) {
+            this.dialog = dialog;
+        }
+        /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+        AlertLostDataHelisaService.prototype.openDialog = /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+            function (title, content, okLabel, cancelLabel) {
+                /** @type {?} */
+                var dialogRef = this.dialog.open(AlertLostDataHelisaComponent, {
+                    width: '250px',
+                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
+                });
+                return dialogRef.afterClosed();
+            };
+        AlertLostDataHelisaService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        AlertLostDataHelisaService.ctorParameters = function () {
+            return [
+                { type: material.MatDialog }
+            ];
+        };
+        /** @nocollapse */ AlertLostDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertLostDataHelisaService_Factory() { return new AlertLostDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertLostDataHelisaService, providedIn: "root" });
+        return AlertLostDataHelisaService;
     }());
 
     /**
@@ -4292,6 +4532,10 @@
     exports.OptionsScrollDirective = OptionsScrollDirective;
     exports.HelTooltipDirective = HelTooltipDirective;
     exports.HelisaLibModule = HelisaLibModule;
+    exports.AlertUncompletedDataHelisaComponent = AlertUncompletedDataHelisaComponent;
+    exports.AlertUncompletedDataHelisaService = AlertUncompletedDataHelisaService;
+    exports.AlertLostDataHelisaComponent = AlertLostDataHelisaComponent;
+    exports.AlertLostDataHelisaService = AlertLostDataHelisaService;
     exports.ɵa = ExternalLinkDirective;
     exports.ɵb = ExternalLinkPipe;
 
