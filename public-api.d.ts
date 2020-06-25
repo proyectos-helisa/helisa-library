@@ -25,3 +25,5 @@ export * from './lib/components/alert-uncompleted-data-helisa/alert-uncompleted-
 export * from './lib/components/alert-uncompleted-data-helisa/alert-uncompleted-data-helisa.service';
 export * from './lib/components/alert-lost-data-helisa/alert-lost-data-helisa.component';
 export * from './lib/components/alert-lost-data-helisa/alert-lost-data-helisa.service';
+export * from './lib/components/alert-delete-data-helisa/alert-delete-data-helisa.component';
+export * from './lib/components/alert-delete-data-helisa/alert-delete-data-helisa.service';

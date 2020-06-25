@@ -4280,6 +4280,79 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var DEFAULT_TITLE$2 = '¿Está seguro que debe anular esta información?';
+    /** @type {?} */
+    var DEFAULT_CONTENT$2 = 'Al anular este concepto, quedará la huella de todo lo que se hizo apoyados en su información. No es una eliminación tácita, es suprimir su uso en adelante.';
+    var AlertDeleteDataHelisaComponent = /** @class */ (function () {
+        function AlertDeleteDataHelisaComponent(dialogRef, data) {
+            var _this = this;
+            this.dialogRef = dialogRef;
+            this.data = data;
+            this.title = data.title;
+            if (this.title === undefined) {
+                this.title = DEFAULT_TITLE$2;
+            }
+            this.content = data.content;
+            if (this.content === undefined) {
+                this.content = DEFAULT_CONTENT$2;
+            }
+            this.okLabel = data.okLabel;
+            if (this.okLabel === undefined) {
+                this.okLabel = 'Lo asumo';
+            }
+            this.cancelLabel = data.cancelLabel;
+            if (this.cancelLabel === undefined) {
+                this.cancelLabel = 'Me retracto';
+            }
+            dialogRef.disableClose = true;
+            dialogRef.keydownEvents().subscribe(( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                if (event.code === 'Escape') {
+                    _this.dialogRef.close(_this.onCancel());
+                }
+            }));
+        }
+        /**
+         * @return {?}
+         */
+        AlertDeleteDataHelisaComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        /**
+         * @return {?}
+         */
+        AlertDeleteDataHelisaComponent.prototype.onCancel = /**
+         * @return {?}
+         */
+            function () {
+                this.dialogRef.close();
+            };
+        AlertDeleteDataHelisaComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'lib-alert-delete-data-helisa',
+                        template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        AlertDeleteDataHelisaComponent.ctorParameters = function () {
+            return [
+                { type: material.MatDialogRef },
+                { type: AlertDeleteDataHelisaComponent, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
+            ];
+        };
+        return AlertDeleteDataHelisaComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var HelisaLibModule = /** @class */ (function () {
         function HelisaLibModule() {
         }
@@ -4300,7 +4373,8 @@
                             ExternalLinkDirective,
                             ExternalLinkPipe,
                             AlertUncompletedDataHelisaComponent,
-                            AlertLostDataHelisaComponent
+                            AlertLostDataHelisaComponent,
+                            AlertDeleteDataHelisaComponent
                         ],
                         imports: [
                             common.CommonModule,
@@ -4395,7 +4469,8 @@
                             dragDrop.DragDropModule,
                             tree$1.MatTreeModule,
                             AlertUncompletedDataHelisaComponent,
-                            AlertLostDataHelisaComponent
+                            AlertLostDataHelisaComponent,
+                            AlertDeleteDataHelisaComponent
                         ],
                         providers: [TableHelisaService, TreeHelisaService]
                     },] }
@@ -4497,6 +4572,51 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var AlertDeleteDataHelisaService = /** @class */ (function () {
+        function AlertDeleteDataHelisaService(dialog) {
+            this.dialog = dialog;
+        }
+        /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+        AlertDeleteDataHelisaService.prototype.openDialog = /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+            function (title, content, okLabel, cancelLabel) {
+                /** @type {?} */
+                var dialogRef = this.dialog.open(AlertDeleteDataHelisaComponent, {
+                    width: '250px',
+                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
+                });
+                return dialogRef.afterClosed();
+            };
+        AlertDeleteDataHelisaService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        AlertDeleteDataHelisaService.ctorParameters = function () {
+            return [
+                { type: material.MatDialog }
+            ];
+        };
+        /** @nocollapse */ AlertDeleteDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertDeleteDataHelisaService_Factory() { return new AlertDeleteDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertDeleteDataHelisaService, providedIn: "root" });
+        return AlertDeleteDataHelisaService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     /**
      * @fileoverview added by tsickle
@@ -4536,6 +4656,8 @@
     exports.AlertUncompletedDataHelisaService = AlertUncompletedDataHelisaService;
     exports.AlertLostDataHelisaComponent = AlertLostDataHelisaComponent;
     exports.AlertLostDataHelisaService = AlertLostDataHelisaService;
+    exports.AlertDeleteDataHelisaComponent = AlertDeleteDataHelisaComponent;
+    exports.AlertDeleteDataHelisaService = AlertDeleteDataHelisaService;
     exports.ɵa = ExternalLinkDirective;
     exports.ɵb = ExternalLinkPipe;
 
