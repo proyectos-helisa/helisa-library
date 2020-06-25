@@ -4336,7 +4336,7 @@ var AlertDeleteDataHelisaComponent = /** @class */ (function () {
     };
     AlertDeleteDataHelisaComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'lib-alert-delete-data-helisa',
+                    selector: 'hel-alert-delete-data-helisa',
                     template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>",
                     styles: [""]
                 }] }
