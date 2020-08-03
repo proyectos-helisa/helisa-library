@@ -40,4 +40,5 @@ export declare class InputHelisaComponent implements OnInit {
     change(event: string): void;
     private getMaskedValue;
     private getRealValue;
+    onFocus($event: FocusEvent): void;
 }
