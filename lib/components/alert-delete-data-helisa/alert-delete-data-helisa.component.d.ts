@@ -7,6 +7,7 @@ export declare class AlertDeleteDataHelisaComponent implements OnInit {
     content: string;
     okLabel: string;
     cancelLabel: string;
+    z: any;
     constructor(dialogRef: MatDialogRef<AlertDeleteDataHelisaComponent>, data: AlertDeleteDataHelisaComponent);
     ngOnInit(): void;
     onCancel(): void;
