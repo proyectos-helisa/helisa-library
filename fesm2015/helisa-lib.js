@@ -3635,7 +3635,7 @@ class AlertInformationNotValidHelisaComponent {
          * @return {?}
          */
         () => {
-            this.dialogRef.close(this.onCancel());
+            this.dialogRef.close();
         }), 3000);
     }
     /**

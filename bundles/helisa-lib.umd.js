@@ -4462,7 +4462,7 @@
                 setTimeout(( /**
                  * @return {?}
                  */function () {
-                    _this.dialogRef.close(_this.onCancel());
+                    _this.dialogRef.close();
                 }), 3000);
             };
         /**
