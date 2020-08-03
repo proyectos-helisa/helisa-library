@@ -4808,6 +4808,47 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var AlertInformationNotValidHelisaService = /** @class */ (function () {
+        function AlertInformationNotValidHelisaService(dialog) {
+            this.dialog = dialog;
+        }
+        /**
+         * @param {?=} title
+         * @param {?=} content
+         * @return {?}
+         */
+        AlertInformationNotValidHelisaService.prototype.openDialog = /**
+         * @param {?=} title
+         * @param {?=} content
+         * @return {?}
+         */
+            function (title, content) {
+                /** @type {?} */
+                var dialogRef = this.dialog.open(AlertInformationNotValidHelisaComponent, {
+                    width: '250px',
+                    data: { title: title, content: content }
+                });
+                return dialogRef.afterClosed();
+            };
+        AlertInformationNotValidHelisaService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        AlertInformationNotValidHelisaService.ctorParameters = function () {
+            return [
+                { type: material.MatDialog }
+            ];
+        };
+        /** @nocollapse */ AlertInformationNotValidHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertInformationNotValidHelisaService_Factory() { return new AlertInformationNotValidHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertInformationNotValidHelisaService, providedIn: "root" });
+        return AlertInformationNotValidHelisaService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     /**
      * @fileoverview added by tsickle
@@ -4851,7 +4892,8 @@
     exports.AlertDeleteDataHelisaService = AlertDeleteDataHelisaService;
     exports.AlertUncompletedSelectedDataHelisaComponent = AlertUncompletedSelectedDataHelisaComponent;
     exports.AlertUncompletedSelectedDataHelisaService = AlertUncompletedSelectedDataHelisaService;
-    exports.ɵc = AlertInformationNotValidHelisaComponent;
+    exports.AlertInformationNotValidHelisaComponent = AlertInformationNotValidHelisaComponent;
+    exports.AlertInformationNotValidHelisaService = AlertInformationNotValidHelisaService;
     exports.ɵa = ExternalLinkDirective;
     exports.ɵb = ExternalLinkPipe;
 
