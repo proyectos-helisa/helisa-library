@@ -4430,6 +4430,71 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var DEFAULT_CONTENT$4 = 'Rectifique. Hay información no válida';
+    var AlertInformationNotValidHelisaComponent = /** @class */ (function () {
+        function AlertInformationNotValidHelisaComponent(dialogRef, data) {
+            var _this = this;
+            this.dialogRef = dialogRef;
+            this.data = data;
+            this.content = data.content;
+            if (this.content === undefined) {
+                this.content = DEFAULT_CONTENT$4;
+            }
+            dialogRef.disableClose = true;
+            dialogRef.keydownEvents().subscribe(( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                if (event.code === 'Escape') {
+                    _this.dialogRef.close(_this.onCancel());
+                }
+            }));
+        }
+        /**
+         * @return {?}
+         */
+        AlertInformationNotValidHelisaComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                setTimeout(( /**
+                 * @return {?}
+                 */function () {
+                    _this.dialogRef.close(_this.onCancel());
+                }), 3000);
+            };
+        /**
+         * @return {?}
+         */
+        AlertInformationNotValidHelisaComponent.prototype.onCancel = /**
+         * @return {?}
+         */
+            function () {
+                this.dialogRef.close();
+            };
+        AlertInformationNotValidHelisaComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'hel-alert-information-not-valid-helisa',
+                        template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        AlertInformationNotValidHelisaComponent.ctorParameters = function () {
+            return [
+                { type: material.MatDialogRef },
+                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
+            ];
+        };
+        return AlertInformationNotValidHelisaComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var HelisaLibModule = /** @class */ (function () {
         function HelisaLibModule() {
         }
@@ -4453,6 +4518,7 @@
                             AlertLostDataHelisaComponent,
                             AlertDeleteDataHelisaComponent,
                             AlertUncompletedSelectedDataHelisaComponent,
+                            AlertInformationNotValidHelisaComponent
                         ],
                         imports: [
                             common.CommonModule,
@@ -4550,6 +4616,7 @@
                             AlertLostDataHelisaComponent,
                             AlertDeleteDataHelisaComponent,
                             AlertUncompletedSelectedDataHelisaComponent,
+                            AlertInformationNotValidHelisaComponent
                         ],
                         providers: [TableHelisaService, TreeHelisaService]
                     },] }
@@ -4784,6 +4851,7 @@
     exports.AlertDeleteDataHelisaService = AlertDeleteDataHelisaService;
     exports.AlertUncompletedSelectedDataHelisaComponent = AlertUncompletedSelectedDataHelisaComponent;
     exports.AlertUncompletedSelectedDataHelisaService = AlertUncompletedSelectedDataHelisaService;
+    exports.ɵc = AlertInformationNotValidHelisaComponent;
     exports.ɵa = ExternalLinkDirective;
     exports.ɵb = ExternalLinkPipe;
 

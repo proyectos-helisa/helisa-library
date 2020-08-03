@@ -24,7 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -4429,6 +4429,71 @@ var AlertUncompletedSelectedDataHelisaComponent = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var DEFAULT_CONTENT$4 = 'Rectifique. Hay información no válida';
+var AlertInformationNotValidHelisaComponent = /** @class */ (function () {
+    function AlertInformationNotValidHelisaComponent(dialogRef, data) {
+        var _this = this;
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.content = data.content;
+        if (this.content === undefined) {
+            this.content = DEFAULT_CONTENT$4;
+        }
+        dialogRef.disableClose = true;
+        dialogRef.keydownEvents().subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
+            if (event.code === 'Escape') {
+                _this.dialogRef.close(_this.onCancel());
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    AlertInformationNotValidHelisaComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        setTimeout((/**
+         * @return {?}
+         */
+        function () {
+            _this.dialogRef.close(_this.onCancel());
+        }), 3000);
+    };
+    /**
+     * @return {?}
+     */
+    AlertInformationNotValidHelisaComponent.prototype.onCancel = /**
+     * @return {?}
+     */
+    function () {
+        this.dialogRef.close();
+    };
+    AlertInformationNotValidHelisaComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'hel-alert-information-not-valid-helisa',
+                    template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
+                    styles: [""]
+                }] }
+    ];
+    /** @nocollapse */
+    AlertInformationNotValidHelisaComponent.ctorParameters = function () { return [
+        { type: MatDialogRef },
+        { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] }
+    ]; };
+    return AlertInformationNotValidHelisaComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var HelisaLibModule = /** @class */ (function () {
     function HelisaLibModule() {
     }
@@ -4452,6 +4517,7 @@ var HelisaLibModule = /** @class */ (function () {
                         AlertLostDataHelisaComponent,
                         AlertDeleteDataHelisaComponent,
                         AlertUncompletedSelectedDataHelisaComponent,
+                        AlertInformationNotValidHelisaComponent
                     ],
                     imports: [
                         CommonModule,
@@ -4549,6 +4615,7 @@ var HelisaLibModule = /** @class */ (function () {
                         AlertLostDataHelisaComponent,
                         AlertDeleteDataHelisaComponent,
                         AlertUncompletedSelectedDataHelisaComponent,
+                        AlertInformationNotValidHelisaComponent
                     ],
                     providers: [TableHelisaService, TreeHelisaService]
                 },] }
@@ -4738,6 +4805,6 @@ var AlertUncompletedSelectedDataHelisaService = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent as ɵc, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
 
 //# sourceMappingURL=helisa-lib.js.map
