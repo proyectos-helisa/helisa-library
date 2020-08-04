@@ -961,6 +961,9 @@ var InputHelisaComponent = /** @class */ (function () {
                 _this.statusChange(_this.inputFormReal.status);
                 if (_this.getMaskedValue(data) !== _this.formControlMask.value) {
                     _this.change(data);
+                    if (_this.isFocused) {
+                        _this.onFocus(null);
+                    }
                 }
             }));
             this.formControlMask.setValidators(this.inputFormReal.validator);
@@ -975,10 +978,10 @@ var InputHelisaComponent = /** @class */ (function () {
              */
             function (data) {
                 _this.statusChange(data);
+                if (_this.isFocused) {
+                    _this.onFocus(null);
+                }
             }));
-            if (this.isFocused) {
-                this.onFocus(null);
-            }
         },
         enumerable: true,
         configurable: true

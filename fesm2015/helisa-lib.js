@@ -743,6 +743,9 @@ class InputHelisaComponent {
             this.statusChange(this.inputFormReal.status);
             if (this.getMaskedValue(data) !== this.formControlMask.value) {
                 this.change(data);
+                if (this.isFocused) {
+                    this.onFocus(null);
+                }
             }
         }));
         this.formControlMask.setValidators(this.inputFormReal.validator);
@@ -757,10 +760,10 @@ class InputHelisaComponent {
          */
         (data) => {
             this.statusChange(data);
+            if (this.isFocused) {
+                this.onFocus(null);
+            }
         }));
-        if (this.isFocused) {
-            this.onFocus(null);
-        }
     }
     /**
      * @private
