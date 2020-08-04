@@ -3605,6 +3605,66 @@ AlertUncompletedSelectedDataHelisaComponent.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const DEFAULT_CONTENT$4 = 'Rectifique. Hay información no válida';
+class AlertInformationNotValidHelisaComponent {
+    /**
+     * @param {?} dialogRef
+     * @param {?} data
+     */
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.content = data.content;
+        if (this.content === undefined) {
+            this.content = DEFAULT_CONTENT$4;
+        }
+        dialogRef.disableClose = true;
+        dialogRef.keydownEvents().subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
+            if (event.code === 'Escape') {
+                this.dialogRef.close(this.onCancel());
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        setTimeout((/**
+         * @return {?}
+         */
+        () => {
+            this.dialogRef.close();
+        }), 3000);
+    }
+    /**
+     * @return {?}
+     */
+    onCancel() {
+        this.dialogRef.close();
+    }
+}
+AlertInformationNotValidHelisaComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'hel-alert-information-not-valid-helisa',
+                template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+AlertInformationNotValidHelisaComponent.ctorParameters = () => [
+    { type: MatDialogRef },
+    { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] }
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class HelisaLibModule {
 }
 HelisaLibModule.decorators = [
@@ -3627,6 +3687,7 @@ HelisaLibModule.decorators = [
                     AlertLostDataHelisaComponent,
                     AlertDeleteDataHelisaComponent,
                     AlertUncompletedSelectedDataHelisaComponent,
+                    AlertInformationNotValidHelisaComponent
                 ],
                 imports: [
                     CommonModule,
@@ -3724,6 +3785,7 @@ HelisaLibModule.decorators = [
                     AlertLostDataHelisaComponent,
                     AlertDeleteDataHelisaComponent,
                     AlertUncompletedSelectedDataHelisaComponent,
+                    AlertInformationNotValidHelisaComponent
                 ],
                 providers: [TableHelisaService, TreeHelisaService]
             },] }
@@ -3885,12 +3947,48 @@ AlertUncompletedSelectedDataHelisaService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class AlertInformationNotValidHelisaService {
+    /**
+     * @param {?} dialog
+     */
+    constructor(dialog) {
+        this.dialog = dialog;
+    }
+    /**
+     * @param {?=} title
+     * @param {?=} content
+     * @return {?}
+     */
+    openDialog(title, content) {
+        /** @type {?} */
+        const dialogRef = this.dialog.open(AlertInformationNotValidHelisaComponent, {
+            width: '250px',
+            data: { title, content }
+        });
+        return dialogRef.afterClosed();
+    }
+}
+AlertInformationNotValidHelisaService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+AlertInformationNotValidHelisaService.ctorParameters = () => [
+    { type: MatDialog }
+];
+/** @nocollapse */ AlertInformationNotValidHelisaService.ngInjectableDef = defineInjectable({ factory: function AlertInformationNotValidHelisaService_Factory() { return new AlertInformationNotValidHelisaService(inject(MatDialog$1)); }, token: AlertInformationNotValidHelisaService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
 
 //# sourceMappingURL=helisa-lib.js.map
