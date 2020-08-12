@@ -789,6 +789,28 @@ class InputHelisaComponent {
     /**
      * @return {?}
      */
+    ngAfterViewInit() {
+        this.isParentDisabled();
+    }
+    /**
+     * @return {?}
+     */
+    isParentDisabled() {
+        setTimeout((/**
+         * @return {?}
+         */
+        () => {
+            if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+                this.disabled = true;
+            }
+            else {
+                this.disabled = false;
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
     search() {
         this.setValue.emit(this.realValue);
     }
@@ -3668,6 +3690,138 @@ AlertInformationNotValidHelisaComponent.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @enum {number} */
+const ComboBoxHelisaState = {
+    CLOSED: 0,
+    SELECT: 1,
+    INSERT: 2,
+};
+ComboBoxHelisaState[ComboBoxHelisaState.CLOSED] = 'CLOSED';
+ComboBoxHelisaState[ComboBoxHelisaState.SELECT] = 'SELECT';
+ComboBoxHelisaState[ComboBoxHelisaState.INSERT] = 'INSERT';
+/**
+ * @template TYPE
+ */
+class ComboBoxHelisaComponent {
+    constructor() {
+        this.placeholder = 'Sin seleccionar';
+        this.selectEmitter = new EventEmitter();
+        this.page = 0;
+        this.pageSize = 50;
+        this.haveNextPage = true;
+        this.state = ComboBoxHelisaState.CLOSED;
+        this.rows = [];
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+    /**
+     * @return {?}
+     */
+    ngAfterViewInit() {
+        this.getNextPage();
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    getNextPage() {
+        if (this.haveNextPage) {
+            this.listable.getData(this.page++, this.pageSize).subscribe((/**
+             * @param {?} rows
+             * @return {?}
+             */
+            (rows) => {
+                rows.forEach((/**
+                 * @param {?} item
+                 * @return {?}
+                 */
+                (item) => this.rows.push(item)));
+                this.haveNextPage = rows.length > 0;
+            }));
+        }
+    }
+    /**
+     * @return {?}
+     */
+    get comboBoxHelisaState() {
+        return ComboBoxHelisaState;
+    }
+    /**
+     * @return {?}
+     */
+    onFocus() {
+        this.state = ComboBoxHelisaState.SELECT;
+    }
+    /**
+     * @param {?} row
+     * @return {?}
+     */
+    selectItem(row) {
+        this.selectedItem = row;
+        this.selectEmitter.emit(row);
+        this.state = ComboBoxHelisaState.CLOSED;
+    }
+    /**
+     * @return {?}
+     */
+    changeToInsert() {
+        this.state = ComboBoxHelisaState.INSERT;
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    insert(event) {
+        if (event.trim().length > 0) {
+            this.editable.insert(event).subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            (data) => {
+                this.rows.push(data);
+                this.state = ComboBoxHelisaState.SELECT;
+            }));
+        }
+        else {
+            this.state = ComboBoxHelisaState.SELECT;
+        }
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    onScroll(event) {
+        /** @type {?} */
+        const element = (/** @type {?} */ (event.target));
+        if (element.scrollHeight - element.scrollTop < 1000) {
+            this.getNextPage();
+        }
+    }
+}
+ComboBoxHelisaComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'lib-combo-box-helisa',
+                template: "<div class=\"combo-box-general-container\">\n  <div class=\"combo-box-input-container\">\n    <input class=\"combo-box-input\" readonly [value]=\"selectedItem?listable.getDisplayText(selectedItem):placeholder\"\n           *ngIf=\"state==comboBoxHelisaState.CLOSED\" (focus)=\"onFocus()\"/>\n  </div>\n  <div class=\"combo-box-list-container combo-box-general-container\" *ngIf=\"state==comboBoxHelisaState.SELECT || state == comboBoxHelisaState.INSERT\">\n    <div class=\"combo-box-line\"></div>\n    <div class=\"combo-box-list\" (scroll)=\"onScroll($event)\">\n      <div *ngFor=\"let row of rows\" class=\"combo-box-row\" [ngClass]=\"{'combo-box-selected-item': selectedItem && listable.compare(selectedItem, row)}\" (dblclick)=\"selectItem(row)\">\n        {{ listable.getDisplayText(row) }}\n      </div>\n      <hel-input *ngIf=\"state==comboBoxHelisaState.INSERT\" [isFocused]=\"true\" (setValue)=\"insert($event)\"></hel-input>\n      <div *ngIf=\"editable && state==comboBoxHelisaState.SELECT\" class=\"combo-box-insert-button\" (click)=\"changeToInsert()\">{{ editable.getButtonInsertText() }}</div>\n    </div>\n  </div>\n</div>\n",
+                styles: [".combo-box-general-container{width:300px}.combo-box-list-container{display:flex;flex-direction:row;height:100px;position:absolute;background-color:#fff}.combo-box-row{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.combo-box-line{width:3px;background-color:#da0080}.combo-box-list{flex:1;overflow-y:auto}.combo-box-input{width:100%}.combo-box-input-container{height:25px}.combo-box-selected-item{color:#7030a0}.combo-box-insert-button{color:#807f7f;cursor:pointer}"]
+            }] }
+];
+/** @nocollapse */
+ComboBoxHelisaComponent.ctorParameters = () => [];
+ComboBoxHelisaComponent.propDecorators = {
+    editable: [{ type: Input }],
+    listable: [{ type: Input }],
+    placeholder: [{ type: Input }],
+    selectedItem: [{ type: Input }],
+    selectEmitter: [{ type: Output }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class HelisaLibModule {
 }
 HelisaLibModule.decorators = [
@@ -3690,7 +3844,8 @@ HelisaLibModule.decorators = [
                     AlertLostDataHelisaComponent,
                     AlertDeleteDataHelisaComponent,
                     AlertUncompletedSelectedDataHelisaComponent,
-                    AlertInformationNotValidHelisaComponent
+                    AlertInformationNotValidHelisaComponent,
+                    ComboBoxHelisaComponent
                 ],
                 imports: [
                     CommonModule,
@@ -3788,7 +3943,8 @@ HelisaLibModule.decorators = [
                     AlertLostDataHelisaComponent,
                     AlertDeleteDataHelisaComponent,
                     AlertUncompletedSelectedDataHelisaComponent,
-                    AlertInformationNotValidHelisaComponent
+                    AlertInformationNotValidHelisaComponent,
+                    ComboBoxHelisaComponent
                 ],
                 providers: [TableHelisaService, TreeHelisaService]
             },] }
@@ -3992,6 +4148,16 @@ AlertInformationNotValidHelisaService.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, ComboBoxHelisaState, ComboBoxHelisaComponent, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
 
 //# sourceMappingURL=helisa-lib.js.map
