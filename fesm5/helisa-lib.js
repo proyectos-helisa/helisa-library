@@ -4545,6 +4545,7 @@ var ComboBoxHelisaComponent = /** @class */ (function () {
     function ComboBoxHelisaComponent() {
         this.placeholder = 'Sin seleccionar';
         this.selectEmitter = new EventEmitter();
+        this.enabled = true;
         this.page = 0;
         this.pageSize = 50;
         this.haveNextPage = true;
@@ -4610,7 +4611,9 @@ var ComboBoxHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.state = ComboBoxHelisaState.SELECT;
+        if (this.enabled) {
+            this.state = ComboBoxHelisaState.SELECT;
+        }
     };
     /**
      * @param {?} row
@@ -4687,7 +4690,8 @@ var ComboBoxHelisaComponent = /** @class */ (function () {
         listable: [{ type: Input }],
         placeholder: [{ type: Input }],
         selectedItem: [{ type: Input }],
-        selectEmitter: [{ type: Output }]
+        selectEmitter: [{ type: Output }],
+        enabled: [{ type: Input }]
     };
     return ComboBoxHelisaComponent;
 }());

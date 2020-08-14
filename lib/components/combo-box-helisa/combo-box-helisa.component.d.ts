@@ -12,6 +12,7 @@ export declare class ComboBoxHelisaComponent<TYPE> implements OnInit, AfterViewI
     placeholder: string;
     selectedItem: TYPE;
     selectEmitter: EventEmitter<TYPE>;
+    enabled: boolean;
     private page;
     private pageSize;
     private haveNextPage;
