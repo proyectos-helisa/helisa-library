@@ -1056,33 +1056,41 @@
          * @return {?}
          */
             function () {
-                this.isParentDisabled();
+                // this.isParentDisabled();
             };
+        /*isParentDisabled(): void {
+          setTimeout(() => {
+            if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+              this.disabled = true;
+            } else {
+              this.disabled = false;
+            }
+          });
+        }*/
+        /*isParentDisabled(): void {
+            setTimeout(() => {
+              if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+                this.disabled = true;
+              } else {
+                this.disabled = false;
+              }
+            });
+          }*/
         /**
          * @return {?}
          */
-        InputHelisaComponent.prototype.isParentDisabled = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                setTimeout(( /**
-                 * @return {?}
-                 */function () {
-                    if (_this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
-                        _this.disabled = true;
-                    }
-                    else {
-                        _this.disabled = false;
-                    }
-                }));
-            };
-        /**
-         * @return {?}
-         */
-        InputHelisaComponent.prototype.search = /**
-         * @return {?}
-         */
+        InputHelisaComponent.prototype.search = /*isParentDisabled(): void {
+            setTimeout(() => {
+              if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+                this.disabled = true;
+              } else {
+                this.disabled = false;
+              }
+            });
+          }*/
+            /**
+             * @return {?}
+             */
             function () {
                 this.setValue.emit(this.realValue);
             };
@@ -4675,7 +4683,7 @@
         ComboBoxHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'lib-combo-box-helisa',
-                        template: "<div class=\"combo-box-general-container\">\n  <div class=\"combo-box-input-container\">\n    <input class=\"combo-box-input\" readonly [value]=\"selectedItem?listable.getDisplayText(selectedItem):placeholder\"\n           *ngIf=\"state==comboBoxHelisaState.CLOSED\" (focus)=\"onFocus()\"/>\n  </div>\n  <div class=\"combo-box-list-container combo-box-general-container\" *ngIf=\"state==comboBoxHelisaState.SELECT || state == comboBoxHelisaState.INSERT\">\n    <div class=\"combo-box-line\"></div>\n    <div class=\"combo-box-list\" (scroll)=\"onScroll($event)\">\n      <div *ngFor=\"let row of rows\" class=\"combo-box-row\" [ngClass]=\"{'combo-box-selected-item': selectedItem && listable.compare(selectedItem, row)}\" (dblclick)=\"selectItem(row)\">\n        {{ listable.getDisplayText(row) }}\n      </div>\n      <hel-input *ngIf=\"state==comboBoxHelisaState.INSERT\" [isFocused]=\"true\" (setValue)=\"insert($event)\"></hel-input>\n      <div *ngIf=\"editable && state==comboBoxHelisaState.SELECT\" class=\"combo-box-insert-button\" (click)=\"changeToInsert()\">{{ editable.getButtonInsertText() }}</div>\n    </div>\n  </div>\n</div>\n",
+                        template: "<div class=\"combo-box-general-container\">\r\n  <div class=\"combo-box-input-container\">\r\n    <input class=\"combo-box-input\" readonly [value]=\"selectedItem?listable.getDisplayText(selectedItem):placeholder\"\r\n           *ngIf=\"state==comboBoxHelisaState.CLOSED\" (focus)=\"onFocus()\"/>\r\n  </div>\r\n  <div class=\"combo-box-list-container combo-box-general-container\" *ngIf=\"state==comboBoxHelisaState.SELECT || state == comboBoxHelisaState.INSERT\">\r\n    <div class=\"combo-box-line\"></div>\r\n    <div class=\"combo-box-list\" (scroll)=\"onScroll($event)\">\r\n      <div *ngFor=\"let row of rows\" class=\"combo-box-row\" [ngClass]=\"{'combo-box-selected-item': selectedItem && listable.compare(selectedItem, row)}\" (dblclick)=\"selectItem(row)\">\r\n        {{ listable.getDisplayText(row) }}\r\n      </div>\r\n      <hel-input *ngIf=\"state==comboBoxHelisaState.INSERT\" [isFocused]=\"true\" (setValue)=\"insert($event)\"></hel-input>\r\n      <div *ngIf=\"editable && state==comboBoxHelisaState.SELECT\" class=\"combo-box-insert-button\" (click)=\"changeToInsert()\">{{ editable.getButtonInsertText() }}</div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
                         styles: [".combo-box-general-container{width:300px}.combo-box-list-container{display:flex;flex-direction:row;height:100px;position:absolute;background-color:#fff}.combo-box-row{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.combo-box-line{width:3px;background-color:#da0080}.combo-box-list{flex:1;overflow-y:auto}.combo-box-input{width:100%}.combo-box-input-container{height:25px}.combo-box-selected-item{color:#7030a0}.combo-box-insert-button{color:#807f7f;cursor:pointer}"]
                     }] }
         ];

@@ -37,7 +37,6 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     private statusChange;
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    isParentDisabled(): void;
     search(): void;
     change(event: string): void;
     private getMaskedValue;
