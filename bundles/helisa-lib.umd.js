@@ -4924,6 +4924,51 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var AlertAuthorizationTransactionHelisaService = /** @class */ (function () {
+        function AlertAuthorizationTransactionHelisaService(dialog) {
+            this.dialog = dialog;
+        }
+        /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+        AlertAuthorizationTransactionHelisaService.prototype.openDialog = /**
+         * @param {?=} title
+         * @param {?=} content
+         * @param {?=} okLabel
+         * @param {?=} cancelLabel
+         * @return {?}
+         */
+            function (title, content, okLabel, cancelLabel) {
+                /** @type {?} */
+                var dialogRef = this.dialog.open(AlertAuthorizationTransactionHelisaComponent, {
+                    width: '250px',
+                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
+                });
+                return dialogRef.afterClosed();
+            };
+        AlertAuthorizationTransactionHelisaService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        AlertAuthorizationTransactionHelisaService.ctorParameters = function () {
+            return [
+                { type: material.MatDialog }
+            ];
+        };
+        /** @nocollapse */ AlertAuthorizationTransactionHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertAuthorizationTransactionHelisaService_Factory() { return new AlertAuthorizationTransactionHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertAuthorizationTransactionHelisaService, providedIn: "root" });
+        return AlertAuthorizationTransactionHelisaService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     /**
      * @fileoverview added by tsickle
@@ -4969,7 +5014,8 @@
     exports.AlertUncompletedSelectedDataHelisaService = AlertUncompletedSelectedDataHelisaService;
     exports.AlertInformationNotValidHelisaComponent = AlertInformationNotValidHelisaComponent;
     exports.AlertInformationNotValidHelisaService = AlertInformationNotValidHelisaService;
-    exports.ɵc = AlertAuthorizationTransactionHelisaComponent;
+    exports.AlertAuthorizationTransactionHelisaComponent = AlertAuthorizationTransactionHelisaComponent;
+    exports.AlertAuthorizationTransactionHelisaService = AlertAuthorizationTransactionHelisaService;
     exports.ɵa = ExternalLinkDirective;
     exports.ɵb = ExternalLinkPipe;
 
