@@ -1,4 +1,4 @@
-import { EventEmitter, OnInit, ElementRef, AfterViewInit } from '@angular/core';
+import { EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 export declare enum InputHelisaType {
     DEFAULT = 0,
@@ -6,7 +6,7 @@ export declare enum InputHelisaType {
     NUMERIC = 2,
     DOUBLE = 3
 }
-export declare class InputHelisaComponent implements OnInit, AfterViewInit {
+export declare class InputHelisaComponent implements OnInit {
     private readonly DECIMAL_SEPARATOR;
     private readonly THOUSAND_SEPARATOR;
     placeholder: string;
@@ -36,7 +36,6 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     inputFormControl: FormControl;
     private statusChange;
     ngOnInit(): void;
-    ngAfterViewInit(): void;
     search(): void;
     change(event: string): void;
     private getMaskedValue;
