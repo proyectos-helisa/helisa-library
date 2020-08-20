@@ -4550,7 +4550,7 @@ var AlertAuthorizationTransactionHelisaComponent = /** @class */ (function () {
     AlertAuthorizationTransactionHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-alert-authorization-transaction-helisa',
-                    template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
+                    template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
                     styles: [""]
                 }] }
     ];
