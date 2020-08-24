@@ -1018,7 +1018,43 @@ var InputHelisaComponent = /** @class */ (function () {
     /**
      * @return {?}
      */
-    InputHelisaComponent.prototype.search = /**
+    InputHelisaComponent.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
+        // this.isParentDisabled();
+    };
+    /*isParentDisabled(): void {
+      setTimeout(() => {
+        if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
+      });
+    }*/
+    /*isParentDisabled(): void {
+        setTimeout(() => {
+          if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+            this.disabled = true;
+          } else {
+            this.disabled = false;
+          }
+        });
+      }*/
+    /**
+     * @return {?}
+     */
+    InputHelisaComponent.prototype.search = /*isParentDisabled(): void {
+        setTimeout(() => {
+          if (this.nameInput.nativeElement.closest('.hw-disabled-mode')) {
+            this.disabled = true;
+          } else {
+            this.disabled = false;
+          }
+        });
+      }*/
+    /**
      * @return {?}
      */
     function () {
@@ -4500,6 +4536,177 @@ var AlertInformationNotValidHelisaComponent = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @enum {number} */
+var ComboBoxHelisaState = {
+    CLOSED: 0,
+    SELECT: 1,
+    INSERT: 2,
+};
+ComboBoxHelisaState[ComboBoxHelisaState.CLOSED] = 'CLOSED';
+ComboBoxHelisaState[ComboBoxHelisaState.SELECT] = 'SELECT';
+ComboBoxHelisaState[ComboBoxHelisaState.INSERT] = 'INSERT';
+/**
+ * @template TYPE
+ */
+var ComboBoxHelisaComponent = /** @class */ (function () {
+    function ComboBoxHelisaComponent() {
+        this.placeholder = 'Sin seleccionar';
+        this.selectEmitter = new EventEmitter();
+        this.enabled = true;
+        this.page = 0;
+        this.pageSize = 50;
+        this.haveNextPage = true;
+        this.state = ComboBoxHelisaState.CLOSED;
+        this.rows = [];
+    }
+    /**
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+    };
+    /**
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
+        this.getNextPage();
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.getNextPage = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this.haveNextPage) {
+            this.listable.getData(this.page++, this.pageSize).subscribe((/**
+             * @param {?} rows
+             * @return {?}
+             */
+            function (rows) {
+                rows.forEach((/**
+                 * @param {?} item
+                 * @return {?}
+                 */
+                function (item) { return _this.rows.push(item); }));
+                _this.haveNextPage = rows.length > 0;
+            }));
+        }
+    };
+    Object.defineProperty(ComboBoxHelisaComponent.prototype, "comboBoxHelisaState", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return ComboBoxHelisaState;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.onFocus = /**
+     * @return {?}
+     */
+    function () {
+        if (this.enabled) {
+            this.state = ComboBoxHelisaState.SELECT;
+        }
+    };
+    /**
+     * @param {?} row
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.selectItem = /**
+     * @param {?} row
+     * @return {?}
+     */
+    function (row) {
+        this.selectedItem = row;
+        this.selectEmitter.emit(row);
+        this.state = ComboBoxHelisaState.CLOSED;
+    };
+    /**
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.changeToInsert = /**
+     * @return {?}
+     */
+    function () {
+        this.state = ComboBoxHelisaState.INSERT;
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.insert = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        var _this = this;
+        if (event.trim().length > 0) {
+            this.editable.insert(event).subscribe((/**
+             * @param {?} data
+             * @return {?}
+             */
+            function (data) {
+                _this.rows.push(data);
+                _this.state = ComboBoxHelisaState.SELECT;
+            }));
+        }
+        else {
+            this.state = ComboBoxHelisaState.SELECT;
+        }
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    ComboBoxHelisaComponent.prototype.onScroll = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        /** @type {?} */
+        var element = (/** @type {?} */ (event.target));
+        if (element.scrollHeight - element.scrollTop < 1000) {
+            this.getNextPage();
+        }
+    };
+    ComboBoxHelisaComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'lib-combo-box-helisa',
+                    template: "<div class=\"combo-box-general-container\">\r\n  <div class=\"combo-box-input-container\">\r\n    <input class=\"combo-box-input\" readonly [value]=\"selectedItem?listable.getDisplayText(selectedItem):placeholder\"\r\n           *ngIf=\"state==comboBoxHelisaState.CLOSED\" (focus)=\"onFocus()\"/>\r\n  </div>\r\n  <div class=\"combo-box-list-container combo-box-general-container\" *ngIf=\"state==comboBoxHelisaState.SELECT || state == comboBoxHelisaState.INSERT\">\r\n    <div class=\"combo-box-line\"></div>\r\n    <div class=\"combo-box-list\" (scroll)=\"onScroll($event)\">\r\n      <div *ngFor=\"let row of rows\" class=\"combo-box-row\" [ngClass]=\"{'combo-box-selected-item': selectedItem && listable.compare(selectedItem, row)}\" (dblclick)=\"selectItem(row)\">\r\n        {{ listable.getDisplayText(row) }}\r\n      </div>\r\n      <hel-input *ngIf=\"state==comboBoxHelisaState.INSERT\" [isFocused]=\"true\" (setValue)=\"insert($event)\"></hel-input>\r\n      <div *ngIf=\"editable && state==comboBoxHelisaState.SELECT\" class=\"combo-box-insert-button\" (click)=\"changeToInsert()\">{{ editable.getButtonInsertText() }}</div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+                    styles: [".combo-box-general-container{width:300px}.combo-box-list-container{display:flex;flex-direction:row;height:100px;position:absolute;background-color:#fff}.combo-box-row{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.combo-box-line{width:3px;background-color:#da0080}.combo-box-list{flex:1;overflow-y:auto}.combo-box-input{width:100%}.combo-box-input-container{height:25px}.combo-box-selected-item{color:#7030a0}.combo-box-insert-button{color:#807f7f;cursor:pointer}"]
+                }] }
+    ];
+    /** @nocollapse */
+    ComboBoxHelisaComponent.ctorParameters = function () { return []; };
+    ComboBoxHelisaComponent.propDecorators = {
+        editable: [{ type: Input }],
+        listable: [{ type: Input }],
+        placeholder: [{ type: Input }],
+        selectedItem: [{ type: Input }],
+        selectEmitter: [{ type: Output }],
+        enabled: [{ type: Input }]
+    };
+    return ComboBoxHelisaComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 var DEFAULT_TITLE$3 = '!Esta transacción requiere autorización!';
 var AlertAuthorizationTransactionHelisaComponent = /** @class */ (function () {
@@ -4590,6 +4797,7 @@ var HelisaLibModule = /** @class */ (function () {
                         AlertDeleteDataHelisaComponent,
                         AlertUncompletedSelectedDataHelisaComponent,
                         AlertInformationNotValidHelisaComponent,
+                        ComboBoxHelisaComponent,
                         AlertAuthorizationTransactionHelisaComponent
                     ],
                     imports: [
@@ -4689,6 +4897,7 @@ var HelisaLibModule = /** @class */ (function () {
                         AlertDeleteDataHelisaComponent,
                         AlertUncompletedSelectedDataHelisaComponent,
                         AlertInformationNotValidHelisaComponent,
+                        ComboBoxHelisaComponent,
                         AlertAuthorizationTransactionHelisaComponent
                     ],
                     providers: [TableHelisaService, TreeHelisaService]
@@ -4912,6 +5121,16 @@ var AlertInformationNotValidHelisaService = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var AlertAuthorizationTransactionHelisaService = /** @class */ (function () {
     function AlertAuthorizationTransactionHelisaService(dialog) {
         this.dialog = dialog;
@@ -4961,6 +5180,6 @@ var AlertAuthorizationTransactionHelisaService = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, AlertAuthorizationTransactionHelisaComponent, AlertAuthorizationTransactionHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, ComboBoxHelisaState, ComboBoxHelisaComponent, AlertAuthorizationTransactionHelisaComponent, AlertAuthorizationTransactionHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
 
 //# sourceMappingURL=helisa-lib.js.map

@@ -31,5 +31,8 @@ export * from './lib/components/alert-uncompleted-selected-data-helisa/alert-unc
 export * from './lib/components/alert-uncompleted-selected-data-helisa/alert-uncompleted-selected-data-helisa.service';
 export * from './lib/components/alert-information-not-valid-helisa/alert-information-not-valid-helisa.component';
 export * from './lib/components/alert-information-not-valid-helisa/alert-information-not-valid-helisa.service';
+export * from './lib/components/combo-box-helisa/combo-box-helisa.component';
+export * from './lib/components/combo-box-helisa/interface/combo-box-listable';
+export * from './lib/components/combo-box-helisa/interface/combo-box-editable';
 export * from './lib/components/alert-authorization-transaction-helisa/alert-authorization-transaction-helisa.component';
 export * from './lib/components/alert-authorization-transaction-helisa/alert-authorization-transaction-helisa.service';
