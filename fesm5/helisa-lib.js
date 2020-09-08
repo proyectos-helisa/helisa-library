@@ -2473,7 +2473,7 @@ var DateHelisaComponent = /** @class */ (function () {
             return 'multi-year';
         }
         else if (this.typeCalendar === this.typeCalendarEnum.STRICT) {
-            return 'multi-year';
+            return 'month';
         }
         else {
             return 'month';
