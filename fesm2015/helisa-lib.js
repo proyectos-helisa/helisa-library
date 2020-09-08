@@ -1934,14 +1934,6 @@ class DateHelisaComponent {
         moment.locale(this.locale);
         this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
-        /**
-         * establecer valor por defecto de la fecha
-         * @type {?}
-         */
-        const incommingDate = moment(this.dateFormControl.value, this.dateFormat).format(this.dateFormat);
-        if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
-            this.dateToVisualize.setValue(incommingDate);
-        }
     }
     /**
      * @return {?}
@@ -1971,8 +1963,6 @@ class DateHelisaComponent {
      */
     formHandler() {
         if (this.typeCalendar === this.typeCalendarEnum.STRICT) {
-            this.dateToVisualize.setValue(moment(this.date, this.dateFormat).format(this.dateFormat));
-            this.dateFormControl.setValue(this.date);
             this.dateToVisualize.valueChanges.subscribe((/**
              * @param {?} date
              * @return {?}

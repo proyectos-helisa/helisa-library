@@ -2437,14 +2437,6 @@ var DateHelisaComponent = /** @class */ (function () {
         moment.locale(this.locale);
         this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
-        /**
-         * establecer valor por defecto de la fecha
-         * @type {?}
-         */
-        var incommingDate = moment(this.dateFormControl.value, this.dateFormat).format(this.dateFormat);
-        if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
-            this.dateToVisualize.setValue(incommingDate);
-        }
     };
     Object.defineProperty(DateHelisaComponent.prototype, "typeCalendarEnum", {
         get: /**
@@ -2490,8 +2482,6 @@ var DateHelisaComponent = /** @class */ (function () {
     function () {
         var _this = this;
         if (this.typeCalendar === this.typeCalendarEnum.STRICT) {
-            this.dateToVisualize.setValue(moment(this.date, this.dateFormat).format(this.dateFormat));
-            this.dateFormControl.setValue(this.date);
             this.dateToVisualize.valueChanges.subscribe((/**
              * @param {?} date
              * @return {?}
