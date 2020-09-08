@@ -2385,6 +2385,7 @@ var moment = moment_;
 var TypeCalendarEnum = {
     NORMAL: 'norma',
     MONTH_YEAR: 'mounth-year',
+    STRICT: 'strict',
 };
 var DateHelisaComponent = /** @class */ (function () {
     function DateHelisaComponent() {
@@ -2393,10 +2394,11 @@ var DateHelisaComponent = /** @class */ (function () {
         this.date = new Date();
         /**
          * Formato de fecha.
-         * Los formatos validos son aquellos que maneja la libreria momentjs
+         * Los formatos validos son aquellos que maneja la libreria momentjs y este: 'DD [de] MMMM [de] YYYY'
          * https://momentjs.com/docs/#/parsing/string-format/
          */
         this.dateFormat = 'DD/MM/YYYY';
+        this.locale = 'es';
         this.errorMessage = 'La fecha no concuerda con el formato ';
         this.placeholder = this.dateFormat;
         /**
@@ -2413,19 +2415,28 @@ var DateHelisaComponent = /** @class */ (function () {
          */
         this.invalidFormat = false;
     }
+    /*
+    * TypeCalendarEnum.MONTH_YEAR = 'MM/YYYY'
+    * TypeCalendarEnum.STRICT = 'DD [de] MMMM [de] YYYY'
+    * */
+    /*
+      * TypeCalendarEnum.MONTH_YEAR = 'MM/YYYY'
+      * TypeCalendarEnum.STRICT = 'DD [de] MMMM [de] YYYY'
+      * */
     /**
      * @return {?}
      */
-    DateHelisaComponent.prototype.ngOnInit = /**
+    DateHelisaComponent.prototype.ngOnInit = /*
+      * TypeCalendarEnum.MONTH_YEAR = 'MM/YYYY'
+      * TypeCalendarEnum.STRICT = 'DD [de] MMMM [de] YYYY'
+      * */
+    /**
      * @return {?}
      */
     function () {
+        moment.locale(this.locale);
         this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
-        if (this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
-            this.dateFormat = 'MM/YYYY';
-            this.placeholder = this.dateFormat;
-        }
         /**
          * establecer valor por defecto de la fecha
          * @type {?}
@@ -2461,6 +2472,9 @@ var DateHelisaComponent = /** @class */ (function () {
         if (this.typeCalendar === this.typeCalendarEnum.MONTH_YEAR) {
             return 'multi-year';
         }
+        else if (this.typeCalendar === this.typeCalendarEnum.STRICT) {
+            return 'multi-year';
+        }
         else {
             return 'month';
         }
@@ -2475,69 +2489,106 @@ var DateHelisaComponent = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        this.dateToVisualize.valueChanges
-            .pipe(tap((/**
-         * @param {?} date
-         * @return {?}
-         */
-        function (date) {
-            if (date.length > _this.dateFormat.length) {
-                _this.invalidFormat = true;
-            }
-            else {
+        if (this.typeCalendar === this.typeCalendarEnum.STRICT) {
+            this.dateToVisualize.setValue(moment(this.date, this.dateFormat).format(this.dateFormat));
+            this.dateFormControl.setValue(this.date);
+            this.dateToVisualize.valueChanges.subscribe((/**
+             * @param {?} date
+             * @return {?}
+             */
+            function (date) {
                 _this.invalidFormat = false;
-            }
-        })), filter((/**
-         * @param {?} date
-         * @return {?}
-         */
-        function (date) { return date.length === _this.dateFormat.length; })))
-            .subscribe((/**
-         * @param {?} date
-         * @return {?}
-         */
-        function (date) {
-            _this.invalidFormat = false;
-            /** @type {?} */
-            var isValid = moment(date, _this.dateFormat, true).isValid();
-            /** @type {?} */
-            var result = moment(date, _this.dateFormat).format('YYYY-MM-DD');
-            if (!!result && (result === 'Invalid date' || !isValid)) {
-                _this.invalidFormat = true;
-                return;
-            }
-            if (!!result) {
-                if (!_this.isFromInputEvent) {
-                    _this.isFromInputEvent = true;
-                    /** @type {?} */
-                    var subString = result.split('-');
-                    /** @type {?} */
-                    var year = parseFloat(subString[0]);
-                    /** @type {?} */
-                    var month = parseFloat(subString[1]);
-                    /** @type {?} */
-                    var day = parseFloat(subString[2]);
-                    _this.date.setFullYear(year);
-                    _this.date.setDate(day);
-                    _this.date.setMonth(month - 1); // -1 por que los meses se toman como los indices en un array
-                    /** cuando es de tipo MOUNTH_YEAR retorna el ultimo dia del mes seleccionado */
-                    if (_this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
-                        _this.date = moment(_this.date).endOf('month').toDate();
+                /** @type {?} */
+                var isValid = moment(date, _this.dateFormat, true).isValid();
+                /** @type {?} */
+                var result = moment(date, _this.dateFormat).format(_this.dateFormat);
+                if (!!result && (result === 'Invalid date' || !isValid)) {
+                    _this.invalidFormat = true;
+                    return;
+                }
+                if (!!result) {
+                    if (!_this.isFromInputEvent) {
+                        _this.isFromInputEvent = true;
+                        _this.dateToVisualize.setValue(moment(_this.date, _this.dateFormat).format(_this.dateFormat));
+                        _this.dateFormControl.setValue(moment(date, _this.dateFormat).format(_this.dateFormat));
+                        _this.isFromInputEvent = false;
                     }
-                    _this.dateToVisualize.setValue(moment(_this.date, 'YYYY-MM-DD').format(_this.dateFormat));
-                    _this.dateFormControl.setValue(_this.date);
-                    _this.isFromInputEvent = false;
+                    else {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        function () {
+                            _this.isFromInputEvent = false;
+                        }), 1500);
+                    }
+                }
+            }));
+        }
+        else {
+            this.dateToVisualize.valueChanges
+                .pipe(tap((/**
+             * @param {?} date
+             * @return {?}
+             */
+            function (date) {
+                if (date.length > _this.dateFormat.length) {
+                    _this.invalidFormat = true;
                 }
                 else {
-                    setTimeout((/**
-                     * @return {?}
-                     */
-                    function () {
-                        _this.isFromInputEvent = false;
-                    }), 1500);
+                    _this.invalidFormat = false;
                 }
-            }
-        }));
+            })), filter((/**
+             * @param {?} date
+             * @return {?}
+             */
+            function (date) { return date.length === _this.dateFormat.length; })))
+                .subscribe((/**
+             * @param {?} date
+             * @return {?}
+             */
+            function (date) {
+                _this.invalidFormat = false;
+                /** @type {?} */
+                var isValid = moment(date, _this.dateFormat, true).isValid();
+                /** @type {?} */
+                var result = moment(date, _this.dateFormat).format('YYYY-MM-DD');
+                if (!!result && (result === 'Invalid date' || !isValid)) {
+                    _this.invalidFormat = true;
+                    return;
+                }
+                if (!!result) {
+                    if (!_this.isFromInputEvent) {
+                        _this.isFromInputEvent = true;
+                        /** @type {?} */
+                        var subString = result.split('-');
+                        /** @type {?} */
+                        var year = parseFloat(subString[0]);
+                        /** @type {?} */
+                        var month = parseFloat(subString[1]);
+                        /** @type {?} */
+                        var day = parseFloat(subString[2]);
+                        _this.date.setFullYear(year);
+                        _this.date.setDate(day);
+                        _this.date.setMonth(month - 1); // -1 por que los meses se toman como los indices en un array
+                        /** cuando es de tipo MOUNTH_YEAR retorna el ultimo dia del mes seleccionado */
+                        if (_this.typeCalendar === TypeCalendarEnum.MONTH_YEAR) {
+                            _this.date = moment(_this.date).endOf('month').toDate();
+                        }
+                        _this.dateToVisualize.setValue(moment(_this.date, 'YYYY-MM-DD').format(_this.dateFormat));
+                        _this.dateFormControl.setValue(_this.date);
+                        _this.isFromInputEvent = false;
+                    }
+                    else {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        function () {
+                            _this.isFromInputEvent = false;
+                        }), 1500);
+                    }
+                }
+            }));
+        }
         this.dateFormControl.valueChanges
             .subscribe((/**
          * @param {?} date
@@ -2606,7 +2657,7 @@ var DateHelisaComponent = /** @class */ (function () {
     DateHelisaComponent.decorators = [
         { type: Component, args: [{
                     selector: 'hel-date-helisa',
-                    template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput \r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n    \r\n    \r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar \r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput \r\n    [matDatepicker]=\"picker\" \r\n    hidden=\"hide\" \r\n    [value]=\"dateToVisualize.value\" \r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n  \r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n    \r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>",
+                    template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
                     styles: [""]
                 }] }
     ];
@@ -2616,6 +2667,7 @@ var DateHelisaComponent = /** @class */ (function () {
         floatLabel: [{ type: Input }],
         dateFormControl: [{ type: Input }],
         dateFormat: [{ type: Input }],
+        locale: [{ type: Input }],
         errorMessage: [{ type: Input }],
         placeholder: [{ type: Input }],
         typeCalendar: [{ type: Input }]

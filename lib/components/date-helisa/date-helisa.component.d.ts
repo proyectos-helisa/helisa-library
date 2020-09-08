@@ -4,7 +4,8 @@ import * as moment_ from 'moment';
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
 export declare enum TypeCalendarEnum {
     NORMAL = "norma",
-    MONTH_YEAR = "mounth-year"
+    MONTH_YEAR = "mounth-year",
+    STRICT = "strict"
 }
 export declare class DateHelisaComponent implements OnInit {
     floatLabel: 'never' | 'always' | 'auto';
@@ -12,10 +13,11 @@ export declare class DateHelisaComponent implements OnInit {
     private date;
     /**
      * Formato de fecha.
-     * Los formatos validos son aquellos que maneja la libreria momentjs
+     * Los formatos validos son aquellos que maneja la libreria momentjs y este: 'DD [de] MMMM [de] YYYY'
      * https://momentjs.com/docs/#/parsing/string-format/
      */
     dateFormat: string;
+    locale: string;
     errorMessage: string;
     placeholder: string;
     /**
