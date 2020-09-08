@@ -23,7 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -1991,7 +1991,7 @@ class DateHelisaComponent {
                     if (!this.isFromInputEvent) {
                         this.isFromInputEvent = true;
                         this.dateToVisualize.setValue(moment(this.date, this.dateFormat).format(this.dateFormat));
-                        this.dateFormControl.setValue(moment(date, this.dateFormat).format(this.dateFormat));
+                        this.dateFormControl.setValue(moment(result, this.dateFormat).toDate());
                         this.isFromInputEvent = false;
                     }
                     else {
