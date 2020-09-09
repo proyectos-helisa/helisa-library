@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnInit, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment_ from 'moment';
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
@@ -20,6 +20,7 @@ export declare class DateHelisaComponent implements OnInit {
     locale: string;
     errorMessage: string;
     placeholder: string;
+    change: EventEmitter<Date>;
     /**
      * Si este valor es diferente a TypeCalendarEnum.NORMAL no
      * será tomado en cuenta

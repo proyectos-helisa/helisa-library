@@ -1909,6 +1909,7 @@ class DateHelisaComponent {
         this.locale = 'es';
         this.errorMessage = 'La fecha no concuerda con el formato ';
         this.placeholder = this.dateFormat;
+        this.change = new EventEmitter();
         /**
          * Si este valor es diferente a TypeCalendarEnum.NORMAL no
          * será tomado en cuenta
@@ -1932,7 +1933,7 @@ class DateHelisaComponent {
      */
     ngOnInit() {
         moment.locale(this.locale);
-        this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
+        this.dateToVisualize = new FormControl('x', this.dateFormControl.validator);
         this.formHandler();
         /**
          * establecer valor por defecto de la fecha
@@ -2108,6 +2109,7 @@ class DateHelisaComponent {
     dateChange(type, event) {
         this.dateToVisualize.setValue(moment(event.value, 'YYYY-MM-DD').format(this.dateFormat));
         this.dateFormControl.setValue(event.value);
+        this.change.emit(event.value);
     }
     /**
      * @return {?}
@@ -2132,6 +2134,7 @@ DateHelisaComponent.propDecorators = {
     locale: [{ type: Input }],
     errorMessage: [{ type: Input }],
     placeholder: [{ type: Input }],
+    change: [{ type: Output }],
     typeCalendar: [{ type: Input }]
 };
 
