@@ -2454,7 +2454,7 @@
              */
             function () {
                 moment.locale(this.locale);
-                this.dateToVisualize = new forms.FormControl('x', this.dateFormControl.validator);
+                this.dateToVisualize = new forms.FormControl('', this.dateFormControl.validator);
                 this.formHandler();
                 /**
                  * establecer valor por defecto de la fecha
@@ -2527,7 +2527,7 @@
                         if (!!result) {
                             if (!_this.isFromInputEvent) {
                                 _this.isFromInputEvent = true;
-                                _this.dateToVisualize.setValue(moment(_this.date, _this.dateFormat).format(_this.dateFormat));
+                                _this.dateToVisualize.setValue(moment(result, _this.dateFormat).format(_this.dateFormat));
                                 _this.dateFormControl.setValue(moment(result, _this.dateFormat).toDate());
                                 _this.isFromInputEvent = false;
                             }

@@ -24,7 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -2436,7 +2436,7 @@ var DateHelisaComponent = /** @class */ (function () {
      */
     function () {
         moment.locale(this.locale);
-        this.dateToVisualize = new FormControl('x', this.dateFormControl.validator);
+        this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
         /**
          * establecer valor por defecto de la fecha
@@ -2511,7 +2511,7 @@ var DateHelisaComponent = /** @class */ (function () {
                 if (!!result) {
                     if (!_this.isFromInputEvent) {
                         _this.isFromInputEvent = true;
-                        _this.dateToVisualize.setValue(moment(_this.date, _this.dateFormat).format(_this.dateFormat));
+                        _this.dateToVisualize.setValue(moment(result, _this.dateFormat).format(_this.dateFormat));
                         _this.dateFormControl.setValue(moment(result, _this.dateFormat).toDate());
                         _this.isFromInputEvent = false;
                     }

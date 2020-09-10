@@ -1933,7 +1933,7 @@ class DateHelisaComponent {
      */
     ngOnInit() {
         moment.locale(this.locale);
-        this.dateToVisualize = new FormControl('x', this.dateFormControl.validator);
+        this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
         /**
          * establecer valor por defecto de la fecha
@@ -1992,7 +1992,7 @@ class DateHelisaComponent {
                 if (!!result) {
                     if (!this.isFromInputEvent) {
                         this.isFromInputEvent = true;
-                        this.dateToVisualize.setValue(moment(this.date, this.dateFormat).format(this.dateFormat));
+                        this.dateToVisualize.setValue(moment(result, this.dateFormat).format(this.dateFormat));
                         this.dateFormControl.setValue(moment(result, this.dateFormat).toDate());
                         this.isFromInputEvent = false;
                     }
