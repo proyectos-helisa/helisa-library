@@ -1,16 +1,13 @@
-/// <reference types="node" />
 import { OnInit, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment_ from 'moment';
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
-import Timer = NodeJS.Timer;
 export declare enum TypeCalendarEnum {
     NORMAL = "norma",
     MONTH_YEAR = "mounth-year",
     STRICT = "strict"
 }
 export declare class DateHelisaComponent implements OnInit {
-    datePickerShow: MatDatepicker<Date>;
     floatLabel: 'never' | 'always' | 'auto';
     dateFormControl: FormControl;
     private date;
@@ -23,10 +20,7 @@ export declare class DateHelisaComponent implements OnInit {
     locale: string;
     errorMessage: string;
     placeholder: string;
-    showDatePicker: boolean;
     change: EventEmitter<Date>;
-    isClosed: boolean;
-    timeout: Timer;
     /**
      * Si este valor es diferente a TypeCalendarEnum.NORMAL no
      * será tomado en cuenta
@@ -44,9 +38,6 @@ export declare class DateHelisaComponent implements OnInit {
     constructor();
     ngOnInit(): void;
     readonly typeCalendarEnum: typeof TypeCalendarEnum;
-    openDatePicker(): void;
-    onKey(event: KeyboardEvent): void;
-    onBlur(): void;
     /**
      * Determina como se debe inicializar la visualizacion del calendar
      */
