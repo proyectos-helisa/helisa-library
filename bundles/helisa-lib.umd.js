@@ -2419,7 +2419,9 @@
             this.locale = 'es';
             this.errorMessage = 'La fecha no concuerda con el formato ';
             this.placeholder = this.dateFormat;
+            this.showDatePicker = false;
             this.change = new i0.EventEmitter();
+            this.isClosed = false;
             /**
              * Si este valor es diferente a TypeCalendarEnum.NORMAL no
              * será tomado en cuenta
@@ -2477,6 +2479,48 @@
             enumerable: true,
             configurable: true
         });
+        /**
+         * @return {?}
+         */
+        DateHelisaComponent.prototype.openDatePicker = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                if (this.showDatePicker && !this.isClosed) {
+                    this.isClosed = true;
+                    this.timeout = setTimeout(( /**
+                     * @return {?}
+                     */function () {
+                        _this.datePickerShow.open();
+                    }), 2000);
+                }
+            };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        DateHelisaComponent.prototype.onKey = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                if (event.key === ' ' && this.showDatePicker) {
+                    this.onBlur();
+                    this.isClosed = true;
+                    this.datePickerShow.open();
+                }
+            };
+        /**
+         * @return {?}
+         */
+        DateHelisaComponent.prototype.onBlur = /**
+         * @return {?}
+         */
+            function () {
+                clearTimeout(this.timeout);
+                this.isClosed = false;
+            };
         /**
          * Determina como se debe inicializar la visualizacion del calendar
          */
@@ -2657,6 +2701,7 @@
                 this.dateToVisualize.setValue(moment(event.value, 'YYYY-MM-DD').format(this.dateFormat));
                 this.dateFormControl.setValue(event.value);
                 this.change.emit(event.value);
+                this.isClosed = true;
             };
         /**
          * @return {?}
@@ -2670,19 +2715,21 @@
         DateHelisaComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'hel-date-helisa',
-                        template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
+                        template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\" (keydown)=\"onKey($event)\" (focus)=\"openDatePicker()\" (blur)=\"onBlur()\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
                         styles: [""]
                     }] }
         ];
         /** @nocollapse */
         DateHelisaComponent.ctorParameters = function () { return []; };
         DateHelisaComponent.propDecorators = {
+            datePickerShow: [{ type: i0.ViewChild, args: ['picker',] }],
             floatLabel: [{ type: i0.Input }],
             dateFormControl: [{ type: i0.Input }],
             dateFormat: [{ type: i0.Input }],
             locale: [{ type: i0.Input }],
             errorMessage: [{ type: i0.Input }],
             placeholder: [{ type: i0.Input }],
+            showDatePicker: [{ type: i0.Input }],
             change: [{ type: i0.Output }],
             typeCalendar: [{ type: i0.Input }]
         };

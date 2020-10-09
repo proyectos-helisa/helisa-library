@@ -23,7 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -1909,7 +1909,9 @@ class DateHelisaComponent {
         this.locale = 'es';
         this.errorMessage = 'La fecha no concuerda con el formato ';
         this.placeholder = this.dateFormat;
+        this.showDatePicker = false;
         this.change = new EventEmitter();
+        this.isClosed = false;
         /**
          * Si este valor es diferente a TypeCalendarEnum.NORMAL no
          * será tomado en cuenta
@@ -1952,6 +1954,38 @@ class DateHelisaComponent {
      */
     get typeCalendarEnum() {
         return TypeCalendarEnum;
+    }
+    /**
+     * @return {?}
+     */
+    openDatePicker() {
+        if (this.showDatePicker && !this.isClosed) {
+            this.isClosed = true;
+            this.timeout = setTimeout((/**
+             * @return {?}
+             */
+            () => {
+                this.datePickerShow.open();
+            }), 2000);
+        }
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    onKey(event) {
+        if (event.key === ' ' && this.showDatePicker) {
+            this.onBlur();
+            this.isClosed = true;
+            this.datePickerShow.open();
+        }
+    }
+    /**
+     * @return {?}
+     */
+    onBlur() {
+        clearTimeout(this.timeout);
+        this.isClosed = false;
     }
     /**
      * Determina como se debe inicializar la visualizacion del calendar
@@ -2110,6 +2144,7 @@ class DateHelisaComponent {
         this.dateToVisualize.setValue(moment(event.value, 'YYYY-MM-DD').format(this.dateFormat));
         this.dateFormControl.setValue(event.value);
         this.change.emit(event.value);
+        this.isClosed = true;
     }
     /**
      * @return {?}
@@ -2121,19 +2156,21 @@ class DateHelisaComponent {
 DateHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-date-helisa',
-                template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
+                template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\" (keydown)=\"onKey($event)\" (focus)=\"openDatePicker()\" (blur)=\"onBlur()\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
                 styles: [""]
             }] }
 ];
 /** @nocollapse */
 DateHelisaComponent.ctorParameters = () => [];
 DateHelisaComponent.propDecorators = {
+    datePickerShow: [{ type: ViewChild, args: ['picker',] }],
     floatLabel: [{ type: Input }],
     dateFormControl: [{ type: Input }],
     dateFormat: [{ type: Input }],
     locale: [{ type: Input }],
     errorMessage: [{ type: Input }],
     placeholder: [{ type: Input }],
+    showDatePicker: [{ type: Input }],
     change: [{ type: Output }],
     typeCalendar: [{ type: Input }]
 };
