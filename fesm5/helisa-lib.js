@@ -24,7 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, ContentChild, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, ContentChild, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -4970,7 +4970,9 @@ var PagingTreeHelisaComponent = /** @class */ (function () {
         this.searchNode = new Map();
         this.visibleObjects = [];
         this.allNode = [];
+        console.log('items : ', items);
         items = this.sortItems(items);
+        console.log('2items : ', items);
         this.searchNode = new Map();
         items.forEach((/**
          * @param {?} item
@@ -4982,6 +4984,8 @@ var PagingTreeHelisaComponent = /** @class */ (function () {
             _this.allNode.push(node);
         }));
         this.loadNextVisibleObjects(null);
+        console.log('all : ', this.allNode);
+        console.log('search : ', this.searchNode);
     };
     /**
      * @private

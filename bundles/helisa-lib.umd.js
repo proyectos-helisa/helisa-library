@@ -4962,7 +4962,9 @@
                 this.searchNode = new Map();
                 this.visibleObjects = [];
                 this.allNode = [];
+                console.log('items : ', items);
                 items = this.sortItems(items);
+                console.log('2items : ', items);
                 this.searchNode = new Map();
                 items.forEach(( /**
                  * @param {?} item
@@ -4973,6 +4975,8 @@
                     _this.allNode.push(node);
                 }));
                 this.loadNextVisibleObjects(null);
+                console.log('all : ', this.allNode);
+                console.log('search : ', this.searchNode);
             };
         /**
          * @private
