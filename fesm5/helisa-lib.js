@@ -5078,6 +5078,7 @@ var PagingTreeHelisaComponent = /** @class */ (function () {
      * @return {?}
      */
     function (id) {
+        console.log("pinche id que no funciona ", id);
         return this.searchNode.get(id);
     };
     /**
