@@ -4985,7 +4985,8 @@ var PagingTreeHelisaComponent = /** @class */ (function () {
         }));
         this.loadNextVisibleObjects(null);
         console.log('all : ', this.allNode);
-        console.log('search : ', this.searchNode);
+        console.log('objects : ', this.visibleObjects);
+        console.log('data : ', this.visibleData);
     };
     /**
      * @private
