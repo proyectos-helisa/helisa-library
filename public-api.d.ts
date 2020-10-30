@@ -36,6 +36,7 @@ export * from './lib/components/combo-box-helisa/interface/combo-box-listable';
 export * from './lib/components/combo-box-helisa/interface/combo-box-editable';
 export * from './lib/components/alert-authorization-transaction-helisa/alert-authorization-transaction-helisa.component';
 export * from './lib/components/alert-authorization-transaction-helisa/alert-authorization-transaction-helisa.service';
+export * from './lib/components/paging-tree-helisa/paging-tree-helisa.component';
 export * from './lib/components/alert-confirm-delete-data-helisa/alert-confirm-delete-data-helisa.component';
 export * from './lib/components/alert-confirm-delete-data-helisa/alert-confirm-delete-data-helisa.service';
 export * from './lib/components/alert-define-residential-physical-structure-helisa/alert-define-residential-physical-structure-helisa.component';

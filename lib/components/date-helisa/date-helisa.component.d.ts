@@ -1,9 +1,7 @@
-/// <reference types="node" />
 import { OnInit, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment_ from 'moment';
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
-import Timer = NodeJS.Timer;
 export declare enum TypeCalendarEnum {
     NORMAL = "norma",
     MONTH_YEAR = "mounth-year",
@@ -26,7 +24,7 @@ export declare class DateHelisaComponent implements OnInit {
     showDatePicker: boolean;
     change: EventEmitter<Date>;
     isClosed: boolean;
-    timeout: Timer;
+    timeout: any;
     /**
      * Si este valor es diferente a TypeCalendarEnum.NORMAL no
      * será tomado en cuenta

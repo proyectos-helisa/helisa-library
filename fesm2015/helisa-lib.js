@@ -23,7 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, ContentChild, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -724,6 +724,7 @@ class InputHelisaComponent {
          * Deprecated
          */
         this.setValue = new EventEmitter();
+        // tslint:disable-next-line:no-any
         this.blur = new EventEmitter();
         this.formControlMask = new FormControl('');
         this.realValue = '';
@@ -3966,6 +3967,392 @@ AlertAuthorizationTransactionHelisaComponent.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @enum {number} */
+const PagingTreeInitialMode = {
+    COLLAPSE: 0,
+    EXPAND: 1,
+};
+PagingTreeInitialMode[PagingTreeInitialMode.COLLAPSE] = 'COLLAPSE';
+PagingTreeInitialMode[PagingTreeInitialMode.EXPAND] = 'EXPAND';
+/**
+ * @template T
+ */
+class PagingTreeHelisaComponent {
+    constructor() {
+        this.pageSize = 200000;
+        this.visibleLimit = 0;
+        this.visibleSize = 100;
+        this.treeMode = PagingTreeInitialMode.EXPAND;
+        this.visibleObjects = [];
+        this.allNode = [];
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+    /**
+     * @return {?}
+     */
+    ngAfterViewInit() {
+    }
+    /**
+     * @param {?} paramMode
+     * @return {?}
+     */
+    set mode(paramMode) {
+        this.treeMode = paramMode;
+        this.reset();
+    }
+    /**
+     * @param {?} paramService
+     * @return {?}
+     */
+    set pagingTreeHelisaListable(paramService) {
+        this.service = paramService;
+        this.reset();
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    reset() {
+        if (this.service) {
+            this.service.get(0, this.pageSize).subscribe((/**
+             * @param {?} items
+             * @return {?}
+             */
+            (items) => this.loadData(items)));
+        }
+    }
+    /**
+     * @private
+     * @param {?} items
+     * @return {?}
+     */
+    loadData(items) {
+        this.searchNode = new Map();
+        this.visibleObjects = [];
+        this.allNode = [];
+        items = this.sortItems(items);
+        this.searchNode = new Map();
+        items.forEach((/**
+         * @param {?} item
+         * @return {?}
+         */
+        (item) => {
+            /** @type {?} */
+            const node = this.createNode(item);
+            this.allNode.push(node);
+        }));
+        this.loadNextVisibleObjects(null);
+    }
+    /**
+     * @private
+     * @param {?} items
+     * @return {?}
+     */
+    sortItems(items) {
+        /** @type {?} */
+        const lAdy = new Map();
+        /** @type {?} */
+        const stack = [];
+        items.forEach((/**
+         * @param {?} item
+         * @return {?}
+         */
+        (item) => {
+            /** @type {?} */
+            const idParent = item[this.service.getIdParentField()];
+            if (!idParent) {
+                stack.unshift(item);
+            }
+            else {
+                if (!lAdy.has(idParent)) {
+                    lAdy.set(idParent, []);
+                }
+                lAdy.get(idParent).push(item);
+            }
+        }));
+        /** @type {?} */
+        const response = new Array(items.length);
+        /** @type {?} */
+        let index = 0;
+        while (stack.length > 0) {
+            /** @type {?} */
+            const last = stack.pop();
+            response[index++] = last;
+            /** @type {?} */
+            const children = lAdy.get(last[this.service.getIdField()]);
+            if (children) {
+                for (let i = children.length - 1; i >= 0; i--) {
+                    stack.push(children[i]);
+                }
+            }
+        }
+        return response;
+    }
+    /**
+     * @private
+     * @param {?} item
+     * @return {?}
+     */
+    createNode(item) {
+        if (this.searchNode.has(item[this.service.getIdField()])) {
+            throw Error('Ya existe el nodo.');
+        }
+        /** @type {?} */
+        const parentInformation = this.getNodeInformationById(item[this.service.getIdParentField()]);
+        /** @type {?} */
+        const nodeInformation = {
+            object: item,
+            haveChildren: false,
+            level: parentInformation ? parentInformation.level + 1 : 0,
+            expanded: this.treeMode === PagingTreeInitialMode.EXPAND,
+            visible: false,
+            preorder: this.searchNode.size + 1,
+        };
+        this.searchNode.set(item[this.service.getIdField()], nodeInformation);
+        if (parentInformation) {
+            parentInformation.haveChildren = true;
+        }
+        return nodeInformation;
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    getNodeInformationById(id) {
+        return this.searchNode.get(id);
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    getNodeInformation(item) {
+        return this.searchNode.get(item[this.service.getIdField()]);
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    getLevelClass(item) {
+        return 'padding-level-' + this.getNodeInformationById(item[this.service.getIdField()]).level;
+    }
+    /**
+     * @private
+     * @param {?} nodeFrom
+     * @return {?}
+     */
+    loadNextVisibleObjects(nodeFrom) {
+        /** @type {?} */
+        const visibleObjects = [];
+        this.visibleObjects.forEach((/**
+         * @param {?} item
+         * @return {?}
+         */
+        (item) => {
+            if (this.getNodeInformation(item)) {
+                if (nodeFrom && this.getNodeInformation(nodeFrom).preorder >= this.getNodeInformation(item).preorder) {
+                    visibleObjects.push(item);
+                }
+                else {
+                    this.getNodeInformationById(item[this.service.getIdField()]).visible = false;
+                }
+            }
+        }));
+        this.visibleLimit = visibleObjects.length + this.visibleSize;
+        this.allNode.forEach((/**
+         * @param {?} item
+         * @return {?}
+         */
+        (item) => {
+            if (visibleObjects.length < this.visibleLimit &&
+                (!nodeFrom || this.getNodeInformation(nodeFrom).preorder < item.preorder)) {
+                /** @type {?} */
+                const idParent = item.object[this.service.getIdParentField()];
+                if (!idParent) {
+                    visibleObjects.push(item.object);
+                    item.visible = true;
+                }
+                else {
+                    /** @type {?} */
+                    const parentInformation = this.getNodeInformationById(idParent);
+                    if (parentInformation.visible && parentInformation.expanded) {
+                        visibleObjects.push(item.object);
+                        item.visible = true;
+                    }
+                }
+            }
+        }));
+        this.visibleObjects = visibleObjects;
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    collapseNode(item) {
+        this.getNodeInformationById(item[this.service.getIdField()]).expanded = false;
+        this.loadNextVisibleObjects(item);
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    expandNode(item) {
+        this.getNodeInformationById(item[this.service.getIdField()]).expanded = true;
+        this.loadNextVisibleObjects(item);
+    }
+    /**
+     * @return {?}
+     */
+    showNextPage() {
+        if (this.visibleObjects.length > 0) {
+            this.loadNextVisibleObjects(this.visibleObjects[this.visibleObjects.length - 1]);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    get visibleData() {
+        return this.visibleObjects;
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    removeItem(item) {
+        /** @type {?} */
+        const set = new Set();
+        set.add(item[this.service.getIdField()]);
+        /** @type {?} */
+        const beginIndex = this.allNode.findIndex((/**
+         * @param {?} itemSearch
+         * @return {?}
+         */
+        (itemSearch) => itemSearch.object[this.service.getIdField()] === item[this.service.getIdField()]));
+        /** @type {?} */
+        let lastIndex = this.allNode.length;
+        for (let i = beginIndex + 1; i < this.allNode.length; i++) {
+            /** @type {?} */
+            const itemSearch = this.allNode[i].object;
+            if (set.has(itemSearch[this.service.getIdParentField()])) {
+                set.add(itemSearch[this.service.getIdField()]);
+            }
+            else {
+                lastIndex = i;
+                break;
+            }
+        }
+        /** @type {?} */
+        const deletedItems = this.allNode.splice(beginIndex, lastIndex - beginIndex);
+        deletedItems.forEach((/**
+         * @param {?} deletedItem
+         * @return {?}
+         */
+        (deletedItem) => this.searchNode.delete(deletedItem.object[this.service.getIdField()])));
+        this.allNode.forEach((/**
+         * @param {?} searchItem
+         * @param {?} index
+         * @return {?}
+         */
+        (searchItem, index) => searchItem.preorder = index + 1));
+        this.loadNextVisibleObjects(beginIndex > 0 ? this.allNode[beginIndex - 1].object : null);
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    addItem(item) {
+        /** @type {?} */
+        const indexParent = this.allNode.findIndex((/**
+         * @param {?} node
+         * @return {?}
+         */
+        (node) => node.object[this.service.getIdField()] === item[this.service.getIdParentField()]));
+        if (indexParent >= 0) {
+            this.allNode.push(this.createNode(item));
+            this.reSort();
+            this.expandNode(this.allNode[indexParent].object);
+        }
+        else {
+            throw Error('No existe el padre.');
+        }
+    }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    updateItem(item) {
+        if (this.getNodeInformation(item)) {
+            this.getNodeInformation(item).object = item;
+            this.reSort();
+            /** @type {?} */
+            const indexParent = this.allNode.findIndex((/**
+             * @param {?} node
+             * @return {?}
+             */
+            (node) => node.object[this.service.getIdField()] === item[this.service.getIdParentField()]));
+            if (indexParent >= 0) {
+                this.expandNode(this.allNode[indexParent].object);
+            }
+            else {
+                this.loadNextVisibleObjects(null);
+            }
+        }
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    reSort() {
+        /** @type {?} */
+        const items = this.allNode.map((/**
+         * @param {?} node
+         * @return {?}
+         */
+        (node) => node.object));
+        items.sort((/**
+         * @param {?} a
+         * @param {?} b
+         * @return {?}
+         */
+        (a, b) => this.service.compare(a, b)));
+        /** @type {?} */
+        const preorder = this.sortItems(items);
+        preorder.forEach((/**
+         * @param {?} object
+         * @param {?} index
+         * @return {?}
+         */
+        (object, index) => this.getNodeInformation(object).preorder = index + 1));
+        this.allNode.sort((/**
+         * @param {?} nodeA
+         * @param {?} nodeB
+         * @return {?}
+         */
+        (nodeA, nodeB) => nodeA.preorder - nodeB.preorder));
+    }
+}
+PagingTreeHelisaComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'hel-paging-tree',
+                template: "<div>\r\n  <div *ngFor=\"let item of visibleData\" [ngClass]=\"this.getLevelClass(item)\">\r\n    <div *ngIf=\"getNodeInformationById(item.id).visible\">\r\n      <div *ngIf=\"getNodeInformationById(item.id) as node\" class=\"helisa-tree-row\">\r\n        <div>\r\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\r\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\r\n        </div>\r\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n",
+                styles: [".padding-level-0{padding-left:0}.padding-level-1{padding-left:40px}.padding-level-2{padding-left:80px}.padding-level-3{padding-left:120px}.padding-level-4{padding-left:160px}.padding-level-5{padding-left:200px}.padding-level-6{padding-left:240px}.padding-level-7{padding-left:280px}.padding-level-8{padding-left:320px}.helisa-tree-row{display:flex;flex-direction:row;align-items:center}"]
+            }] }
+];
+/** @nocollapse */
+PagingTreeHelisaComponent.ctorParameters = () => [];
+PagingTreeHelisaComponent.propDecorators = {
+    nodeComponent: [{ type: ContentChild, args: ['nodeComponent',] }],
+    mode: [{ type: Input }],
+    pagingTreeHelisaListable: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 const DEFAULT_CONTENT$5 = '¿Esta seguro que desea eliminar esta información?';
 class AlertConfirmDeleteDataHelisaComponent {
@@ -4233,6 +4620,7 @@ HelisaLibModule.decorators = [
                     AlertInformationNotValidHelisaComponent,
                     ComboBoxHelisaComponent,
                     AlertAuthorizationTransactionHelisaComponent,
+                    PagingTreeHelisaComponent,
                     AlertConfirmDeleteDataHelisaComponent,
                     AlertDefineResidentialPhysicalStructureHelisaComponent,
                     AlertDefineCommercialStructureHelisaComponent,
@@ -4337,6 +4725,7 @@ HelisaLibModule.decorators = [
                     AlertInformationNotValidHelisaComponent,
                     ComboBoxHelisaComponent,
                     AlertAuthorizationTransactionHelisaComponent,
+                    PagingTreeHelisaComponent,
                     AlertConfirmDeleteDataHelisaComponent,
                     AlertDefineResidentialPhysicalStructureHelisaComponent,
                     AlertDefineCommercialStructureHelisaComponent,
@@ -4738,6 +5127,6 @@ AlertDefineParkingStructureHelisaService.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, ComboBoxHelisaState, ComboBoxHelisaComponent, AlertAuthorizationTransactionHelisaComponent, AlertAuthorizationTransactionHelisaService, AlertConfirmDeleteDataHelisaComponent, AlertConfirmDeleteDataHelisaService, AlertDefineResidentialPhysicalStructureHelisaComponent, AlertDefineResidentialPhysicalStructureHelisaService, AlertDefineCommercialStructureHelisaComponent, AlertDefineCommercialStructureHelisaService, AlertDefineParkingStructureHelisaComponent, AlertDefineParkingStructureHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
+export { InputWithButtonComponent, ToastHelisaComponent, ToastHelisaService, ToastType, AlertHelisaType, AlertHelisaComponent, AlertHelisaService, DependencyTableHelisaComponent, DependencyTableHelisaService, InputHelisaType, InputHelisaComponent, TableHelisaComponent, ColumnType, EventScope, TotalType, ChangeColumnConfigurationType, TableHelisaType, ColumnConfigUtil, TableHelisaService, TypeCalendarEnum, DateHelisaComponent, TreeHelisaComponent, TreeHelisaConnect, TreeHelisaService, AutocompleteHelisaComponent, AutocompleteHelisaService, OptionsScrollDirective, HelTooltipDirective, HelisaLibModule, AlertUncompletedDataHelisaComponent, AlertUncompletedDataHelisaService, AlertLostDataHelisaComponent, AlertLostDataHelisaService, AlertDeleteDataHelisaComponent, AlertDeleteDataHelisaService, AlertUncompletedSelectedDataHelisaComponent, AlertUncompletedSelectedDataHelisaService, AlertInformationNotValidHelisaComponent, AlertInformationNotValidHelisaService, ComboBoxHelisaState, ComboBoxHelisaComponent, AlertAuthorizationTransactionHelisaComponent, AlertAuthorizationTransactionHelisaService, PagingTreeInitialMode, PagingTreeHelisaComponent, AlertConfirmDeleteDataHelisaComponent, AlertConfirmDeleteDataHelisaService, AlertDefineResidentialPhysicalStructureHelisaComponent, AlertDefineResidentialPhysicalStructureHelisaService, AlertDefineCommercialStructureHelisaComponent, AlertDefineCommercialStructureHelisaService, AlertDefineParkingStructureHelisaComponent, AlertDefineParkingStructureHelisaService, ExternalLinkDirective as ɵa, ExternalLinkPipe as ɵb };
 
 //# sourceMappingURL=helisa-lib.js.map
