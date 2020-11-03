@@ -23,7 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Pipe, Directive, HostBinding, PLATFORM_ID, HostListener, ViewChildren, ContentChild, defineInjectable, inject, NgModule } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, Inject, Injectable, Directive, HostBinding, PLATFORM_ID, Pipe, HostListener, ViewChildren, ContentChild, defineInjectable, inject, NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort, MatTable, MatTableDataSource, MatTreeNestedDataSource, MatAutocomplete, MatTooltip, MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MatDialog as MatDialog$1, MatDialogModule } from '@angular/material/dialog';
 
@@ -3985,6 +3985,7 @@ class PagingTreeHelisaComponent {
         this.treeMode = PagingTreeInitialMode.EXPAND;
         this.visibleObjects = [];
         this.allNode = [];
+        this.afterLoadData = new EventEmitter();
     }
     /**
      * @return {?}
@@ -4046,6 +4047,7 @@ class PagingTreeHelisaComponent {
             this.allNode.push(node);
         }));
         this.loadNextVisibleObjects(null);
+        this.afterLoadData.emit();
     }
     /**
      * @private
@@ -4222,15 +4224,22 @@ class PagingTreeHelisaComponent {
      * @return {?}
      */
     removeItem(item) {
+        this.removeById(item[this.service.getIdField()]);
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    removeById(id) {
         /** @type {?} */
         const set = new Set();
-        set.add(item[this.service.getIdField()]);
+        set.add(id);
         /** @type {?} */
         const beginIndex = this.allNode.findIndex((/**
          * @param {?} itemSearch
          * @return {?}
          */
-        (itemSearch) => itemSearch.object[this.service.getIdField()] === item[this.service.getIdField()]));
+        (itemSearch) => itemSearch.object[this.service.getIdField()] === id));
         /** @type {?} */
         let lastIndex = this.allNode.length;
         for (let i = beginIndex + 1; i < this.allNode.length; i++) {
@@ -4337,13 +4346,14 @@ class PagingTreeHelisaComponent {
 PagingTreeHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-paging-tree',
-                template: "<div>\r\n  <div *ngFor=\"let item of visibleData\" [ngClass]=\"this.getLevelClass(item)\">\r\n    <div *ngIf=\"getNodeInformation(item).visible\">\r\n      <div *ngIf=\"getNodeInformation(item) as node\" class=\"helisa-tree-row\">\r\n        <div>\r\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\r\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\r\n        </div>\r\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n",
+                template: "<div>\r\n  <div *ngFor=\"let item of visibleData\" [ngClass]=\"this.getLevelClass(item)\">\r\n    <div *ngIf=\"getNodeInformation(item).visible\">\r\n      <div *ngIf=\"getNodeInformation(item) as node\" class=\"helisa-tree-row\">\r\n        <div>\r\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\r\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\r\n        </div>\r\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
                 styles: [".padding-level-0{padding-left:0}.padding-level-1{padding-left:40px}.padding-level-2{padding-left:80px}.padding-level-3{padding-left:120px}.padding-level-4{padding-left:160px}.padding-level-5{padding-left:200px}.padding-level-6{padding-left:240px}.padding-level-7{padding-left:280px}.padding-level-8{padding-left:320px}.helisa-tree-row{display:flex;flex-direction:row;align-items:center}"]
             }] }
 ];
 /** @nocollapse */
 PagingTreeHelisaComponent.ctorParameters = () => [];
 PagingTreeHelisaComponent.propDecorators = {
+    afterLoadData: [{ type: Output }],
     nodeComponent: [{ type: ContentChild, args: ['nodeComponent',] }],
     mode: [{ type: Input }],
     pagingTreeHelisaListable: [{ type: Input }]

@@ -1,4 +1,4 @@
-import { AfterViewInit, OnInit, TemplateRef } from '@angular/core';
+import { AfterViewInit, EventEmitter, OnInit, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 export declare enum PagingTreeInitialMode {
     COLLAPSE = 0,
@@ -35,6 +35,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     private service;
     private searchNode;
     private allNode;
+    afterLoadData: EventEmitter<void>;
     nodeComponent: TemplateRef<{
         data: T;
         node: HelisaNodeData<T>;
@@ -57,6 +58,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     showNextPage(): void;
     readonly visibleData: ReadonlyArray<T>;
     removeItem(item: T): void;
+    removeById(id: string): void;
     addItem(item: T): void;
     updateItem(item: T): void;
     private reSort;
