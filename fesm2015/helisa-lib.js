@@ -4231,42 +4231,56 @@ class PagingTreeHelisaComponent {
      * @return {?}
      */
     removeById(id) {
-        /** @type {?} */
-        const set = new Set();
-        set.add(id);
-        /** @type {?} */
-        const beginIndex = this.allNode.findIndex((/**
-         * @param {?} itemSearch
-         * @return {?}
-         */
-        (itemSearch) => itemSearch.object[this.service.getIdField()] === id));
-        /** @type {?} */
-        let lastIndex = this.allNode.length;
-        for (let i = beginIndex + 1; i < this.allNode.length; i++) {
+        if (this.getNodeInformationById(id)) {
             /** @type {?} */
-            const itemSearch = this.allNode[i].object;
-            if (set.has(itemSearch[this.service.getIdParentField()])) {
-                set.add(itemSearch[this.service.getIdField()]);
+            const idParent = this.getNodeInformationById(id).object[this.service.getIdParentField()];
+            /** @type {?} */
+            const set = new Set();
+            set.add(id);
+            /** @type {?} */
+            const beginIndex = this.allNode.findIndex((/**
+             * @param {?} itemSearch
+             * @return {?}
+             */
+            (itemSearch) => itemSearch.object[this.service.getIdField()] === id));
+            /** @type {?} */
+            let lastIndex = this.allNode.length;
+            for (let i = beginIndex + 1; i < this.allNode.length; i++) {
+                /** @type {?} */
+                const itemSearch = this.allNode[i].object;
+                if (set.has(itemSearch[this.service.getIdParentField()])) {
+                    set.add(itemSearch[this.service.getIdField()]);
+                }
+                else {
+                    lastIndex = i;
+                    break;
+                }
             }
-            else {
-                lastIndex = i;
-                break;
+            /** @type {?} */
+            const deletedItems = this.allNode.splice(beginIndex, lastIndex - beginIndex);
+            /** @type {?} */
+            let parentHaveChildren = false;
+            deletedItems.forEach((/**
+             * @param {?} deletedItem
+             * @return {?}
+             */
+            (deletedItem) => this.searchNode.delete(deletedItem.object[this.service.getIdField()])));
+            this.allNode.forEach((/**
+             * @param {?} searchItem
+             * @param {?} index
+             * @return {?}
+             */
+            (searchItem, index) => {
+                searchItem.preorder = index + 1;
+                if (searchItem.object[this.service.getIdParentField()] === idParent) {
+                    parentHaveChildren = true;
+                }
+            }));
+            if (idParent) {
+                this.getNodeInformationById(idParent).haveChildren = parentHaveChildren;
             }
+            this.loadNextVisibleObjects(beginIndex > 0 ? this.allNode[beginIndex - 1].object : null);
         }
-        /** @type {?} */
-        const deletedItems = this.allNode.splice(beginIndex, lastIndex - beginIndex);
-        deletedItems.forEach((/**
-         * @param {?} deletedItem
-         * @return {?}
-         */
-        (deletedItem) => this.searchNode.delete(deletedItem.object[this.service.getIdField()])));
-        this.allNode.forEach((/**
-         * @param {?} searchItem
-         * @param {?} index
-         * @return {?}
-         */
-        (searchItem, index) => searchItem.preorder = index + 1));
-        this.loadNextVisibleObjects(beginIndex > 0 ? this.allNode[beginIndex - 1].object : null);
     }
     /**
      * @param {?} item
@@ -4281,6 +4295,7 @@ class PagingTreeHelisaComponent {
         (node) => node.object[this.service.getIdField()] === item[this.service.getIdParentField()]));
         if (indexParent >= 0) {
             this.allNode.push(this.createNode(item));
+            this.allNode[indexParent].haveChildren = true;
             this.reSort();
             this.expandNode(this.allNode[indexParent].object);
         }

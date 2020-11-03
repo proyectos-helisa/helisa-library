@@ -5207,39 +5207,53 @@
          */
             function (id) {
                 var _this = this;
-                /** @type {?} */
-                var set = new Set();
-                set.add(id);
-                /** @type {?} */
-                var beginIndex = this.allNode.findIndex(( /**
-                 * @param {?} itemSearch
-                 * @return {?}
-                 */function (itemSearch) { return itemSearch.object[_this.service.getIdField()] === id; }));
-                /** @type {?} */
-                var lastIndex = this.allNode.length;
-                for (var i = beginIndex + 1; i < this.allNode.length; i++) {
+                if (this.getNodeInformationById(id)) {
                     /** @type {?} */
-                    var itemSearch = this.allNode[i].object;
-                    if (set.has(itemSearch[this.service.getIdParentField()])) {
-                        set.add(itemSearch[this.service.getIdField()]);
+                    var idParent_1 = this.getNodeInformationById(id).object[this.service.getIdParentField()];
+                    /** @type {?} */
+                    var set = new Set();
+                    set.add(id);
+                    /** @type {?} */
+                    var beginIndex = this.allNode.findIndex(( /**
+                     * @param {?} itemSearch
+                     * @return {?}
+                     */function (itemSearch) { return itemSearch.object[_this.service.getIdField()] === id; }));
+                    /** @type {?} */
+                    var lastIndex = this.allNode.length;
+                    for (var i = beginIndex + 1; i < this.allNode.length; i++) {
+                        /** @type {?} */
+                        var itemSearch = this.allNode[i].object;
+                        if (set.has(itemSearch[this.service.getIdParentField()])) {
+                            set.add(itemSearch[this.service.getIdField()]);
+                        }
+                        else {
+                            lastIndex = i;
+                            break;
+                        }
                     }
-                    else {
-                        lastIndex = i;
-                        break;
+                    /** @type {?} */
+                    var deletedItems = this.allNode.splice(beginIndex, lastIndex - beginIndex);
+                    /** @type {?} */
+                    var parentHaveChildren_1 = false;
+                    deletedItems.forEach(( /**
+                     * @param {?} deletedItem
+                     * @return {?}
+                     */function (deletedItem) { return _this.searchNode.delete(deletedItem.object[_this.service.getIdField()]); }));
+                    this.allNode.forEach(( /**
+                     * @param {?} searchItem
+                     * @param {?} index
+                     * @return {?}
+                     */function (searchItem, index) {
+                        searchItem.preorder = index + 1;
+                        if (searchItem.object[_this.service.getIdParentField()] === idParent_1) {
+                            parentHaveChildren_1 = true;
+                        }
+                    }));
+                    if (idParent_1) {
+                        this.getNodeInformationById(idParent_1).haveChildren = parentHaveChildren_1;
                     }
+                    this.loadNextVisibleObjects(beginIndex > 0 ? this.allNode[beginIndex - 1].object : null);
                 }
-                /** @type {?} */
-                var deletedItems = this.allNode.splice(beginIndex, lastIndex - beginIndex);
-                deletedItems.forEach(( /**
-                 * @param {?} deletedItem
-                 * @return {?}
-                 */function (deletedItem) { return _this.searchNode.delete(deletedItem.object[_this.service.getIdField()]); }));
-                this.allNode.forEach(( /**
-                 * @param {?} searchItem
-                 * @param {?} index
-                 * @return {?}
-                 */function (searchItem, index) { return searchItem.preorder = index + 1; }));
-                this.loadNextVisibleObjects(beginIndex > 0 ? this.allNode[beginIndex - 1].object : null);
             };
         /**
          * @param {?} item
@@ -5258,6 +5272,7 @@
                  */function (node) { return node.object[_this.service.getIdField()] === item[_this.service.getIdParentField()]; }));
                 if (indexParent >= 0) {
                     this.allNode.push(this.createNode(item));
+                    this.allNode[indexParent].haveChildren = true;
                     this.reSort();
                     this.expandNode(this.allNode[indexParent].object);
                 }
