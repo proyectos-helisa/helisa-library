@@ -45,7 +45,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     ngAfterViewInit(): void;
     mode: PagingTreeInitialMode;
     pagingTreeHelisaListable: PagingTreeHelisaListable<T>;
-    private reset;
+    reset(): void;
     private loadData;
     private sortItems;
     private createNode;
