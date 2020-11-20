@@ -25,6 +25,7 @@ export declare class DateHelisaComponent implements OnInit {
     change: EventEmitter<Date>;
     isClosed: boolean;
     timeout: any;
+    isDisabled: boolean;
     /**
      * Si este valor es diferente a TypeCalendarEnum.NORMAL no
      * será tomado en cuenta
@@ -39,6 +40,7 @@ export declare class DateHelisaComponent implements OnInit {
      * Verificar si el formato es valido
      */
     invalidFormat: boolean;
+    private inputFormReal;
     constructor();
     ngOnInit(): void;
     readonly typeCalendarEnum: typeof TypeCalendarEnum;

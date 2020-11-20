@@ -736,6 +736,16 @@ class InputHelisaComponent {
      */
     set inputFormControl(formControl) {
         this.inputFormReal = formControl;
+        this.inputFormReal.registerOnDisabledChange(((/**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+        (isDisabled) => {
+            if (isDisabled)
+                this.formControlMask.disable();
+            else
+                this.formControlMask.enable();
+        })));
         this.inputFormReal.valueChanges.subscribe((/**
          * @param {?} data
          * @return {?}
@@ -1913,6 +1923,7 @@ class DateHelisaComponent {
         this.showDatePicker = false;
         this.change = new EventEmitter();
         this.isClosed = false;
+        this.isDisabled = false;
         /**
          * Si este valor es diferente a TypeCalendarEnum.NORMAL no
          * será tomado en cuenta
@@ -1926,6 +1937,7 @@ class DateHelisaComponent {
          * Verificar si el formato es valido
          */
         this.invalidFormat = false;
+        this.inputFormReal = new FormControl('');
     }
     /*
       * TypeCalendarEnum.MONTH_YEAR = 'MM/YYYY'
@@ -1938,6 +1950,21 @@ class DateHelisaComponent {
         moment.locale(this.locale);
         this.dateToVisualize = new FormControl('', this.dateFormControl.validator);
         this.formHandler();
+        this.inputFormReal = this.dateFormControl;
+        this.inputFormReal.registerOnDisabledChange((/**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+        (isDisabled) => {
+            if (isDisabled) {
+                this.isDisabled = true;
+                this.dateToVisualize.disable();
+            }
+            else {
+                this.isDisabled = false;
+                this.dateToVisualize.enable();
+            }
+        }));
         /**
          * establecer valor por defecto de la fecha
          */
@@ -2157,7 +2184,7 @@ class DateHelisaComponent {
 DateHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-date-helisa',
-                template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\" (keydown)=\"onKey($event)\" (focus)=\"openDatePicker()\" (blur)=\"onBlur()\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
+                template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\" (keydown)=\"onKey($event)\" (focus)=\"openDatePicker()\" (blur)=\"onBlur()\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"dateToVisualize.value\"\r\n    (dateChange)=\"dateChange('change', $event)\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\" [disabled]=\"isDisabled\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
                 styles: [""]
             }] }
 ];
