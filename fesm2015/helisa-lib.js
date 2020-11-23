@@ -902,7 +902,7 @@ class InputHelisaComponent {
         }
         if (this.type === InputHelisaType.IDENTITY) {
             for (const strItem of str) {
-                if (strItem.match('[a-zA-Z0-9]')) {
+                if (strItem.match('[0-9]')) {
                     realStr += strItem;
                 }
             }
