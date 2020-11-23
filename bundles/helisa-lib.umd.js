@@ -1205,7 +1205,7 @@
                     try {
                         for (var str_1 = __values(str), str_1_1 = str_1.next(); !str_1_1.done; str_1_1 = str_1.next()) {
                             var strItem = str_1_1.value;
-                            if (strItem.match('[a-zA-Z0-9]')) {
+                            if (strItem.match('[0-9]')) {
                                 realStr += strItem;
                             }
                         }
