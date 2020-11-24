@@ -1937,6 +1937,7 @@ class DateHelisaComponent {
          * Verificar si el formato es valido
          */
         this.invalidFormat = false;
+        this.invalidDate = new EventEmitter();
         this.inputFormReal = new FormControl('');
     }
     /*
@@ -2145,6 +2146,7 @@ class DateHelisaComponent {
             if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
                 this.dateToVisualize.setValue(incommingDate);
             }
+            this.invalidDate.emit(this.invalidFormat);
         }));
     }
     /**
@@ -2178,7 +2180,7 @@ class DateHelisaComponent {
      * @return {?}
      */
     getErrorMessage() {
-        return this.errorMessage + this.dateFormat;
+        this.invalidDate.emit(this.invalidFormat);
     }
 }
 DateHelisaComponent.decorators = [
@@ -2200,7 +2202,8 @@ DateHelisaComponent.propDecorators = {
     placeholder: [{ type: Input }],
     showDatePicker: [{ type: Input }],
     change: [{ type: Output }],
-    typeCalendar: [{ type: Input }]
+    typeCalendar: [{ type: Input }],
+    invalidDate: [{ type: Output }]
 };
 
 /**
