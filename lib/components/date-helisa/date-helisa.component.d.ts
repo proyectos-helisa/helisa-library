@@ -40,7 +40,6 @@ export declare class DateHelisaComponent implements OnInit {
      * Verificar si el formato es valido
      */
     invalidFormat: boolean;
-    invalidDate: EventEmitter<boolean>;
     private inputFormReal;
     constructor();
     ngOnInit(): void;
@@ -61,5 +60,5 @@ export declare class DateHelisaComponent implements OnInit {
      * Evento desde el control touch del calendar
      */
     dateChange(type: string, event: MatDatepickerInputEvent<Date>): void;
-    getErrorMessage(): void;
+    getErrorMessage(): string;
 }

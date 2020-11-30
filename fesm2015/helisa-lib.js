@@ -1937,7 +1937,6 @@ class DateHelisaComponent {
          * Verificar si el formato es valido
          */
         this.invalidFormat = false;
-        this.invalidDate = new EventEmitter();
         this.inputFormReal = new FormControl('');
     }
     /*
@@ -2146,7 +2145,6 @@ class DateHelisaComponent {
             if (this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
                 this.dateToVisualize.setValue(incommingDate);
             }
-            this.invalidDate.emit(this.invalidFormat);
         }));
     }
     /**
@@ -2180,7 +2178,7 @@ class DateHelisaComponent {
      * @return {?}
      */
     getErrorMessage() {
-        this.invalidDate.emit(this.invalidFormat);
+        return this.errorMessage + this.dateFormat;
     }
 }
 DateHelisaComponent.decorators = [
@@ -2202,8 +2200,7 @@ DateHelisaComponent.propDecorators = {
     placeholder: [{ type: Input }],
     showDatePicker: [{ type: Input }],
     change: [{ type: Output }],
-    typeCalendar: [{ type: Input }],
-    invalidDate: [{ type: Output }]
+    typeCalendar: [{ type: Input }]
 };
 
 /**
@@ -3753,27 +3750,18 @@ class AlertInformationNotValidHelisaComponent {
         if (this.content === undefined) {
             this.content = DEFAULT_CONTENT$4;
         }
-        dialogRef.disableClose = true;
         dialogRef.keydownEvents().subscribe((/**
          * @param {?} event
          * @return {?}
          */
         (event) => {
-            if (event.code === 'Escape') {
-                this.dialogRef.close(this.onCancel());
-            }
+            this.dialogRef.close(this.onCancel());
         }));
     }
     /**
      * @return {?}
      */
     ngOnInit() {
-        setTimeout((/**
-         * @return {?}
-         */
-        () => {
-            this.dialogRef.close();
-        }), 3000);
     }
     /**
      * @return {?}

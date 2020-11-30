@@ -2446,7 +2446,6 @@
              * Verificar si el formato es valido
              */
             this.invalidFormat = false;
-            this.invalidDate = new i0.EventEmitter();
             this.inputFormReal = new forms.FormControl('');
         }
         /*
@@ -2684,7 +2683,6 @@
                     if (_this.dateFormControl.value !== '' && incommingDate !== 'Invalid date') {
                         _this.dateToVisualize.setValue(incommingDate);
                     }
-                    _this.invalidDate.emit(_this.invalidFormat);
                 }));
             };
         /**
@@ -2739,7 +2737,7 @@
          * @return {?}
          */
             function () {
-                this.invalidDate.emit(this.invalidFormat);
+                return this.errorMessage + this.dateFormat;
             };
         DateHelisaComponent.decorators = [
             { type: i0.Component, args: [{
@@ -2760,8 +2758,7 @@
             placeholder: [{ type: i0.Input }],
             showDatePicker: [{ type: i0.Input }],
             change: [{ type: i0.Output }],
-            typeCalendar: [{ type: i0.Input }],
-            invalidDate: [{ type: i0.Output }]
+            typeCalendar: [{ type: i0.Input }]
         };
         return DateHelisaComponent;
     }());
@@ -4614,14 +4611,11 @@
             if (this.content === undefined) {
                 this.content = DEFAULT_CONTENT$4;
             }
-            dialogRef.disableClose = true;
             dialogRef.keydownEvents().subscribe(( /**
              * @param {?} event
              * @return {?}
              */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
+                _this.dialogRef.close(_this.onCancel());
             }));
         }
         /**
@@ -4631,12 +4625,6 @@
          * @return {?}
          */
             function () {
-                var _this = this;
-                setTimeout(( /**
-                 * @return {?}
-                 */function () {
-                    _this.dialogRef.close();
-                }), 3000);
             };
         /**
          * @return {?}
