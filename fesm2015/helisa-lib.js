@@ -736,7 +736,7 @@ class InputHelisaComponent {
      */
     set inputFormControl(formControl) {
         this.inputFormReal = formControl;
-        this.inputFormReal.registerOnDisabledChange(((/**
+        this.inputFormReal.registerOnDisabledChange((/**
          * @param {?} isDisabled
          * @return {?}
          */
@@ -747,7 +747,7 @@ class InputHelisaComponent {
             else {
                 this.formControlMask.enable();
             }
-        })));
+        }));
         this.inputFormReal.valueChanges.subscribe((/**
          * @param {?} data
          * @return {?}
@@ -786,6 +786,7 @@ class InputHelisaComponent {
     statusChange(data) {
         if (data === 'INVALID') {
             this.formControlMask.setErrors({ key: 'Error de validación.' });
+            this.formControlMask.markAsTouched();
         }
         else {
             this.formControlMask.setErrors(null);

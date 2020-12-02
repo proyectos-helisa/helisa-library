@@ -954,7 +954,7 @@ var InputHelisaComponent = /** @class */ (function () {
         function (formControl) {
             var _this = this;
             this.inputFormReal = formControl;
-            this.inputFormReal.registerOnDisabledChange(((/**
+            this.inputFormReal.registerOnDisabledChange((/**
              * @param {?} isDisabled
              * @return {?}
              */
@@ -965,7 +965,7 @@ var InputHelisaComponent = /** @class */ (function () {
                 else {
                     _this.formControlMask.enable();
                 }
-            })));
+            }));
             this.inputFormReal.valueChanges.subscribe((/**
              * @param {?} data
              * @return {?}
@@ -1012,6 +1012,7 @@ var InputHelisaComponent = /** @class */ (function () {
     function (data) {
         if (data === 'INVALID') {
             this.formControlMask.setErrors({ key: 'Error de validación.' });
+            this.formControlMask.markAsTouched();
         }
         else {
             this.formControlMask.setErrors(null);
