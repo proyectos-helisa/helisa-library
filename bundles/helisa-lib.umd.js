@@ -994,10 +994,12 @@
                  * @param {?} isDisabled
                  * @return {?}
                  */function (isDisabled) {
-                    if (isDisabled)
+                    if (isDisabled) {
                         _this.formControlMask.disable();
-                    else
+                    }
+                    else {
                         _this.formControlMask.enable();
+                    }
                 })));
                 this.inputFormReal.valueChanges.subscribe(( /**
                  * @param {?} data
@@ -4318,344 +4320,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @type {?} */
-    var DEFAULT_TITLE = 'No ha suministrado la información necesaria.';
-    /** @type {?} */
-    var DEFAULT_CONTENT = 'Si insite en grabar así, este concepto no será utilizable hasta su conclusión satisfactoria, que deberá completar posteriormente modificando en concepto.';
-    var AlertUncompletedDataHelisaComponent = /** @class */ (function () {
-        function AlertUncompletedDataHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.title = data.title;
-            if (this.title === undefined) {
-                this.title = DEFAULT_TITLE;
-            }
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT;
-            }
-            this.okLabel = data.okLabel;
-            if (this.okLabel === undefined) {
-                this.okLabel = 'Lo asumo';
-            }
-            this.cancelLabel = data.cancelLabel;
-            if (this.cancelLabel === undefined) {
-                this.cancelLabel = 'Me retracto';
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertUncompletedDataHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertUncompletedDataHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertUncompletedDataHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-uncompleted-data-helisa',
-                        template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertUncompletedDataHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertUncompletedDataHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_TITLE$1 = '¿Está seguro de querer perder lo ya hecho?';
-    /** @type {?} */
-    var DEFAULT_CONTENT$1 = 'Si no está seguro, puede continuar o "aplicar" y posteriormente cuando tenga clara las respuestas, usando la opción de modificar podrá completar el concepto.';
-    var AlertLostDataHelisaComponent = /** @class */ (function () {
-        function AlertLostDataHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.title = data.title;
-            if (this.title === undefined) {
-                this.title = DEFAULT_TITLE$1;
-            }
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$1;
-            }
-            this.okLabel = data.okLabel;
-            if (this.okLabel === undefined) {
-                this.okLabel = 'Lo asumo';
-            }
-            this.cancelLabel = data.cancelLabel;
-            if (this.cancelLabel === undefined) {
-                this.cancelLabel = 'Me retracto';
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertLostDataHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertLostDataHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertLostDataHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-lost-data-helisa',
-                        template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertLostDataHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertLostDataHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_TITLE$2 = '¿Está seguro que debe anular esta información?';
-    /** @type {?} */
-    var DEFAULT_CONTENT$2 = 'Al anular este concepto, quedará la huella de todo lo que se hizo apoyados en su información. No es una eliminación tácita, es suprimir su uso en adelante.';
-    var AlertDeleteDataHelisaComponent = /** @class */ (function () {
-        function AlertDeleteDataHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.title = data.title;
-            if (this.title === undefined) {
-                this.title = DEFAULT_TITLE$2;
-            }
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$2;
-            }
-            this.okLabel = data.okLabel;
-            if (this.okLabel === undefined) {
-                this.okLabel = 'Lo asumo';
-            }
-            this.cancelLabel = data.cancelLabel;
-            if (this.cancelLabel === undefined) {
-                this.cancelLabel = 'Me retracto';
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertDeleteDataHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertDeleteDataHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertDeleteDataHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-delete-data-helisa',
-                        template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertDeleteDataHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: AlertDeleteDataHelisaComponent, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertDeleteDataHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_CONTENT$3 = 'Elemento sin información requerida. Modifíquelo para completarlo.';
-    var AlertUncompletedSelectedDataHelisaComponent = /** @class */ (function () {
-        function AlertUncompletedSelectedDataHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$3;
-            }
-            this.okLabel = data.okLabel;
-            if (this.okLabel === undefined) {
-                this.okLabel = 'Aceptar';
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertUncompletedSelectedDataHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertUncompletedSelectedDataHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertUncompletedSelectedDataHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-uncompleted-selected-data-helisa',
-                        template: "<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\r\n</div>\r\n",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertUncompletedSelectedDataHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertUncompletedSelectedDataHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_CONTENT$4 = 'Rectifique. Hay información no válida';
-    var AlertInformationNotValidHelisaComponent = /** @class */ (function () {
-        function AlertInformationNotValidHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$4;
-            }
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                _this.dialogRef.close(_this.onCancel());
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertInformationNotValidHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertInformationNotValidHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertInformationNotValidHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-information-not-valid-helisa',
-                        template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertInformationNotValidHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertInformationNotValidHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     /** @enum {number} */
     var ComboBoxHelisaState = {
         CLOSED: 0,
@@ -4817,73 +4481,6 @@
             enabled: [{ type: i0.Input }]
         };
         return ComboBoxHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_TITLE$3 = '!Esta transacción requiere autorización!';
-    var AlertAuthorizationTransactionHelisaComponent = /** @class */ (function () {
-        function AlertAuthorizationTransactionHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.title = data.title;
-            if (this.title === undefined) {
-                this.title = DEFAULT_TITLE$3;
-            }
-            this.okLabel = data.okLabel;
-            if (this.okLabel === undefined) {
-                this.okLabel = 'Solicitarla';
-            }
-            this.cancelLabel = data.cancelLabel;
-            if (this.cancelLabel === undefined) {
-                this.cancelLabel = 'Negarla';
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertAuthorizationTransactionHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertAuthorizationTransactionHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertAuthorizationTransactionHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-authorization-transaction-helisa',
-                        template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertAuthorizationTransactionHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertAuthorizationTransactionHelisaComponent;
     }());
 
     /**
@@ -5376,24 +4973,103 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @enum {number} */
+    var AlertInformationType = {
+        AUTHORIZATION_TRANSACTION: 0,
+        CONFIRM_DELETE_DATA: 1,
+        DELETE_DATA: 2,
+        INFORMATION_NOT_VALID: 3,
+        LOST_DATA: 4,
+        UNCOMPLETED_DATA: 5,
+        UNCOMPLETED_SELECTED_DATA: 6,
+        DEFINE_COMMERCIAL_STRUCTURE: 7,
+        DEFINE_PARKING_STRUCTURE: 8,
+        DEFINE_RESIDENCIAL_STRUCTURE: 9,
+    };
+    AlertInformationType[AlertInformationType.AUTHORIZATION_TRANSACTION] = 'AUTHORIZATION_TRANSACTION';
+    AlertInformationType[AlertInformationType.CONFIRM_DELETE_DATA] = 'CONFIRM_DELETE_DATA';
+    AlertInformationType[AlertInformationType.DELETE_DATA] = 'DELETE_DATA';
+    AlertInformationType[AlertInformationType.INFORMATION_NOT_VALID] = 'INFORMATION_NOT_VALID';
+    AlertInformationType[AlertInformationType.LOST_DATA] = 'LOST_DATA';
+    AlertInformationType[AlertInformationType.UNCOMPLETED_DATA] = 'UNCOMPLETED_DATA';
+    AlertInformationType[AlertInformationType.UNCOMPLETED_SELECTED_DATA] = 'UNCOMPLETED_SELECTED_DATA';
+    AlertInformationType[AlertInformationType.DEFINE_COMMERCIAL_STRUCTURE] = 'DEFINE_COMMERCIAL_STRUCTURE';
+    AlertInformationType[AlertInformationType.DEFINE_PARKING_STRUCTURE] = 'DEFINE_PARKING_STRUCTURE';
+    AlertInformationType[AlertInformationType.DEFINE_RESIDENCIAL_STRUCTURE] = 'DEFINE_RESIDENCIAL_STRUCTURE';
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     /** @type {?} */
-    var DEFAULT_CONTENT$5 = '¿Esta seguro que desea eliminar esta información?';
-    var AlertConfirmDeleteDataHelisaComponent = /** @class */ (function () {
-        function AlertConfirmDeleteDataHelisaComponent(dialogRef, data) {
+    var TITLE_BY_ALERT_TYPE = ['!Esta transacción requiere autorización!',
+        '',
+        '¿Está seguro que debe anular esta información?',
+        '',
+        '¿Está seguro de querer perder lo ya hecho?',
+        'No ha suministrado la información necesaria.',
+        '',
+        '',
+        '',
+        ''
+    ];
+    /** @type {?} */
+    var CONTENT_BY_ALERT_TYPE = ['',
+        '¿Esta seguro que desea eliminar esta información?',
+        'Al anular este concepto, quedará la huella de todo lo que se hizo apoyados en su información. No es una eliminación tácita, es suprimir su uso en adelante.',
+        'Rectifique. Hay información no válida',
+        'Si no está seguro, puede continuar o "aplicar" y posteriormente cuando tenga clara las respuestas, usando la opción de modificar podrá completar el concepto.',
+        'Si insite en grabar así, este concepto no será utilizable hasta su conclusión satisfactoria, que deberá completar posteriormente modificando el concepto.',
+        'Elemento sin información requerida. Modifíquelo para completarlo.',
+        'Primero defina la estructura comercial en configuración.',
+        'Primero defina la estructura zona de parqueaderos en configuración.',
+        'Primero defina la estructura física residencial en configuración.'
+    ];
+    /** @type {?} */
+    var OK_LABEL_BY_ALERT_TYPE = ['Solicitarla',
+        'Lo asumo',
+        'Lo asumo',
+        '',
+        'Lo asumo',
+        'Lo asumo',
+        'Aceptar',
+        '',
+        '',
+        ''
+    ];
+    /** @type {?} */
+    var CANCEL_LABEL_BY_ALERT_TYPE = ['Negarla',
+        'Me retracto',
+        'Me retracto',
+        '',
+        'Me retracto',
+        'Me retracto',
+        '',
+        '',
+        '',
+        ''
+    ];
+    var AlertInformationDataHelisaComponent = /** @class */ (function () {
+        function AlertInformationDataHelisaComponent(dialogRef, data) {
             var _this = this;
             this.dialogRef = dialogRef;
             this.data = data;
+            this.alertType = data.alertType;
+            this.title = data.title;
+            if (this.title === undefined) {
+                this.title = TITLE_BY_ALERT_TYPE[this.alertType];
+            }
             this.content = data.content;
             if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$5;
+                this.content = CONTENT_BY_ALERT_TYPE[this.alertType];
             }
             this.okLabel = data.okLabel;
             if (this.okLabel === undefined) {
-                this.okLabel = 'Lo asumo';
+                this.okLabel = OK_LABEL_BY_ALERT_TYPE[this.alertType];
             }
             this.cancelLabel = data.cancelLabel;
             if (this.cancelLabel === undefined) {
-                this.cancelLabel = 'Me retracto';
+                this.cancelLabel = CANCEL_LABEL_BY_ALERT_TYPE[this.alertType];
             }
             dialogRef.disableClose = true;
             dialogRef.keydownEvents().subscribe(( /**
@@ -5408,230 +5084,87 @@
         /**
          * @return {?}
          */
-        AlertConfirmDeleteDataHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        /**
-         * @return {?}
-         */
-        AlertConfirmDeleteDataHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertConfirmDeleteDataHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-confirm-delete-data-helisa',
-                        template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial>{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertConfirmDeleteDataHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: AlertConfirmDeleteDataHelisaComponent, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertConfirmDeleteDataHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_CONTENT$6 = 'Primero defina la estructura física residencial en configuración.';
-    var AlertDefineResidentialPhysicalStructureHelisaComponent = /** @class */ (function () {
-        function AlertDefineResidentialPhysicalStructureHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$6;
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertDefineResidentialPhysicalStructureHelisaComponent.prototype.ngOnInit = /**
+        AlertInformationDataHelisaComponent.prototype.ngOnInit = /**
          * @return {?}
          */
             function () {
                 var _this = this;
-                setTimeout(( /**
-                 * @return {?}
-                 */function () {
-                    _this.dialogRef.close();
-                }), 3000);
+                if (this.alertType === AlertInformationType.DEFINE_COMMERCIAL_STRUCTURE || this.alertType === AlertInformationType.DEFINE_PARKING_STRUCTURE ||
+                    this.alertType === AlertInformationType.DEFINE_RESIDENCIAL_STRUCTURE) {
+                    setTimeout(( /**
+                     * @return {?}
+                     */function () {
+                        _this.dialogRef.close();
+                    }), 3000);
+                }
             };
         /**
          * @return {?}
          */
-        AlertDefineResidentialPhysicalStructureHelisaComponent.prototype.onCancel = /**
+        AlertInformationDataHelisaComponent.prototype.onCancel = /**
          * @return {?}
          */
             function () {
                 this.dialogRef.close();
             };
-        AlertDefineResidentialPhysicalStructureHelisaComponent.decorators = [
+        /**
+         * @return {?}
+         */
+        AlertInformationDataHelisaComponent.prototype.hasTitle = /**
+         * @return {?}
+         */
+            function () {
+                return this.alertType === AlertInformationType.AUTHORIZATION_TRANSACTION || this.alertType === AlertInformationType.DELETE_DATA ||
+                    this.alertType === AlertInformationType.LOST_DATA || this.alertType === AlertInformationType.UNCOMPLETED_DATA;
+            };
+        /**
+         * @return {?}
+         */
+        AlertInformationDataHelisaComponent.prototype.hasContent = /**
+         * @return {?}
+         */
+            function () {
+                return this.alertType === AlertInformationType.CONFIRM_DELETE_DATA || this.alertType === AlertInformationType.DELETE_DATA ||
+                    this.alertType === AlertInformationType.INFORMATION_NOT_VALID || this.alertType === AlertInformationType.LOST_DATA ||
+                    this.alertType === AlertInformationType.UNCOMPLETED_DATA || this.alertType === AlertInformationType.UNCOMPLETED_SELECTED_DATA ||
+                    this.alertType === AlertInformationType.DEFINE_COMMERCIAL_STRUCTURE || this.alertType === AlertInformationType.DEFINE_PARKING_STRUCTURE ||
+                    this.alertType === AlertInformationType.DEFINE_RESIDENCIAL_STRUCTURE;
+            };
+        /**
+         * @return {?}
+         */
+        AlertInformationDataHelisaComponent.prototype.hasButtons = /**
+         * @return {?}
+         */
+            function () {
+                return this.alertType === AlertInformationType.AUTHORIZATION_TRANSACTION || this.alertType === AlertInformationType.CONFIRM_DELETE_DATA ||
+                    this.alertType === AlertInformationType.DELETE_DATA || this.alertType === AlertInformationType.LOST_DATA ||
+                    this.alertType === AlertInformationType.UNCOMPLETED_DATA || this.alertType === AlertInformationType.UNCOMPLETED_SELECTED_DATA;
+            };
+        /**
+         * @return {?}
+         */
+        AlertInformationDataHelisaComponent.prototype.hasCancelButton = /**
+         * @return {?}
+         */
+            function () {
+                return this.alertType !== AlertInformationType.UNCOMPLETED_SELECTED_DATA;
+            };
+        AlertInformationDataHelisaComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'hel-alert-define-residential-physical-structure-helisa',
-                        template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
+                        selector: 'hel-alert-information-data-helisa',
+                        template: "<h1 mat-dialog-title *ngIf=\"hasTitle()\">{{ title }}</h1>\r\n<div mat-dialog-content *ngIf=\"hasContent()\">{{ content }}</div>\r\n<div mat-dialog-action *ngIf=\"hasButtons()\">\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial *ngIf=\"hasCancelButton()\">{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
                         styles: [""]
                     }] }
         ];
         /** @nocollapse */
-        AlertDefineResidentialPhysicalStructureHelisaComponent.ctorParameters = function () {
+        AlertInformationDataHelisaComponent.ctorParameters = function () {
             return [
                 { type: material.MatDialogRef },
                 { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
             ];
         };
-        return AlertDefineResidentialPhysicalStructureHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_CONTENT$7 = 'Primero defina la estructura comercial en configuración.';
-    var AlertDefineCommercialStructureHelisaComponent = /** @class */ (function () {
-        function AlertDefineCommercialStructureHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$7;
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertDefineCommercialStructureHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                setTimeout(( /**
-                 * @return {?}
-                 */function () {
-                    _this.dialogRef.close();
-                }), 3000);
-            };
-        /**
-         * @return {?}
-         */
-        AlertDefineCommercialStructureHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertDefineCommercialStructureHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-define-commercial-structure-helisa',
-                        template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertDefineCommercialStructureHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertDefineCommercialStructureHelisaComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEFAULT_CONTENT$8 = 'Primero defina la estructura zona de parqueaderos en configuración.';
-    var AlertDefineParkingStructureHelisaComponent = /** @class */ (function () {
-        function AlertDefineParkingStructureHelisaComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.content = data.content;
-            if (this.content === undefined) {
-                this.content = DEFAULT_CONTENT$8;
-            }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            }));
-        }
-        /**
-         * @return {?}
-         */
-        AlertDefineParkingStructureHelisaComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                setTimeout(( /**
-                 * @return {?}
-                 */function () {
-                    _this.dialogRef.close();
-                }), 3000);
-            };
-        /**
-         * @return {?}
-         */
-        AlertDefineParkingStructureHelisaComponent.prototype.onCancel = /**
-         * @return {?}
-         */
-            function () {
-                this.dialogRef.close();
-            };
-        AlertDefineParkingStructureHelisaComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'hel-alert-define-parking-structure-helisa',
-                        template: "<div mat-dialog-content>\r\n    {{ content }}\r\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        AlertDefineParkingStructureHelisaComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
-        return AlertDefineParkingStructureHelisaComponent;
+        return AlertInformationDataHelisaComponent;
     }());
 
     /**
@@ -5657,18 +5190,9 @@
                             HelTooltipDirective,
                             ExternalLinkDirective,
                             ExternalLinkPipe,
-                            AlertUncompletedDataHelisaComponent,
-                            AlertLostDataHelisaComponent,
-                            AlertDeleteDataHelisaComponent,
-                            AlertUncompletedSelectedDataHelisaComponent,
-                            AlertInformationNotValidHelisaComponent,
                             ComboBoxHelisaComponent,
-                            AlertAuthorizationTransactionHelisaComponent,
                             PagingTreeHelisaComponent,
-                            AlertConfirmDeleteDataHelisaComponent,
-                            AlertDefineResidentialPhysicalStructureHelisaComponent,
-                            AlertDefineCommercialStructureHelisaComponent,
-                            AlertDefineParkingStructureHelisaComponent
+                            AlertInformationDataHelisaComponent
                         ],
                         imports: [
                             common.CommonModule,
@@ -5762,18 +5286,9 @@
                             chips.MatChipsModule,
                             dragDrop.DragDropModule,
                             tree$1.MatTreeModule,
-                            AlertUncompletedDataHelisaComponent,
-                            AlertLostDataHelisaComponent,
-                            AlertDeleteDataHelisaComponent,
-                            AlertUncompletedSelectedDataHelisaComponent,
-                            AlertInformationNotValidHelisaComponent,
                             ComboBoxHelisaComponent,
-                            AlertAuthorizationTransactionHelisaComponent,
                             PagingTreeHelisaComponent,
-                            AlertConfirmDeleteDataHelisaComponent,
-                            AlertDefineResidentialPhysicalStructureHelisaComponent,
-                            AlertDefineCommercialStructureHelisaComponent,
-                            AlertDefineParkingStructureHelisaComponent
+                            AlertInformationDataHelisaComponent
                         ],
                         providers: [TableHelisaService, TreeHelisaService]
                     },] }
@@ -5785,434 +5300,47 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var AlertUncompletedDataHelisaService = /** @class */ (function () {
-        function AlertUncompletedDataHelisaService(dialog) {
+    var AlertInformationDataHelisaService = /** @class */ (function () {
+        function AlertInformationDataHelisaService(dialog) {
             this.dialog = dialog;
         }
         /**
+         * @param {?} alertType
          * @param {?=} title
          * @param {?=} content
          * @param {?=} okLabel
          * @param {?=} cancelLabel
          * @return {?}
          */
-        AlertUncompletedDataHelisaService.prototype.openDialog = /**
+        AlertInformationDataHelisaService.prototype.openDialog = /**
+         * @param {?} alertType
          * @param {?=} title
          * @param {?=} content
          * @param {?=} okLabel
          * @param {?=} cancelLabel
          * @return {?}
          */
-            function (title, content, okLabel, cancelLabel) {
+            function (alertType, title, content, okLabel, cancelLabel) {
                 /** @type {?} */
-                var dialogRef = this.dialog.open(AlertUncompletedDataHelisaComponent, {
+                var dialogRef = this.dialog.open(AlertInformationDataHelisaComponent, {
                     width: '250px',
-                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
+                    data: { alertType: alertType, title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
                 });
                 return dialogRef.afterClosed();
             };
-        AlertUncompletedDataHelisaService.decorators = [
+        AlertInformationDataHelisaService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
                     },] }
         ];
         /** @nocollapse */
-        AlertUncompletedDataHelisaService.ctorParameters = function () {
+        AlertInformationDataHelisaService.ctorParameters = function () {
             return [
                 { type: material.MatDialog }
             ];
         };
-        /** @nocollapse */ AlertUncompletedDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertUncompletedDataHelisaService_Factory() { return new AlertUncompletedDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertUncompletedDataHelisaService, providedIn: "root" });
-        return AlertUncompletedDataHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertLostDataHelisaService = /** @class */ (function () {
-        function AlertLostDataHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-        AlertLostDataHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-            function (title, content, okLabel, cancelLabel) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertLostDataHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertLostDataHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertLostDataHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertLostDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertLostDataHelisaService_Factory() { return new AlertLostDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertLostDataHelisaService, providedIn: "root" });
-        return AlertLostDataHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertDeleteDataHelisaService = /** @class */ (function () {
-        function AlertDeleteDataHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-        AlertDeleteDataHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-            function (title, content, okLabel, cancelLabel) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertDeleteDataHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertDeleteDataHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertDeleteDataHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertDeleteDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertDeleteDataHelisaService_Factory() { return new AlertDeleteDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertDeleteDataHelisaService, providedIn: "root" });
-        return AlertDeleteDataHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertUncompletedSelectedDataHelisaService = /** @class */ (function () {
-        function AlertUncompletedSelectedDataHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-        AlertUncompletedSelectedDataHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-            function (title, content, okLabel, cancelLabel) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertUncompletedSelectedDataHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertUncompletedSelectedDataHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertUncompletedSelectedDataHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertUncompletedSelectedDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertUncompletedSelectedDataHelisaService_Factory() { return new AlertUncompletedSelectedDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertUncompletedSelectedDataHelisaService, providedIn: "root" });
-        return AlertUncompletedSelectedDataHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertInformationNotValidHelisaService = /** @class */ (function () {
-        function AlertInformationNotValidHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-        AlertInformationNotValidHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-            function (title, content) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertInformationNotValidHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertInformationNotValidHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertInformationNotValidHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertInformationNotValidHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertInformationNotValidHelisaService_Factory() { return new AlertInformationNotValidHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertInformationNotValidHelisaService, providedIn: "root" });
-        return AlertInformationNotValidHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertAuthorizationTransactionHelisaService = /** @class */ (function () {
-        function AlertAuthorizationTransactionHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-        AlertAuthorizationTransactionHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-            function (title, content, okLabel, cancelLabel) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertAuthorizationTransactionHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertAuthorizationTransactionHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertAuthorizationTransactionHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertAuthorizationTransactionHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertAuthorizationTransactionHelisaService_Factory() { return new AlertAuthorizationTransactionHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertAuthorizationTransactionHelisaService, providedIn: "root" });
-        return AlertAuthorizationTransactionHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertConfirmDeleteDataHelisaService = /** @class */ (function () {
-        function AlertConfirmDeleteDataHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-        AlertConfirmDeleteDataHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @param {?=} okLabel
-         * @param {?=} cancelLabel
-         * @return {?}
-         */
-            function (title, content, okLabel, cancelLabel) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertConfirmDeleteDataHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content, okLabel: okLabel, cancelLabel: cancelLabel }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertConfirmDeleteDataHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertConfirmDeleteDataHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertConfirmDeleteDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertConfirmDeleteDataHelisaService_Factory() { return new AlertConfirmDeleteDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertConfirmDeleteDataHelisaService, providedIn: "root" });
-        return AlertConfirmDeleteDataHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertDefineResidentialPhysicalStructureHelisaService = /** @class */ (function () {
-        function AlertDefineResidentialPhysicalStructureHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-        AlertDefineResidentialPhysicalStructureHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-            function (title, content) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertDefineResidentialPhysicalStructureHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertDefineResidentialPhysicalStructureHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertDefineResidentialPhysicalStructureHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertDefineResidentialPhysicalStructureHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertDefineResidentialPhysicalStructureHelisaService_Factory() { return new AlertDefineResidentialPhysicalStructureHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertDefineResidentialPhysicalStructureHelisaService, providedIn: "root" });
-        return AlertDefineResidentialPhysicalStructureHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertDefineCommercialStructureHelisaService = /** @class */ (function () {
-        function AlertDefineCommercialStructureHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-        AlertDefineCommercialStructureHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-            function (title, content) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertDefineCommercialStructureHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertDefineCommercialStructureHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertDefineCommercialStructureHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertDefineCommercialStructureHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertDefineCommercialStructureHelisaService_Factory() { return new AlertDefineCommercialStructureHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertDefineCommercialStructureHelisaService, providedIn: "root" });
-        return AlertDefineCommercialStructureHelisaService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var AlertDefineParkingStructureHelisaService = /** @class */ (function () {
-        function AlertDefineParkingStructureHelisaService(dialog) {
-            this.dialog = dialog;
-        }
-        /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-        AlertDefineParkingStructureHelisaService.prototype.openDialog = /**
-         * @param {?=} title
-         * @param {?=} content
-         * @return {?}
-         */
-            function (title, content) {
-                /** @type {?} */
-                var dialogRef = this.dialog.open(AlertDefineParkingStructureHelisaComponent, {
-                    width: '250px',
-                    data: { title: title, content: content }
-                });
-                return dialogRef.afterClosed();
-            };
-        AlertDefineParkingStructureHelisaService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AlertDefineParkingStructureHelisaService.ctorParameters = function () {
-            return [
-                { type: material.MatDialog }
-            ];
-        };
-        /** @nocollapse */ AlertDefineParkingStructureHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertDefineParkingStructureHelisaService_Factory() { return new AlertDefineParkingStructureHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertDefineParkingStructureHelisaService, providedIn: "root" });
-        return AlertDefineParkingStructureHelisaService;
+        /** @nocollapse */ AlertInformationDataHelisaService.ngInjectableDef = i0.defineInjectable({ factory: function AlertInformationDataHelisaService_Factory() { return new AlertInformationDataHelisaService(i0.inject(i1$1.MatDialog)); }, token: AlertInformationDataHelisaService, providedIn: "root" });
+        return AlertInformationDataHelisaService;
     }());
 
     /**
@@ -6254,30 +5382,13 @@
     exports.OptionsScrollDirective = OptionsScrollDirective;
     exports.HelTooltipDirective = HelTooltipDirective;
     exports.HelisaLibModule = HelisaLibModule;
-    exports.AlertUncompletedDataHelisaComponent = AlertUncompletedDataHelisaComponent;
-    exports.AlertUncompletedDataHelisaService = AlertUncompletedDataHelisaService;
-    exports.AlertLostDataHelisaComponent = AlertLostDataHelisaComponent;
-    exports.AlertLostDataHelisaService = AlertLostDataHelisaService;
-    exports.AlertDeleteDataHelisaComponent = AlertDeleteDataHelisaComponent;
-    exports.AlertDeleteDataHelisaService = AlertDeleteDataHelisaService;
-    exports.AlertUncompletedSelectedDataHelisaComponent = AlertUncompletedSelectedDataHelisaComponent;
-    exports.AlertUncompletedSelectedDataHelisaService = AlertUncompletedSelectedDataHelisaService;
-    exports.AlertInformationNotValidHelisaComponent = AlertInformationNotValidHelisaComponent;
-    exports.AlertInformationNotValidHelisaService = AlertInformationNotValidHelisaService;
     exports.ComboBoxHelisaState = ComboBoxHelisaState;
     exports.ComboBoxHelisaComponent = ComboBoxHelisaComponent;
-    exports.AlertAuthorizationTransactionHelisaComponent = AlertAuthorizationTransactionHelisaComponent;
-    exports.AlertAuthorizationTransactionHelisaService = AlertAuthorizationTransactionHelisaService;
     exports.PagingTreeInitialMode = PagingTreeInitialMode;
     exports.PagingTreeHelisaComponent = PagingTreeHelisaComponent;
-    exports.AlertConfirmDeleteDataHelisaComponent = AlertConfirmDeleteDataHelisaComponent;
-    exports.AlertConfirmDeleteDataHelisaService = AlertConfirmDeleteDataHelisaService;
-    exports.AlertDefineResidentialPhysicalStructureHelisaComponent = AlertDefineResidentialPhysicalStructureHelisaComponent;
-    exports.AlertDefineResidentialPhysicalStructureHelisaService = AlertDefineResidentialPhysicalStructureHelisaService;
-    exports.AlertDefineCommercialStructureHelisaComponent = AlertDefineCommercialStructureHelisaComponent;
-    exports.AlertDefineCommercialStructureHelisaService = AlertDefineCommercialStructureHelisaService;
-    exports.AlertDefineParkingStructureHelisaComponent = AlertDefineParkingStructureHelisaComponent;
-    exports.AlertDefineParkingStructureHelisaService = AlertDefineParkingStructureHelisaService;
+    exports.AlertInformationDataHelisaComponent = AlertInformationDataHelisaComponent;
+    exports.AlertInformationDataHelisaService = AlertInformationDataHelisaService;
+    exports.AlertInformationType = AlertInformationType;
     exports.ɵa = ExternalLinkDirective;
     exports.ɵb = ExternalLinkPipe;
 
