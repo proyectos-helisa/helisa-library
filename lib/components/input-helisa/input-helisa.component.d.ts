@@ -31,9 +31,9 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     formControlMask: FormControl;
     private realValue;
     private inputFormReal;
-    nameInput: ElementRef;
+    inputText: ElementRef;
     constructor();
-    inputFormControl: FormControl;
+    set inputFormControl(formControl: FormControl);
     private statusChange;
     ngOnInit(): void;
     ngAfterViewInit(): void;

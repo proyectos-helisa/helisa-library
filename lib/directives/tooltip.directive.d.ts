@@ -1,5 +1,5 @@
 import { ElementRef } from '@angular/core';
-import { MatTooltip } from '@angular/material';
+import { MatTooltip } from '@angular/material/tooltip';
 export declare class HelTooltipDirective {
     private elemRef;
     tooltip: MatTooltip;

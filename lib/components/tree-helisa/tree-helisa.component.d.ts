@@ -1,6 +1,7 @@
 import { OnInit, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource, MatTree, MatOptionSelectionChange } from '@angular/material';
+import { MatOptionSelectionChange } from '@angular/material/core';
+import { MatTreeNestedDataSource, MatTree } from '@angular/material/tree';
 import { Node } from './node';
 import { TreeHelisaService } from './tree-helisa.service';
 import { Router } from '@angular/router';

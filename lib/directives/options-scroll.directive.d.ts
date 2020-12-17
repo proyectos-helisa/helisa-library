@@ -1,5 +1,5 @@
 import { EventEmitter, OnDestroy } from '@angular/core';
-import { MatAutocomplete } from '@angular/material';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
 export interface IAutoCompleteScrollEvent {
     autoComplete: MatAutocomplete;

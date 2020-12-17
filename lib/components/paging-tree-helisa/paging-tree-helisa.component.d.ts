@@ -43,8 +43,8 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     constructor();
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    mode: PagingTreeInitialMode;
-    pagingTreeHelisaListable: PagingTreeHelisaListable<T>;
+    set mode(paramMode: PagingTreeInitialMode);
+    set pagingTreeHelisaListable(paramService: PagingTreeHelisaListable<T>);
     reset(): void;
     private loadData;
     private sortItems;
@@ -56,7 +56,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     collapseNode(item: T): void;
     expandNode(item: T): void;
     showNextPage(): void;
-    readonly visibleData: ReadonlyArray<T>;
+    get visibleData(): ReadonlyArray<T>;
     removeItem(item: T): void;
     removeById(id: string): void;
     addItem(item: T): void;

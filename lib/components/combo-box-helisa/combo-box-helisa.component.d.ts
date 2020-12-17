@@ -22,7 +22,7 @@ export declare class ComboBoxHelisaComponent<TYPE> implements OnInit, AfterViewI
     ngOnInit(): void;
     ngAfterViewInit(): void;
     private getNextPage;
-    readonly comboBoxHelisaState: typeof ComboBoxHelisaState;
+    get comboBoxHelisaState(): typeof ComboBoxHelisaState;
     onFocus(): void;
     selectItem(row: TYPE): void;
     changeToInsert(): void;
