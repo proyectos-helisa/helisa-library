@@ -1,11 +1,6 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-const AlertHelisaType = {
-    ERROR: 'ERROR',
-    CONFIRMATION: 'CONFIRMATION',
-};
-export { AlertHelisaType };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQtaGVsaXNhLXR5cGUuZW51bS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL2hlbGlzYS1saWIvIiwic291cmNlcyI6WyJsaWIvY29tcG9uZW50cy9hbGVydC1oZWxpc2EvYWxlcnQtaGVsaXNhLXR5cGUuZW51bS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7SUFDSSxPQUFRLE9BQU87SUFDZixjQUFlLGNBQWMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZW51bSBBbGVydEhlbGlzYVR5cGUge1xyXG4gICAgRVJST1IgPSAnRVJST1InLFxyXG4gICAgQ09ORklSTUFUSU9OID0gJ0NPTkZJUk1BVElPTidcclxufVxyXG4iXX0=
+export var AlertHelisaType;
+(function (AlertHelisaType) {
+    AlertHelisaType["ERROR"] = "ERROR";
+    AlertHelisaType["CONFIRMATION"] = "CONFIRMATION";
+})(AlertHelisaType || (AlertHelisaType = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQtaGVsaXNhLXR5cGUuZW51bS5qcyIsInNvdXJjZVJvb3QiOiIuLi8uLi8uLi9wcm9qZWN0cy9oZWxpc2EtbGliL3NyYy8iLCJzb3VyY2VzIjpbImxpYi9jb21wb25lbnRzL2FsZXJ0LWhlbGlzYS9hbGVydC1oZWxpc2EtdHlwZS5lbnVtLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE1BQU0sQ0FBTixJQUFZLGVBR1g7QUFIRCxXQUFZLGVBQWU7SUFDdkIsa0NBQWUsQ0FBQTtJQUNmLGdEQUE2QixDQUFBO0FBQ2pDLENBQUMsRUFIVyxlQUFlLEtBQWYsZUFBZSxRQUcxQiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBlbnVtIEFsZXJ0SGVsaXNhVHlwZSB7XHJcbiAgICBFUlJPUiA9ICdFUlJPUicsXHJcbiAgICBDT05GSVJNQVRJT04gPSAnQ09ORklSTUFUSU9OJ1xyXG59XHJcbiJdfQ==

@@ -1,4 +1,4 @@
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { AlertInformationType } from './alert-information-helisa-type.enum';
 export declare class AlertInformationDataHelisaService {

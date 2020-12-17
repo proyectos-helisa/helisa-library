@@ -1,5 +1,5 @@
 import { OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AlertInformationType } from './alert-information-helisa-type.enum';
 interface AlertInformationDataHelisaProperties {
     alertType: AlertInformationType;

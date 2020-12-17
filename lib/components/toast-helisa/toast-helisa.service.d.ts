@@ -1,4 +1,4 @@
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastType } from './toast-type.enum';
 export declare class ToastHelisaService {
     private snackBar;

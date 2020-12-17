@@ -1,7 +1,7 @@
 import { OnInit, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment_ from 'moment';
-import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
+import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material/datepicker';
 export declare enum TypeCalendarEnum {
     NORMAL = "norma",
     MONTH_YEAR = "mounth-year",
@@ -43,7 +43,7 @@ export declare class DateHelisaComponent implements OnInit {
     private inputFormReal;
     constructor();
     ngOnInit(): void;
-    readonly typeCalendarEnum: typeof TypeCalendarEnum;
+    get typeCalendarEnum(): typeof TypeCalendarEnum;
     openDatePicker(): void;
     onKey(event: KeyboardEvent): void;
     onBlur(): void;

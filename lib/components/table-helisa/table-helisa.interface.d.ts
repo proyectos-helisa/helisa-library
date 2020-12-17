@@ -1,4 +1,4 @@
-import { SortDirection } from '@angular/material';
+import { SortDirection } from '@angular/material/sort';
 import { RowData } from './table-helisa.component';
 export declare enum ColumnType {
     NORMAL = 0,

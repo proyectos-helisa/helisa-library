@@ -1,5 +1,6 @@
 import { AfterViewInit, EventEmitter, OnInit, ElementRef } from '@angular/core';
-import { MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
 export interface RowData<T> {
@@ -74,11 +75,13 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     constructor(tableService: TableHelisaService<T>);
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    isRemote: boolean;
-    columnConfiguration: Array<ColumnConfig>;
-    dataSource: Array<T>;
-    selectedIndexRow: number;
-    private prepareDataSource;
+    set isRemote(w: boolean);
+    set columnConfiguration(columnConfiguration: Array<ColumnConfig>);
+    set dataSource(dataSource: Array<T>);
+    get dataSource(): Array<T>;
+    set selectedIndexRow(idRowSelected: number);
+    private reloadColumnConfig;
+    reload(): void;
     private addTotalGroup;
     private compare;
     getGroupDescription(obj: T): string;
@@ -110,6 +113,6 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     dragger(event: MouseEvent): boolean;
     startDrag(event: MouseEvent): void;
     private getRowIndex;
-    readonly columnType: typeof ColumnType;
+    get columnType(): typeof ColumnType;
 }
 export {};
