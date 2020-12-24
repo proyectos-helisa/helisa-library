@@ -2542,6 +2542,7 @@ class PagingTreeHelisaComponent {
             this.allNode.push(node);
         });
         this.loadNextVisibleObjects(null);
+        this.reSort();
         this.afterLoadData.emit();
     }
     sortItems(items) {

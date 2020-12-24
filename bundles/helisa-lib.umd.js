@@ -2960,6 +2960,7 @@
                 _this.allNode.push(node);
             });
             this.loadNextVisibleObjects(null);
+            this.reSort();
             this.afterLoadData.emit();
         };
         PagingTreeHelisaComponent.prototype.sortItems = function (items) {
