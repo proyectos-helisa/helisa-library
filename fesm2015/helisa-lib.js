@@ -2541,8 +2541,8 @@ class PagingTreeHelisaComponent {
             const node = this.createNode(item);
             this.allNode.push(node);
         });
-        this.loadNextVisibleObjects(null);
         this.reSort();
+        this.loadNextVisibleObjects(null);
         this.afterLoadData.emit();
     }
     sortItems(items) {

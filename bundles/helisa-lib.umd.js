@@ -2959,8 +2959,8 @@
                 var node = _this.createNode(item);
                 _this.allNode.push(node);
             });
-            this.loadNextVisibleObjects(null);
             this.reSort();
+            this.loadNextVisibleObjects(null);
             this.afterLoadData.emit();
         };
         PagingTreeHelisaComponent.prototype.sortItems = function (items) {
