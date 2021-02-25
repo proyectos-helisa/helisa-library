@@ -40,6 +40,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
         data: T;
         node: HelisaNodeData<T>;
     }>;
+    nodeTitle: TemplateRef<any>;
     constructor();
     ngOnInit(): void;
     ngAfterViewInit(): void;
