@@ -22,6 +22,8 @@ export declare class DateHelisaComponent implements OnInit {
     errorMessage: string;
     placeholder: string;
     showDatePicker: boolean;
+    minDate: Date;
+    maxDate: Date;
     change: EventEmitter<Date>;
     isClosed: boolean;
     timeout: any;
