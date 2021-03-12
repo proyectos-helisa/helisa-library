@@ -11,6 +11,8 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     private readonly THOUSAND_SEPARATOR;
     placeholder: string;
     floatLabel: 'never' | 'always' | 'auto';
+    minlength: number;
+    maxlength: number;
     /** Activar o desactivar el autocompletado
      * (Caracteristica de los navegadores para campos comunes como
      * Direccion , Usuario, Password ... etc)
