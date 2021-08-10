@@ -3178,6 +3178,7 @@
         AlertInformationType[AlertInformationType["DEFINE_COMMERCIAL_STRUCTURE"] = 7] = "DEFINE_COMMERCIAL_STRUCTURE";
         AlertInformationType[AlertInformationType["DEFINE_PARKING_STRUCTURE"] = 8] = "DEFINE_PARKING_STRUCTURE";
         AlertInformationType[AlertInformationType["DEFINE_RESIDENCIAL_STRUCTURE"] = 9] = "DEFINE_RESIDENCIAL_STRUCTURE";
+        AlertInformationType[AlertInformationType["NO_SEARCH_RESULTS"] = 10] = "NO_SEARCH_RESULTS";
     })(exports.AlertInformationType || (exports.AlertInformationType = {}));
 
     var TITLE_BY_ALERT_TYPE = ['!Esta transacción requiere autorización!',
@@ -3200,7 +3201,8 @@
         'Elemento sin información requerida. Modifíquelo para completarlo.',
         'Primero defina la estructura comercial en configuración.',
         'Primero defina la estructura zona de parqueaderos en configuración.',
-        'Primero defina la estructura física residencial en configuración.'
+        'Primero defina la estructura física residencial en configuración.',
+        'No fueron encontradas coincidencias con el criterio de búsqueda.',
     ];
     var OK_LABEL_BY_ALERT_TYPE = ['Solicitarla',
         'Lo asumo',
@@ -3274,7 +3276,7 @@
                 this.alertType === exports.AlertInformationType.INFORMATION_NOT_VALID || this.alertType === exports.AlertInformationType.LOST_DATA ||
                 this.alertType === exports.AlertInformationType.UNCOMPLETED_DATA || this.alertType === exports.AlertInformationType.UNCOMPLETED_SELECTED_DATA ||
                 this.alertType === exports.AlertInformationType.DEFINE_COMMERCIAL_STRUCTURE || this.alertType === exports.AlertInformationType.DEFINE_PARKING_STRUCTURE ||
-                this.alertType === exports.AlertInformationType.DEFINE_RESIDENCIAL_STRUCTURE;
+                this.alertType === exports.AlertInformationType.DEFINE_RESIDENCIAL_STRUCTURE || this.alertType === exports.AlertInformationType.NO_SEARCH_RESULTS;
         };
         AlertInformationDataHelisaComponent.prototype.hasButtons = function () {
             return this.alertType === exports.AlertInformationType.AUTHORIZATION_TRANSACTION || this.alertType === exports.AlertInformationType.CONFIRM_DELETE_DATA ||
