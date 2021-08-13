@@ -2,6 +2,7 @@ import { OnInit, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment_ from 'moment';
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material/datepicker';
+import * as ɵngcc0 from '@angular/core';
 export declare enum TypeCalendarEnum {
     NORMAL = "norma",
     MONTH_YEAR = "mounth-year",
@@ -63,4 +64,8 @@ export declare class DateHelisaComponent implements OnInit {
      */
     dateChange(type: string, event: MatDatepickerInputEvent<Date>): void;
     getErrorMessage(): string;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<DateHelisaComponent, never>;
+    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<DateHelisaComponent, "hel-date-helisa", never, { "floatLabel": "floatLabel"; "dateFormControl": "dateFormControl"; "dateFormat": "dateFormat"; "locale": "locale"; "errorMessage": "errorMessage"; "placeholder": "placeholder"; "showDatePicker": "showDatePicker"; "typeCalendar": "typeCalendar"; "minDate": "minDate"; "maxDate": "maxDate"; }, { "change": "change"; }, never, never>;
 }
+
+//# sourceMappingURL=date-helisa.component.d.ts.map

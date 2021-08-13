@@ -2,6 +2,7 @@ import { OnInit, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { AutocompleteHelisaService } from './autocomplete-helisa.component.service';
+import * as ɵngcc0 from '@angular/core';
 export interface OptionAutocompleteHelisa<T> {
     value: T;
     displayText: string;
@@ -30,4 +31,8 @@ export declare class AutocompleteHelisaComponent<T> implements OnInit {
         };
     }): void;
     getNextPage(): void;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<AutocompleteHelisaComponent<any>, never>;
+    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<AutocompleteHelisaComponent<any>, "hel-autocomplete", never, { "myControl": "myControl"; "options": "options"; "isRemote": "isRemote"; }, { "selectedValueEmmiter": "selectedValueEmmiter"; "nextPage": "nextPage"; }, never, never>;
 }
+
+//# sourceMappingURL=autocomplete-helisa.component.d.ts.map

@@ -1,2 +1,55 @@
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from './components/input-with-button/input-with-button.component';
+import * as ɵngcc2 from './components/toast-helisa/toast-helisa.component';
+import * as ɵngcc3 from './components/alert-helisa/alert-helisa.component';
+import * as ɵngcc4 from './components/dependency-table-helisa/dependency-table-helisa.component';
+import * as ɵngcc5 from './components/input-helisa/input-helisa.component';
+import * as ɵngcc6 from './components/table-helisa/table-helisa.component';
+import * as ɵngcc7 from './components/tree-helisa/tree-helisa.component';
+import * as ɵngcc8 from './components/date-helisa/date-helisa.component';
+import * as ɵngcc9 from './components/autocomplete-helisa/autocomplete-helisa.component';
+import * as ɵngcc10 from './directives/options-scroll.directive';
+import * as ɵngcc11 from './directives/tooltip.directive';
+import * as ɵngcc12 from './directives/external-link.directive';
+import * as ɵngcc13 from './pipes/external-link.pipe';
+import * as ɵngcc14 from './components/combo-box-helisa/combo-box-helisa.component';
+import * as ɵngcc15 from './components/paging-tree-helisa/paging-tree-helisa.component';
+import * as ɵngcc16 from './components/alert-information-data-helisa/alert-information-data-helisa.component';
+import * as ɵngcc17 from '@angular/common';
+import * as ɵngcc18 from '@angular/forms';
+import * as ɵngcc19 from '@angular/material/autocomplete';
+import * as ɵngcc20 from '@angular/material/button';
+import * as ɵngcc21 from '@angular/material/checkbox';
+import * as ɵngcc22 from '@angular/material/toolbar';
+import * as ɵngcc23 from '@angular/material/expansion';
+import * as ɵngcc24 from '@angular/material/form-field';
+import * as ɵngcc25 from '@angular/material/input';
+import * as ɵngcc26 from '@angular/material/select';
+import * as ɵngcc27 from '@angular/material/core';
+import * as ɵngcc28 from '@angular/material/list';
+import * as ɵngcc29 from '@angular/material/icon';
+import * as ɵngcc30 from '@angular/material/snack-bar';
+import * as ɵngcc31 from '@angular/material/card';
+import * as ɵngcc32 from '@angular/cdk/layout';
+import * as ɵngcc33 from '@angular/material/tooltip';
+import * as ɵngcc34 from '@angular/material/sidenav';
+import * as ɵngcc35 from '@angular/material/grid-list';
+import * as ɵngcc36 from '@angular/material/menu';
+import * as ɵngcc37 from '@angular/material/radio';
+import * as ɵngcc38 from '@angular/material/progress-spinner';
+import * as ɵngcc39 from '@angular/material/table';
+import * as ɵngcc40 from '@angular/material/paginator';
+import * as ɵngcc41 from '@angular/material/sort';
+import * as ɵngcc42 from '@angular/material/dialog';
+import * as ɵngcc43 from '@angular/material/tabs';
+import * as ɵngcc44 from '@angular/material/datepicker';
+import * as ɵngcc45 from '@angular/material/stepper';
+import * as ɵngcc46 from '@angular/material/chips';
+import * as ɵngcc47 from '@angular/cdk/drag-drop';
+import * as ɵngcc48 from '@angular/material/tree';
 export declare class HelisaLibModule {
+    static ɵmod: ɵngcc0.ɵɵNgModuleDefWithMeta<HelisaLibModule, [typeof ɵngcc1.InputWithButtonComponent, typeof ɵngcc2.ToastHelisaComponent, typeof ɵngcc3.AlertHelisaComponent, typeof ɵngcc4.DependencyTableHelisaComponent, typeof ɵngcc5.InputHelisaComponent, typeof ɵngcc6.TableHelisaComponent, typeof ɵngcc7.TreeHelisaComponent, typeof ɵngcc8.DateHelisaComponent, typeof ɵngcc9.AutocompleteHelisaComponent, typeof ɵngcc10.OptionsScrollDirective, typeof ɵngcc11.HelTooltipDirective, typeof ɵngcc12.ExternalLinkDirective, typeof ɵngcc13.ExternalLinkPipe, typeof ɵngcc14.ComboBoxHelisaComponent, typeof ɵngcc15.PagingTreeHelisaComponent, typeof ɵngcc16.AlertInformationDataHelisaComponent], [typeof ɵngcc17.CommonModule, typeof ɵngcc18.FormsModule, typeof ɵngcc18.ReactiveFormsModule, typeof ɵngcc19.MatAutocompleteModule, typeof ɵngcc20.MatButtonModule, typeof ɵngcc21.MatCheckboxModule, typeof ɵngcc22.MatToolbarModule, typeof ɵngcc23.MatExpansionModule, typeof ɵngcc24.MatFormFieldModule, typeof ɵngcc25.MatInputModule, typeof ɵngcc26.MatSelectModule, typeof ɵngcc27.MatOptionModule, typeof ɵngcc28.MatListModule, typeof ɵngcc29.MatIconModule, typeof ɵngcc30.MatSnackBarModule, typeof ɵngcc31.MatCardModule, typeof ɵngcc32.LayoutModule, typeof ɵngcc33.MatTooltipModule, typeof ɵngcc20.MatButtonModule, typeof ɵngcc34.MatSidenavModule, typeof ɵngcc29.MatIconModule, typeof ɵngcc28.MatListModule, typeof ɵngcc35.MatGridListModule, typeof ɵngcc31.MatCardModule, typeof ɵngcc36.MatMenuModule, typeof ɵngcc25.MatInputModule, typeof ɵngcc26.MatSelectModule, typeof ɵngcc37.MatRadioModule, typeof ɵngcc38.MatProgressSpinnerModule, typeof ɵngcc39.MatTableModule, typeof ɵngcc40.MatPaginatorModule, typeof ɵngcc41.MatSortModule, typeof ɵngcc42.MatDialogModule, typeof ɵngcc43.MatTabsModule, typeof ɵngcc44.MatDatepickerModule, typeof ɵngcc27.MatNativeDateModule, typeof ɵngcc45.MatStepperModule, typeof ɵngcc46.MatChipsModule, typeof ɵngcc47.DragDropModule, typeof ɵngcc48.MatTreeModule], [typeof ɵngcc1.InputWithButtonComponent, typeof ɵngcc2.ToastHelisaComponent, typeof ɵngcc3.AlertHelisaComponent, typeof ɵngcc4.DependencyTableHelisaComponent, typeof ɵngcc5.InputHelisaComponent, typeof ɵngcc6.TableHelisaComponent, typeof ɵngcc7.TreeHelisaComponent, typeof ɵngcc8.DateHelisaComponent, typeof ɵngcc9.AutocompleteHelisaComponent, typeof ɵngcc10.OptionsScrollDirective, typeof ɵngcc11.HelTooltipDirective, typeof ɵngcc12.ExternalLinkDirective, typeof ɵngcc13.ExternalLinkPipe, typeof ɵngcc20.MatButtonModule, typeof ɵngcc21.MatCheckboxModule, typeof ɵngcc22.MatToolbarModule, typeof ɵngcc23.MatExpansionModule, typeof ɵngcc24.MatFormFieldModule, typeof ɵngcc25.MatInputModule, typeof ɵngcc26.MatSelectModule, typeof ɵngcc27.MatOptionModule, typeof ɵngcc28.MatListModule, typeof ɵngcc29.MatIconModule, typeof ɵngcc30.MatSnackBarModule, typeof ɵngcc31.MatCardModule, typeof ɵngcc32.LayoutModule, typeof ɵngcc33.MatTooltipModule, typeof ɵngcc20.MatButtonModule, typeof ɵngcc34.MatSidenavModule, typeof ɵngcc29.MatIconModule, typeof ɵngcc28.MatListModule, typeof ɵngcc35.MatGridListModule, typeof ɵngcc31.MatCardModule, typeof ɵngcc36.MatMenuModule, typeof ɵngcc25.MatInputModule, typeof ɵngcc26.MatSelectModule, typeof ɵngcc37.MatRadioModule, typeof ɵngcc38.MatProgressSpinnerModule, typeof ɵngcc39.MatTableModule, typeof ɵngcc40.MatPaginatorModule, typeof ɵngcc41.MatSortModule, typeof ɵngcc42.MatDialogModule, typeof ɵngcc43.MatTabsModule, typeof ɵngcc44.MatDatepickerModule, typeof ɵngcc27.MatNativeDateModule, typeof ɵngcc45.MatStepperModule, typeof ɵngcc46.MatChipsModule, typeof ɵngcc47.DragDropModule, typeof ɵngcc48.MatTreeModule, typeof ɵngcc14.ComboBoxHelisaComponent, typeof ɵngcc15.PagingTreeHelisaComponent, typeof ɵngcc16.AlertInformationDataHelisaComponent]>;
+    static ɵinj: ɵngcc0.ɵɵInjectorDef<HelisaLibModule>;
 }
+
+//# sourceMappingURL=helisa-lib.module.d.ts.map

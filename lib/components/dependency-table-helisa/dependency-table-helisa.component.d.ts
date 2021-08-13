@@ -3,6 +3,7 @@ import { DependencyTableHelisaService, ConfigTable } from './dependency-table-he
 import { Cell, EventColumn, RequestTableHelisa, SelectObject } from '../table-helisa/table-helisa.interface';
 import { TableHelisaService } from '../table-helisa/table-helisa.service';
 import { TableHelisaComponent } from '../table-helisa/table-helisa.component';
+import * as ɵngcc0 from '@angular/core';
 export interface EventDependency<T> {
     index: number;
     data: T;
@@ -81,4 +82,8 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
     onAddRow(index: number): void;
     selectedCell(index: number, event: Cell<T>): void;
     onBookClicked(index: number, event: EventDependency<T>): void;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<DependencyTableHelisaComponent<any>, never>;
+    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<DependencyTableHelisaComponent<any>, "hel-dependency-table", never, { "showToolTip": "showToolTip"; "hideDelay": "hideDelay"; "showDelay": "showDelay"; }, { "selected": "selected"; "selectObject": "selectObject"; "nextPage": "nextPage"; "total": "total"; "sort": "sort"; "drop": "drop"; "addRow": "addRow"; "selectCell": "selectCell"; "bookClicked": "bookClicked"; }, never, never>;
 }
+
+//# sourceMappingURL=dependency-table-helisa.component.d.ts.map

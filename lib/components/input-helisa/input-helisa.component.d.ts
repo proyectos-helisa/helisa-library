@@ -1,5 +1,6 @@
 import { EventEmitter, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import * as ɵngcc0 from '@angular/core';
 export declare enum InputHelisaType {
     DEFAULT = 0,
     IDENTITY = 1,
@@ -44,4 +45,8 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     private getMaskedValue;
     private getRealValue;
     onFocus($event: FocusEvent): void;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<InputHelisaComponent, never>;
+    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<InputHelisaComponent, "hel-input", never, { "placeholder": "placeholder"; "floatLabel": "floatLabel"; "autocompleteMode": "autocompleteMode"; "isSearch": "isSearch"; "isFocused": "isFocused"; "disabled": "disabled"; "type": "type"; "inputFormControl": "inputFormControl"; "minlength": "minlength"; "maxlength": "maxlength"; }, { "setValue": "setValue"; "blur": "blur"; }, never, never>;
 }
+
+//# sourceMappingURL=input-helisa.component.d.ts.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"external-link.pipe.d.ts","sources":["external-link.pipe.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;;;AACA","sourcesContent":["import { PipeTransform } from '@angular/core';\nexport declare class ExternalLinkPipe implements PipeTransform {\n    transform(value: string, ...args: string[]): string;\n}\n"]}
