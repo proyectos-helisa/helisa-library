@@ -1,7 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 import { ColumnConfig, AddRowButton, ConfigRowStyles, TotalTableHelisa } from '../table-helisa/table-helisa.interface';
 import { EventDependency } from './dependency-table-helisa.component';
-import * as ɵngcc0 from '@angular/core';
 export interface ConfigTable<T> {
     columns: Array<ColumnConfig>;
     isRemote: boolean;
@@ -73,8 +72,4 @@ export declare class DependencyTableHelisaService<T> {
      * @param event para indicar el index de la tabla y en "data" columnas
      */
     changeColumnsByTable(event: EventDependency<ColumnConfig[]>): void;
-    static ɵfac: ɵngcc0.ɵɵFactoryDef<DependencyTableHelisaService<any>, never>;
-    static ɵprov: ɵngcc0.ɵɵInjectableDef<DependencyTableHelisaService<any>>;
 }
-
-//# sourceMappingURL=dependency-table-helisa.service.d.ts.map

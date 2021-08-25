@@ -18,6 +18,7 @@ export interface ColumnConfig {
     colspanSubtitle?: number;
     columnStyle?: string;
     columnType?: ColumnType;
+    isSelectable?: boolean;
 }
 export interface AddRowButton {
     text: string;

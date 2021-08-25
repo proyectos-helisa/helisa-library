@@ -3,7 +3,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
-import * as ɵngcc0 from '@angular/core';
 export interface RowData<T> {
     data: {} | T;
     rowType: RowType;
@@ -117,9 +116,5 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     startDrag(event: MouseEvent): void;
     private getRowIndex;
     get columnType(): typeof ColumnType;
-    static ɵfac: ɵngcc0.ɵɵFactoryDef<TableHelisaComponent<any>, never>;
-    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<TableHelisaComponent<any>, "hel-table", never, { "showTitle": "showTitle"; "isCellSelection": "isCellSelection"; "isDragged": "isDragged"; "addRowButton": "addRowButton"; "addBookButton": "addBookButton"; "showToolTip": "showToolTip"; "hideDelay": "hideDelay"; "showDelay": "showDelay"; "isRemote": "isRemote"; "columnConfiguration": "columnConfiguration"; "dataSource": "dataSource"; "selectedIndexRow": "selectedIndexRow"; "selectedCells": "selectedCells"; "count": "count"; "configCellStyles": "configCellStyles"; "configRowStylesFromColumn": "configRowStylesFromColumn"; "configColumnClass": "configColumnClass"; }, { "sort": "sort"; "total": "total"; "search": "search"; "select": "select"; "selectCell": "selectCell"; "selectObject": "selectObject"; "nextPage": "nextPage"; "drop": "drop"; "addRow": "addRow"; "bookClicked": "bookClicked"; }, never, never>;
 }
 export {};
-
-//# sourceMappingURL=table-helisa.component.d.ts.map

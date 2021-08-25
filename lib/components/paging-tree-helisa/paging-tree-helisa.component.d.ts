@@ -1,6 +1,5 @@
 import { AfterViewInit, EventEmitter, OnInit, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as ɵngcc0 from '@angular/core';
 export declare enum PagingTreeInitialMode {
     COLLAPSE = 0,
     EXPAND = 1
@@ -64,9 +63,5 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     addItem(item: T): void;
     updateItem(item: T): void;
     private reSort;
-    static ɵfac: ɵngcc0.ɵɵFactoryDef<PagingTreeHelisaComponent<any>, never>;
-    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<PagingTreeHelisaComponent<any>, "hel-paging-tree", never, { "mode": "mode"; "pagingTreeHelisaListable": "pagingTreeHelisaListable"; }, { "afterLoadData": "afterLoadData"; }, ["nodeComponent", "nodeTitle"], never>;
 }
 export {};
-
-//# sourceMappingURL=paging-tree-helisa.component.d.ts.map

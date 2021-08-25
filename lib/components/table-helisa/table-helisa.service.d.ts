@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { TotalTableHelisa } from './table-helisa.interface';
 import { TableHelisaComponent } from './table-helisa.component';
-import * as ɵngcc0 from '@angular/core';
 export interface TableHelisaServiceInfo<T> {
     obj: T;
     table?: {} | TableHelisaComponent<T>;
@@ -23,7 +22,4 @@ export declare class TableHelisaService<T> {
      * @param change indicar si se muestra o no el boton de add row de la tabla
      */
     changeVisibilityButton(change: boolean): void;
-    static ɵfac: ɵngcc0.ɵɵFactoryDef<TableHelisaService<any>, never>;
 }
-
-//# sourceMappingURL=table-helisa.service.d.ts.map

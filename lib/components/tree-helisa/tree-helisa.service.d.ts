@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Node } from './node';
-import * as ɵngcc0 from '@angular/core';
 export declare class TreeHelisaService {
     private emitNodeSelected;
     nodeSelected: Observable<string | number>;
@@ -27,7 +26,4 @@ export declare class TreeHelisaService {
     expandOneNode(node: Node): void;
     collapseOneNode(node: Node): void;
     constructor();
-    static ɵfac: ɵngcc0.ɵɵFactoryDef<TreeHelisaService, never>;
 }
-
-//# sourceMappingURL=tree-helisa.service.d.ts.map

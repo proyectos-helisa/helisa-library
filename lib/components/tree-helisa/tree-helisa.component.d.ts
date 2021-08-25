@@ -6,7 +6,6 @@ import { Node } from './node';
 import { TreeHelisaService } from './tree-helisa.service';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import * as ɵngcc0 from '@angular/core';
 export interface RequestTreeHelisa {
     page: number;
 }
@@ -114,8 +113,4 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
      */
     getNodeById(id: number | string): Node;
     reorderByOrderIndex(node: Node[]): Node[];
-    static ɵfac: ɵngcc0.ɵɵFactoryDef<TreeHelisaComponent, never>;
-    static ɵcmp: ɵngcc0.ɵɵComponentDefWithMeta<TreeHelisaComponent, "hel-tree", never, { "data": "data"; }, { "removed": "removed"; "edited": "edited"; "added": "added"; "collapseParent": "collapseParent"; "rangeScrolled": "rangeScrolled"; "nodeSelected": "nodeSelected"; "dobleClick": "dobleClick"; "keypressDelete": "keypressDelete"; "keypressInsert": "keypressInsert"; "checkedOptionNode": "checkedOptionNode"; "uncheckedOptionNode": "uncheckedOptionNode"; "clickAddNode": "clickAddNode"; "clickEditNode": "clickEditNode"; "clickDeleteNode": "clickDeleteNode"; }, never, never>;
 }
-
-//# sourceMappingURL=tree-helisa.component.d.ts.map
