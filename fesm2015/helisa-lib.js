@@ -518,11 +518,13 @@ var InputHelisaType;
     InputHelisaType[InputHelisaType["IDENTITY"] = 1] = "IDENTITY";
     InputHelisaType[InputHelisaType["NUMERIC"] = 2] = "NUMERIC";
     InputHelisaType[InputHelisaType["DOUBLE"] = 3] = "DOUBLE";
+    InputHelisaType[InputHelisaType["POSITIVEORNEGATIVEDOUBLE"] = 4] = "POSITIVEORNEGATIVEDOUBLE";
 })(InputHelisaType || (InputHelisaType = {}));
 class InputHelisaComponent {
     constructor() {
         this.DECIMAL_SEPARATOR = '.';
         this.THOUSAND_SEPARATOR = ',';
+        this.NEGATIVE_SIGN = '-';
         this.placeholder = '';
         this.floatLabel = 'never';
         /** Activar o desactivar el autocompletado
@@ -651,17 +653,30 @@ class InputHelisaComponent {
             }
         }
         if (this.type === InputHelisaType.DOUBLE) {
-            if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0) {
-                for (let i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++) {
-                    maskedStr += str[i];
-                }
+            maskedStr = this.getMaskedValueDouble(str);
+        }
+        if (this.type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+            const isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
+            const newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
+            maskedStr = this.getMaskedValueDouble(newStr);
+            if (isNegativeValue) {
+                maskedStr = this.NEGATIVE_SIGN + maskedStr;
             }
-            for (let i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
-                if (j > 0 && j % 3 === 0) {
-                    maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
-                }
-                maskedStr = str[i] + maskedStr;
+        }
+        return maskedStr;
+    }
+    getMaskedValueDouble(str) {
+        let maskedStr = '';
+        if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0) {
+            for (let i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++) {
+                maskedStr += str[i];
             }
+        }
+        for (let i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
+            if (j > 0 && j % 3 === 0) {
+                maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
+            }
+            maskedStr = str[i] + maskedStr;
         }
         return maskedStr;
     }
@@ -689,18 +704,31 @@ class InputHelisaComponent {
             }
         }
         if (this.type === InputHelisaType.DOUBLE) {
-            let haveDot = false;
-            for (const strItem of str) {
-                if (strItem.match('[0-9]') || ((strItem === this.DECIMAL_SEPARATOR) && !haveDot)) {
-                    realStr += strItem;
-                }
-                haveDot = haveDot || (strItem === this.DECIMAL_SEPARATOR);
+            realStr = this.getRealValueDouble(str);
+        }
+        if (this.type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+            const isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
+            const newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
+            realStr = this.getRealValueDouble(newStr);
+            if (isNegativeValue) {
+                realStr = this.NEGATIVE_SIGN + realStr;
             }
         }
         return realStr;
     }
+    getRealValueDouble(str) {
+        let realStr = '';
+        let haveDot = false;
+        for (const strItem of str) {
+            if (strItem.match('[0-9]') || ((strItem === this.DECIMAL_SEPARATOR) && !haveDot)) {
+                realStr += strItem;
+            }
+            haveDot = haveDot || (strItem === this.DECIMAL_SEPARATOR);
+        }
+        return realStr;
+    }
     onFocus($event) {
-        if ((this.type === InputHelisaType.NUMERIC || this.type === InputHelisaType.DOUBLE) &&
+        if ((this.type === InputHelisaType.NUMERIC || this.type === InputHelisaType.DOUBLE || this.type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) &&
             Number(this.getRealValue(this.inputText.nativeElement.value)) === 0) {
             this.inputText.nativeElement.select();
         }

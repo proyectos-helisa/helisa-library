@@ -4,11 +4,13 @@ export declare enum InputHelisaType {
     DEFAULT = 0,
     IDENTITY = 1,
     NUMERIC = 2,
-    DOUBLE = 3
+    DOUBLE = 3,
+    POSITIVEORNEGATIVEDOUBLE = 4
 }
 export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     private readonly DECIMAL_SEPARATOR;
     private readonly THOUSAND_SEPARATOR;
+    private readonly NEGATIVE_SIGN;
     placeholder: string;
     floatLabel: 'never' | 'always' | 'auto';
     minlength: number;
@@ -42,6 +44,8 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     search(): void;
     change(event: string): void;
     private getMaskedValue;
+    private getMaskedValueDouble;
     private getRealValue;
+    getRealValueDouble(str: string): string;
     onFocus($event: FocusEvent): void;
 }

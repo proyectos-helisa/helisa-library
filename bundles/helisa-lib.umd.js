@@ -817,11 +817,13 @@
         InputHelisaType[InputHelisaType["IDENTITY"] = 1] = "IDENTITY";
         InputHelisaType[InputHelisaType["NUMERIC"] = 2] = "NUMERIC";
         InputHelisaType[InputHelisaType["DOUBLE"] = 3] = "DOUBLE";
+        InputHelisaType[InputHelisaType["POSITIVEORNEGATIVEDOUBLE"] = 4] = "POSITIVEORNEGATIVEDOUBLE";
     })(exports.InputHelisaType || (exports.InputHelisaType = {}));
     var InputHelisaComponent = /** @class */ (function () {
         function InputHelisaComponent() {
             this.DECIMAL_SEPARATOR = '.';
             this.THOUSAND_SEPARATOR = ',';
+            this.NEGATIVE_SIGN = '-';
             this.placeholder = '';
             this.floatLabel = 'never';
             /** Activar o desactivar el autocompletado
@@ -955,22 +957,35 @@
                 }
             }
             if (this.type === exports.InputHelisaType.DOUBLE) {
-                if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0) {
-                    for (var i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++) {
-                        maskedStr += str[i];
-                    }
-                }
-                for (var i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
-                    if (j > 0 && j % 3 === 0) {
-                        maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
-                    }
-                    maskedStr = str[i] + maskedStr;
+                maskedStr = this.getMaskedValueDouble(str);
+            }
+            if (this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+                var isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
+                var newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
+                maskedStr = this.getMaskedValueDouble(newStr);
+                if (isNegativeValue) {
+                    maskedStr = this.NEGATIVE_SIGN + maskedStr;
                 }
             }
             return maskedStr;
         };
+        InputHelisaComponent.prototype.getMaskedValueDouble = function (str) {
+            var maskedStr = '';
+            if (str.indexOf(this.DECIMAL_SEPARATOR) >= 0) {
+                for (var i = str.indexOf(this.DECIMAL_SEPARATOR); i < str.length; i++) {
+                    maskedStr += str[i];
+                }
+            }
+            for (var i = (str.indexOf(this.DECIMAL_SEPARATOR) >= 0 ? str.indexOf(this.DECIMAL_SEPARATOR) : str.length) - 1, j = 0; i >= 0; i--, j++) {
+                if (j > 0 && j % 3 === 0) {
+                    maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
+                }
+                maskedStr = str[i] + maskedStr;
+            }
+            return maskedStr;
+        };
         InputHelisaComponent.prototype.getRealValue = function (str) {
-            var e_1, _a, e_2, _b, e_3, _c;
+            var e_1, _a, e_2, _b;
             if (str == null) {
                 return str;
             }
@@ -1014,28 +1029,42 @@
                 }
             }
             if (this.type === exports.InputHelisaType.DOUBLE) {
-                var haveDot = false;
-                try {
-                    for (var str_3 = __values(str), str_3_1 = str_3.next(); !str_3_1.done; str_3_1 = str_3.next()) {
-                        var strItem = str_3_1.value;
-                        if (strItem.match('[0-9]') || ((strItem === this.DECIMAL_SEPARATOR) && !haveDot)) {
-                            realStr += strItem;
-                        }
-                        haveDot = haveDot || (strItem === this.DECIMAL_SEPARATOR);
-                    }
-                }
-                catch (e_3_1) { e_3 = { error: e_3_1 }; }
-                finally {
-                    try {
-                        if (str_3_1 && !str_3_1.done && (_c = str_3.return)) _c.call(str_3);
-                    }
-                    finally { if (e_3) throw e_3.error; }
+                realStr = this.getRealValueDouble(str);
+            }
+            if (this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+                var isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
+                var newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
+                realStr = this.getRealValueDouble(newStr);
+                if (isNegativeValue) {
+                    realStr = this.NEGATIVE_SIGN + realStr;
                 }
             }
             return realStr;
         };
+        InputHelisaComponent.prototype.getRealValueDouble = function (str) {
+            var e_3, _a;
+            var realStr = '';
+            var haveDot = false;
+            try {
+                for (var str_3 = __values(str), str_3_1 = str_3.next(); !str_3_1.done; str_3_1 = str_3.next()) {
+                    var strItem = str_3_1.value;
+                    if (strItem.match('[0-9]') || ((strItem === this.DECIMAL_SEPARATOR) && !haveDot)) {
+                        realStr += strItem;
+                    }
+                    haveDot = haveDot || (strItem === this.DECIMAL_SEPARATOR);
+                }
+            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+            finally {
+                try {
+                    if (str_3_1 && !str_3_1.done && (_a = str_3.return)) _a.call(str_3);
+                }
+                finally { if (e_3) throw e_3.error; }
+            }
+            return realStr;
+        };
         InputHelisaComponent.prototype.onFocus = function ($event) {
-            if ((this.type === exports.InputHelisaType.NUMERIC || this.type === exports.InputHelisaType.DOUBLE) &&
+            if ((this.type === exports.InputHelisaType.NUMERIC || this.type === exports.InputHelisaType.DOUBLE || this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) &&
                 Number(this.getRealValue(this.inputText.nativeElement.value)) === 0) {
                 this.inputText.nativeElement.select();
             }
