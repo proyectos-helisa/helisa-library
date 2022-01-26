@@ -5,7 +5,8 @@ export declare enum InputHelisaType {
     IDENTITY = 1,
     NUMERIC = 2,
     DOUBLE = 3,
-    POSITIVEORNEGATIVEDOUBLE = 4
+    POSITIVEORNEGATIVEDOUBLE = 4,
+    PHONE = 5
 }
 export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     private readonly DECIMAL_SEPARATOR;
