@@ -3249,7 +3249,6 @@
     ];
     var AlertInformationDataHelisaComponent = /** @class */ (function () {
         function AlertInformationDataHelisaComponent(dialogRef, data) {
-            var _this = this;
             this.dialogRef = dialogRef;
             this.data = data;
             this.alertType = data.alertType;
@@ -3269,12 +3268,6 @@
             if (this.cancelLabel === undefined) {
                 this.cancelLabel = CANCEL_LABEL_BY_ALERT_TYPE[this.alertType];
             }
-            dialogRef.disableClose = true;
-            dialogRef.keydownEvents().subscribe(function (event) {
-                if (event.code === 'Escape') {
-                    _this.dialogRef.close(_this.onCancel());
-                }
-            });
         }
         AlertInformationDataHelisaComponent.prototype.ngOnInit = function () {
             var _this = this;
@@ -3312,7 +3305,7 @@
     AlertInformationDataHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-alert-information-data-helisa',
-                    template: "<h1 mat-dialog-title *ngIf=\"hasTitle()\">{{ title }}</h1>\r\n<div mat-dialog-content *ngIf=\"hasContent()\">{{ content }}</div>\r\n<div mat-dialog-action *ngIf=\"hasButtons()\">\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial *ngIf=\"hasCancelButton()\">{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
+                    template: "<button style='position: absolute; float: right; top: 0px; right: 0px;' (click)=\"onCancel()\">X</button>\r\n<h1 mat-dialog-title *ngIf=\"hasTitle()\">{{ title }}</h1>\r\n<div mat-dialog-content *ngIf=\"hasContent()\">{{ content }}</div>\r\n<div mat-dialog-action *ngIf=\"hasButtons()\">\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial *ngIf=\"hasCancelButton()\">{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
                     styles: [""]
                 },] }
     ];
