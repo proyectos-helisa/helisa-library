@@ -2370,7 +2370,6 @@
             }
         };
         TreeHelisaComponent.prototype.receivePage = function (data) {
-            var _this = this;
             if (!this.data) {
                 this.data = { id: null, name: 'root', isSelected: false };
             }
@@ -2379,9 +2378,10 @@
                 this.treeHelisaConnect = new TreeHelisaConnect();
             }
             this.data.children = this.data.children.concat(data);
-            this.data.children.forEach(function (node) {
-                _this.fillParent(node, _this.data);
-            });
+            // DEPRECATED por velocidad de carga del arbol
+            // this.data.children.forEach((node: Node): void => {
+            //   this.fillParent(node, this.data);
+            // });
             this.data.children = this.reorderByOrderIndex(this.data.children);
             this.dataSource.data = this.data.children;
             this.treeControl.dataNodes = this.data.children;
@@ -2391,15 +2391,14 @@
         /**
          * Llenan el campo parent de todos los nodos hijos
          */
-        TreeHelisaComponent.prototype.fillParent = function (node, parent) {
-            var _this = this;
-            node.parent = parent;
-            if (node.children && node.children.length > 0) {
-                node.children.forEach(function (item) {
-                    _this.fillParent(item, node);
-                });
-            }
-        };
+        // private fillParent(node: Node, parent: Node): void {
+        //   node.parent = parent;
+        //   if (node.children && node.children.length > 0) {
+        //     node.children.forEach((item: Node): void => {
+        //       this.fillParent(item, node);
+        //     });
+        //   }
+        // }
         /**
          * coloca como true del isSelected del nodo que concuerde con el id
          */
