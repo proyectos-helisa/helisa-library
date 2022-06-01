@@ -88,6 +88,7 @@ export declare class TreeHelisaComponent implements OnInit, AfterViewInit {
     /**
      * Llenan el campo parent de todos los nodos hijos
      */
+    private fillParent;
     /**
      * coloca como true del isSelected del nodo que concuerde con el id
      */
