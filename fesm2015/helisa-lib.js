@@ -1434,16 +1434,20 @@ class DateHelisaComponent {
         }
     }
     onKey(event) {
-        if (event.key === 'Enter' || (event.key === ' ' || event.code === "Space")) {
+        if (event.key === 'Enter') {
             this.onBlur();
+            this.isClosed = true;
+            this.datePickerShow.open();
         }
     }
     onBlur() {
         if (moment(this.dateToVisualize.value, this.dateFormat, true).isValid()) {
-            const incomingDate = moment(this.dateFormControl.value, this.dateFormat).format(this.dateFormat);
-            this.dateToVisualize.setValue(incomingDate);
-            this.dateFormControl.setValue(moment(this.dateFormControl.value, this.dateFormat).toDate());
-            this.change.emit(moment(this.dateFormControl.value, this.dateFormat).toDate());
+            const incomingDate = moment(this.dateToVisualize.value, this.dateFormat).format(this.dateFormat);
+            this.dateToVisualize.setValue(incomingDate.trim());
+            this.dateFormControl.setValue(moment(this.dateToVisualize.value, this.dateFormat).toDate());
+            this.change.emit(moment(this.dateToVisualize.value, this.dateFormat).toDate());
+            clearTimeout(this.timeout);
+            this.isClosed = false;
             if (this.showDatePicker) {
                 this.isClosed = true;
                 this.datePickerShow.open();
