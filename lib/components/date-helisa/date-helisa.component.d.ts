@@ -63,4 +63,5 @@ export declare class DateHelisaComponent implements OnInit {
      */
     dateChange(type: string, event: MatDatepickerInputEvent<Date>): void;
     getErrorMessage(): string;
+    getDateToControl(): Date;
 }
