@@ -1801,7 +1801,7 @@
         DateHelisaComponent.prototype.onBlur = function () {
             if (moment(this.dateToVisualize.value, this.dateFormat, true).isValid()) {
                 var incomingDate = moment(this.dateToVisualize.value, this.dateFormat).format(this.dateFormat);
-                this.dateToVisualize.setValue(incomingDate.trim());
+                this.dateToVisualize.setValue(incomingDate);
                 this.dateFormControl.setValue(moment(this.dateToVisualize.value, this.dateFormat).toDate());
                 this.change.emit(moment(this.dateToVisualize.value, this.dateFormat).toDate());
                 clearTimeout(this.timeout);
