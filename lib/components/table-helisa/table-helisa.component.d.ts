@@ -1,7 +1,7 @@
 import { AfterViewInit, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType } from './table-helisa.interface';
+import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType, EmptyMessageColumn } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
 export interface RowData<T> {
     data: {} | T;
@@ -59,6 +59,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     drop: EventEmitter<DropElement<T>>;
     isDragged: boolean;
     addRowButton: AddRowButton;
+    emptyMessageForColumn: EmptyMessageColumn;
     addRow: EventEmitter<void>;
     bookClicked: EventEmitter<T>;
     addBookButton: boolean;
@@ -116,5 +117,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     startDrag(event: MouseEvent): void;
     private getRowIndex;
     get columnType(): typeof ColumnType;
+    showMessageEmpty(data: MatTableDataSource<RowData<T>>): boolean;
+    getMessageEmtpy(): string;
+    getIfButtonDisabled(): boolean;
+    getToolTipButtonMessage(): string;
 }
 export {};

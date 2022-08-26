@@ -23,6 +23,12 @@ export interface ColumnConfig {
 export interface AddRowButton {
     text: string;
     showButton: boolean;
+    isDisabled?: boolean;
+    toolTipText?: string;
+}
+export interface EmptyMessageColumn {
+    text: string;
+    isEnabled: boolean;
 }
 export declare enum EventScope {
     USER = 0,
