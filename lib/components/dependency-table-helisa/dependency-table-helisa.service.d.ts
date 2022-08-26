@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { ColumnConfig, AddRowButton, ConfigRowStyles, TotalTableHelisa } from '../table-helisa/table-helisa.interface';
+import { ColumnConfig, AddRowButton, ConfigRowStyles, TotalTableHelisa, EmptyMessageColumn } from '../table-helisa/table-helisa.interface';
 import { EventDependency } from './dependency-table-helisa.component';
 export interface ConfigTable<T> {
     columns: Array<ColumnConfig>;
@@ -15,6 +15,7 @@ export interface ConfigTable<T> {
     configColumnClass?: Array<string>;
     isCellSelection?: boolean;
     addBookButton?: boolean;
+    emptyMessageForColumn?: EmptyMessageColumn;
 }
 export declare class DependencyTableHelisaService<T> {
     tables: Subject<ConfigTable<T>[]>;
@@ -27,6 +28,11 @@ export declare class DependencyTableHelisaService<T> {
     emitIsCellSelection: Observable<EventDependency<boolean>>;
     private emitChangeColumns$;
     emitChangeColumns: Observable<EventDependency<ColumnConfig[]>>;
+    private emitEnabledButton$;
+    emitEnabledButton: Observable<EventDependency<{
+        isDisabled: boolean;
+        text: string;
+    }>>;
     emitTotal: Subject<EventDependency<TotalTableHelisa>>;
     emitNextPage: Subject<EventDependency<T[]>>;
     constructor();
@@ -52,6 +58,14 @@ export declare class DependencyTableHelisaService<T> {
      */
     addPage(event: EventDependency<T[]>): void;
     selectIndexRow(config: ConfigTable<T>): void;
+    /**
+     * * Deshabilita el botón y le pone un titulo sobre el over
+     * @param event para indicar el index de la tabla y en "data" true o false
+     */
+    changeEnabledButton(event: EventDependency<{
+        isDisabled: boolean;
+        text: string;
+    }>): void;
     /**
      * Muestra o esconde el boton una tabla en especifico
      * @param event para indicar el index de la tabla y en "data" true o false

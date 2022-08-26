@@ -11,6 +11,7 @@ export declare class TableHelisaService<T> {
     totalReturn: Observable<TableHelisaServiceInfo<TotalTableHelisa>>;
     nextPageReturn: Observable<TableHelisaServiceInfo<T[]>>;
     private emitVisibleButton$;
+    private emitEnabledButton$;
     /**
      * Observable para saber si se debe mostrar o esconder el boton de add row
      */
@@ -22,4 +23,12 @@ export declare class TableHelisaService<T> {
      * @param change indicar si se muestra o no el boton de add row de la tabla
      */
     changeVisibilityButton(change: boolean): void;
+    /**
+     * para modificar el estado del boton de add row de la tabla
+     * @param change indicar si se muestra o no el boton de add row de la tabla
+     */
+    changeEnabledButton(change: {
+        isDisabled: boolean;
+        text: string;
+    }): void;
 }
