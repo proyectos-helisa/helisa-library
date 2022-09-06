@@ -564,13 +564,13 @@ class InputHelisaComponent {
         this.isSearch = false;
         // @Input() inputFormControl: FormControl = new FormControl('');
         this.isFocused = false;
-        // @Input() currencyFormatShowZerosDecimal: boolean = false;
-        this.showCurrencyZerosDecimal = false;
+        // Esto agrega en el tipo DOUBLE, NUMERIC y POSITIVEORNEGATIVEDOUBLE  dos ceros al final si no los tiene y es true
+        this._showCurrencyZerosDecimal = false;
         /**
          * Deprecated
          */
         this.disabled = false;
-        this.type = InputHelisaType.DEFAULT;
+        this._type = InputHelisaType.DEFAULT;
         /**
          * Deprecated
          */
@@ -580,6 +580,14 @@ class InputHelisaComponent {
         this.formControlMask = new FormControl('');
         this.realValue = '';
         this.inputFormReal = new FormControl('');
+    }
+    set showCurrencyZerosDecimal(newShowCurrencyZerosDecimal) {
+        this._showCurrencyZerosDecimal = newShowCurrencyZerosDecimal;
+        this.changeValue(this.inputFormReal.value, true);
+    }
+    set type(newType) {
+        this._type = newType;
+        this.changeValue(this.inputFormReal.value, true);
     }
     set inputFormControl(formControl) {
         this.inputFormReal = formControl;
@@ -593,15 +601,15 @@ class InputHelisaComponent {
         }));
         this.inputFormReal.valueChanges.subscribe((data) => {
             this.statusChange(this.inputFormReal.status);
-            if (this.getMaskedValue(data) !== this.formControlMask.value) {
-                this.change(data);
+            if (this.getMaskedValue(data, false) !== this.formControlMask.value) {
+                this.changeValue(data, false);
                 if (this.isFocused) {
                     this.onFocus(null);
                 }
             }
         });
         this.formControlMask.setValidators(this.inputFormReal.validator);
-        this.change(this.inputFormReal.value);
+        this.changeValue(this.inputFormReal.value, true);
         // disable control
         if (formControl.disabled) {
             this.formControlMask.disable({ onlySelf: true });
@@ -642,31 +650,36 @@ class InputHelisaComponent {
     search() {
         this.setValue.emit(this.realValue);
     }
-    change(event) {
+    ngModelChange(event) {
+        this.changeValue(event, false);
+    }
+    changeValue(event, isFinishOrStart) {
         if (event != null) {
             event = event + '';
         }
         let position = this.inputText.nativeElement.selectionStart;
         const length = event ? event.length : 0;
         this.realValue = this.getRealValue(event);
-        if (this.getMaskedValue(this.realValue) !== this.formControlMask.value) {
-            this.formControlMask.setValue(this.getMaskedValue(this.realValue));
+        if (this.getMaskedValue(this.realValue, isFinishOrStart) !== this.formControlMask.value) {
+            this.formControlMask.setValue(this.getMaskedValue(this.realValue, isFinishOrStart));
             position += this.inputText.nativeElement.value.length - length;
             this.inputText.nativeElement.selectionStart = position;
             this.inputText.nativeElement.selectionEnd = position;
         }
-        this.inputFormReal.setValue(this.realValue);
+        if (this.inputFormReal.value !== this.realValue) {
+            this.inputFormReal.setValue(this.realValue);
+        }
     }
-    getMaskedValue(str) {
+    getMaskedValue(str, isFinish) {
         if (str == null) {
             return str;
         }
         str = str + '';
-        if (this.type === InputHelisaType.DEFAULT || this.type === InputHelisaType.PHONE) {
+        if (this._type === InputHelisaType.DEFAULT || this._type === InputHelisaType.PHONE) {
             return str;
         }
         let maskedStr = '';
-        if (this.type === InputHelisaType.IDENTITY) {
+        if (this._type === InputHelisaType.IDENTITY) {
             for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 === 0) {
                     maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
@@ -674,26 +687,42 @@ class InputHelisaComponent {
                 maskedStr = str[i] + maskedStr;
             }
         }
-        if (this.type === InputHelisaType.NUMERIC) {
+        if (this._type === InputHelisaType.NUMERIC) {
             for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
                 if (j > 0 && j % 3 === 0) {
                     maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
                 }
                 maskedStr = str[i] + maskedStr;
             }
+            maskedStr = this.addZeroDecimals(maskedStr, isFinish);
         }
-        if (this.type === InputHelisaType.DOUBLE) {
+        if (this._type === InputHelisaType.DOUBLE) {
             maskedStr = this.getMaskedValueDouble(str);
-            if (maskedStr.indexOf(this.DECIMAL_SEPARATOR) < 0 && this.showCurrencyZerosDecimal) {
-                maskedStr += '.00';
-            }
+            maskedStr = this.addZeroDecimals(maskedStr, isFinish);
         }
-        if (this.type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+        if (this._type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
             const isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
             const newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
             maskedStr = this.getMaskedValueDouble(newStr);
             if (isNegativeValue) {
                 maskedStr = this.NEGATIVE_SIGN + maskedStr;
+            }
+            maskedStr = this.addZeroDecimals(maskedStr, isFinish);
+        }
+        return maskedStr;
+    }
+    addZeroDecimals(maskedStr, isFinish) {
+        if (this._showCurrencyZerosDecimal && isFinish) {
+            const indexDecimalSeparator = maskedStr.indexOf(this.DECIMAL_SEPARATOR);
+            if (indexDecimalSeparator < 0) {
+                maskedStr += '.00';
+            }
+            else {
+                let decimals = maskedStr.substring(indexDecimalSeparator);
+                while (decimals.length < 3) {
+                    decimals += '0';
+                }
+                maskedStr = maskedStr.substring(0, indexDecimalSeparator) + decimals;
             }
         }
         return maskedStr;
@@ -719,20 +748,20 @@ class InputHelisaComponent {
         }
         str = str + '';
         let realStr = '';
-        if (this.type === InputHelisaType.DEFAULT) {
+        if (this._type === InputHelisaType.DEFAULT) {
             return str;
         }
-        if (this.type === InputHelisaType.IDENTITY || this.type === InputHelisaType.NUMERIC || this.type === InputHelisaType.PHONE) {
+        if (this._type === InputHelisaType.IDENTITY || this._type === InputHelisaType.NUMERIC || this._type === InputHelisaType.PHONE) {
             for (const strItem of str) {
                 if (strItem.match('[0-9]')) {
                     realStr += strItem;
                 }
             }
         }
-        if (this.type === InputHelisaType.DOUBLE) {
+        if (this._type === InputHelisaType.DOUBLE) {
             realStr = this.getRealValueDouble(str);
         }
-        if (this.type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+        if (this._type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
             const isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
             const newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
             realStr = this.getRealValueDouble(newStr);
@@ -754,16 +783,19 @@ class InputHelisaComponent {
         return realStr;
     }
     onFocus($event) {
-        if ((this.type === InputHelisaType.NUMERIC || this.type === InputHelisaType.DOUBLE || this.type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) &&
+        if ((this._type === InputHelisaType.NUMERIC || this._type === InputHelisaType.DOUBLE || this._type === InputHelisaType.POSITIVEORNEGATIVEDOUBLE) &&
             Number(this.getRealValue(this.inputText.nativeElement.value)) === 0) {
             this.inputText.nativeElement.select();
         }
+    }
+    change(event) {
+        this.changeValue(event.target.value, true);
     }
 }
 InputHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-input',
-                template: "<mat-form-field [floatLabel]=\"floatLabel\">\n  <input #inputText matInput placeholder=\"{{placeholder}}\"\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\n  [autocomplete]=\"(autocompleteMode) ? 'on' : 'off'\" (blur)=\"blur.emit($event)\" [minlength]=\"minlength\" [maxlength]=\"maxlength\" (focus)=\"onFocus($event)\">\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
+                template: "<mat-form-field [floatLabel]=\"floatLabel\">\n  <input #inputText matInput placeholder=\"{{placeholder}}\"\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"ngModelChange($event)\"\n  (change)=\"change($event)\"\n  [autocomplete]=\"(autocompleteMode) ? 'on' : 'off'\" (blur)=\"blur.emit($event)\" [minlength]=\"minlength\" [maxlength]=\"maxlength\" (focus)=\"onFocus($event)\">\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
                 styles: ["::ng-deep hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
             },] }
 ];
@@ -776,12 +808,12 @@ InputHelisaComponent.propDecorators = {
     autocompleteMode: [{ type: Input }],
     isSearch: [{ type: Input }],
     isFocused: [{ type: Input }],
-    showCurrencyZerosDecimal: [{ type: Input }],
     disabled: [{ type: Input }],
-    type: [{ type: Input }],
     setValue: [{ type: Output }],
     blur: [{ type: Output }],
     inputText: [{ type: ViewChild, args: ['inputText', { static: true },] }],
+    showCurrencyZerosDecimal: [{ type: Input }],
+    type: [{ type: Input }],
     inputFormControl: [{ type: Input }]
 };
 
