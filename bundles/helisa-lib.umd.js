@@ -863,6 +863,8 @@
             this.isSearch = false;
             // @Input() inputFormControl: FormControl = new FormControl('');
             this.isFocused = false;
+            // @Input() currencyFormatShowZerosDecimal: boolean = false;
+            this.showCurrencyZerosDecimal = false;
             /**
              * Deprecated
              */
@@ -986,6 +988,9 @@
             }
             if (this.type === exports.InputHelisaType.DOUBLE) {
                 maskedStr = this.getMaskedValueDouble(str);
+                if (maskedStr.indexOf(this.DECIMAL_SEPARATOR) < 0 && this.showCurrencyZerosDecimal) {
+                    maskedStr += '.00';
+                }
             }
             if (this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
                 var isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
@@ -1098,6 +1103,7 @@
         autocompleteMode: [{ type: i0.Input }],
         isSearch: [{ type: i0.Input }],
         isFocused: [{ type: i0.Input }],
+        showCurrencyZerosDecimal: [{ type: i0.Input }],
         disabled: [{ type: i0.Input }],
         type: [{ type: i0.Input }],
         setValue: [{ type: i0.Output }],
