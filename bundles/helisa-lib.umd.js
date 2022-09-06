@@ -863,13 +863,13 @@
             this.isSearch = false;
             // @Input() inputFormControl: FormControl = new FormControl('');
             this.isFocused = false;
-            // @Input() currencyFormatShowZerosDecimal: boolean = false;
-            this.showCurrencyZerosDecimal = false;
+            // Esto agrega en el tipo DOUBLE, NUMERIC y POSITIVEORNEGATIVEDOUBLE  dos ceros al final si no los tiene y es true
+            this._showCurrencyZerosDecimal = false;
             /**
              * Deprecated
              */
             this.disabled = false;
-            this.type = exports.InputHelisaType.DEFAULT;
+            this._type = exports.InputHelisaType.DEFAULT;
             /**
              * Deprecated
              */
@@ -880,6 +880,22 @@
             this.realValue = '';
             this.inputFormReal = new forms.FormControl('');
         }
+        Object.defineProperty(InputHelisaComponent.prototype, "showCurrencyZerosDecimal", {
+            set: function (newShowCurrencyZerosDecimal) {
+                this._showCurrencyZerosDecimal = newShowCurrencyZerosDecimal;
+                this.changeValue(this.inputFormReal.value, true);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(InputHelisaComponent.prototype, "type", {
+            set: function (newType) {
+                this._type = newType;
+                this.changeValue(this.inputFormReal.value, true);
+            },
+            enumerable: false,
+            configurable: true
+        });
         Object.defineProperty(InputHelisaComponent.prototype, "inputFormControl", {
             set: function (formControl) {
                 var _this = this;
@@ -894,15 +910,15 @@
                 }));
                 this.inputFormReal.valueChanges.subscribe(function (data) {
                     _this.statusChange(_this.inputFormReal.status);
-                    if (_this.getMaskedValue(data) !== _this.formControlMask.value) {
-                        _this.change(data);
+                    if (_this.getMaskedValue(data, false) !== _this.formControlMask.value) {
+                        _this.changeValue(data, false);
                         if (_this.isFocused) {
                             _this.onFocus(null);
                         }
                     }
                 });
                 this.formControlMask.setValidators(this.inputFormReal.validator);
-                this.change(this.inputFormReal.value);
+                this.changeValue(this.inputFormReal.value, true);
                 // disable control
                 if (formControl.disabled) {
                     this.formControlMask.disable({ onlySelf: true });
@@ -946,31 +962,36 @@
         InputHelisaComponent.prototype.search = function () {
             this.setValue.emit(this.realValue);
         };
-        InputHelisaComponent.prototype.change = function (event) {
+        InputHelisaComponent.prototype.ngModelChange = function (event) {
+            this.changeValue(event, false);
+        };
+        InputHelisaComponent.prototype.changeValue = function (event, isFinishOrStart) {
             if (event != null) {
                 event = event + '';
             }
             var position = this.inputText.nativeElement.selectionStart;
             var length = event ? event.length : 0;
             this.realValue = this.getRealValue(event);
-            if (this.getMaskedValue(this.realValue) !== this.formControlMask.value) {
-                this.formControlMask.setValue(this.getMaskedValue(this.realValue));
+            if (this.getMaskedValue(this.realValue, isFinishOrStart) !== this.formControlMask.value) {
+                this.formControlMask.setValue(this.getMaskedValue(this.realValue, isFinishOrStart));
                 position += this.inputText.nativeElement.value.length - length;
                 this.inputText.nativeElement.selectionStart = position;
                 this.inputText.nativeElement.selectionEnd = position;
             }
-            this.inputFormReal.setValue(this.realValue);
+            if (this.inputFormReal.value !== this.realValue) {
+                this.inputFormReal.setValue(this.realValue);
+            }
         };
-        InputHelisaComponent.prototype.getMaskedValue = function (str) {
+        InputHelisaComponent.prototype.getMaskedValue = function (str, isFinish) {
             if (str == null) {
                 return str;
             }
             str = str + '';
-            if (this.type === exports.InputHelisaType.DEFAULT || this.type === exports.InputHelisaType.PHONE) {
+            if (this._type === exports.InputHelisaType.DEFAULT || this._type === exports.InputHelisaType.PHONE) {
                 return str;
             }
             var maskedStr = '';
-            if (this.type === exports.InputHelisaType.IDENTITY) {
+            if (this._type === exports.InputHelisaType.IDENTITY) {
                 for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
                     if (j > 0 && j % 3 === 0) {
                         maskedStr = this.DECIMAL_SEPARATOR + maskedStr;
@@ -978,26 +999,42 @@
                     maskedStr = str[i] + maskedStr;
                 }
             }
-            if (this.type === exports.InputHelisaType.NUMERIC) {
+            if (this._type === exports.InputHelisaType.NUMERIC) {
                 for (var i = str.length - 1, j = 0; i >= 0; i--, j++) {
                     if (j > 0 && j % 3 === 0) {
                         maskedStr = this.THOUSAND_SEPARATOR + maskedStr;
                     }
                     maskedStr = str[i] + maskedStr;
                 }
+                maskedStr = this.addZeroDecimals(maskedStr, isFinish);
             }
-            if (this.type === exports.InputHelisaType.DOUBLE) {
+            if (this._type === exports.InputHelisaType.DOUBLE) {
                 maskedStr = this.getMaskedValueDouble(str);
-                if (maskedStr.indexOf(this.DECIMAL_SEPARATOR) < 0 && this.showCurrencyZerosDecimal) {
-                    maskedStr += '.00';
-                }
+                maskedStr = this.addZeroDecimals(maskedStr, isFinish);
             }
-            if (this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+            if (this._type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
                 var isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
                 var newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
                 maskedStr = this.getMaskedValueDouble(newStr);
                 if (isNegativeValue) {
                     maskedStr = this.NEGATIVE_SIGN + maskedStr;
+                }
+                maskedStr = this.addZeroDecimals(maskedStr, isFinish);
+            }
+            return maskedStr;
+        };
+        InputHelisaComponent.prototype.addZeroDecimals = function (maskedStr, isFinish) {
+            if (this._showCurrencyZerosDecimal && isFinish) {
+                var indexDecimalSeparator = maskedStr.indexOf(this.DECIMAL_SEPARATOR);
+                if (indexDecimalSeparator < 0) {
+                    maskedStr += '.00';
+                }
+                else {
+                    var decimals = maskedStr.substring(indexDecimalSeparator);
+                    while (decimals.length < 3) {
+                        decimals += '0';
+                    }
+                    maskedStr = maskedStr.substring(0, indexDecimalSeparator) + decimals;
                 }
             }
             return maskedStr;
@@ -1024,10 +1061,10 @@
             }
             str = str + '';
             var realStr = '';
-            if (this.type === exports.InputHelisaType.DEFAULT) {
+            if (this._type === exports.InputHelisaType.DEFAULT) {
                 return str;
             }
-            if (this.type === exports.InputHelisaType.IDENTITY || this.type === exports.InputHelisaType.NUMERIC || this.type === exports.InputHelisaType.PHONE) {
+            if (this._type === exports.InputHelisaType.IDENTITY || this._type === exports.InputHelisaType.NUMERIC || this._type === exports.InputHelisaType.PHONE) {
                 try {
                     for (var str_1 = __values(str), str_1_1 = str_1.next(); !str_1_1.done; str_1_1 = str_1.next()) {
                         var strItem = str_1_1.value;
@@ -1044,10 +1081,10 @@
                     finally { if (e_1) throw e_1.error; }
                 }
             }
-            if (this.type === exports.InputHelisaType.DOUBLE) {
+            if (this._type === exports.InputHelisaType.DOUBLE) {
                 realStr = this.getRealValueDouble(str);
             }
-            if (this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
+            if (this._type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) {
                 var isNegativeValue = str.indexOf(this.NEGATIVE_SIGN) === 0;
                 var newStr = isNegativeValue ? str.replace(this.NEGATIVE_SIGN, '') : str;
                 realStr = this.getRealValueDouble(newStr);
@@ -1080,17 +1117,20 @@
             return realStr;
         };
         InputHelisaComponent.prototype.onFocus = function ($event) {
-            if ((this.type === exports.InputHelisaType.NUMERIC || this.type === exports.InputHelisaType.DOUBLE || this.type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) &&
+            if ((this._type === exports.InputHelisaType.NUMERIC || this._type === exports.InputHelisaType.DOUBLE || this._type === exports.InputHelisaType.POSITIVEORNEGATIVEDOUBLE) &&
                 Number(this.getRealValue(this.inputText.nativeElement.value)) === 0) {
                 this.inputText.nativeElement.select();
             }
+        };
+        InputHelisaComponent.prototype.change = function (event) {
+            this.changeValue(event.target.value, true);
         };
         return InputHelisaComponent;
     }());
     InputHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-input',
-                    template: "<mat-form-field [floatLabel]=\"floatLabel\">\n  <input #inputText matInput placeholder=\"{{placeholder}}\"\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"change($event)\"\n  [autocomplete]=\"(autocompleteMode) ? 'on' : 'off'\" (blur)=\"blur.emit($event)\" [minlength]=\"minlength\" [maxlength]=\"maxlength\" (focus)=\"onFocus($event)\">\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
+                    template: "<mat-form-field [floatLabel]=\"floatLabel\">\n  <input #inputText matInput placeholder=\"{{placeholder}}\"\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"ngModelChange($event)\"\n  (change)=\"change($event)\"\n  [autocomplete]=\"(autocompleteMode) ? 'on' : 'off'\" (blur)=\"blur.emit($event)\" [minlength]=\"minlength\" [maxlength]=\"maxlength\" (focus)=\"onFocus($event)\">\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
                     styles: ["::ng-deep hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
                 },] }
     ];
@@ -1103,12 +1143,12 @@
         autocompleteMode: [{ type: i0.Input }],
         isSearch: [{ type: i0.Input }],
         isFocused: [{ type: i0.Input }],
-        showCurrencyZerosDecimal: [{ type: i0.Input }],
         disabled: [{ type: i0.Input }],
-        type: [{ type: i0.Input }],
         setValue: [{ type: i0.Output }],
         blur: [{ type: i0.Output }],
         inputText: [{ type: i0.ViewChild, args: ['inputText', { static: true },] }],
+        showCurrencyZerosDecimal: [{ type: i0.Input }],
+        type: [{ type: i0.Input }],
         inputFormControl: [{ type: i0.Input }]
     };
 

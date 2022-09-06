@@ -23,12 +23,12 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     autocompleteMode: boolean;
     isSearch: boolean;
     isFocused: boolean;
-    showCurrencyZerosDecimal: boolean;
+    _showCurrencyZerosDecimal: boolean;
     /**
      * Deprecated
      */
     disabled: boolean;
-    type: InputHelisaType;
+    _type: InputHelisaType;
     /**
      * Deprecated
      */
@@ -39,15 +39,20 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     private inputFormReal;
     inputText: ElementRef;
     constructor();
+    set showCurrencyZerosDecimal(newShowCurrencyZerosDecimal: boolean);
+    set type(newType: InputHelisaType);
     set inputFormControl(formControl: FormControl);
     private statusChange;
     ngOnInit(): void;
     ngAfterViewInit(): void;
     search(): void;
-    change(event: string): void;
+    ngModelChange(event: string): void;
+    private changeValue;
     private getMaskedValue;
+    private addZeroDecimals;
     private getMaskedValueDouble;
     private getRealValue;
     getRealValueDouble(str: string): string;
     onFocus($event: FocusEvent): void;
+    change(event: Event): void;
 }
