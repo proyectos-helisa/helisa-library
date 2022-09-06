@@ -1,8 +1,8 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('@angular/material/snack-bar'), require('@angular/material/dialog'), require('rxjs'), require('@angular/material/sort'), require('@angular/material/table'), require('@angular/cdk/drag-drop'), require('moment'), require('rxjs/operators'), require('@angular/cdk/tree'), require('@angular/material/tree'), require('@angular/router'), require('lodash'), require('@angular/material/autocomplete'), require('@angular/material/tooltip'), require('@angular/cdk/layout'), require('@angular/common'), require('@angular/material/button'), require('@angular/material/checkbox'), require('@angular/material/core'), require('@angular/material/grid-list'), require('@angular/material/input'), require('@angular/material/menu'), require('@angular/material/paginator'), require('@angular/material/radio'), require('@angular/material/sidenav'), require('@angular/material/card'), require('@angular/material/chips'), require('@angular/material/datepicker'), require('@angular/material/expansion'), require('@angular/material/form-field'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/progress-spinner'), require('@angular/material/select'), require('@angular/material/stepper'), require('@angular/material/tabs'), require('@angular/material/toolbar')) :
     typeof define === 'function' && define.amd ? define('helisa-lib', ['exports', '@angular/core', '@angular/forms', '@angular/material/snack-bar', '@angular/material/dialog', 'rxjs', '@angular/material/sort', '@angular/material/table', '@angular/cdk/drag-drop', 'moment', 'rxjs/operators', '@angular/cdk/tree', '@angular/material/tree', '@angular/router', 'lodash', '@angular/material/autocomplete', '@angular/material/tooltip', '@angular/cdk/layout', '@angular/common', '@angular/material/button', '@angular/material/checkbox', '@angular/material/core', '@angular/material/grid-list', '@angular/material/input', '@angular/material/menu', '@angular/material/paginator', '@angular/material/radio', '@angular/material/sidenav', '@angular/material/card', '@angular/material/chips', '@angular/material/datepicker', '@angular/material/expansion', '@angular/material/form-field', '@angular/material/icon', '@angular/material/list', '@angular/material/progress-spinner', '@angular/material/select', '@angular/material/stepper', '@angular/material/tabs', '@angular/material/toolbar'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['helisa-lib'] = {}, global.ng.core, global.ng.forms, global.ng.material.snackBar, global.ng.material.dialog, global.rxjs, global.ng.material.sort, global.ng.material.table, global.ng.cdk.dragDrop, global.moment_, global.rxjs.operators, global.ng.cdk.tree, global.ng.material.tree, global.ng.router, global._, global.ng.material.autocomplete, global.ng.material.tooltip, global.ng.cdk.layout, global.ng.common, global.ng.material.button, global.ng.material.checkbox, global.ng.material.core, global.ng.material.gridList, global.ng.material.input, global.ng.material.menu, global.ng.material.paginator, global.ng.material.radio, global.ng.material.sidenav, global.ng.material.card, global.ng.material.chips, global.ng.material.datepicker, global.ng.material.expansion, global.ng.material.formField, global.ng.material.icon, global.ng.material.list, global.ng.material.progressSpinner, global.ng.material.select, global.ng.material.stepper, global.ng.material.tabs, global.ng.material.toolbar));
-}(this, (function (exports, i0, forms, i1, i1$1, rxjs, sort, table, dragDrop, moment_, operators, tree, tree$1, router, _, autocomplete, tooltip, layout, common, button, checkbox, core, gridList, input, menu, paginator, radio, sidenav, card, chips, datepicker, expansion, formField, icon, list, progressSpinner, select, stepper, tabs, toolbar) { 'use strict';
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["helisa-lib"] = {}, global.ng.core, global.ng.forms, global.ng.material.snackBar, global.ng.material.dialog, global.rxjs, global.ng.material.sort, global.ng.material.table, global.ng.cdk.dragDrop, global.moment_, global.rxjs.operators, global.ng.cdk.tree, global.ng.material.tree, global.ng.router, global._, global.ng.material.autocomplete, global.ng.material.tooltip, global.ng.cdk.layout, global.ng.common, global.ng.material.button, global.ng.material.checkbox, global.ng.material.core, global.ng.material.gridList, global.ng.material.input, global.ng.material.menu, global.ng.material.paginator, global.ng.material.radio, global.ng.material.sidenav, global.ng.material.card, global.ng.material.chips, global.ng.material.datepicker, global.ng.material.expansion, global.ng.material.formField, global.ng.material.icon, global.ng.material.list, global.ng.material.progressSpinner, global.ng.material.select, global.ng.material.stepper, global.ng.material.tabs, global.ng.material.toolbar));
+})(this, (function (exports, i0, forms, i1, i1$1, rxjs, sort, table, dragDrop, moment_, operators, tree, tree$1, router, _, autocomplete, tooltip, layout, common, button, checkbox, core, gridList, input, menu, paginator, radio, sidenav, card, chips, datepicker, expansion, formField, icon, list, progressSpinner, select, stepper, tabs, toolbar) { 'use strict';
 
     function _interopNamespace(e) {
         if (e && e.__esModule) return e;
@@ -13,18 +13,20 @@
                     var d = Object.getOwnPropertyDescriptor(e, k);
                     Object.defineProperty(n, k, d.get ? d : {
                         enumerable: true,
-                        get: function () {
-                            return e[k];
-                        }
+                        get: function () { return e[k]; }
                     });
                 }
             });
         }
-        n['default'] = e;
+        n["default"] = e;
         return Object.freeze(n);
     }
 
+    var i0__namespace = /*#__PURE__*/_interopNamespace(i0);
+    var i1__namespace = /*#__PURE__*/_interopNamespace(i1);
+    var i1__namespace$1 = /*#__PURE__*/_interopNamespace(i1$1);
     var moment___namespace = /*#__PURE__*/_interopNamespace(moment_);
+    var ___namespace = /*#__PURE__*/_interopNamespace(_);
 
     var InputWithButtonComponent = /** @class */ (function () {
         function InputWithButtonComponent() {
@@ -55,7 +57,7 @@
     InputWithButtonComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-input-with-button',
-                    template: "<div>\n  <mat-form-field>\n    <input #inputText  matInput [placeholder]=\"placeholder\" [formControl]= \"inputFormControl\">    \n    <mat-icon matSuffix (click)=\"onDone()\">done</mat-icon>\n    <mat-icon matSuffix (click)=\"onCancel()\">close</mat-icon>\n    <mat-error *ngIf=\"inputFormControl.hasError('required')\">\n      {{ requiredMessage }}\n    </mat-error>\n  </mat-form-field>\n</div>\n",
+                    template: "<div>\r\n  <mat-form-field>\r\n    <input #inputText  matInput [placeholder]=\"placeholder\" [formControl]= \"inputFormControl\">    \r\n    <mat-icon matSuffix (click)=\"onDone()\">done</mat-icon>\r\n    <mat-icon matSuffix (click)=\"onCancel()\">close</mat-icon>\r\n    <mat-error *ngIf=\"inputFormControl.hasError('required')\">\r\n      {{ requiredMessage }}\r\n    </mat-error>\r\n  </mat-form-field>\r\n</div>\r\n",
                     styles: [""]
                 },] }
     ];
@@ -82,7 +84,7 @@
     ToastHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-toast',
-                    template: "<div [ngClass]=\"'toast-'+data.type\">\n  <span class=\"toast-message\">{{ data.message }}</span>\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\n  </ng-container>    \n</div>\n",
+                    template: "<div [ngClass]=\"'toast-'+data.type\">\r\n  <span class=\"toast-message\">{{ data.message }}</span>\r\n  <ng-container *ngIf=\"!!data && !!data.subMessages\">\r\n    <span class=\"toast-sub-message\" *ngFor=\"let submessage of data.subMessages\">{{ submessage }}</span>\r\n  </ng-container>    \r\n</div>\r\n",
                     styles: [""]
                 },] }
     ];
@@ -104,7 +106,7 @@
         };
         return ToastHelisaService;
     }());
-    ToastHelisaService.ɵprov = i0.ɵɵdefineInjectable({ factory: function ToastHelisaService_Factory() { return new ToastHelisaService(i0.ɵɵinject(i1.MatSnackBar)); }, token: ToastHelisaService, providedIn: "root" });
+    ToastHelisaService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function ToastHelisaService_Factory() { return new ToastHelisaService(i0__namespace.ɵɵinject(i1__namespace.MatSnackBar)); }, token: ToastHelisaService, providedIn: "root" });
     ToastHelisaService.decorators = [
         { type: i0.Injectable, args: [{
                     providedIn: 'root'
@@ -114,12 +116,14 @@
         { type: i1.MatSnackBar }
     ]; };
 
+    exports.ToastType = void 0;
     (function (ToastType) {
         ToastType["DONE"] = "done";
         ToastType["ERROR"] = "error";
         ToastType["INFO"] = "info";
     })(exports.ToastType || (exports.ToastType = {}));
 
+    exports.AlertHelisaType = void 0;
     (function (AlertHelisaType) {
         AlertHelisaType["ERROR"] = "ERROR";
         AlertHelisaType["CONFIRMATION"] = "CONFIRMATION";
@@ -158,7 +162,7 @@
     AlertHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-alert',
-                    template: "<h1 mat-dialog-title>{{ title }}</h1>\n<div mat-dialog-content>\n  {{ content }}\n</div>\n<div mat-dialog-actions>\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\n</div>",
+                    template: "<h1 mat-dialog-title>{{ title }}</h1>\r\n<div mat-dialog-content>\r\n  {{ content }}\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button *ngIf=\"hasCancel\" [mat-dialog-close]=\"false\" >{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" cdkFocusInitial>{{okLabel}}</button>\r\n</div>",
                     styles: [""]
                 },] }
     ];
@@ -180,7 +184,7 @@
         };
         return AlertHelisaService;
     }());
-    AlertHelisaService.ɵprov = i0.ɵɵdefineInjectable({ factory: function AlertHelisaService_Factory() { return new AlertHelisaService(i0.ɵɵinject(i1$1.MatDialog)); }, token: AlertHelisaService, providedIn: "root" });
+    AlertHelisaService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function AlertHelisaService_Factory() { return new AlertHelisaService(i0__namespace.ɵɵinject(i1__namespace$1.MatDialog)); }, token: AlertHelisaService, providedIn: "root" });
     AlertHelisaService.decorators = [
         { type: i0.Injectable, args: [{
                     providedIn: 'root'
@@ -190,7 +194,7 @@
         { type: i1$1.MatDialog }
     ]; };
 
-    /*! *****************************************************************************
+    /******************************************************************************
     Copyright (c) Microsoft Corporation.
 
     Permission to use, copy, modify, and/or distribute this software for any
@@ -214,6 +218,8 @@
         return extendStatics(d, b);
     };
     function __extends(d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -350,7 +356,11 @@
     var __createBinding = Object.create ? (function (o, m, k, k2) {
         if (k2 === undefined)
             k2 = k;
-        Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+            desc = { enumerable: true, get: function () { return m[k]; } };
+        }
+        Object.defineProperty(o, k2, desc);
     }) : (function (o, m, k, k2) {
         if (k2 === undefined)
             k2 = k;
@@ -399,11 +409,13 @@
         }
         return ar;
     }
+    /** @deprecated */
     function __spread() {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
+    /** @deprecated */
     function __spreadArrays() {
         for (var s = 0, i = 0, il = arguments.length; i < il; i++)
             s += arguments[i].length;
@@ -412,7 +424,17 @@
                 r[k] = a[j];
         return r;
     }
-    ;
+    function __spreadArray(to, from, pack) {
+        if (pack || arguments.length === 2)
+            for (var i = 0, l = from.length, ar; i < l; i++) {
+                if (ar || !(i in from)) {
+                    if (!ar)
+                        ar = Array.prototype.slice.call(from, 0, i);
+                    ar[i] = from[i];
+                }
+            }
+        return to.concat(ar || Array.prototype.slice.call(from));
+    }
     function __await(v) {
         return this instanceof __await ? (this.v = v, this) : new __await(v);
     }
@@ -477,18 +499,26 @@
     function __importDefault(mod) {
         return (mod && mod.__esModule) ? mod : { default: mod };
     }
-    function __classPrivateFieldGet(receiver, privateMap) {
-        if (!privateMap.has(receiver)) {
-            throw new TypeError("attempted to get private field on non-instance");
-        }
-        return privateMap.get(receiver);
+    function __classPrivateFieldGet(receiver, state, kind, f) {
+        if (kind === "a" && !f)
+            throw new TypeError("Private accessor was defined without a getter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+            throw new TypeError("Cannot read private member from an object whose class did not declare it");
+        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
     }
-    function __classPrivateFieldSet(receiver, privateMap, value) {
-        if (!privateMap.has(receiver)) {
-            throw new TypeError("attempted to set private field on non-instance");
-        }
-        privateMap.set(receiver, value);
-        return value;
+    function __classPrivateFieldSet(receiver, state, value, kind, f) {
+        if (kind === "m")
+            throw new TypeError("Private method is not writable");
+        if (kind === "a" && !f)
+            throw new TypeError("Private accessor was defined without a setter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+            throw new TypeError("Cannot write private member to an object whose class did not declare it");
+        return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+    }
+    function __classPrivateFieldIn(state, receiver) {
+        if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function"))
+            throw new TypeError("Cannot use 'in' operator on non-object");
+        return typeof state === "function" ? receiver === state : state.has(receiver);
     }
 
     var DependencyTableHelisaService = /** @class */ (function () {
@@ -640,7 +670,7 @@
         };
         return TableHelisaService;
     }());
-    TableHelisaService.ɵprov = i0.ɵɵdefineInjectable({ factory: function TableHelisaService_Factory() { return new TableHelisaService(); }, token: TableHelisaService, providedIn: "root" });
+    TableHelisaService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function TableHelisaService_Factory() { return new TableHelisaService(); }, token: TableHelisaService, providedIn: "root" });
     TableHelisaService.decorators = [
         { type: i0.Injectable, args: [{
                     providedIn: 'root'
@@ -814,7 +844,7 @@
     DependencyTableHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-dependency-table',
-                    template: "<div>    \n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\n  </hel-table>\n</div>\n",
+                    template: "<div>    \r\n  <hel-table #viewTables *ngFor=\"let table of tables; let i = index;\" class=\"table-test\"\r\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\r\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\r\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\r\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\r\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\r\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\r\n    (bookClicked)=\"onBookClicked(i,$event)\"\r\n    [showToolTip]=\"showToolTip\"\r\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\">\r\n  </hel-table>\r\n</div>\r\n",
                     providers: [DependencyTableHelisaService],
                     styles: [""]
                 },] }
@@ -839,6 +869,7 @@
         showDelay: [{ type: i0.Input }]
     };
 
+    exports.InputHelisaType = void 0;
     (function (InputHelisaType) {
         InputHelisaType[InputHelisaType["DEFAULT"] = 0] = "DEFAULT";
         InputHelisaType[InputHelisaType["IDENTITY"] = 1] = "IDENTITY";
@@ -879,6 +910,7 @@
             this.formControlMask = new forms.FormControl('');
             this.realValue = '';
             this.inputFormReal = new forms.FormControl('');
+            this.isUserChange = false;
         }
         Object.defineProperty(InputHelisaComponent.prototype, "showCurrencyZerosDecimal", {
             set: function (newShowCurrencyZerosDecimal) {
@@ -910,12 +942,13 @@
                 }));
                 this.inputFormReal.valueChanges.subscribe(function (data) {
                     _this.statusChange(_this.inputFormReal.status);
-                    if (_this.getMaskedValue(data, false) !== _this.formControlMask.value) {
-                        _this.changeValue(data, false);
+                    if (_this.getMaskedValue(data, !_this.isUserChange) !== _this.formControlMask.value) {
+                        _this.changeValue(data, !_this.isUserChange);
                         if (_this.isFocused) {
                             _this.onFocus(null);
                         }
                     }
+                    _this.isUserChange = false;
                 });
                 this.formControlMask.setValidators(this.inputFormReal.validator);
                 this.changeValue(this.inputFormReal.value, true);
@@ -963,6 +996,7 @@
             this.setValue.emit(this.realValue);
         };
         InputHelisaComponent.prototype.ngModelChange = function (event) {
+            this.isUserChange = true;
             this.changeValue(event, false);
         };
         InputHelisaComponent.prototype.changeValue = function (event, isFinishOrStart) {
@@ -1130,7 +1164,7 @@
     InputHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-input',
-                    template: "<mat-form-field [floatLabel]=\"floatLabel\">\n  <input #inputText matInput placeholder=\"{{placeholder}}\"\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"ngModelChange($event)\"\n  (change)=\"change($event)\"\n  [autocomplete]=\"(autocompleteMode) ? 'on' : 'off'\" (blur)=\"blur.emit($event)\" [minlength]=\"minlength\" [maxlength]=\"maxlength\" (focus)=\"onFocus($event)\">\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\n</mat-form-field>\n",
+                    template: "<mat-form-field [floatLabel]=\"floatLabel\">\r\n  <input #inputText matInput placeholder=\"{{placeholder}}\"\r\n  (keyup.enter)=\"search()\" [formControl]= \"formControlMask\"\r\n  [attr.disabled]=\"disabled ? 'disabled' : null\" (ngModelChange)=\"ngModelChange($event)\"\r\n  (change)=\"change($event)\"\r\n  [autocomplete]=\"(autocompleteMode) ? 'on' : 'off'\" (blur)=\"blur.emit($event)\" [minlength]=\"minlength\" [maxlength]=\"maxlength\" (focus)=\"onFocus($event)\">\r\n  <mat-icon matSuffix (click)=\"search()\" *ngIf=\"isSearch\">search</mat-icon>\r\n</mat-form-field>\r\n",
                     styles: ["::ng-deep hel-autocomplete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix input{text-overflow:ellipsis}"]
                 },] }
     ];
@@ -1152,24 +1186,29 @@
         inputFormControl: [{ type: i0.Input }]
     };
 
+    exports.ColumnType = void 0;
     (function (ColumnType) {
         ColumnType[ColumnType["NORMAL"] = 0] = "NORMAL";
         ColumnType[ColumnType["URL"] = 1] = "URL";
     })(exports.ColumnType || (exports.ColumnType = {}));
+    exports.EventScope = void 0;
     (function (EventScope) {
         EventScope[EventScope["USER"] = 0] = "USER";
         EventScope[EventScope["CODE_CALL"] = 1] = "CODE_CALL";
     })(exports.EventScope || (exports.EventScope = {}));
+    exports.TotalType = void 0;
     (function (TotalType) {
         TotalType[TotalType["SUM"] = 0] = "SUM";
         TotalType[TotalType["AVERAGE"] = 1] = "AVERAGE";
         TotalType[TotalType["COUNT"] = 2] = "COUNT";
     })(exports.TotalType || (exports.TotalType = {}));
+    exports.ChangeColumnConfigurationType = void 0;
     (function (ChangeColumnConfigurationType) {
         ChangeColumnConfigurationType[ChangeColumnConfigurationType["SORT"] = 0] = "SORT";
         ChangeColumnConfigurationType[ChangeColumnConfigurationType["UNKNOWN"] = 1] = "UNKNOWN";
         ChangeColumnConfigurationType[ChangeColumnConfigurationType["TOTAL"] = 2] = "TOTAL";
     })(exports.ChangeColumnConfigurationType || (exports.ChangeColumnConfigurationType = {}));
+    exports.TableHelisaType = void 0;
     (function (TableHelisaType) {
         TableHelisaType[TableHelisaType["REMOTE"] = 0] = "REMOTE";
         TableHelisaType[TableHelisaType["LOCAL"] = 1] = "LOCAL";
@@ -1763,8 +1802,8 @@
     TableHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-table',
-                    template: "<button title=\"{{getToolTipButtonMessage()}}\" [disabled]=\"getIfButtonDisabled()\"  *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\n<div [ngClass]=\"getClassToColumn()\" class=\"div-table-helisa\">\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\n\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable\n      (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\n        <ng-container [matColumnDef]=\"column.name\" [stickyEnd]=\"column.name === 'bookButton'\">\n          <ng-container *ngIf=\"column.title != undefined\">\n            <div *ngIf=\"!column.sortable\">\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n                *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\n                {{column.title}} </th>\n            </div>\n            <div *ngIf=\"column.sortable\">\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n                *matHeaderCellDef mat-sort-header [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\n            </div>\n          </ng-container>\n\n          <ng-container *ngIf=\"addBookButton && column.name === 'bookButton'\">\n            <th mat-header-cell *matHeaderCellDef></th>\n            <td mat-cell *matCellDef=\"let element;\" (click)=\"selectedCell(element, column)\">\n              <button mat-icon-button *ngIf=\"element.data === selectedObject\">\n                <i class=\"material-icons-outlined\">description</i>\n              </button>\n            </td>\n          </ng-container>\n\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\" [hideDelay]=\"hideDelay\"\n            [showDelay]=\"showDelay\" *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\"\n            (click)=\"selectedCell(element, column)\" [class.selected-row]=\"isSelectedCell(element, column)\"\n            [ngClass]=\"getClassToCell(element.data, column)\">\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{\n              getValue(element.data, column) }}</a>\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\n          </td>\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\n        </ng-container>\n\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\n            {{column.subtitle}}</th>\n        </ng-container>\n      </ng-container>\n\n      <ng-container matColumnDef=\"groupHeader\">\n        <td mat-cell *matCellDef=\"let group\">\n          <strong>{{ getGroupDescription(group.data) }}</strong>\n        </td>\n      </ng-container>\n\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\n      </ng-container>\n\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\"\n          [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"!isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\n        </tr>\n      </ng-container>\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\n    </table>\n  </div>\n  <div *ngIf=\"showMessageEmpty(data)\">\n    <p>\n      {{getMessageEmtpy()}}\n    </p>\n  </div>\n</div>\n",
-                    styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{overflow:hidden;padding:2px 10px 0;text-overflow:ellipsis}thead tr th{background:#579380;color:#fff;font-size:18px;text-transform:uppercase}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{border:none;box-shadow:inset 1px 0 0 0 #b7b7b7}tbody tr td button{height:auto;line-height:inherit}tfoot{display:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}::ng-deep hel-table{position:relative}::ng-deep hel-table>button{align-items:flex-start;background:transparent;border:none;color:transparent;cursor:pointer;display:flex;height:26px;justify-content:center;opacity:.5;overflow:hidden;position:absolute;right:0;top:0;width:20px;z-index:101}::ng-deep hel-table>button:focus{outline:none}::ng-deep hel-table>button:hover{opacity:1}::ng-deep hel-table>button:before{align-items:center;color:#fff;content:\"+\";display:flex;font-size:20px;height:26px;justify-content:center;position:absolute;width:20px}::ng-deep hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}::ng-deep hel-table .buttons-container{order:2}::ng-deep hel-table .buttons-container.hasSubtitle,::ng-deep hel-table .buttons-container.hasTitle{padding-top:26px}::ng-deep hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}::ng-deep hel-table .buttons-container>div{height:26px}::ng-deep hel-table .buttons-container>div button{align-items:center;display:flex;height:26px;justify-content:center}::ng-deep hel-table .buttons-container>div button>*{display:flex;height:100%}::ng-deep hel-table .div-table-helisa{height:100%}::ng-deep hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}::ng-deep hel-table .div-table-helisa .container-table .table-helisa{width:100%}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep table{table-layout:fixed}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr{height:26px}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr th,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr th,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr th{overflow:hidden;padding:2px 10px 0;text-overflow:ellipsis}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr th{background:#579380;color:#fff;font-size:18px;text-transform:uppercase}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td{border:none;box-shadow:inset 1px 0 0 0 #b7b7b7}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td button{height:auto;line-height:inherit}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot{display:none}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}::ng-deep hel-table .div-table-helisa .container-table .table-helisa .selected-row{background:silver;font-weight:700}"]
+                    template: "<button title=\"{{getToolTipButtonMessage()}}\" [disabled]=\"getIfButtonDisabled()\"  *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\r\n<div [ngClass]=\"getClassToColumn()\" class=\"div-table-helisa\">\r\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\r\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\r\n\r\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable\r\n      (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\r\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\r\n        <ng-container [matColumnDef]=\"column.name\" [stickyEnd]=\"column.name === 'bookButton'\">\r\n          <ng-container *ngIf=\"column.title != undefined\">\r\n            <div *ngIf=\"!column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\r\n                *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\">\r\n                {{column.title}} </th>\r\n            </div>\r\n            <div *ngIf=\"column.sortable\">\r\n              <th mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\r\n                *matHeaderCellDef mat-sort-header [attr.colspan]=\"column.colspanTitle\"> {{column.title}} </th>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <ng-container *ngIf=\"addBookButton && column.name === 'bookButton'\">\r\n            <th mat-header-cell *matHeaderCellDef></th>\r\n            <td mat-cell *matCellDef=\"let element;\" (click)=\"selectedCell(element, column)\">\r\n              <button mat-icon-button *ngIf=\"element.data === selectedObject\">\r\n                <i class=\"material-icons-outlined\">description</i>\r\n              </button>\r\n            </td>\r\n          </ng-container>\r\n\r\n          <td mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\" [hideDelay]=\"hideDelay\"\r\n            [showDelay]=\"showDelay\" *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\"\r\n            (click)=\"selectedCell(element, column)\" [class.selected-row]=\"isSelectedCell(element, column)\"\r\n            [ngClass]=\"getClassToCell(element.data, column)\">\r\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{\r\n              getValue(element.data, column) }}</a>\r\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\r\n          </td>\r\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\r\n        </ng-container>\r\n\r\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\r\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\r\n            {{column.subtitle}}</th>\r\n        </ng-container>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"groupHeader\">\r\n        <td mat-cell *matCellDef=\"let group\">\r\n          <strong>{{ getGroupDescription(group.data) }}</strong>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\r\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\r\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\"\r\n          [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isDragged\">\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\r\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\r\n        </tr>\r\n      </ng-container>\r\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\r\n    </table>\r\n  </div>\r\n  <div *ngIf=\"showMessageEmpty(data)\">\r\n    <p>\r\n      {{getMessageEmtpy()}}\r\n    </p>\r\n  </div>\r\n</div>\r\n",
+                    styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}tbody tr td button{line-height:inherit;height:auto}tfoot{display:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}::ng-deep hel-table{position:relative}::ng-deep hel-table>button{justify-content:center;align-items:flex-start;background:transparent;position:absolute;color:transparent;overflow:hidden;cursor:pointer;display:flex;border:none;height:26px;z-index:101;width:20px;opacity:.5;right:0;top:0}::ng-deep hel-table>button:focus{outline:none}::ng-deep hel-table>button:hover{opacity:1}::ng-deep hel-table>button:before{justify-content:center;align-items:center;position:absolute;font-size:20px;display:flex;content:\"+\";color:#fff;height:26px;width:20px}::ng-deep hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}::ng-deep hel-table .buttons-container{order:2}::ng-deep hel-table .buttons-container.hasSubtitle,::ng-deep hel-table .buttons-container.hasTitle{padding-top:26px}::ng-deep hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}::ng-deep hel-table .buttons-container>div{height:26px}::ng-deep hel-table .buttons-container>div button{justify-content:center;align-items:center;display:flex;height:26px}::ng-deep hel-table .buttons-container>div button>*{display:flex;height:100%}::ng-deep hel-table .div-table-helisa{height:100%}::ng-deep hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}::ng-deep hel-table .div-table-helisa .container-table .table-helisa{width:100%}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep table{table-layout:fixed}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr{height:26px}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr th,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr th,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr th{text-overflow:ellipsis;padding:2px 10px 0;overflow:hidden}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr th{text-transform:uppercase;background:#579380;font-size:18px;color:#fff}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td{box-shadow:inset 1px 0 0 0 #b7b7b7;border:none}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td button{line-height:inherit;height:auto}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot{display:none}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}::ng-deep hel-table .div-table-helisa .container-table .table-helisa .selected-row{font-weight:700;background:silver}"]
                 },] }
     ];
     TableHelisaComponent.ctorParameters = function () { return [
@@ -1806,6 +1845,7 @@
     };
 
     var moment = moment___namespace;
+    exports.TypeCalendarEnum = void 0;
     (function (TypeCalendarEnum) {
         TypeCalendarEnum["NORMAL"] = "norma";
         TypeCalendarEnum["MONTH_YEAR"] = "mounth-year";
@@ -2037,7 +2077,7 @@
     DateHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-date-helisa',
-                    template: "<div>\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\n    <input matInput\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\" (keydown)=\"onKey($event)\" (focus)=\"openDatePicker()\" (blur)=\"onBlur()\">\n\n\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\n      ya que el valor es diferente cuando se escribe directamente en este\n    -->\n    <input matInput\n    [matDatepicker]=\"picker\"\n    hidden=\"hide\"\n    [value]=\"getDateToControl()\"\n    (dateChange)=\"dateChange('change', $event)\" [min]=\"minDate\" [max]=\"maxDate\">\n    <!--  -->\n\n    <mat-datepicker-toggle matSuffix [for]=\"picker\" [disabled]=\"isDisabled\"></mat-datepicker-toggle>\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\n\n  </mat-form-field>\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\n  </div>\n",
+                    template: "<div>\r\n  <mat-form-field class=\"example-full-width\" [floatLabel]=\"floatLabel\">\r\n    <input matInput\r\n    [formControl]= \"dateToVisualize\" [placeholder]=\"placeholder\" (keydown)=\"onKey($event)\" (focus)=\"openDatePicker()\" (blur)=\"onBlur()\">\r\n\r\n\r\n    <!-- NO BORRAR!!! Este input no es visible y solo es necesario para disparar el evento cuan se selecciona una fecha desde el calendar\r\n      ya que el valor es diferente cuando se escribe directamente en este\r\n    -->\r\n    <input matInput\r\n    [matDatepicker]=\"picker\"\r\n    hidden=\"hide\"\r\n    [value]=\"getDateToControl()\"\r\n    (dateChange)=\"dateChange('change', $event)\" [min]=\"minDate\" [max]=\"maxDate\">\r\n    <!--  -->\r\n\r\n    <mat-datepicker-toggle matSuffix [for]=\"picker\" [disabled]=\"isDisabled\"></mat-datepicker-toggle>\r\n    <mat-datepicker touchUi #picker [startView]=\"getStartView()\" (monthSelected)=\"monthSelectedHandler($event,picker)\"></mat-datepicker>\r\n\r\n  </mat-form-field>\r\n  <mat-error *ngIf=\"invalidFormat\">{{getErrorMessage()}}</mat-error>\r\n  </div>\r\n",
                     styles: [""]
                 },] }
     ];
@@ -2110,7 +2150,7 @@
         };
         return TreeHelisaService;
     }());
-    TreeHelisaService.ɵprov = i0.ɵɵdefineInjectable({ factory: function TreeHelisaService_Factory() { return new TreeHelisaService(); }, token: TreeHelisaService, providedIn: "root" });
+    TreeHelisaService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function TreeHelisaService_Factory() { return new TreeHelisaService(); }, token: TreeHelisaService, providedIn: "root" });
     TreeHelisaService.decorators = [
         { type: i0.Injectable, args: [{
                     providedIn: 'root'
@@ -2317,7 +2357,7 @@
         TreeHelisaComponent.prototype.onEdited = function (node, value) {
             node.name = value;
             if (node.id == null && node.name === '') {
-                _.remove(node.parent.children, node);
+                ___namespace.remove(node.parent.children, node);
                 this.refreshTree();
             }
             else if (node.id && node.id != null && node.name.trim() !== '') {
@@ -2336,7 +2376,7 @@
             this.isDisabled = false;
             // Si no tiene id por ser un nuevo item, lo elimina
             if (node.id == null) {
-                _.remove(node.parent.children, node);
+                ___namespace.remove(node.parent.children, node);
                 this.refreshTree();
             }
             node.isEditable = false;
@@ -2640,7 +2680,7 @@
             var _this = this;
             if (!!node && node.length > 0) {
                 try {
-                    node = _.orderBy(node, function (x) { return x.orderIndex; }, ['asc']);
+                    node = ___namespace.orderBy(node, function (x) { return x.orderIndex; }, ['asc']);
                     node.forEach(function (element) {
                         if (!!element.children && element != null) {
                             element.children = _this.reorderByOrderIndex(element.children);
@@ -2658,8 +2698,8 @@
     TreeHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-tree',
-                    template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\n  <mat-tree #tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\n    <!-- This is the tree node template for leaf nodes -->\n    <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\n      <li\n        class=\"mat-tree-node\"\n        [ngClass]=\"getClassNode(node)\"\n        (click)=\"onRedirect(node)\"\n        (dblclick)=\"onDblClick(node)\"\n        *ngIf=\"!node.isEditable\"\n        class=\"tree-node\"\n      >\n        <!-- use a disabled button to provide padding for tree leaf -->\n        <button mat-icon-button disabled></button>\n        <ng-container *ngIf=\"node.data\">\n          <ul>\n            <ng-container *ngFor=\"let col of node.data\">\n              <li *ngIf=\"col.visible\">\n                {{ col.name }}\n              </li>\n            </ng-container>\n          </ul>\n        </ng-container>\n        <ng-container *ngIf=\"!node.data\"> {{ node.name }}</ng-container>\n      </li>\n      <li class=\"tree-options\">\n        <button mat-icon-button *ngIf=\"node.showEditButton\" [disabled]=\"this.isDisabled || node.disabledEditButton\" (click)=\"onEdit(node)\">\n          <mat-icon>edit</mat-icon>\n        </button>\n        <button mat-icon-button *ngIf=\"node.showAddButton\" [disabled]=\"this.isDisabled || node.disabledAddButton\" (click)=\"onAdd(node)\">\n          <mat-icon>add</mat-icon>\n        </button>\n        <button mat-icon-button *ngIf=\"node.showDeleteButton\" [disabled]=\"this.isDisabled || node.disabledDeleteButton\" (click)=\"onDelete(node)\">\n          <mat-icon>delete</mat-icon>\n        </button>\n      </li>\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\n          <mat-icon>more_vert</mat-icon>\n        </button>\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\" (onSelectionChange)=\"onSelectOption($event, option)\">{{\n              option.name\n            }}</mat-option>\n          </mat-select>\n        </mat-form-field>\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\n          <mat-icon>done</mat-icon>\n        </button>\n      </div>\n\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\n        <hel-input-with-button [isFocused]=\"true\" [value]=\"node.name\" (cancel)=\"onCancel(node, $event)\" (done)=\"onEdited(node, $event)\">\n        </hel-input-with-button>\n      </li>\n    </mat-tree-node>\n    <!-- This is the tree node template for expandable nodes -->\n    <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\n      <ul>\n        <li>\n          <div class=\"mat-tree-node tree-options tree-node\" *ngIf=\"!node.isEditable\">\n            <button mat-icon-button matTreeNodeToggle [attr.aria-label]=\"'toggle ' + node.name\">\n              <mat-icon class=\"mat-icon-rtl-mirror\">\n                {{ treeControl.isExpanded(node) ? 'remove' : 'add' }}\n              </mat-icon>\n            </button>\n            <p class=\"tree-node-text\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" [ngClass]=\"getClassNode(node)\">\n              <ng-container *ngIf=\"node.data\">\n                <ul>\n                  <ng-container *ngFor=\"let col of node.data\">\n                    <li *ngIf=\"col.visible\">\n                      {{ col.name }}\n                    </li>\n                  </ng-container>\n                </ul>\n              </ng-container>\n              <ng-container *ngIf=\"!node.data\"> {{ node.name }}</ng-container>\n            </p>\n          </div>\n          <div class=\"tree-options\">\n            <li class=\"tree-options\">\n              <button mat-icon-button *ngIf=\"node.showEditButton\" [disabled]=\"this.isDisabled || node.disabledEditButton\" (click)=\"onEdit(node)\">\n                <mat-icon>edit</mat-icon>\n              </button>\n              <button mat-icon-button *ngIf=\"node.showAddButton\" [disabled]=\"this.isDisabled || node.disabledAddButton\" (click)=\"onAdd(node)\">\n                <mat-icon>add</mat-icon>\n              </button>\n              <button mat-icon-button *ngIf=\"node.showDeleteButton\" [disabled]=\"this.isDisabled || node.disabledDeleteButton\" (click)=\"onDelete(node)\">\n                <mat-icon>delete</mat-icon>\n              </button>\n            </li>\n            <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\n              <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\n                <mat-icon>more_vert</mat-icon>\n              </button>\n              <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\n                <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\n                  <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\" (onSelectionChange)=\"onSelectOption($event, option)\">{{\n                    option.name\n                  }}</mat-option>\n                </mat-select>\n              </mat-form-field>\n              <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\n                <mat-icon>done</mat-icon>\n              </button>\n            </div>\n          </div>\n          <ul *ngIf=\"treeControl.isExpanded(node)\">\n            <ng-container matTreeNodeOutlet></ng-container>\n          </ul>\n        </li>\n      </ul>\n    </mat-nested-tree-node>\n  </mat-tree>\n</div>\n",
-                    styles: [".example-tree-invisible{display:none}.example-tree li,.example-tree ul{list-style-type:none;margin-bottom:0;margin-top:0}.isSelected{background:red}.tree-options{display:inline}.container-tree{height:350px;overflow:scroll;width:100%}.tree-node{-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none}.tree-node-text{display:inline;margin-bottom:0}"]
+                    template: "<div class=\"container-tree\" (scroll)=\"onScroll($event)\">\r\n  <mat-tree #tree [dataSource]=\"dataSource\" [treeControl]=\"treeControl\" class=\"example-tree\">\r\n    <!-- This is the tree node template for leaf nodes -->\r\n    <mat-tree-node *matTreeNodeDef=\"let node\" matTreeNodeToggle>\r\n      <li\r\n        class=\"mat-tree-node\"\r\n        [ngClass]=\"getClassNode(node)\"\r\n        (click)=\"onRedirect(node)\"\r\n        (dblclick)=\"onDblClick(node)\"\r\n        *ngIf=\"!node.isEditable\"\r\n        class=\"tree-node\"\r\n      >\r\n        <!-- use a disabled button to provide padding for tree leaf -->\r\n        <button mat-icon-button disabled></button>\r\n        <ng-container *ngIf=\"node.data\">\r\n          <ul>\r\n            <ng-container *ngFor=\"let col of node.data\">\r\n              <li *ngIf=\"col.visible\">\r\n                {{ col.name }}\r\n              </li>\r\n            </ng-container>\r\n          </ul>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!node.data\"> {{ node.name }}</ng-container>\r\n      </li>\r\n      <li class=\"tree-options\">\r\n        <button mat-icon-button *ngIf=\"node.showEditButton\" [disabled]=\"this.isDisabled || node.disabledEditButton\" (click)=\"onEdit(node)\">\r\n          <mat-icon>edit</mat-icon>\r\n        </button>\r\n        <button mat-icon-button *ngIf=\"node.showAddButton\" [disabled]=\"this.isDisabled || node.disabledAddButton\" (click)=\"onAdd(node)\">\r\n          <mat-icon>add</mat-icon>\r\n        </button>\r\n        <button mat-icon-button *ngIf=\"node.showDeleteButton\" [disabled]=\"this.isDisabled || node.disabledDeleteButton\" (click)=\"onDelete(node)\">\r\n          <mat-icon>delete</mat-icon>\r\n        </button>\r\n      </li>\r\n      <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\r\n        <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\r\n          <mat-icon>more_vert</mat-icon>\r\n        </button>\r\n        <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\r\n          <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\r\n            <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\" (onSelectionChange)=\"onSelectOption($event, option)\">{{\r\n              option.name\r\n            }}</mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\r\n          <mat-icon>done</mat-icon>\r\n        </button>\r\n      </div>\r\n\r\n      <li class=\"tree-options\" *ngIf=\"!!node.isEditable && node.isEditable\">\r\n        <hel-input-with-button [isFocused]=\"true\" [value]=\"node.name\" (cancel)=\"onCancel(node, $event)\" (done)=\"onEdited(node, $event)\">\r\n        </hel-input-with-button>\r\n      </li>\r\n    </mat-tree-node>\r\n    <!-- This is the tree node template for expandable nodes -->\r\n    <mat-nested-tree-node *matTreeNodeDef=\"let node; when: hasChild\" id=\"nested\">\r\n      <ul>\r\n        <li>\r\n          <div class=\"mat-tree-node tree-options tree-node\" *ngIf=\"!node.isEditable\">\r\n            <button mat-icon-button matTreeNodeToggle [attr.aria-label]=\"'toggle ' + node.name\">\r\n              <mat-icon class=\"mat-icon-rtl-mirror\">\r\n                {{ treeControl.isExpanded(node) ? 'remove' : 'add' }}\r\n              </mat-icon>\r\n            </button>\r\n            <p class=\"tree-node-text\" (click)=\"onRedirect(node)\" (dblclick)=\"onDblClick(node)\" [ngClass]=\"getClassNode(node)\">\r\n              <ng-container *ngIf=\"node.data\">\r\n                <ul>\r\n                  <ng-container *ngFor=\"let col of node.data\">\r\n                    <li *ngIf=\"col.visible\">\r\n                      {{ col.name }}\r\n                    </li>\r\n                  </ng-container>\r\n                </ul>\r\n              </ng-container>\r\n              <ng-container *ngIf=\"!node.data\"> {{ node.name }}</ng-container>\r\n            </p>\r\n          </div>\r\n          <div class=\"tree-options\">\r\n            <li class=\"tree-options\">\r\n              <button mat-icon-button *ngIf=\"node.showEditButton\" [disabled]=\"this.isDisabled || node.disabledEditButton\" (click)=\"onEdit(node)\">\r\n                <mat-icon>edit</mat-icon>\r\n              </button>\r\n              <button mat-icon-button *ngIf=\"node.showAddButton\" [disabled]=\"this.isDisabled || node.disabledAddButton\" (click)=\"onAdd(node)\">\r\n                <mat-icon>add</mat-icon>\r\n              </button>\r\n              <button mat-icon-button *ngIf=\"node.showDeleteButton\" [disabled]=\"this.isDisabled || node.disabledDeleteButton\" (click)=\"onDelete(node)\">\r\n                <mat-icon>delete</mat-icon>\r\n              </button>\r\n            </li>\r\n            <div *ngIf=\"node.options && node.options.length\" class=\"tree-options\">\r\n              <button mat-icon-button *ngIf=\"!getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, true)\">\r\n                <mat-icon>more_vert</mat-icon>\r\n              </button>\r\n              <mat-form-field *ngIf=\"getSelectedOptions(node).editMode\">\r\n                <mat-select multiple [formControl]=\"getSelectedOptions(node).formControl\">\r\n                  <mat-option *ngFor=\"let option of node.options\" [value]=\"option.id\" (onSelectionChange)=\"onSelectOption($event, option)\">{{\r\n                    option.name\r\n                  }}</mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n              <button mat-icon-button *ngIf=\"getSelectedOptions(node).editMode\" (click)=\"onEditMode(node, false)\">\r\n                <mat-icon>done</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          <ul *ngIf=\"treeControl.isExpanded(node)\">\r\n            <ng-container matTreeNodeOutlet></ng-container>\r\n          </ul>\r\n        </li>\r\n      </ul>\r\n    </mat-nested-tree-node>\r\n  </mat-tree>\r\n</div>\r\n",
+                    styles: [".example-tree-invisible{display:none}.example-tree li,.example-tree ul{margin-top:0;margin-bottom:0;list-style-type:none}.isSelected{background:red}.tree-options{display:inline}.container-tree{overflow:scroll;height:350px;width:100%}.tree-node{-webkit-user-select:none;-moz-user-select:none;-khtml-user-select:none;-ms-user-select:none}.tree-node-text{display:inline;margin-bottom:0}"]
                 },] }
     ];
     TreeHelisaComponent.ctorParameters = function () { return [
@@ -2768,7 +2808,7 @@
     AutocompleteHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-autocomplete',
-                    template: "<mat-form-field>\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\n      {{option.displayText}}\n    </mat-option>    \n  </mat-autocomplete>\n</mat-form-field>",
+                    template: "<mat-form-field>\r\n  <input type=\"text\" matInput [formControl]=\"myControl\" [matAutocomplete]=\"auto\"> \r\n  <mat-autocomplete  [displayWith]=\"displayFn\" #auto=\"matAutocomplete\" (optionSelected)=\"onSelected($event)\" (optionsScroll)=\"getNextPage()\">\r\n    <mat-option *ngFor=\"let option of filteredOptions | async; let idx = index\"  [value]=\"option\" [helTooltip]=\"option.displayText\">\r\n      {{option.displayText}}\r\n    </mat-option>    \r\n  </mat-autocomplete>\r\n</mat-form-field>",
                     providers: [AutocompleteHelisaService],
                     styles: [""]
                 },] }
@@ -2958,6 +2998,7 @@
                 },] }
     ];
 
+    exports.ComboBoxHelisaState = void 0;
     (function (ComboBoxHelisaState) {
         ComboBoxHelisaState[ComboBoxHelisaState["CLOSED"] = 0] = "CLOSED";
         ComboBoxHelisaState[ComboBoxHelisaState["SELECT"] = 1] = "SELECT";
@@ -3031,8 +3072,8 @@
     ComboBoxHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'lib-combo-box-helisa',
-                    template: "<div class=\"combo-box-general-container\">\n  <div class=\"combo-box-input-container\">\n    <input class=\"combo-box-input\" readonly [value]=\"selectedItem?listable.getDisplayText(selectedItem):placeholder\"\n           *ngIf=\"state==comboBoxHelisaState.CLOSED\" (focus)=\"onFocus()\"/>\n  </div>\n  <div class=\"combo-box-list-container combo-box-general-container\" *ngIf=\"state==comboBoxHelisaState.SELECT || state == comboBoxHelisaState.INSERT\">\n    <div class=\"combo-box-line\"></div>\n    <div class=\"combo-box-list\" (scroll)=\"onScroll($event)\">\n      <div *ngFor=\"let row of rows\" class=\"combo-box-row\" [ngClass]=\"{'combo-box-selected-item': selectedItem && listable.compare(selectedItem, row)}\" (dblclick)=\"selectItem(row)\">\n        {{ listable.getDisplayText(row) }}\n      </div>\n      <hel-input *ngIf=\"state==comboBoxHelisaState.INSERT\" [isFocused]=\"true\" (setValue)=\"insert($event)\"></hel-input>\n      <div *ngIf=\"editable && state==comboBoxHelisaState.SELECT\" class=\"combo-box-insert-button\" (click)=\"changeToInsert()\">{{ editable.getButtonInsertText() }}</div>\n    </div>\n  </div>\n</div>\n",
-                    styles: [".combo-box-general-container{width:300px}.combo-box-list-container{background-color:#fff;display:flex;flex-direction:row;height:100px;position:absolute}.combo-box-row{cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.combo-box-line{background-color:#da0080;width:3px}.combo-box-list{flex:1;overflow-y:auto}.combo-box-input{width:100%}.combo-box-input-container{height:25px}.combo-box-selected-item{color:#7030a0}.combo-box-insert-button{color:#807f7f;cursor:pointer}"]
+                    template: "<div class=\"combo-box-general-container\">\r\n  <div class=\"combo-box-input-container\">\r\n    <input class=\"combo-box-input\" readonly [value]=\"selectedItem?listable.getDisplayText(selectedItem):placeholder\"\r\n           *ngIf=\"state==comboBoxHelisaState.CLOSED\" (focus)=\"onFocus()\"/>\r\n  </div>\r\n  <div class=\"combo-box-list-container combo-box-general-container\" *ngIf=\"state==comboBoxHelisaState.SELECT || state == comboBoxHelisaState.INSERT\">\r\n    <div class=\"combo-box-line\"></div>\r\n    <div class=\"combo-box-list\" (scroll)=\"onScroll($event)\">\r\n      <div *ngFor=\"let row of rows\" class=\"combo-box-row\" [ngClass]=\"{'combo-box-selected-item': selectedItem && listable.compare(selectedItem, row)}\" (dblclick)=\"selectItem(row)\">\r\n        {{ listable.getDisplayText(row) }}\r\n      </div>\r\n      <hel-input *ngIf=\"state==comboBoxHelisaState.INSERT\" [isFocused]=\"true\" (setValue)=\"insert($event)\"></hel-input>\r\n      <div *ngIf=\"editable && state==comboBoxHelisaState.SELECT\" class=\"combo-box-insert-button\" (click)=\"changeToInsert()\">{{ editable.getButtonInsertText() }}</div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+                    styles: [".combo-box-general-container{width:300px}.combo-box-list-container{display:flex;flex-direction:row;height:100px;position:absolute;background-color:#fff}.combo-box-row{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.combo-box-line{width:3px;background-color:#da0080}.combo-box-list{flex:1;overflow-y:auto}.combo-box-input{width:100%}.combo-box-input-container{height:25px}.combo-box-selected-item{color:#7030a0}.combo-box-insert-button{color:#807f7f;cursor:pointer}"]
                 },] }
     ];
     ComboBoxHelisaComponent.ctorParameters = function () { return []; };
@@ -3045,6 +3086,7 @@
         enabled: [{ type: i0.Input }]
     };
 
+    exports.PagingTreeInitialMode = void 0;
     (function (PagingTreeInitialMode) {
         PagingTreeInitialMode[PagingTreeInitialMode["COLLAPSE"] = 0] = "COLLAPSE";
         PagingTreeInitialMode[PagingTreeInitialMode["EXPAND"] = 1] = "EXPAND";
@@ -3287,8 +3329,8 @@
     PagingTreeHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-paging-tree',
-                    template: "<div>\n  <ng-container [ngTemplateOutlet]=\"nodeTitle\"></ng-container>\n  <div *ngFor=\"let item of visibleData\" [ngClass]=\"this.getLevelClass(item)\" class=\"w-100\">\n    <div *ngIf=\"getNodeInformation(item).visible\">\n      <div *ngIf=\"getNodeInformation(item) as node\" class=\"helisa-tree-row w-100\">\n        <div [ngClass]=\"{expandNode: !node.expanded && node.haveChildren, withoutNode: !node.haveChildren}\">\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\n          <mat-icon *ngIf=\"!node.haveChildren\"></mat-icon>\n        </div>\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\n      </div>\n    </div>\n  </div>\n</div>\n",
-                    styles: [".w-100{width:100%}.padding-level-0{margin-left:0}.padding-level-1{margin-left:40px}.padding-level-2{margin-left:80px}.padding-level-3{margin-left:120px}.padding-level-4{margin-left:160px}.padding-level-5{margin-left:200px}.padding-level-6{margin-left:240px}.padding-level-7{margin-left:280px}.padding-level-8{margin-left:320px}.helisa-tree-row{align-items:center;display:flex;flex-direction:row}"]
+                    template: "<div>\r\n  <ng-container [ngTemplateOutlet]=\"nodeTitle\"></ng-container>\r\n  <div *ngFor=\"let item of visibleData\" [ngClass]=\"this.getLevelClass(item)\" class=\"w-100\">\r\n    <div *ngIf=\"getNodeInformation(item).visible\">\r\n      <div *ngIf=\"getNodeInformation(item) as node\" class=\"helisa-tree-row w-100\">\r\n        <div [ngClass]=\"{expandNode: !node.expanded && node.haveChildren, withoutNode: !node.haveChildren}\">\r\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\r\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\r\n          <mat-icon *ngIf=\"!node.haveChildren\"></mat-icon>\r\n        </div>\r\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+                    styles: [".w-100{width:100%}.padding-level-0{margin-left:0}.padding-level-1{margin-left:40px}.padding-level-2{margin-left:80px}.padding-level-3{margin-left:120px}.padding-level-4{margin-left:160px}.padding-level-5{margin-left:200px}.padding-level-6{margin-left:240px}.padding-level-7{margin-left:280px}.padding-level-8{margin-left:320px}.helisa-tree-row{display:flex;flex-direction:row;align-items:center}"]
                 },] }
     ];
     PagingTreeHelisaComponent.ctorParameters = function () { return []; };
@@ -3300,6 +3342,7 @@
         pagingTreeHelisaListable: [{ type: i0.Input }]
     };
 
+    exports.AlertInformationType = void 0;
     (function (AlertInformationType) {
         AlertInformationType[AlertInformationType["AUTHORIZATION_TRANSACTION"] = 0] = "AUTHORIZATION_TRANSACTION";
         AlertInformationType[AlertInformationType["CONFIRM_DELETE_DATA"] = 1] = "CONFIRM_DELETE_DATA";
@@ -3417,7 +3460,7 @@
     AlertInformationDataHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-alert-information-data-helisa',
-                    template: "<button style='position: absolute; float: right; top: 0px; right: 10px;' (click)=\"onCancel()\">X</button>\n<h1 mat-dialog-title *ngIf=\"hasTitle()\">{{ title }}</h1>\n<div mat-dialog-content *ngIf=\"hasContent()\">{{ content }}</div>\n<div mat-dialog-action *ngIf=\"hasButtons()\">\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial *ngIf=\"hasCancelButton()\">{{cancelLabel}}</button>\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\n</div>\n",
+                    template: "<button style='position: absolute; float: right; top: 0px; right: 10px;' (click)=\"onCancel()\">X</button>\r\n<h1 mat-dialog-title *ngIf=\"hasTitle()\">{{ title }}</h1>\r\n<div mat-dialog-content *ngIf=\"hasContent()\">{{ content }}</div>\r\n<div mat-dialog-action *ngIf=\"hasButtons()\">\r\n    <button mat-button [mat-dialog-close]=\"false\" cdkFocusInitial *ngIf=\"hasCancelButton()\">{{cancelLabel}}</button>\r\n    <button mat-button [mat-dialog-close]=\"true\" >{{okLabel}}</button>\r\n</div>\r\n",
                     styles: [""]
                 },] }
     ];
@@ -3564,7 +3607,7 @@
         };
         return AlertInformationDataHelisaService;
     }());
-    AlertInformationDataHelisaService.ɵprov = i0.ɵɵdefineInjectable({ factory: function AlertInformationDataHelisaService_Factory() { return new AlertInformationDataHelisaService(i0.ɵɵinject(i1$1.MatDialog)); }, token: AlertInformationDataHelisaService, providedIn: "root" });
+    AlertInformationDataHelisaService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function AlertInformationDataHelisaService_Factory() { return new AlertInformationDataHelisaService(i0__namespace.ɵɵinject(i1__namespace$1.MatDialog)); }, token: AlertInformationDataHelisaService, providedIn: "root" });
     AlertInformationDataHelisaService.decorators = [
         { type: i0.Injectable, args: [{
                     providedIn: 'root'
@@ -3606,10 +3649,10 @@
     exports.TreeHelisaComponent = TreeHelisaComponent;
     exports.TreeHelisaConnect = TreeHelisaConnect;
     exports.TreeHelisaService = TreeHelisaService;
-    exports.ɵa = ExternalLinkDirective;
-    exports.ɵb = ExternalLinkPipe;
+    exports["ɵa"] = ExternalLinkDirective;
+    exports["ɵb"] = ExternalLinkPipe;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=helisa-lib.umd.js.map

@@ -37,6 +37,7 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     formControlMask: FormControl;
     private realValue;
     private inputFormReal;
+    private isUserChange;
     inputText: ElementRef;
     constructor();
     set showCurrencyZerosDecimal(newShowCurrencyZerosDecimal: boolean);
