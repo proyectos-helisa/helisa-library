@@ -23,6 +23,7 @@ export declare class InputHelisaComponent implements OnInit, AfterViewInit {
     autocompleteMode: boolean;
     isSearch: boolean;
     isFocused: boolean;
+    showCurrencyZerosDecimal: boolean;
     /**
      * Deprecated
      */
