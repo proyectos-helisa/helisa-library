@@ -20,6 +20,7 @@ export declare class DateHelisaComponent implements OnInit {
     dateFormat: string;
     locale: string;
     errorMessage: string;
+    showErrorMessage: boolean;
     placeholder: string;
     showDatePicker: boolean;
     minDate: Date;
