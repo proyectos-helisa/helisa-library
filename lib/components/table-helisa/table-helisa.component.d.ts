@@ -3,6 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AddRowButton, Cell, ColumnConfig, ConfigCellStyles, ConfigRowStyles, DropElement, EventColumn, EventSearch, RequestTableHelisa, SelectObject, TableHelisaType, TotalGroup, ColumnType, EmptyMessageColumn } from './table-helisa.interface';
 import { TableHelisaService } from './table-helisa.service';
+import { ResizeConfig, ResizeResponse } from '../dependency-table-helisa/dependency-table-helisa.component';
 export interface RowData<T> {
     data: {} | T;
     rowType: RowType;
@@ -64,6 +65,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     bookClicked: EventEmitter<T>;
     addBookButton: boolean;
     showToolTip: boolean;
+    tableIndex: number;
+    resizeConfig: ResizeConfig;
+    afterViewInit: EventEmitter<ResizeResponse>;
     showFooter: boolean;
     showSearch: boolean;
     /**
@@ -121,5 +125,9 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     getMessageEmtpy(): string;
     getIfButtonDisabled(): boolean;
     getToolTipButtonMessage(): string;
+    isResizingTable(): boolean;
+    isResizingCell(): boolean;
+    getIdForHelTable(): string;
+    getIdForCellTable(idx: number): string;
 }
 export {};

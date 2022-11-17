@@ -7,6 +7,21 @@ export interface EventDependency<T> {
     index: number;
     data: T;
 }
+export declare enum TypeResizeEnum {
+    BOTH = 0,
+    ONLY_CELLS = 1,
+    ONLY_TABLES = 2
+}
+export declare class ResizeConfig {
+    enableResize: boolean;
+    typeResize: TypeResizeEnum;
+    uuid: string;
+    constructor();
+}
+export declare class ResizeResponse {
+    quantityTable: number;
+    uuid: string;
+}
 export declare class DependencyTableHelisaComponent<T> implements OnInit {
     private dependencyTableHelisaService;
     private tableService;
@@ -25,6 +40,7 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
     addRow: EventEmitter<number>;
     selectCell: EventEmitter<EventDependency<{} | T>>;
     bookClicked: EventEmitter<EventDependency<{} | T>>;
+    afterViewInit: EventEmitter<ResizeResponse>;
     selectedObject: EventDependency<{}>;
     /**
      * Tiempo antes de ocultarla el mensaje del tooltip
@@ -34,7 +50,9 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
      * Tiempo antes de mostra el mensaje del tooltip
      */
     showDelay: number;
+    resizeConfig: ResizeConfig;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService<T>, tableService: TableHelisaService<T>);
+    get resizingConfig(): ResizeConfig;
     ngOnInit(): void;
     /**
      * retorna el servicio que gestiona el componente.
@@ -81,4 +99,5 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
     onAddRow(index: number): void;
     selectedCell(index: number, event: Cell<T>): void;
     onBookClicked(index: number, event: EventDependency<T>): void;
+    onAfterViewInitTable(resizeResponse: ResizeResponse): void;
 }
