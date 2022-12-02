@@ -32,6 +32,7 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
      * deprecated, use selectObject
      */
     selected: EventEmitter<EventDependency<T>>;
+    selectToImport: EventEmitter<EventDependency<{} | T>>;
     selectObject: EventEmitter<EventDependency<{} | T>>;
     nextPage: EventEmitter<EventDependency<{} | T>>;
     total: EventEmitter<EventDependency<{} | T>>;
@@ -51,7 +52,9 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
      */
     showDelay: number;
     resizeConfig: ResizeConfig;
+    modeImportEnabled: boolean;
     constructor(dependencyTableHelisaService: DependencyTableHelisaService<T>, tableService: TableHelisaService<T>);
+    get modeImportingEnabled(): boolean;
     get resizingConfig(): ResizeConfig;
     ngOnInit(): void;
     /**
@@ -68,6 +71,7 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
      * @param data retorna la fila que fue seleccionada
      */
     onSelectedDependency(index: number, event: SelectObject<T>): void;
+    onSelectedDependencyImport(index: number, event: SelectObject<T>): void;
     /**
      * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
      * @param index indica el indice de la tabla que genera el evento

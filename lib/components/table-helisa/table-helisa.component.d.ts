@@ -48,6 +48,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      */
     select: EventEmitter<T>;
     selectCell: EventEmitter<Cell<T>>;
+    selectToImport: EventEmitter<SelectObject<T>>;
     selectObject: EventEmitter<SelectObject<T>>;
     nextPage: EventEmitter<RequestTableHelisa<T>>;
     showTitle: boolean;
@@ -78,6 +79,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      * Tiempo antes de mostra el mensaje del tooltip
      */
     showDelay: number;
+    modeImportEnabled: boolean;
     constructor(tableService: TableHelisaService<T>);
     ngOnInit(): void;
     ngAfterViewInit(): void;
@@ -111,6 +113,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     getClassToRow(row: T): string[];
     onDrop(event: MouseEvent): void;
     tableKeydown(event: KeyboardEvent): void;
+    arrowsEvents(event: KeyboardEvent): void;
     /**
      * Emite el evento cuando se da click al boton AddRow
      */

@@ -675,6 +675,7 @@
              * deprecated, use selectObject
              */
             this.selected = new i0.EventEmitter();
+            this.selectToImport = new i0.EventEmitter();
             this.selectObject = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
@@ -694,7 +695,15 @@
              */
             this.showDelay = 500;
             this.resizeConfig = new ResizeConfig();
+            this.modeImportEnabled = true;
         }
+        Object.defineProperty(DependencyTableHelisaComponent.prototype, "modeImportingEnabled", {
+            get: function () {
+                return this.modeImportEnabled;
+            },
+            enumerable: false,
+            configurable: true
+        });
         Object.defineProperty(DependencyTableHelisaComponent.prototype, "resizingConfig", {
             get: function () {
                 return this.resizeConfig;
@@ -789,6 +798,9 @@
             this.selected.emit({ index: index, data: event.value });
             this.selectObject.emit({ index: index, data: event });
         };
+        DependencyTableHelisaComponent.prototype.onSelectedDependencyImport = function (index, event) {
+            this.selectToImport.emit({ index: index, data: event });
+        };
         /**
          * Evento que se dispara desde una tabla, emitiendo un nuevo evento con el inidice de la tabla que dispara el evento y el evento generado.
          * @param index indica el indice de la tabla que genera el evento
@@ -849,7 +861,7 @@
     DependencyTableHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-dependency-table',
-                    template: "<div>\n  <hel-table [resizeConfig]=\"resizingConfig\" #viewTables *ngFor=\"let table of tables; let i = index;\" [tableIndex]=\"i\" class=\"table-test hw-min-width-120\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n    (afterViewInit)=\"onAfterViewInitTable($event)\">\n  </hel-table>\n</div>\n",
+                    template: "<div tabindex=\"0\">\n  <hel-table [modeImportEnabled]=\"modeImportingEnabled\" [resizeConfig]=\"resizingConfig\" #viewTables *ngFor=\"let table of tables; let i = index;\" [tableIndex]=\"i\" class=\"table-test hw-min-width-120\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" (selectToImport)=\"onSelectedDependencyImport(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n    (afterViewInit)=\"onAfterViewInitTable($event)\">\n  </hel-table>\n</div>\n",
                     providers: [DependencyTableHelisaService],
                     styles: [""]
                 },] }
@@ -862,6 +874,7 @@
         viewTables: [{ type: i0.ViewChildren, args: ['viewTables',] }],
         showToolTip: [{ type: i0.Input }],
         selected: [{ type: i0.Output }],
+        selectToImport: [{ type: i0.Output }],
         selectObject: [{ type: i0.Output }],
         nextPage: [{ type: i0.Output }],
         total: [{ type: i0.Output }],
@@ -873,7 +886,8 @@
         afterViewInit: [{ type: i0.Output }],
         hideDelay: [{ type: i0.Input }],
         showDelay: [{ type: i0.Input }],
-        resizeConfig: [{ type: i0.Input }]
+        resizeConfig: [{ type: i0.Input }],
+        modeImportEnabled: [{ type: i0.Input }]
     };
 
     (function (InputHelisaType) {
@@ -1270,6 +1284,7 @@
              */
             this.select = new i0.EventEmitter();
             this.selectCell = new i0.EventEmitter();
+            this.selectToImport = new i0.EventEmitter();
             this.selectObject = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.showTitle = true;
@@ -1295,6 +1310,7 @@
              * Tiempo antes de mostra el mensaje del tooltip
              */
             this.showDelay = 500;
+            this.modeImportEnabled = false;
         }
         TableHelisaComponent.prototype.ngOnInit = function () {
             var _this = this;
@@ -1618,7 +1634,7 @@
             }
         };
         TableHelisaComponent.prototype.isSelectedCell = function (row, column) {
-            if (this.isCellSelection) {
+            if (this.isCellSelection && !this.modeImportEnabled) {
                 if (this.selectedCells != null) {
                     if (this.selectedCells.column.name === column.name &&
                         this.selectedCells.row.data === row.data) {
@@ -1631,6 +1647,9 @@
         TableHelisaComponent.prototype.getClassToCell = function (row, column) {
             var _this = this;
             var classToCell = new Array();
+            if (this.modeImportEnabled) {
+                classToCell.push('hw-color-gray');
+            }
             if (this.configCellStyles) {
                 var found = this.configCellStyles.find(function (c) {
                     return c.cellData === _this.getValue(row, column);
@@ -1679,40 +1698,50 @@
             }
         };
         TableHelisaComponent.prototype.tableKeydown = function (event) {
-            var _this = this;
-            if (!this.isCellSelection) {
-                var currentIndex_1 = this.data.data.findIndex(function (row) { return row.data === _this.selectedObject; });
-                var newSelection_1 = -10;
-                if (event.key === 'ArrowDown') {
-                    this.scrollCount++;
-                    this.data.data.forEach(function (row, index) {
-                        if (newSelection_1 === -10 && index > currentIndex_1 && row.rowType === RowType.ROW) {
-                            newSelection_1 = index;
-                        }
-                    });
-                }
-                if (event.key === 'ArrowUp') {
-                    this.scrollCount--;
-                    currentIndex_1 = this.data.data.length - currentIndex_1 - 1;
-                    this.data.data.reverse().forEach(function (row, index) {
-                        if (newSelection_1 === -10 && index > currentIndex_1 && row.rowType === RowType.ROW) {
-                            newSelection_1 = index;
-                        }
-                    });
-                    this.data.data.reverse();
-                    if (newSelection_1 !== -10) {
-                        newSelection_1 = this.data.data.length - newSelection_1 - 1;
-                    }
-                }
-                if (newSelection_1 !== -10) {
-                    this.selectRow(this.data.data[newSelection_1], true);
-                }
-                if (Math.abs(this.scrollCount) >= 2) {
-                    this.scrollCount = 0;
-                }
-                else {
+            if (this.modeImportEnabled) {
+                if (event.code === 'Space' || event.key === 'Insert' || event.key === 'Delete') {
                     event.preventDefault();
+                    event.stopPropagation();
+                    this.selectToImport.emit({ value: this.selectedObject, scope: exports.EventScope.USER, keyActionImport: event.key });
                 }
+            }
+            if (!this.isCellSelection) {
+                this.arrowsEvents(event);
+            }
+        };
+        TableHelisaComponent.prototype.arrowsEvents = function (event) {
+            var _this = this;
+            var currentIndex = this.data.data.findIndex(function (row) { return row.data === _this.selectedObject; });
+            var newSelection = -10;
+            if (event.key === 'ArrowDown') {
+                this.scrollCount++;
+                this.data.data.forEach(function (row, index) {
+                    if (newSelection === -10 && index > currentIndex && row.rowType === RowType.ROW) {
+                        newSelection = index;
+                    }
+                });
+            }
+            if (event.key === 'ArrowUp') {
+                this.scrollCount--;
+                currentIndex = this.data.data.length - currentIndex - 1;
+                this.data.data.reverse().forEach(function (row, index) {
+                    if (newSelection === -10 && index > currentIndex && row.rowType === RowType.ROW) {
+                        newSelection = index;
+                    }
+                });
+                this.data.data.reverse();
+                if (newSelection !== -10) {
+                    newSelection = this.data.data.length - newSelection - 1;
+                }
+            }
+            if (newSelection !== -10) {
+                this.selectRow(this.data.data[newSelection], true);
+            }
+            if (Math.abs(this.scrollCount) >= 2) {
+                this.scrollCount = 0;
+            }
+            else {
+                event.preventDefault();
             }
         };
         /**
@@ -1823,7 +1852,7 @@
     TableHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-table',
-                    template: "<button title=\"{{getToolTipButtonMessage()}}\" [disabled]=\"getIfButtonDisabled()\"  *ngIf=\"!!addRowButton && addRowButton.showButton\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\n<div [ngClass]=\"getClassToColumn()\" class=\"div-table-helisa\">\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\n\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable\n      (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\n        <ng-container [matColumnDef]=\"column.name\" [stickyEnd]=\"column.name === 'bookButton'\">\n          <ng-container *ngIf=\"column.title != undefined\">\n            <div *ngIf=\"!column.sortable\">\n              <th [title]=\"column.title\" mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n                *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\" class=\"hw-min-width-100\">\n                {{column.title}}\n                <div id=\"{{getIdForCellTable(idx)}}\" *ngIf=\"isResizingCell()\" class=\"resize-handle-right resize-handle-table\"></div>\n              </th>\n            </div>\n            <div *ngIf=\"column.sortable\">\n              <th [title]=\"column.title\" mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n                *matHeaderCellDef mat-sort-header [attr.colspan]=\"column.colspanTitle\" class=\"hw-min-width-100\"> {{column.title}}\n                <div id=\"{{getIdForCellTable(idx)}}\" *ngIf=\"isResizingCell()\" class=\"resize-handle-right resize-handle-table\"></div>\n              </th>\n            </div>\n          </ng-container>\n\n          <ng-container *ngIf=\"addBookButton && column.name === 'bookButton'\">\n            <th mat-header-cell *matHeaderCellDef></th>\n            <td mat-cell *matCellDef=\"let element;\" (click)=\"selectedCell(element, column)\">\n              <button mat-icon-button *ngIf=\"element.data === selectedObject\">\n                <i class=\"material-icons-outlined\">description</i>\n              </button>\n            </td>\n          </ng-container>\n\n          <td [title]=\"getValue(element.data, column)\" mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\" [hideDelay]=\"hideDelay\"\n            [showDelay]=\"showDelay\" *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\"\n            (click)=\"selectedCell(element, column)\" [class.selected-row]=\"isSelectedCell(element, column)\"\n            [ngClass]=\"getClassToCell(element.data, column)\">\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{\n              getValue(element.data, column) }}</a>\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\n          </td>\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\n        </ng-container>\n\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\n            {{column.subtitle}}</th>\n        </ng-container>\n      </ng-container>\n\n      <ng-container matColumnDef=\"groupHeader\">\n        <td mat-cell *matCellDef=\"let group\">\n          <strong>{{ getGroupDescription(group.data) }}</strong>\n        </td>\n      </ng-container>\n\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\n      </ng-container>\n\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\"\n          [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"!isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\n        </tr>\n      </ng-container>\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\n    </table>\n  </div>\n  <div *ngIf=\"showMessageEmpty(data)\">\n    <p>\n      {{getMessageEmtpy()}}\n    </p>\n  </div>\n</div>\n<div *ngIf=\"isResizingTable()\" class=\"resize-handle-right resize-handle-table\" id=\"{{getIdForHelTable()}}\"></div>\n",
+                    template: "<button title=\"{{getToolTipButtonMessage()}}\" [disabled]=\"getIfButtonDisabled()\"  *ngIf=\"!!addRowButton && addRowButton.showButton && !modeImportEnabled\" (click)=\"onAddRow()\">{{addRowButton.text}}</button>\n<div [ngClass]=\"getClassToColumn()\" class=\"div-table-helisa\">\n  <hel-input (setValue)=\"searchText($event)\" [isSearch]=\"true\" *ngIf=\"showSearch\"></hel-input>\n  <div class=\"container-table\" (scroll)=\"onScroll($event)\" #containerTable>\n\n    <table mat-table [dataSource]=\"data\" class=\"table-helisa\" matSort matTable\n      (keydown)=\"tableKeydown($event)\" tabindex=\"0\" (drop)=\"onDrop($event)\" (dragover)=\"dragger($event)\">\n      <ng-container *ngFor=\"let column of columnConfig; let idx = index\">\n        <ng-container [matColumnDef]=\"column.name\" [stickyEnd]=\"column.name === 'bookButton'\">\n          <ng-container *ngIf=\"column.title != undefined\">\n            <div *ngIf=\"!column.sortable\">\n              <th [title]=\"column.title\" mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n                *matHeaderCellDef [attr.colspan]=\"column.colspanTitle\" class=\"hw-min-width-100 hw-weight-bold\">\n                {{column.title}}\n                <div id=\"{{getIdForCellTable(idx)}}\" *ngIf=\"isResizingCell()\" class=\"resize-handle-right resize-handle-table\"></div>\n              </th>\n            </div>\n            <div *ngIf=\"column.sortable\">\n              <th [title]=\"column.title\" mat-header-cell [helTooltip]=\"column.title\" [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n                *matHeaderCellDef mat-sort-header [attr.colspan]=\"column.colspanTitle\" class=\"hw-min-width-100 hw-weight-bold\"> {{column.title}}\n                <div id=\"{{getIdForCellTable(idx)}}\" *ngIf=\"isResizingCell()\" class=\"resize-handle-right resize-handle-table\"></div>\n              </th>\n            </div>\n          </ng-container>\n\n          <ng-container *ngIf=\"addBookButton && column.name === 'bookButton' && !modeImportEnabled\">\n            <th mat-header-cell *matHeaderCellDef></th>\n            <td mat-cell *matCellDef=\"let element;\" (click)=\"selectedCell(element, column)\">\n              <button mat-icon-button *ngIf=\"element.data === selectedObject\">\n                <i class=\"material-icons-outlined\">description</i>\n              </button>\n            </td>\n          </ng-container>\n\n          <td [title]=\"getValue(element.data, column)\" mat-cell [helTooltip]=\"getValueTooltip(element.data, column)\" [hideDelay]=\"hideDelay\"\n            [showDelay]=\"showDelay\" *matCellDef=\"let element\" (dblclick)=\"dblClickCell()\"\n            (click)=\"selectedCell(element, column)\" [class.selected-row]=\"isSelectedCell(element, column)\"\n            [ngClass]=\"getClassToCell(element.data, column)\">\n            <a [href]=\"getValue(element.data, column) | externalLink\" *ngIf=\"column.columnType == columnType.URL\">{{\n              getValue(element.data, column) }}</a>\n            {{ column.columnType != columnType.URL?getValue(element.data, column):\"\" }}\n          </td>\n          <td mat-footer-cell *matFooterCellDef> <strong>{{ totalData[idx] }} </strong></td>\n        </ng-container>\n\n        <ng-container [matColumnDef]=\"'subtitle' + idx\" *ngIf=\"column.subtitle != undefined\">\n          <th mat-header-cell *matHeaderCellDef [attr.colspan]=\"column.colspanSubtitle\" [matTooltip]=\"column.subtitle\">\n            {{column.subtitle}}</th>\n        </ng-container>\n      </ng-container>\n\n      <ng-container matColumnDef=\"groupHeader\">\n        <td mat-cell *matCellDef=\"let group\">\n          <strong>{{ getGroupDescription(group.data) }}</strong>\n        </td>\n      </ng-container>\n\n      <ng-container [matColumnDef]=\"'footer-'+column.name\" *ngFor=\"let column of columnConfig; let i= index\">\n        <td mat-cell *matCellDef=\"let element\"> <strong>{{ getGroupValue(column, element.data[i]) }} </strong></td>\n      </ng-container>\n\n      <ng-container *ngIf=\"showFooter && displayedColumnsWithFooter.length > 0\">\n        <tr mat-footer-row *matFooterRowDef=\"displayedColumns;sticky:true\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"showTitle && displayedColumnsWithTitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithTitle;sticky: true\" class=\"hw-head-title\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"displayedColumnsWithSubtitle.length > 0\">\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumnsWithSubtitle\" class=\"hw-head-subtitle\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\" (click)=\"selectRow(row, true)\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\"\n          [draggable]=\"true\" (dragstart)=\"startDrag($event)\"></tr>\n      </ng-container>\n      <ng-container *ngIf=\"!isDragged\">\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns; when: isRow\"\n          [class.selected-row]=\"row.data === selectedObject && !isCellSelection\" [ngClass]=\"getClassToRow(row.data)\">\n        </tr>\n      </ng-container>\n      <tr mat-row *matRowDef=\"let row; columns: ['groupHeader']; when: isGroupTitle\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumnsWithFooter; when: isGroupFooter\"></tr>\n    </table>\n  </div>\n  <div *ngIf=\"showMessageEmpty(data)\">\n    <p>\n      {{getMessageEmtpy()}}\n    </p>\n  </div>\n</div>\n<div *ngIf=\"isResizingTable()\" class=\"resize-handle-right resize-handle-table\" id=\"{{getIdForHelTable()}}\"></div>\n",
                     styles: ["table{table-layout:fixed}tbody tr,tfoot tr,thead tr{height:26px}tbody tr td,tbody tr th,tfoot tr td,tfoot tr th,thead tr td,thead tr th{overflow:hidden;padding:2px 10px 0;text-overflow:ellipsis}thead tr th{background:#579380;color:#fff;font-size:18px;text-transform:uppercase}tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}tbody tr td{border:none;box-shadow:inset 1px 0 0 0 #b7b7b7}tbody tr td button{height:auto;line-height:inherit}tfoot{display:none}tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}::ng-deep hel-table{position:relative}::ng-deep hel-table>button{align-items:flex-start;background:transparent;border:none;color:transparent;cursor:pointer;display:flex;height:26px;justify-content:center;opacity:.5;overflow:hidden;position:absolute;right:0;top:0;width:20px;z-index:101}::ng-deep hel-table>button:focus{outline:none}::ng-deep hel-table>button:hover{opacity:1}::ng-deep hel-table>button:before{align-items:center;color:#fff;content:\"+\";display:flex;font-size:20px;height:26px;justify-content:center;position:absolute;width:20px}::ng-deep hel-table>button+.div-table-helisa .container-table .table-helisa thead tr th:last-child{padding-right:20px}::ng-deep hel-table .buttons-container{order:2}::ng-deep hel-table .buttons-container.hasSubtitle,::ng-deep hel-table .buttons-container.hasTitle{padding-top:26px}::ng-deep hel-table .buttons-container.hasTitle.hasSubtitle{padding-top:52px}::ng-deep hel-table .buttons-container>div{height:26px}::ng-deep hel-table .buttons-container>div button{align-items:center;display:flex;height:26px;justify-content:center}::ng-deep hel-table .buttons-container>div button>*{display:flex;height:100%}::ng-deep hel-table .div-table-helisa{height:100%}::ng-deep hel-table .div-table-helisa .container-table{display:flex;height:100%;width:100%}::ng-deep hel-table .div-table-helisa .container-table .table-helisa{width:100%}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep table{table-layout:fixed}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr{height:26px}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr th,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr th,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr td,::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr th{overflow:hidden;padding:2px 10px 0;text-overflow:ellipsis}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep thead tr th{background:#579380;color:#fff;font-size:18px;text-transform:uppercase}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr{box-shadow:inset 0 1px 0 0 #b6b6b6}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td{border:none;box-shadow:inset 1px 0 0 0 #b7b7b7}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tbody tr td button{height:auto;line-height:inherit}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot{display:none}::ng-deep hel-table .div-table-helisa .container-table .table-helisa ::ng-deep tfoot tr td{box-shadow:inset 0 1px 0 0 #b7b7b7}::ng-deep hel-table .div-table-helisa .container-table .table-helisa .selected-row{background:silver;font-weight:700}"]
                 },] }
     ];
@@ -1840,6 +1869,7 @@
         search: [{ type: i0.Output }],
         select: [{ type: i0.Output }],
         selectCell: [{ type: i0.Output }],
+        selectToImport: [{ type: i0.Output }],
         selectObject: [{ type: i0.Output }],
         nextPage: [{ type: i0.Output }],
         showTitle: [{ type: i0.Input }],
@@ -1862,6 +1892,7 @@
         afterViewInit: [{ type: i0.Output }],
         hideDelay: [{ type: i0.Input }],
         showDelay: [{ type: i0.Input }],
+        modeImportEnabled: [{ type: i0.Input }],
         isRemote: [{ type: i0.Input }],
         columnConfiguration: [{ type: i0.Input }],
         dataSource: [{ type: i0.Input }],

@@ -72,6 +72,7 @@ export interface DropElement<T> {
 export interface SelectObject<T> {
     value: T;
     scope: EventScope;
+    keyActionImport?: string;
 }
 export declare enum TableHelisaType {
     REMOTE = 0,
