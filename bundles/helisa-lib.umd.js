@@ -695,7 +695,7 @@
              */
             this.showDelay = 500;
             this.resizeConfig = new ResizeConfig();
-            this.modeImportEnabled = true;
+            this.modeImportEnabled = false;
         }
         Object.defineProperty(DependencyTableHelisaComponent.prototype, "modeImportingEnabled", {
             get: function () {

@@ -396,7 +396,7 @@ class DependencyTableHelisaComponent {
          */
         this.showDelay = 500;
         this.resizeConfig = new ResizeConfig();
-        this.modeImportEnabled = true;
+        this.modeImportEnabled = false;
     }
     get modeImportingEnabled() {
         return this.modeImportEnabled;
