@@ -35,8 +35,17 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     private service;
     private searchNode;
     private allNode;
+    isModeAssociation: boolean;
     afterLoadData: EventEmitter<void>;
     nodeComponent: TemplateRef<{
+        data: T;
+        node: HelisaNodeData<T>;
+    }>;
+    otherColumnsComponent: TemplateRef<{
+        data: T;
+        node: HelisaNodeData<T>;
+    }>;
+    otherTitlesColumnsComponent: TemplateRef<{
         data: T;
         node: HelisaNodeData<T>;
     }>;
@@ -52,7 +61,9 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     private createNode;
     getNodeInformationById(id: string): HelisaNode<T>;
     getNodeInformation(item: T): HelisaNode<T>;
+    getClassAssociation(): string;
     getLevelClass(item: T): string;
+    getRowClassAssociation(): string;
     private loadNextVisibleObjects;
     collapseNode(item: T): void;
     expandNode(item: T): void;

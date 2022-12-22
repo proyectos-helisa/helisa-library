@@ -3153,6 +3153,7 @@
             this.treeMode = exports.PagingTreeInitialMode.EXPAND;
             this.visibleObjects = [];
             this.allNode = [];
+            this.isModeAssociation = false;
             this.afterLoadData = new i0.EventEmitter();
         }
         PagingTreeHelisaComponent.prototype.ngOnInit = function () {
@@ -3251,8 +3252,14 @@
         PagingTreeHelisaComponent.prototype.getNodeInformation = function (item) {
             return this.searchNode.get(item[this.service.getIdField()]);
         };
+        PagingTreeHelisaComponent.prototype.getClassAssociation = function () {
+            return (this.isModeAssociation ? 'width-custom-1' : 'width-custom-full');
+        };
         PagingTreeHelisaComponent.prototype.getLevelClass = function (item) {
             return 'padding-level-' + this.getNodeInformationById(item[this.service.getIdField()]).level;
+        };
+        PagingTreeHelisaComponent.prototype.getRowClassAssociation = function () {
+            return (this.isModeAssociation ? 'helisa-tree-row-association' : '');
         };
         PagingTreeHelisaComponent.prototype.loadNextVisibleObjects = function (nodeFrom) {
             var _this = this;
@@ -3383,14 +3390,17 @@
     PagingTreeHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-paging-tree',
-                    template: "<div>\n  <ng-container [ngTemplateOutlet]=\"nodeTitle\"></ng-container>\n  <div *ngFor=\"let item of visibleData\" [ngClass]=\"this.getLevelClass(item)\" class=\"w-100\">\n    <div *ngIf=\"getNodeInformation(item).visible\">\n      <div *ngIf=\"getNodeInformation(item) as node\" class=\"helisa-tree-row w-100\">\n        <div [ngClass]=\"{expandNode: !node.expanded && node.haveChildren, withoutNode: !node.haveChildren}\">\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\n          <mat-icon *ngIf=\"!node.haveChildren\"></mat-icon>\n        </div>\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\n      </div>\n    </div>\n  </div>\n</div>\n",
-                    styles: [".w-100{width:100%}.padding-level-0{margin-left:0}.padding-level-1{margin-left:40px}.padding-level-2{margin-left:80px}.padding-level-3{margin-left:120px}.padding-level-4{margin-left:160px}.padding-level-5{margin-left:200px}.padding-level-6{margin-left:240px}.padding-level-7{margin-left:280px}.padding-level-8{margin-left:320px}.helisa-tree-row{align-items:center;display:flex;flex-direction:row}"]
+                    template: "<div>\n  <ng-container [ngTemplateOutlet]=\"nodeTitle\"></ng-container>\n  <div *ngIf=\"isModeAssociation\" class=\"w-100 flex-custom hw-color-white hw-bg-blue\">\n    <ng-container [ngTemplateOutlet]=\"otherTitlesColumnsComponent\"></ng-container>\n  </div>\n  <div *ngFor=\"let item of visibleData\" class=\"w-100 flex-custom\" [ngClass]=\"getRowClassAssociation()\">\n    <div *ngIf=\"getNodeInformation(item).visible\" [ngClass]=\"getClassAssociation()\">\n      <div *ngIf=\"getNodeInformation(item) as node\" [ngClass]=\"this.getLevelClass(item)\" class=\"helisa-tree-row w-100\">\n        <div [ngClass]=\"{expandNode: !node.expanded && node.haveChildren, withoutNode: !node.haveChildren}\">\n          <mat-icon *ngIf=\"!node.expanded && node.haveChildren\" (click)=\"expandNode(item)\">add</mat-icon>\n          <mat-icon *ngIf=\"node.expanded && node.haveChildren\" (click)=\"collapseNode(item)\">remove</mat-icon>\n          <mat-icon *ngIf=\"!node.haveChildren\"></mat-icon>\n        </div>\n        <ng-container [ngTemplateOutlet]=\"nodeComponent\" [ngTemplateOutletContext]=\"{data: item, node: node}\"></ng-container>\n      </div>\n    </div>\n    <div *ngIf=\"isModeAssociation\" class=\"d-flex width-custom-2\">\n      <ng-container [ngTemplateOutlet]=\"otherColumnsComponent\" [ngTemplateOutletContext]=\"{data: item, node: getNodeInformation(item)}\"></ng-container>\n    </div>\n  </div>\n</div>\n",
+                    styles: [".w-100{width:100%}.padding-level-0{margin-left:0}.padding-level-1{margin-left:40px}.padding-level-2{margin-left:80px}.padding-level-3{margin-left:120px}.padding-level-4{margin-left:160px}.padding-level-5{margin-left:200px}.padding-level-6{margin-left:240px}.padding-level-7{margin-left:280px}.padding-level-8{margin-left:320px}.helisa-tree-row{align-items:center;display:flex;flex-direction:row}.helisa-tree-row-association:hover{background-color:#f2f2f2}.flex-custom{display:flex;flex-direction:row;justify-content:space-between}.flex-custom>div{display:flex}.width-custom-1,.width-custom-2{width:50%}.width-custom-full{width:100%}"]
                 },] }
     ];
     PagingTreeHelisaComponent.ctorParameters = function () { return []; };
     PagingTreeHelisaComponent.propDecorators = {
+        isModeAssociation: [{ type: i0.Input }],
         afterLoadData: [{ type: i0.Output }],
         nodeComponent: [{ type: i0.ContentChild, args: ['nodeComponent',] }],
+        otherColumnsComponent: [{ type: i0.ContentChild, args: ['otherColumnsComponent',] }],
+        otherTitlesColumnsComponent: [{ type: i0.ContentChild, args: ['otherTitlesColumnsComponent',] }],
         nodeTitle: [{ type: i0.ContentChild, args: ['nodeTitle',] }],
         mode: [{ type: i0.Input }],
         pagingTreeHelisaListable: [{ type: i0.Input }]
