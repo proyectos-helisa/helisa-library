@@ -57,6 +57,8 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     set pagingTreeHelisaListable(paramService: PagingTreeHelisaListable<T>);
     reset(): void;
     private loadData;
+    getUniqueId(item: T): string;
+    scrollToItem(item: T): void;
     private sortItems;
     private createNode;
     getNodeInformationById(id: string): HelisaNode<T>;
@@ -66,7 +68,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     getRowClassAssociation(): string;
     private loadNextVisibleObjects;
     collapseNode(item: T): void;
-    expandNode(item: T): void;
+    expandNode(item: T, isScrollToItem?: boolean): void;
     showNextPage(): void;
     get visibleData(): ReadonlyArray<T>;
     removeItem(item: T): void;
