@@ -1,4 +1,4 @@
-import { AfterViewInit, EventEmitter, OnInit, TemplateRef } from '@angular/core';
+import { AfterViewInit, EventEmitter, OnInit, TemplateRef, AfterViewChecked } from '@angular/core';
 import { Observable } from 'rxjs';
 export declare enum PagingTreeInitialMode {
     COLLAPSE = 0,
@@ -26,7 +26,7 @@ export interface HelisaNodeData<T> {
     readonly visible: boolean;
     readonly preorder: number;
 }
-export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewInit {
+export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewInit, AfterViewChecked {
     private pageSize;
     private visibleLimit;
     private visibleSize;
@@ -50,15 +50,18 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
         node: HelisaNodeData<T>;
     }>;
     nodeTitle: TemplateRef<any>;
+    private itemToScroll;
     constructor();
     ngOnInit(): void;
     ngAfterViewInit(): void;
     set mode(paramMode: PagingTreeInitialMode);
     set pagingTreeHelisaListable(paramService: PagingTreeHelisaListable<T>);
     reset(): void;
+    ngAfterViewChecked(): void;
     private loadData;
     getUniqueId(item: T): string;
     scrollToItem(item: T): void;
+    scrollToTargetAdjusted(item: T, offset: number): void;
     private sortItems;
     private createNode;
     getNodeInformationById(id: string): HelisaNode<T>;
@@ -68,7 +71,7 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     getRowClassAssociation(): string;
     private loadNextVisibleObjects;
     collapseNode(item: T): void;
-    expandNode(item: T, isScrollToItem?: boolean): void;
+    expandNode(item: T): void;
     showNextPage(): void;
     get visibleData(): ReadonlyArray<T>;
     removeItem(item: T): void;
@@ -76,5 +79,6 @@ export declare class PagingTreeHelisaComponent<T> implements OnInit, AfterViewIn
     addItem(item: T): void;
     updateItem(item: T): void;
     private reSort;
+    expandToItem(item: T): void;
 }
 export {};
