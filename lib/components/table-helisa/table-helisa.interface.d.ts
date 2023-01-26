@@ -19,6 +19,7 @@ export interface ColumnConfig {
     columnStyle?: string;
     columnType?: ColumnType;
     isSelectable?: boolean;
+    headerStyle?: string;
 }
 export interface AddRowButton {
     text: string;

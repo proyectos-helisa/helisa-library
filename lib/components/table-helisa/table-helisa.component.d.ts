@@ -48,6 +48,7 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
      */
     select: EventEmitter<T>;
     selectCell: EventEmitter<Cell<T>>;
+    selectHeaderCell: EventEmitter<ColumnConfig>;
     selectToImport: EventEmitter<SelectObject<T>>;
     selectObject: EventEmitter<SelectObject<T>>;
     nextPage: EventEmitter<RequestTableHelisa<T>>;
@@ -108,6 +109,8 @@ export declare class TableHelisaComponent<T> implements OnInit, AfterViewInit {
     dblClickCell(): void;
     selectedCell(element: RowData<T>, column: ColumnConfig): void;
     isSelectedCell(row: RowData<T>, column: ColumnConfig): boolean;
+    selectedHeaderCell(column: ColumnConfig): void;
+    getClassToHeaderCell(column: ColumnConfig): string[];
     getClassToCell(row: T, column: ColumnConfig): string[];
     getClassToColumn(): string[];
     getClassToRow(row: T): string[];
