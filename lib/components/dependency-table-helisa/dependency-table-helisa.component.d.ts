@@ -34,6 +34,7 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
     selected: EventEmitter<EventDependency<T>>;
     selectToImport: EventEmitter<EventDependency<{} | T>>;
     selectObject: EventEmitter<EventDependency<{} | T>>;
+    selectHeaderCellDependency: EventEmitter<EventDependency<{} | T>>;
     nextPage: EventEmitter<EventDependency<{} | T>>;
     total: EventEmitter<EventDependency<{} | T>>;
     sort: EventEmitter<EventDependency<{} | T>>;
@@ -70,6 +71,7 @@ export declare class DependencyTableHelisaComponent<T> implements OnInit {
      * @param index indica el indice de la tabla seleccionada
      * @param data retorna la fila que fue seleccionada
      */
+    onSelectHeaderCell(index: number, event: SelectObject<T>): void;
     onSelectedDependency(index: number, event: SelectObject<T>): void;
     onSelectedDependencyImport(index: number, event: SelectObject<T>): void;
     /**

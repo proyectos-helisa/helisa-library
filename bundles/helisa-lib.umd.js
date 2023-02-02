@@ -677,6 +677,7 @@
             this.selected = new i0.EventEmitter();
             this.selectToImport = new i0.EventEmitter();
             this.selectObject = new i0.EventEmitter();
+            this.selectHeaderCellDependency = new i0.EventEmitter();
             this.nextPage = new i0.EventEmitter();
             this.total = new i0.EventEmitter();
             this.sort = new i0.EventEmitter();
@@ -793,6 +794,9 @@
          * @param index indica el indice de la tabla seleccionada
          * @param data retorna la fila que fue seleccionada
          */
+        DependencyTableHelisaComponent.prototype.onSelectHeaderCell = function (index, event) {
+            this.selectHeaderCellDependency.emit({ index: index, data: event });
+        };
         DependencyTableHelisaComponent.prototype.onSelectedDependency = function (index, event) {
             this.selectedObject = { index: index, data: event };
             this.selected.emit({ index: index, data: event.value });
@@ -861,7 +865,7 @@
     DependencyTableHelisaComponent.decorators = [
         { type: i0.Component, args: [{
                     selector: 'hel-dependency-table',
-                    template: "<div tabindex=\"0\">\n  <hel-table [modeImportEnabled]=\"modeImportingEnabled\" [resizeConfig]=\"resizingConfig\" #viewTables *ngFor=\"let table of tables; let i = index;\" [tableIndex]=\"i\" class=\"table-test hw-min-width-120\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" (selectToImport)=\"onSelectedDependencyImport(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n    (afterViewInit)=\"onAfterViewInitTable($event)\">\n  </hel-table>\n</div>\n",
+                    template: "<div tabindex=\"0\">\n  <hel-table [modeImportEnabled]=\"modeImportingEnabled\" [resizeConfig]=\"resizingConfig\" #viewTables *ngFor=\"let table of tables; let i = index;\" [tableIndex]=\"i\" class=\"table-test hw-min-width-120\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" (selectToImport)=\"onSelectedDependencyImport(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n    (afterViewInit)=\"onAfterViewInitTable($event)\"\n    (selectHeaderCell)=\"onSelectHeaderCell(i, $event)\"\n    >\n  </hel-table>\n</div>\n",
                     providers: [DependencyTableHelisaService],
                     styles: [""]
                 },] }
@@ -876,6 +880,7 @@
         selected: [{ type: i0.Output }],
         selectToImport: [{ type: i0.Output }],
         selectObject: [{ type: i0.Output }],
+        selectHeaderCellDependency: [{ type: i0.Output }],
         nextPage: [{ type: i0.Output }],
         total: [{ type: i0.Output }],
         sort: [{ type: i0.Output }],

@@ -378,6 +378,7 @@ class DependencyTableHelisaComponent {
         this.selected = new EventEmitter();
         this.selectToImport = new EventEmitter();
         this.selectObject = new EventEmitter();
+        this.selectHeaderCellDependency = new EventEmitter();
         this.nextPage = new EventEmitter();
         this.total = new EventEmitter();
         this.sort = new EventEmitter();
@@ -483,6 +484,9 @@ class DependencyTableHelisaComponent {
      * @param index indica el indice de la tabla seleccionada
      * @param data retorna la fila que fue seleccionada
      */
+    onSelectHeaderCell(index, event) {
+        this.selectHeaderCellDependency.emit({ index, data: event });
+    }
     onSelectedDependency(index, event) {
         this.selectedObject = { index, data: event };
         this.selected.emit({ index, data: event.value });
@@ -550,7 +554,7 @@ class DependencyTableHelisaComponent {
 DependencyTableHelisaComponent.decorators = [
     { type: Component, args: [{
                 selector: 'hel-dependency-table',
-                template: "<div tabindex=\"0\">\n  <hel-table [modeImportEnabled]=\"modeImportingEnabled\" [resizeConfig]=\"resizingConfig\" #viewTables *ngFor=\"let table of tables; let i = index;\" [tableIndex]=\"i\" class=\"table-test hw-min-width-120\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" (selectToImport)=\"onSelectedDependencyImport(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n    (afterViewInit)=\"onAfterViewInitTable($event)\">\n  </hel-table>\n</div>\n",
+                template: "<div tabindex=\"0\">\n  <hel-table [modeImportEnabled]=\"modeImportingEnabled\" [resizeConfig]=\"resizingConfig\" #viewTables *ngFor=\"let table of tables; let i = index;\" [tableIndex]=\"i\" class=\"table-test hw-min-width-120\"\n    [dataSource]=\"table.dataSource\" [columnConfiguration]=\"table.columns\" [isRemote]=\"table.isRemote\" [count]=\"table.count\"\n    (selectObject)=\"onSelectedDependency(i, $event)\" (selectToImport)=\"onSelectedDependencyImport(i, $event)\" [selectedIndexRow]=\"table.indexRowSelect\" (nextPage)=\"onNextPage(i, $event)\"\n    (total)=\"onTotal(i, $event)\" (sort)=\"onSort(i, $event)\" [isDragged]=\"table.isDragged\" (drop)=\"onDrop(i, $event)\"\n    (addRow)=\"onAddRow(i)\" [addRowButton]=\"table.addRowButton\" [configRowStylesFromColumn]=\"table.configRowStylesFromColumn\" [configColumnClass]=\"table.configColumnClass\"\n    [isCellSelection]=\"table.isCellSelection\" (selectCell)=\"selectedCell(i, $event)\"\n    [addBookButton]=\"(table.addBookButton != null)?table.addBookButton:false\"\n    (bookClicked)=\"onBookClicked(i,$event)\"\n    [showToolTip]=\"showToolTip\"\n    [hideDelay]=\"hideDelay\" [showDelay]=\"showDelay\"\n    (afterViewInit)=\"onAfterViewInitTable($event)\"\n    (selectHeaderCell)=\"onSelectHeaderCell(i, $event)\"\n    >\n  </hel-table>\n</div>\n",
                 providers: [DependencyTableHelisaService],
                 styles: [""]
             },] }
@@ -565,6 +569,7 @@ DependencyTableHelisaComponent.propDecorators = {
     selected: [{ type: Output }],
     selectToImport: [{ type: Output }],
     selectObject: [{ type: Output }],
+    selectHeaderCellDependency: [{ type: Output }],
     nextPage: [{ type: Output }],
     total: [{ type: Output }],
     sort: [{ type: Output }],
