@@ -2,7 +2,8 @@ import { SortDirection } from '@angular/material/sort';
 import { RowData } from './table-helisa.component';
 export declare enum ColumnType {
     NORMAL = 0,
-    URL = 1
+    URL = 1,
+    ICON = 2
 }
 export interface ColumnConfig {
     name: string;
